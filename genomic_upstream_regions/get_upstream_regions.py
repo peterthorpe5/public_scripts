@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 ########################################################################################################
 #####: TITLE: script to get the upstream regions of genes of interest ###############
 #script will return upt to the gene if the full length falls within that gene.
