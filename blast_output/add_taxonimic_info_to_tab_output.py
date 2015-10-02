@@ -423,7 +423,7 @@ $ python Diamond_blast_to_taxid.py -i diamond_tab_output -t /PATH_TO/NCBI_gi_tax
         or
 
 
-$ python Diamond_blast_to_taxid.py -i diamond_tab_output -p /PATH_TO/FILES -o outfile.tab
+$ Diamond_blast_to_taxid.py -i diamond_tab_output -p /PATH_TO/FILES -o outfile.tab
 
 
 This script opens up a diamond tab output (-i) and looks up the relavant tax_id info (-t), look up the kingdom (-c)
