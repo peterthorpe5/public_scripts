@@ -1,13 +1,13 @@
 
 ######################################################################
-# Title: Script to bring back every 10000 sequences from a fastq file#
+# Title: Script to get reads I want from a file of read names#
 ######################################################################
 
 """ This script uses Biopython magic to iterate through a fastq file
-and return every 10000 sequences.
+if the read names is in a file of wanted read names it splits the read
+into a fq file.
 
-why? : Sometimes it is good to work with a subset of data for time
-and CPU reasons, as the whole data set can take much longer"""
+why? : for very large file. grep sometimes doesnt work"""
 
 #imports
 from Bio.SeqIO.QualityIO import FastqGeneralIterator
@@ -34,16 +34,17 @@ def filter_my_fastq_file (in_fastq, read_names, out_fastq):
     name_set = set([])
     for i in wanted_data:
         if not i.startswith("#"):
+            i = i.rstrip("\n")[1:]
             name_set.add(i)
-    
-    #print wanted_data
-    names = set([])
+    #print name_set
     print ("I have loaded the read names")
     
     # enumerate is a way of counting i
     # iterate through the fatsq file
     for i, (title, seq, qual) in enumerate(FastqGeneralIterator(in_file)):
-        if title in names:
+        #print title
+        if title.rstrip("\n") in name_set:
+            #print "boom"
             #write this to a file
             out_file.write("@%s\n%s\n+\n%s\n" % (title, seq.upper(), qual))
     out_file.close()
@@ -66,17 +67,24 @@ usage = """Use as follows:
 
 
 python get_fastq....py -i infile.fastq -n names_of_reads -o outfile
+
+
+This script uses Biopython magic to iterate through a fastq file
+if the read names is in a file of wanted read names it splits the read
+into a fq file.
+
+why? : for very large file. grep sometimes doesnt work
 """
 
 parser = OptionParser(usage=usage)
 parser.add_option("-i", "--in", dest="in_file", default=None,
-                  help="Output filename",
+                  help="Output filename .fastq",
                   metavar="FILE")
-parser.add_option("-n", "--names", dest="filter", default=None,
+parser.add_option("-n", "--names", dest="names", default=None,
                   help="a file of read name. Has to match exactly the names in fq file")
 
 parser.add_option("-o", "--output", dest="out_file", default=None,
-                  help="Output filename",
+                  help="Output filename - formatted as fastq",
                   metavar="FILE")
 
 
@@ -86,8 +94,8 @@ parser.add_option("-o", "--output", dest="out_file", default=None,
 (options, args) = parser.parse_args()
 
 infile = options.in_file
-filter_n = options.filter
+names = options.names
 outfile = options.out_file
 
-filter_my_fastq_file(infile, filter_n, outfile)
+filter_my_fastq_file(infile, names, outfile)
                            
