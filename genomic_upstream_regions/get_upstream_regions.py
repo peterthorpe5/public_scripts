@@ -246,7 +246,7 @@ This will return (--upstream number) of nucleotides to the start of your genes(s
 
 The coordinate file can be generated using a GFF3 file and a linux command line using:
 
-grep "gene" name.gff3 | cut -f 1,4,5,7,9 > format_for_py_script.out
+grep "gene" name.gff3 | grep -v "#" | cut -f1,4,5,7,9 > format_for_py_script.out
 
 
 yeilding this reulting file:
@@ -256,6 +256,10 @@ GROS_00001	2195	3076	-	ID=GROS_g00002
 GROS_00001	8583	10515	+	ID=GROS_g00005.....
 
 The script will check that the start is always less than the end. GFF file should have starts < stop irrespective of the coding direction
+
+To get all the genes in the file do:
+
+cut -f5 format_for_py_script.out > all_gene_names.out
 
 MORE help / example:
 
@@ -269,8 +273,8 @@ This got (-u 225) 225 bp upstream and (-z 125) 125bp into the current gene for a
 
 parser = OptionParser(usage=usage)
 
-parser.add_option("-c", "--coordinates",dest="coordinate_file", default=None,
-                  help="NOTE: coordinate_file can generate using linux command line of GFF file:  grep 'gene' name.gff3 | cut -f 1,4,5,7,9 > format_for_py_script.out ")
+parser.add_option("-c", "--coordinates",dest="coordinate_file", default="format_for_py_script.out",
+                  help="NOTE: coordinate_file can generate using linux command line of GFF file:  grep 'gene' name.gff3 | grep -v '#' | cut -f1,4,5,7,9 > format_for_py_script.out . Default = format_for_py_script.out")
 
 parser.add_option("-g", "--genome", dest="genome_sequence", default=None,
                   help="genome_sequence.fasta  -  this has to be the file used to generate the gene models/GFF file")
@@ -309,6 +313,6 @@ seq_getter(coordinate_file, genome_sequence, upstream, genes_file, outfile, user
 
 
 end_time=time.time()
-#print 'that took, %.3f' %(end_time - start_time)
+print 'that took, %.3f' %(end_time - start_time)
 
 #print 'done'
