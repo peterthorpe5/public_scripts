@@ -1,7 +1,12 @@
+#script to re-write badly formatted fasta file. Remove duplicates,
+#or get seq or interest.
 
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio import SeqIO
+import sys
+import os
+from optparse import OptionParser
 
 def name_set(in_names):
     name_set = set([])
@@ -25,19 +30,21 @@ def reformat_as_fasta(filename,lenth,wanted,not_wanted, outfile):
         not_wanted_data = [line.replace("\t", "").rstrip("\n") for line in names
                   if line.strip() != ""]
         not_wanted_name_set = name_set(not_wanted_data)
-        
+    current_names = set([])     
     #print wanted_data
     for seq_record in SeqIO.parse(filename, "fasta"):
         if len(seq_record.seq)> int(lenth):
-            if wanted:
-                if seq_record.id in wanted_name_set:
-                    SeqIO.write(seq_record, f, "fasta")
-            if not_wanted:
-                if not seq_record.id in not_wanted_name_set:
-                    SeqIO.write(seq_record, f, "fasta")
-            else:
-                SeqIO.write(seq_record, f, "fasta")                    
-    
+            if not seq_record.id in current_names:
+                current_names.add(seq_record.id)
+                if wanted:
+                    if seq_record.id in wanted_name_set:
+                        SeqIO.write(seq_record, f, "fasta")
+                if not_wanted:
+                    if not seq_record.id in not_wanted_name_set:
+                        SeqIO.write(seq_record, f, "fasta")
+                else:
+                    SeqIO.write(seq_record, f, "fasta")                    
+        
     f.close()
     return True
 
@@ -59,6 +66,8 @@ script either reformats badly formated fasta file. Within reason. Ie. Word docum
 if lenght of seq is longer than -l default 3 - writes to file.
 
 can filter fasta by giving it a list of --not_wanted or --wanted names.
+
+REQUIRES Biopython
 
 """
 
@@ -92,7 +101,6 @@ not_wanted = options.not_wanted
 wanted = options.wanted
 out = options.out
 lenth = options.lenth
-convert_files(in_file, out)
 
 
 reformat_as_fasta(in_file,lenth,wanted,not_wanted, out)

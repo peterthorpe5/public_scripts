@@ -400,7 +400,7 @@ def find_positive_next_ATG(transcriptome_record, position, strand):
 
 
 def find_positive_next_ATG(transcriptome_record, position, strand):
-    "function to find the next ATG"
+    "function to find the next ATG; returns integer or None."
     #print ("start position = %d" % position)
     transcriptome_record= transcriptome_record[position:]
     if strand =="+":
@@ -411,15 +411,15 @@ def find_positive_next_ATG(transcriptome_record, position, strand):
             start += 3
             end += 3
             next_codon = transcriptome_record[start:end]
-            print("start %i, end %i, codon: %s" % (start, end, next_codon))
+            #print("start %i, end %i, codon: %s" % (start, end, next_codon))
             #print next_codon
             #next_codon = transcript.seq[position+3:position+6]
             if next_codon == "ATG":
                 #print "fucking yes"
                 next_methionine = start
                 return next_methionine + position  # Note restoring offet!
-        #return None
-        raise ValueError("No start codon found")
+        return None  # To indicate no start codon found
+        #raise ValueError("No start codon found")
     else:
         raise ValueError("Called on strand %r" % strand)
 
@@ -434,12 +434,18 @@ def find_downstream_start(transcript, current_start, strand):
         print("Looking for CAT (i.e. ATG rev-comp) before %d in sequence %s" % (current_start, transcript))
         new = find_positive_next_ATG(reverse_complement(transcript),
                                      len(transcript) - current_start, "+")
-        assert new is not None
+        if new is None:
+            # No start codon found
+            return None
         return len(transcript) - new
     else:
         raise ValueError("Bad strand value %r" % strand)
         
     
+
+def mean_coverage(coverage_array, slice_start, slice_end):
+    selected_coverage = coverage_array[slice_start:slice_end]
+    return mean(selected_coverage)
 
 ##### main function 
 def parse_transcriptome_file(genome, transcriptome_file, cds_file, bam, gff, min_read_depth,\
@@ -470,135 +476,174 @@ def parse_transcriptome_file(genome, transcriptome_file, cds_file, bam, gff, min
         assert length == len(transcriptome_record.seq)
         
         #basically if it has less than ~10? reads mapped we cant really do stats on it
-        if expression >= min_read_depth_threshold:
-            #test one: is the a cds predcited for this, if not move on
-            try:
-                cds_record = cds_index_database[transcriptome_record.id]
-            except KeyError:
-                print ("no CDS was found for %s.. so moving on to the next" %(transcriptome_record.id))
-                break
-            # call samtools to get the depth per posititon for the transcript of interest
-            depth_filename = "./temp_fix_five_prime/depth.tmp"
-            cmd = 'samtools depth -r "%s" "%s" > "%s"' % (transcriptome_record.id, bam_file, depth_filename)
-            print("Running %s" % cmd)
-            return_code = os.system(cmd)
-            assert return_code == 0, "samtools says NO!! - something went wrong. Is your BAM file correct?"
-            
-            # assign zeros to all positions of the transcript, as samtool does no report zeros
-            all_coverage = [0]*len(transcriptome_record.seq)
+        if expression < min_read_depth_threshold:
+            continue
+        
+        #test one: is the a cds predcited for this, if not move on
+        try:
+            cds_record = cds_index_database[transcriptome_record.id]
+        except KeyError:
+            print ("no CDS was found for %s.. so moving on to the next" %(transcriptome_record.id))
+            continue
+        # call samtools to get the depth per posititon for the transcript of interest
+        depth_filename = "./temp_fix_five_prime/depth.tmp"
+        cmd = 'samtools depth -r "%s" "%s" > "%s"' % (transcriptome_record.id, bam_file, depth_filename)
+        print("Running %s" % cmd)
+        return_code = os.system(cmd)
+        assert return_code == 0, "samtools says NO!! - something went wrong. Is your BAM file correct?"
+        
+        # assign zeros to all positions of the transcript, as samtool does no report zeros
+        all_coverage = [0]*len(transcriptome_record.seq)
 
-            for line in open(depth_filename):
-                ref, possition, coverage = line.rstrip("\n").split("\t")
-                possition = int(possition) - 1
+        for line in open(depth_filename):
+            ref, possition, coverage = line.rstrip("\n").split("\t")
+            possition = int(possition) - 1
+            
+            #assign the correct coverage to the relavent postiton, thus removing the zero value.
+            #Or if there is no info, it remains as a zero.
+            all_coverage[possition] = int(coverage)
+        #Now have all the coverage information for this transcript in all_coverage
+
+        #the_mean, standard_dev = average_standard_dev (all_coverage)
+
+        #print("%s has coverage min %i, max %i, mean %0.2f, std %0.2f\n" % (transcriptome_record.id,
+                                                              #min(all_coverage), max(all_coverage),
+                                                              #mean(all_coverage),standard_dev))
+        start_position = transcriptome_record.seq.find(cds_record.seq)
+        
+        
+        if start_position != -1:
+            end_position = start_position +len(cds_record.seq)
+            # logic for (+) startnded transcripts
+            assert 0 <= start_position < end_position <= len(transcriptome_record)
+            coord_lower, coord_upper = middle_portion_of_transcript(transcriptome_record.seq)
+            print ("coord_lower = %d\tstart_position = %d" %(coord_lower, start_position))
+            if coord_lower <= start_position:
+                coord_lower = start_position+50
+            if coord_lower + 30 >= coord_upper:
+                continue
                 
-                #assign the correct coverage to the relavent postiton, thus removing the zero value.
-                #Or if there is no info, it remains as a zero.
-                all_coverage[possition] = int(coverage)
-            #Now have all the coverage information for this transcript in all_coverage
+            the_mean, standard_dev = average_standard_dev (all_coverage[coord_lower:coord_upper])
+            print("%s has coverage min %i, max %i, For sliced section: mean %0.2f, std %0.2f - (+) coding strand\n" % (transcriptome_record.id,
+                                                        min(all_coverage), max(all_coverage),
+                                                        the_mean,standard_dev))
+            cut_off = the_mean - (int(stand_dev_threshold)*standard_dev)
+            #if all_coverage[start_position] < cut_off:
+            start_codon_mean_cov = mean(all_coverage[start_position:start_position+3])
+            if start_codon_mean_cov < cut_off:
+                print("houston we have a problem!!: %s different expression. Has coverage min %i, max %i, For sliced section: mean %0.2f, std %0.2f, current starting position %0.2f\n" % (transcriptome_record.id,
+                                                        min(all_coverage), max(all_coverage),
+                                                        the_mean,standard_dev,all_coverage[start_position]))
+                #find the next ATG:
+                next_ATG_position = find_downstream_start(str(transcriptome_record.seq), start_position, "+")
+                # if it cant find another ATG - dont change the data....
+                if next_ATG_position == None:
+                    # No alternative start, do nothing
+                    pass
+                elif next_ATG_position > end_position:
+                    # No alternative start within CDS, do nothing
+                    pass
+                else:
+                    assert next_ATG_position < end_position, "Was %i to %i, new start %i" % (start_position, end_position, next_ATG_position)
+                    if all_coverage[next_ATG_position] > cut_off:
+                        print ("next_ATG_position  = %d" %(next_ATG_position))
 
-            #the_mean, standard_dev = average_standard_dev (all_coverage)
-
-            #print("%s has coverage min %i, max %i, mean %0.2f, std %0.2f\n" % (transcriptome_record.id,
-                                                                  #min(all_coverage), max(all_coverage),
-                                                                  #mean(all_coverage),standard_dev))
-            start_postition = transcriptome_record.seq.find(cds_record.seq)
-            
-            
-            if start_postition != -1:
-                end_postition = start_postition +len(cds_record.seq)
-                # logic for (+) startnded transcripts
-                coord_lower, coord_upper = middle_portion_of_transcript(transcriptome_record.seq)
-                print ("coord_lower = %d\tstart_postition = %d" %(coord_lower, start_postition))
-                if coord_lower <= start_postition:
-                    coord_lower = start_postition+50
-                the_mean, standard_dev = average_standard_dev (all_coverage[coord_lower:coord_upper])
-                print("%s has coverage min %i, max %i, For sliced section: mean %0.2f, std %0.2f - (+) coding strand\n" % (transcriptome_record.id,
+                        print("houston, we may have fixed the problem!!: %s len %i NEW start %i, end %i. Has coverage min %i, max %i, For sliced section: mean %0.2f, std %0.2f, next_ATG_position %0.2f\n"
+                              % (transcriptome_record.id, len(transcriptome_record.seq), next_ATG_position, end_position,
                                                             min(all_coverage), max(all_coverage),
-                                                            the_mean,standard_dev))
-                cut_off = the_mean - (int(stand_dev_threshold)*standard_dev)
-                if all_coverage[start_postition] < cut_off:
-                    print("houston we have a problem!!: %s different expression. Has coverage min %i, max %i, For sliced section: mean %0.2f, std %0.2f, current starting position %0.2f\n" % (transcriptome_record.id,
-                                                            min(all_coverage), max(all_coverage),
-                                                            the_mean,standard_dev,all_coverage[start_postition]))
-                    #find the next ATG:
-                    next_ATG_position = find_downstream_start(str(transcriptome_record.seq), start_postition, "+")
-                    # if it cant find another ATG - dont change the data....
-                    if next_ATG_position == None:
-                        cds_record = cds_record
+                                                            the_mean,standard_dev,all_coverage[next_ATG_position]))
+                        cds_record.seq = transcriptome_record.seq[next_ATG_position:end_position] ########## <-------- I have added one to this, is that correct????????????? - TESTS work.
+                        cds_record.description = "Five_prime_altered"+cds_record.description
                     else:
-                        if all_coverage[next_ATG_position] > cut_off:
-                            print ("next_ATG_position  = %d" %(next_ATG_position))
-
-                            print("may have fixed the problem!!: %s NEW start. Has coverage min %i, max %i, For sliced section: mean %0.2f, std %0.2f, next_ATG_position %0.2f\n" % (transcriptome_record.id,
-                                                                min(all_coverage), max(all_coverage),
-                                                                the_mean,standard_dev,all_coverage[next_ATG_position]))
-                            cds_record.seq = transcriptome_record.seq[next_ATG_position:end_postition] ########## <-------- I have added one to this, is that correct????????????? - TESTS work.
-
-                        else:
-                            another_ATG_position = find_downstream_start(str(transcriptome_record.seq), next_ATG_position, "+")
-                            #if this new ATG comed witht the thresholds for "being" real
-                            if all_coverage[another_ATG_position] > cut_off:
-                                #set the new cds
-                                cds_record.seq = transcriptome.seq[another_ATG_position:end_postition]
-                                print("may have fixed the problem!!: %s another_ATG_position_NEW start. Has coverage min %i, max %i, For sliced section: mean %0.2f, std %0.2f, another_ATG_position %0.2f\n" % (transcriptome_record.id,
-                                                                min(all_coverage), max(all_coverage),
-                                                             the_mean,standard_dev,all_coverage[another_ATG_position]))                            
-                            else:
-                                print ("we cannot do anything with this %s -- we will leave the cds as is" %(transcriptome_record.id))
-                assert len(cds_record), "Trimmed to nothing?"
-                SeqIO.write(cds_record, file_out, "fasta")
-                
- ##############################################################################################################################################################################                   
-            #logic for (-) coded transcripts   
-            if start_postition== -1:
-                end_postition = transcriptome_record.seq.find(cds_record.seq.reverse_complement())
-                #use string matching, then add the lenght of the cds to it to find the biological start postiton - think negative strand
-                start_postition_negative = len(cds_record.seq)+(transcriptome_record.seq.find(cds_record.seq.reverse_complement()))
-                print ("we should be looking at this as a neagtive coded cds")
-
-                coord_lower, coord_upper = middle_portion_of_transcript(transcriptome_record.seq)
-                print ("coord_lower = %d\tstart_postition_negative = %d" %(coord_lower, start_postition_negative))
-                if coord_upper <= start_postition_negative:
-                    coord_upper = start_postition_negative - 10
-                print ("coord_lower:coord_upper",coord_lower,coord_upper)
-                the_mean, standard_dev = average_standard_dev (all_coverage[coord_lower:coord_upper])
-                print("%s has coverage min %i, max %i, For sliced section: mean %0.2f, std %0.2f - (-) coding strand\n" % (transcriptome_record.id,
-                                                            min(all_coverage), max(all_coverage),
-                                                            the_mean,standard_dev))
-                cut_off = the_mean - (int(stand_dev_threshold)*standard_dev)
-                if all_coverage[start_postition_negative] < cut_off:
-                    print("houston we have a problem!!: %s different expression. Has coverage min %i, max %i, For sliced section: mean %0.2f, std %0.2f, current starting position %0.2f\n" % (transcriptome_record.id,
-                                                            min(all_coverage), max(all_coverage),
-                                                            the_mean,standard_dev, all_coverage[start_postition_negative]))
-                    next_negative_ATG_position = find_downstream_start(str(transcriptome_record.seq), start_postition_negative, "-")
-                    # if it cant find another ATG - dont change the data....
-                    if next_negative_ATG_position == None:
-                        cds_record = cds_record
-                    else:
-                        print ("next_negative_ATG_position  = %d" %(next_negative_ATG_position))
-
-                        if all_coverage[next_negative_ATG_position] > cut_off:
-                            print("may have fixed the problem!!: %s NEW start. Has coverage min %i, max %i, For sliced section: mean %0.2f, std %0.2f, next_ATG_position %0.2f\n" % (transcriptome_record.id,
-                                                            min(all_coverage), max(all_coverage),
-                                                            the_mean,standard_dev,all_coverage[next_negative_ATG_position]))
-                            print "Cutting to [%i:%i]" % (next_negative_ATG_position, end_postition)
-                            cds_record.seq = transcriptome_record.seq[end_postition:next_negative_ATG_position]
-                            cds_record.seq = cds_record.seq.reverse_complement()
-                        else:
-                            another_ATG_position = find_downstream_start(str(transcriptome_record.seq), next_negative_ATG_position, "-")
-                            #if this new ATG comed witht the thresholds for "being" real
-                            if all_coverage[next_negative_ATG_position] > cut_off:
-                                #set the new cds
-                                print "Cutting to [%i:%i]" % (next_negative_ATG_position, end_postition)
-                                cds_record.seq = transcriptome.seq[end_postition:next_negative_ATG_position]
-                                cds_record.seq = cds_record.seq.reverse_complement()
-                                print("may have fixed the problem!!: %s another_ATG_position_NEW start. Has coverage min %i, max %i, For sliced section: mean %0.2f, std %0.2f, another_ATG_position %0.2f\n" % (transcriptome_record.id,
+                        another_ATG_position = find_downstream_start(str(transcriptome_record.seq), next_ATG_position, "+")
+                        #if this new ATG comed witht the thresholds for "being" real
+                        if another_ATG_position is None:
+                             print ("No alt start, cannot do anything with this %s -- we will leave the cds as is" %(transcriptome_record.id))
+                        elif another_ATG_position > end_position:
+                    # No alternative start within CDS, do nothing
+                            pass
+                        elif all_coverage[another_ATG_position] > cut_off:
+                            #set the new cds
+                            cds_record.seq = transcriptome_record.seq[another_ATG_position:end_position]
+                            cds_record.description = "Five_prime_altered2"+cds_record.description
+                            print("houston, may have fixed the problem!!: %s another_ATG_position_NEW start. Has coverage min %i, max %i, For sliced section: mean %0.2f, std %0.2f, another_ATG_position %0.2f\n" % (transcriptome_record.id,
                                                             min(all_coverage), max(all_coverage),
                                                          the_mean,standard_dev,all_coverage[another_ATG_position]))                            
-                            else:
-                                print ("we cannot do anything with this %s -- we will leave the cds as is" %(transcriptome_record.id))
-                assert len(cds_record), "Trimmed to nothing?"
-                SeqIO.write(cds_record, file_out, "fasta")
+                        else:
+                            print ("we cannot do anything with this %s -- we will leave the cds as is" %(transcriptome_record.id))
+            assert len(cds_record), "Trimmed to nothing?"
+            SeqIO.write(cds_record, file_out, "fasta")
+            
+##############################################################################################################################################################################                   
+        #logic for (-) coded transcripts   
+        if start_position== -1:
+            end_position = transcriptome_record.seq.find(cds_record.seq.reverse_complement())
+            #use string matching, then add the lenght of the cds to it to find the biological start postiton - think negative strand
+            start_position_negative = len(cds_record.seq)+(transcriptome_record.seq.find(cds_record.seq.reverse_complement()))
+            assert 0 <= start_position_negative <= len(transcriptome_record.seq), start_position_negative
+            print ("we should be looking at this as a neagtive coded cds %s" %(cds_record.seq))
+
+            coord_lower, coord_upper = middle_portion_of_transcript(transcriptome_record.seq)
+            print ("coord_lower = %d\tstart_position_negative = %d" %(coord_lower, start_position_negative))
+            if coord_upper <= start_position_negative:
+                coord_upper = start_position_negative - 10
+            print ("middle portion coord_lower:coord_upper %i:%i within length %i, start %i" %
+                       (coord_lower, coord_upper, len(transcriptome_record), start_position_negative))
+            assert len(transcriptome_record) == len(all_coverage)
+            the_mean, standard_dev = average_standard_dev (all_coverage[coord_lower:coord_upper])
+            print("%s has coverage min %i, max %i, For sliced section: mean %0.2f, std %0.2f - (-) coding strand\n" % (transcriptome_record.id,
+                                                        min(all_coverage), max(all_coverage),
+                                                        the_mean,standard_dev))
+            cut_off = the_mean - (int(stand_dev_threshold)*standard_dev)
+            assert 0 <= start_position_negative <= len(transcriptome_record.seq) and len(transcriptome_record) == len(all_coverage), start_position_negative
+            if start_position_negative == len(transcriptome_record.seq):
+                print("This is fun, your start codon is right at the end of the transcript!")
+                # i.e. all_coverage[start_position_negative] will break!
+                
+            #if all_coverage[start_position_negative] < cut_off:
+            start_codon_mean_cov = mean(all_coverage[start_position_negative-3:start_position_negative])
+            if start_codon_mean_cov < cut_off:
+                print("houston we have a problem!!: %s different expression. Has coverage min %i, max %i, For sliced section: mean %0.2f, std %0.2f, current starting position %0.2f\n" % (transcriptome_record.id,
+                                                        min(all_coverage), max(all_coverage),
+                                                        the_mean,standard_dev, start_codon_mean_cov))
+                next_negative_ATG_position = find_downstream_start(str(transcriptome_record.seq), start_position_negative, "-")
+                # if it cant find another ATG - dont change the data....
+                if next_negative_ATG_position == None:
+                    # Can't find any other strat codon
+                    pass
+                elif next_negative_ATG_position < end_position:
+                    # No alternative start with CDS, do nothing
+                    pass
+                else:
+                    print ("next_negative_ATG_position  = %d" %(next_negative_ATG_position))
+
+                    if all_coverage[next_negative_ATG_position] > cut_off:
+                        print("houston, may have fixed the problem!!: %s NEW start. Has coverage min %i, max %i, For sliced section: mean %0.2f, std %0.2f, next_ATG_position %0.2f\n" % (transcriptome_record.id,
+                                                        min(all_coverage), max(all_coverage),
+                                                        the_mean,standard_dev,start_codon_mean_cov))
+                        print "Cutting to [%i:%i]" % (next_negative_ATG_position, end_position)
+                        cds_record.seq = transcriptome_record.seq[end_position:next_negative_ATG_position]
+                        cds_record.seq = cds_record.seq.reverse_complement()
+                    else:
+                        another_ATG_position = find_downstream_start(str(transcriptome_record.seq), next_negative_ATG_position, "-")
+                        #if this new ATG comed witht the thresholds for "being" real
+                        if another_ATG_position is None:
+                            print("No alt start, give up")
+                        elif another_ATG_position > end_position:
+                        # No alternative start within CDS, do nothing
+                            pass
+                        elif all_coverage[another_ATG_position] > cut_off:
+                            #set the new cds
+                            print "Cutting to [%i:%i]" % (another_ATG_position, end_position)
+                            cds_record.seq = transcriptome_record.seq[end_position:another_ATG_position]
+                            cds_record.seq = cds_record.seq.reverse_complement()
+                            print("houston, may have fixed the problem!!: %s another_ATG_position_NEW start. Has coverage min %i, max %i, For sliced section: mean %0.2f, std %0.2f, another_ATG_position %0.2f\n" % (transcriptome_record.id,
+                                                        min(all_coverage), max(all_coverage),
+                                                     the_mean,standard_dev,start_codon_mean_cov))                            
+                        else:
+                            print ("we cannot do anything with this %s -- we will leave the cds as is" %(transcriptome_record.id))
+            assert len(cds_record.seq) != 0, "Trimmed to nothing?"
+            SeqIO.write(cds_record, file_out, "fasta")
 
 
 
