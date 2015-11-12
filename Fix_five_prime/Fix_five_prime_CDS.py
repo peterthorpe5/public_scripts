@@ -729,4 +729,16 @@ parse_transcriptome_file(genome, transcriptome_file, cds_file, bam_file, gff,min
 
 
 
-
+def translate_cds(fasta_file):
+    "function to translate the new cds file"
+    # outfile is define in optparser
+    file_out_name = outfile+".pep"
+    file_out = open(file_out_name, "w")
+    for seq_record in SeqIO.parse(fasta_file, "fasta"):
+        seq_record.seq = seq_record.seq.translate()
+        SeqIO.write(seq_record, file_out, "fasta")
+    file_out.close()
+    
+translate_cds(outfile)        
+        
+    
