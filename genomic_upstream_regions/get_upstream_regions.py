@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
 ########################################################################################################
-#####: TITLE: script to get the upstream regions of genes of interest ###############
+#####: TITLE: script to get the upstream regions of genes of interest ##################################
 #script will return upt to the gene if the full length falls within that gene.
-#also, script will retunr reverse complemnet of negative strand coded genes.
+#also, script will return reverse complemnet of negative strand coded genes.
+
+#author: Peter Thorpe September 2015. The James Hutton Insitute, Dundee, UK.
 
 """
 script to return a user defined threshoold upstream number of nucleotides of genes of interest
@@ -21,7 +23,7 @@ import sys
 from optparse import OptionParser
 
 
-##################################################################################################
+########################################################################################################
 def wanted_genes(genes_file):
     "function to return a list of wanted genes from file"
     wanted = open(genes_file, "r")
@@ -31,7 +33,8 @@ def wanted_genes(genes_file):
     wanted.close()
     wanted_set = set([])
     for i in wanted_data:
-        #this is needed for the shitty names for GROS
+        i = i.replace("id=", "")
+        i = i.replace(".t1", "")
         wanted_set.add(i.split(";")[0])
     return wanted_set
 
@@ -48,6 +51,8 @@ def index_gene_scaffold_coordinates(coordinate_file):
         gene=gff_info.split("\t")[4]
         if ";" in gene:
             gene = gene.split(";")[0]
+            gene = gene.replace("id=", "")
+            gene = gene.replace(".t1", "")
         #assert gff_info.split("\t")[4].startswith("g"), "this is not a gene column in the last element of -c file"
         if gene in coordinate_dict.values():
             print "repeated line in gff sub file"
@@ -215,9 +220,7 @@ def seq_getter(coordinate_file, genome_sequence, upstream, genes_file, outfile, 
                         print "NNN found in %s" %(gene_name)
                           
 
-##                #String formatting (note no line wrapping):
-##                #print >> f, '>%s %s\n%s' % (seq_record.id, seq_record.description, seq_record.seq)
-##                #SeqRecord method (with line wrapping), bit slow
+##              #alterantive print methods if someone wnats properly formatted fasta files
 ##                #print >> f, seq_record.format("fasta")
 ##                #SeqIO.write call (with line wrapping), faster but still a bit slow
 ##            #SeqIO.write(seq_record, f, "fasta")
@@ -233,7 +236,7 @@ start_time=time.time()
 
 
 if "-v" in sys.argv or "--version" in sys.argv:
-    print "v0.0.2"
+    print "v0.0.3"
     sys.exit(0)
 
 
@@ -241,6 +244,9 @@ usage = """Use as follows:
 
 $ python get_upstream_regions_using_gene_coordinates_GFF_format.py --coordinates coordinate_file.fasta -g genome_sequence.fasta -upstream <int> number of nucleotides upstream of strat of gene to return e.g.  -u 1000
 -z user_defined_genic (how much of the gene to return) -o outfile_name
+
+Requirements:
+python 2.7 and biopyton.  If using python 3.x, the user must alter the print to file statements accordingly (print >> is 2.X only). 
 
 This will return (--upstream number) of nucleotides to the start of your genes(s) of interest (-g) gene_file using data from (-c). Gene file can either be space, tab or \n separated..
 
@@ -274,7 +280,9 @@ This got (-u 225) 225 bp upstream and (-z 125) 125bp into the current gene for a
 parser = OptionParser(usage=usage)
 
 parser.add_option("-c", "--coordinates",dest="coordinate_file", default="format_for_py_script.out",
-                  help="NOTE: coordinate_file can generate using linux command line of GFF file:  grep 'gene' name.gff3 | grep -v '#' | cut -f1,4,5,7,9 > format_for_py_script.out . Default = format_for_py_script.out")
+                  help="NOTE: coordinate_file can generate using linux command line of "
+                  "GFF file:  grep 'gene' name.gff3 | grep -v '#' | cut -f1,4,5,7,9 > format_for_py_script.out ."
+                  "Default = format_for_py_script.out")
 
 parser.add_option("-g", "--genome", dest="genome_sequence", default=None,
                   help="genome_sequence.fasta  -  this has to be the file used to generate the gene models/GFF file")
@@ -283,13 +291,15 @@ parser.add_option("-f", "--gene_names", dest="genes_file", default=None,
                   help="a file with a list of gene names to get the upstream regions for")
 
 parser.add_option("-u", "--upstream", dest="upstream", default="1000",
-                  help="the amount of nucleotide upstream of the gene start, taking into account gene directions, to return in the outfile")
+                  help="the amount of nucleotide upstream of the gene start, taking into account gene directions, to return in the outfile"
+                  "by default this will not return sequences of 50bp or less. If you require these alter"
+                  "lines 204 and 214")
 
 parser.add_option("-z", "--user_defined_genic", dest="user_defined_genic", default="0",
-                  help="the number of nucleotides from the gene to return, default is 0")
+                  help="the number of nucleotides from within the gene to return, default is 0")
 
 parser.add_option("-o", "--output", dest="out_file", default="upstream_of_genes.fasta",
-                  help="Output filename",
+                  help="Output filename (fasta file)",
                   metavar="FILE")
 
 
@@ -306,7 +316,14 @@ user_defined_genic = options.user_defined_genic
 #if len(args) < 1:
     #stop_err("Expects no argument, one input filename")
 
+if not os.path.isfile(coordinate_file):
+    sys_exit("Input coordinate_file file not found: %s" % coordinate_file)
 
+if not os.path.isfile(genome_sequence):
+    sys_exit("Input genome_sequence file not found: %s" % genome_sequence)
+
+if not os.path.isfile(genes_file):
+    sys_exit("Input genome_sequence file not found: %s" % genes_file)
 
 seq_getter(coordinate_file, genome_sequence, upstream, genes_file, outfile, user_defined_genic)
 
