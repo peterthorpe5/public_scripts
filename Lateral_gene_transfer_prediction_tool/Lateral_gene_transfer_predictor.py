@@ -247,7 +247,7 @@ def write_out_data(best_metazoan_hits, best_nonmetazoan_hits, tax_coloumn, out_f
     out_list = [data_formatted_top_meta_no_hit, data_formatted_top_meta,\
                 data_formatted_top_nonmeta_no_hit, data_formatted_top_nonmeta]
     for i in out_list:
-        #print "i = ", i
+        print "i = ", i
         out_file.write(i)
 
 
@@ -285,39 +285,48 @@ def parse_blast_tab_file(filename1, outfile, filter_out_tax_id, Metazoa_tax_id, 
             #this is the first time we have seen it. - write out the old results, if there are any
             if len(name_already_seen_set) > 0:
                 if not last_gene_name in name_print_set:
-                    name_print_set.add(query_name)
+                    name_print_set.add(last_gene_name)
+                    #print " IIIAAAMMM HHEEERRE", query_name
                     write_out_data(best_metazoan_hits, best_nonmetazoan_hits, tax_coloumn, out_file)
                     best_metazoan_hits = reset_list_add_info(best_metazoan_hits, None)
                     best_nonmetazoan_hits = reset_list_add_info(best_nonmetazoan_hits, None)
+
+                    #print "reset best to :", best_nonmetazoan_hits
                     
-                    print "do I want to write out old results here?"
+                    #print "do I want to write out old results here?"
             name_already_seen_set.add(query_name)
             key = meta_or_non_metazoan(tax_id,Metazoa_tax_id, filter_out_tax_id)
-            print "KEY = ", key, blast_line
+            #print "KEY = ", key, blast_line
             if key == "metazoan":
                 best_metazoan_hits = reset_list_add_info(best_metazoan_hits, blast_line)
             if key == "nonmetazoan":
                 best_nonmetazoan_hits = reset_list_add_info(best_nonmetazoan_hits, blast_line)
             last_gene_name = query_name
-            print "best_metazoan_hits == ", best_metazoan_hits, "\n"
-            print "best_nonmetazoan_hits == ", best_nonmetazoan_hits, "\n"
+            #print "best_metazoan_hits == ", best_metazoan_hits, "\n"
+            #print "best_nonmetazoan_hits == ", best_nonmetazoan_hits, "\n"
             # break the loop
             continue
 
         #if the query name is the same as the last one, we test the bit score to see which is the best hit ... depending on metazoan/ non assignment
         if query_name == last_gene_name:
+            print "already seen", query_name
             key = meta_or_non_metazoan(tax_id,Metazoa_tax_id, filter_out_tax_id)
+            #print "KEY = ", key, blast_line
             if key == "metazoan":
                 if best_metazoan_hits == []:
                     best_metazoan_hits = reset_list_add_info(best_metazoan_hits, blast_line)                    
 
-                if float(bit_score) > float(best_metazoan_hits[0][3]):
+                if float(bit_score) > float(best_metazoan_hits[0][11]):
                         best_metazoan_hits = reset_list_add_info(best_metazoan_hits, blast_line)
             if key == "nonmetazoan":
                 if best_nonmetazoan_hits == []:
                     best_nonmetazoan_hits = reset_list_add_info(best_nonmetazoan_hits, blast_line)
-
-                if float(bit_score) > float(best_nonmetazoan_hits[0][3]):
+                old_bit_score = float(best_nonmetazoan_hits[0][11])
+                #print "best_nonmetazoan_hits", best_nonmetazoan_hits
+                #print "old bit score = ", old_bit_score, " new = ", float(bit_score)
+                if float(bit_score) > float(best_nonmetazoan_hits[0][11]):
+                    #print " you should see this"
+                    
                     best_nonmetazoan_hits = reset_list_add_info(best_nonmetazoan_hits, blast_line)
             last_gene_name = query_name
         
@@ -334,7 +343,7 @@ def parse_blast_tab_file(filename1, outfile, filter_out_tax_id, Metazoa_tax_id, 
                 
         last_gene_name = query_name
         last_blast_line = blast_line
-        
+    #print "name_print_set = ", name_print_set    
     if not last_gene_name in name_print_set:
         write_out_data(best_metazoan_hits, best_nonmetazoan_hits, tax_coloumn, out_file)
         name_print_set.add(query_name)
