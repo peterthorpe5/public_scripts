@@ -190,7 +190,7 @@ def meta_or_non_metazoan(tax_id,Metazoa_tax_id, filter_out_tax_id):
     if tax_id =="N/A":
         return "N/A"
     elif test_if_id_is_metazoan(tax_id, Metazoa_tax_id, filter_out_tax_id) == "In_filter_out_tax_id":
-        print "in filter out phylum\n"
+        #print "in filter out phylum\n"
         return "N/A" # skip the code below
     elif test_if_id_is_metazoan(tax_id, Metazoa_tax_id, filter_out_tax_id):
         return "metazoan"
@@ -247,7 +247,7 @@ def write_out_data(best_metazoan_hits, best_nonmetazoan_hits, tax_coloumn, out_f
     out_list = [data_formatted_top_meta_no_hit, data_formatted_top_meta,\
                 data_formatted_top_nonmeta_no_hit, data_formatted_top_nonmeta]
     for i in out_list:
-        print "i = ", i
+        #print "i = ", i
         out_file.write(i)
 
 
@@ -278,7 +278,7 @@ def parse_blast_tab_file(filename1, outfile, filter_out_tax_id, Metazoa_tax_id, 
         blast_line = line.rstrip("\n").split("\t")
         query_name, percentage_identity, Evalue, bit_score, description, tax_id,\
                     species_sci, species_common, kingdom = parse_blast_line(blast_line, tax_coloumn)
-        print query_name
+        #print query_name
         #print blast_line
         
         if not query_name in name_already_seen_set:
@@ -309,7 +309,7 @@ def parse_blast_tab_file(filename1, outfile, filter_out_tax_id, Metazoa_tax_id, 
 
         #if the query name is the same as the last one, we test the bit score to see which is the best hit ... depending on metazoan/ non assignment
         if query_name == last_gene_name:
-            print "already seen", query_name
+            #print "already seen", query_name
             key = meta_or_non_metazoan(tax_id,Metazoa_tax_id, filter_out_tax_id)
             #print "KEY = ", key, blast_line
             if key == "metazoan":
@@ -424,7 +424,8 @@ def find_true_alien_score(filename_with_precursor_values, outfile):
 
     # AI = log((Best E-value for Metazoa) + e-200) - log((Best E-value for Non-Metazoa) + e-200)
     blast_file = open (filename_with_precursor_values, "r")
-    LGT_out = open(filename_with_precursor_values+"_LGT_candifates.out", "w")
+    LTG_out_new_name = filename_with_precursor_values.split("_")[0]+"_LGT_candifates.out"
+    LGT_out = open(LTG_out_new_name, "w")
     out_file = open(outfile,"w")
     tile_file_fields_all = "#query_name\tpercentage_identity\tevalue\tbit_score\ttax_id\tkingdom\tcatorgory\talien_index\t"+\
                        "species\tdescription\tcomments\t\t\tMeta_query_name\tMeta_percentage_identity\tMeta_evalue\tMeta_bit_score\tMeta_tax_id\t"+\
@@ -666,7 +667,8 @@ parse_blast_tab_file(blast_tab_output, outfile, tax_filter_out, tax_filter_up_to
 #call_function - get precursor vaules to alien score
 parse_blast_tab_file_to_get_Alien_precursor_value(outfile, outfile+"_precursor_value.temp")
 #call_function - finally get the alien scores
+final_gene_of_interest = outfile.split("_")[0]+"_Alien_index.out"
 find_true_alien_score(outfile+"_precursor_value.temp", outfile+"_Alien_index.out")
 
-print 'done'
+print '\n\tdone... go to the pub\n'
 
