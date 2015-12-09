@@ -106,13 +106,12 @@ Options:
 There will be Four outfiles, using the -o prefix.
 
 1) prefix name :
-================
  This will contain the best metazoan and non metazoan hit per blast query. Depending on your filters specified.
+ 
 2) prefix_precursor_value_temp : 
-===============================
  this file contain the precursor value for each of those if out_file(1). This is used for the next file
+ 
 3) prefix_Alien_index.out :  
-============================
 This file contains all the AI scores for each BLAST query. In one long line the best metazoanan
 and non-metazoan hits can be seen. A final comment is added if the programs believes there to be a HGT/LGT event,
 or if this is contamination.
@@ -120,7 +119,6 @@ or if this is contamination.
 Contamination is based on a high AI score and greater than 70% identity to a non-metazoan. This can ofcourse be changed to suit the user.
 
 4) Perfix_LGT_candifates.out :  
-==============================
 This file contains all scores greater than 0. The final comments box is a note to say if it think it is potential
 contamination or if it may be a HGT/LTG event.
 
