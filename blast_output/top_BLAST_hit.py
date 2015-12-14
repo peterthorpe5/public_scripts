@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 ########################################################################################################
 #####: TITLE: Get the top blast hit from tab file. Get Kingdom hits. Taxonmy filter  ###############
 
