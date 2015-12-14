@@ -17,10 +17,10 @@ author: Peter Thorpe September 2015. The James Hutton Insitute, Dundee, UK.
 ./Lateral_gene_transfer_predictor.py -h
 Usage: Use as follows:
 
-$ ``./Lateral_gene_transfer_predictor.py`` -i blast_w_tax_id.tab --tax_filter_out 6656 (e.g.arthropoda) --tax_filter_up_to 33208 (e.g. metazoan) -o LTG_results.out
+$ ``./Lateral_gene_transfer_predictor.py -i blast_w_tax_id.tab --tax_filter_out 6656 (e.g.arthropoda) --tax_filter_up_to 33208 (e.g. metazoan) -o LTG_results.out``
 
 
-taxid - 6231 (nematoda)
+- for info: taxid - 6231 (nematoda)
 
 Tax databse from NCBI is require. Download, unzip, and use -p /PATH/TO/   scripts will find them from here.
 
@@ -28,8 +28,8 @@ Tax databse from NCBI is require. Download, unzip, and use -p /PATH/TO/   script
     tar -zxvf taxdump.tar.gz
 
 
-#6656 = filter_out_tax_id --tax_filter_out
-#33208 = Metazoa   -  for me this is the tax id I want to go up to --tax_filter_up_to
+e.g. 6656 = filter_out_tax_id --tax_filter_out
+e.g. 33208 = Metazoa   -  for me this is the tax id I want to go up to --tax_filter_up_to
 
 What:
 To determine Lateral gene transfer event (LGT). An alien index score needs to be generated. Score > 45
@@ -39,6 +39,7 @@ is a candidate LGT - however, it could be contamination. The user will have to d
 How:
 
 Alien index: (plagerised from Seb Eves Van Den Akker et al, Naccubus paper....)
+http://gbe.oxfordjournals.org/content/6/9/2181.short
 taxonomic origin: Bacteria, Fungi, Plantae, Metazoa, and Other (including protists), and
 the best expect value from each group was used to calculate an Alien Index (AI) as given
 by the formula AI = log((Best E-value for Metazoa) + e-200) - log((Best E-value for Non-
@@ -51,23 +52,23 @@ i.e Rotifera, filter_out_tax_id or Nematoda), were excluded from the analysis
 
     BLAST DATA should be formatted as:
 
-qseqid = Query Seq-id (ID of your sequence)
-sseqid = Subject Seq-id (ID of the database hit)
-pident = Percentage of identical matches
-length = Alignment length
-mismatch = Number of mismatches
-gapopen = Number of gap openings
-qstart = Start of alignment in query
-qend = End of alignment in query
-sstart = Start of alignment in subject (database hit)
-send = End of alignment in subject (database hit)
-evalue = Expectation value (E-value)
-bitscore = Bit score
-salltitles = TOP description of the blast hit
-staxids = tax_id
-scientific_name
-scomnames = common_name
-sskingdoms = kingdom
+1)qseqid = Query Seq-id (ID of your sequence)
+2)sseqid = Subject Seq-id (ID of the database hit)
+3)pident = Percentage of identical matches
+4)length = Alignment length
+5)mismatch = Number of mismatches
+6)gapopen = Number of gap openings
+7)qstart = Start of alignment in query
+8)qend = End of alignment in query
+9)sstart = Start of alignment in subject (database hit)
+10)send = End of alignment in subject (database hit)
+11)evalue = Expectation value (E-value)
+12)bitscore = Bit score
+13)salltitles = TOP description of the blast hit
+14)staxids = tax_id
+15)scientific_name
+16)scomnames = common_name
+17)sskingdoms = kingdom
 
 
 
@@ -80,9 +81,7 @@ Alien index:  (http://www.sciencemag.org/content/suppl/2008/05/29/320.5880.1210.
     by the formula AI = log((Best E-value for Metazoa) + e-200) - log((Best E-value for Non-
     Metazoa) + e-200). If no hits were found, the E-value was set to 1. Thus, AI is allowed to
     vary in the interval between +460 and -460,being positive when top non-metazoan hits
-    yielded better E-values than the top metazoan ones. Entries with incomplete taxonomy,
-    such as X-ray structures, or hits belonging to the same phylum as the query sequence (
-    i.e Rotifera, filter_out_tax_id or Nematoda), were excluded from the analysis
+    yielded better E-values than the top metazoan ones. 
 
     Based on AI, genes were classified as foreign (AI>45), indeterminate (0<AI<45), or metazoan (AI<0)
 
@@ -132,4 +131,8 @@ Options:
                         the coloumn with the tax_id info. Defulat is 14(as
                         counted by a human/ not a computer
   -o FILE, --out=FILE   Output filename - default=
-                        infile__tab_blast_LGT_results
+                        infile__tab_blast_LGT_result
+					
+					
+Note: this script currently only ranges from -200 to +200. Not the range specified in their publication. 
+Maybe an alterantive LOG is used.
