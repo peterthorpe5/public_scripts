@@ -3,7 +3,7 @@ READme info for script to Identify putative HGT events
 
 basic usage:
 
-``./Lateral_gene_transfer_predictor.py`` -h 
+``./Lateral_gene_transfer_predictor.py`` -h
 
 
 script to open up a tab blast output and generate Alien index scores,
