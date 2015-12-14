@@ -25,7 +25,8 @@ $ ``./Lateral_gene_transfer_predictor.py -i blast_w_tax_id.tab --tax_filter_out 
 Tax databse from NCBI is require. Download, unzip, and use -p /PATH/TO/   scripts will find them from here.
 
     wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz
-    tar -zxvf taxdump.tar.gz
+    
+	tar -zxvf taxdump.tar.gz
 
 
 e.g. 6656 = filter_out_tax_id --tax_filter_out
@@ -136,3 +137,7 @@ Options:
 					
 Note: this script currently only ranges from -200 to +200. Not the range specified in their publication. 
 Maybe an alterantive LOG is used.
+
+TO DO:
+
+This script does not yet bin the blast hits to kingdom. Im not entirely sure why this is done.
