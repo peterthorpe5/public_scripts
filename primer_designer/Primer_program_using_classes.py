@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from __future__ import division
 from string import maketrans
 import os
