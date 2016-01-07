@@ -236,7 +236,7 @@ for seq_record in SeqIO.parse(in_file, "fasta"):
     out_file_name = seq_record.id.replace(" ", "_")+"_"+out_file
     primer_list= list(all_possible_primers(DNA, k))
     f_out = open(out_file_name, "w")
-    title = "primer_info\tstart_coordinate\tend_coordinate_in_seq\tprimer_sequence\tAT_content_%\tMelting_temp\tPalindromic_mismatches\tpercentage_non_palidromic_%\tNOTES\n"
+    title = "#primer_info\tstart_coordinate\tend_coordinate_in_seq\tprimer_sequence\tAT_content_%\tMelting_temp\tPalindromic_mismatches\tpercentage_non_palidromic_%\tNOTES\n"
     f_out.write(title)
     for i in primer_list:
         NOTES = ""

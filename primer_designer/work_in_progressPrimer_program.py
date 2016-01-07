@@ -165,7 +165,7 @@ Forward_primer_list = []
 Rev_primer_list = []
 
 # way to iterate through the class object
-print "primer_info\tcoordinate_in_seq\tprimer_sequence\tAT_content\tMelting_temp\tPalindromic_mismatches\tpercentage_non_palidromic"
+print "#primer_info\tcoordinate_in_seq\tprimer_sequence\tAT_content\tMelting_temp\tPalindromic_mismatches\tpercentage_non_palidromic"
 
 for i in primer_list:
     NOTES = ""
