@@ -201,7 +201,7 @@ loop over all record in fasta and creates an individual file of primers for each
 
 
 The info provided is:
-primer_orientation, coordinate in seq, AT content, melting_temp, palindromic mismatches (greater the better!!!
+primer_orientation, coordinate in seq, AT content, melting_temp, palindromic mismatches (greater the better!!!), percentage_non_palidromic (high the better)
 
 
 e.g.  python Primer_program_using_classes.py -i test.fasta -k 15 -o primer
