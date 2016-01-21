@@ -1,0 +1,36 @@
+#2015-10-26
+#qseqid	sseqid	pident	length	mismatch	gapopen	qstart	qend	sstart	send	evalue	bitscore	salltitles	staxids	scientific_name	scomnames	sskingdoms
+# should be LTG
+comp10005	gi|802659886|gb|KKA64008.1|	74.2	89	23	0	16	104	20	108	2.8e-28	132.9	euk	9606	human human		Eukaryota
+comp10005	gi|802791933|gb|KKA78786.1|	67.4	95	30	1	14	107	15	109	2.6e-79	500.3	should_be_LTGmade_up_LTG_event	562	ecoli		Bacteria
+comp10005	gi|541046946|gb|ERG85708.1|	61.2	98	37	1	9	105	8	105	1.0e-25	124.4	euk	6253	Ascaris suum		Eukaryota
+comp10005	gi|241111424|ref|XP_002399280.1|	60.5	81	32	0	22	102	29	109	8.2e-20	104.8	euk	6945	Ixodes scapularis	shoulder tick	Eukaryota
+#
+##should not be
+comp10009	gi|685827713|emb|CEF62635.1|	29.1	127	84	3	3	129	742	862	9.8e-07	61.6	not_be_LTG	34506	NEMATODE_FILTER_OUT!!!! ratti		Eukaryota
+#
+##should be contanimination
+comp10009	gi|685827713|emb|CEF62635.1|	80	127	84	3	3	129	742	862	9.8e-07	61.6	CONTAMINATION	4751	fungi ratti		Fungi
+#
+#
+##should not be
+comp10013	gi|350537381|ref|NP_001234035.1|	100.0	197	0	0	1	197	142	338	2.0e-109	403.3	euk	9606	human human		Eukaryota
+comp10013	gi|24745945|dbj|BAC23049.1|	99.0	197	2	0	1	197	142	338	1.3e-05	100.6	should_not_be_LTG	562	bacteria	ecoli	Bacteria
+comp10013	gi|573918604|ref|XP_006646939.1|	97.5	197	5	0	1	197	142	338	2.5e-107	396.4	euk	4751	fungi fungi		Eukaryota
+comp10013	gi|468861723|gb|AGH32502.1|	97.5	197	5	0	1	197	142	338	4.2e-107	395.6	euk	62615	Stylosanthes guianensis	stylo	Eukaryota
+#
+##should be
+comp10026	gi|587665037|gb|EWY87378.1|	97.0	133	4	0	1	133	1	133	1.1e-69	270.8	euk	909455	Fusarium oxysporum FOSC 3-a		Eukaryota
+comp10026	gi|615448090|ref|XP_007593884.1|	72.5	138	32	4	1	133	1	137	6.9e-45	188.3	euk	1445577	Colletotrichum fioriniae PJ7		Eukaryota
+comp10026	gi|920640544|gb|KOM21385.1|	69.6	135	37	3	1	133	1	133	8.4e-43	181.4	euk	268505	Ophiocordyceps unilateralis		Eukaryota
+#
+#Yes - but contamination
+comp10027	gi|342881741|gb|EGU82573.1|	96.8	93	3	0	1	93	148	240	2.8e-45	189.1	euk	660025	Fusarium oxysporum Fo5176		Eukaryota
+comp10027	gi|358392569|gb|EHK41973.1|	68.5	92	26	2	4	93	149	239	1.7e-26	126.7	hypothetical protein TRIATDRAFT_302301 [Trichoderma atroviride IMI 206040]	452589	Trichoderma atroviride IMI 206040		Eukaryota
+comp10027	gi|758997336|ref|XP_011394734.1|	59.2	103	28	2	4	93	191	292	2.9e-26	125.9	hypothetical protein, variant [Neurospora crassa OR74A]	367110	Neurospora crassa OR74A		Eukaryota
+#
+##should not be
+comp10014	gi|350537381|ref|NP_001234035.1|	100.0	197	0	0	1	197	142	338	2.0e-19	403.3	euk	9606	human human		Eukaryota
+comp10014	gi|24745945|dbj|BAC23049.1|	99.0	197	2	0	1	197	142	338	1.3e-05	100.6	should_not_be_LTG	562	bacteria	ecoli	Bacteria
+comp10014	gi|468861723|gb|AGH32502.1|	97.5	197	5	0	1	197	142	338	4.2e-107	395.6	euk	9606	human human	stylo	Eukaryota
+#
