@@ -23,7 +23,6 @@ def reformat_fasta_scaffold_name(filename, prefix, out_prefix):
         SeqIO.write(seq_record, f, "fasta")                    
     f.close()
     f_in.close()
-    return True
 
 def reformat_hints_scaffold_name(hints, prefix, out_prefix):
     "function to reformat name. Remove pipes and make names shorter"
@@ -56,7 +55,7 @@ $ python re_format_fasta_hints -f genome.fasta --hints hints_file --prefix Mc
 
 script to reformt scaffold names for Braker. It doesnt seems to like '|' or long names
 
-requires Biopython!! python 2.7 - if you have python 3 alter this line: print >>f_out,data and add a "\n" to data
+requires Biopython
 """
 
 parser = OptionParser(usage=usage)
@@ -67,10 +66,10 @@ parser.add_option("--hints", dest="hints", default=None,
                   help="hintsfile",
                   metavar="FILE")
 parser.add_option("-p", "--prefix", dest="prefix", default="Sc",
-                  help="prefix to alter the full 'scaffold123|length1234' to 'prefix123'",
+                  help="prefix to alter the fulla scaffoldXX|length to prefix|XX",
                   metavar="FILE")
 parser.add_option("-o", "--out_prefix", dest="out_prefix", default=None,
-                  help="prefix to the output filenames e.g. Out_prefix.fasta out_prefix.hints")
+                  help="prefix to the output filenames")
 
 
 (options, args) = parser.parse_args()
@@ -82,8 +81,8 @@ out_prefix = options.out_prefix
 
 #run the program
 
+#biopython imports
 reformat_hints_scaffold_name(hints, prefix, out_prefix)
-#biopython imports required for this function
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio import SeqIO
