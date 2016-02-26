@@ -32,7 +32,7 @@ def reformat_hints_scaffold_name(hints, prefix, out_prefix):
     prefix = str(prefix)
     for line in f_in:
         if "scaffol" in line:
-            #line = line.replace("|", "_")
+            #line = line.replace("_", "_")
             scaf,a,b,c,d,e,f,g,h = line.split("\t")
             scaf = scaf.split("|")[0]
             scaf = scaf.replace("scaffold", prefix)
