@@ -115,6 +115,11 @@ Options:
   -p PATH, --path=PATH  Directory containing relevant taxonomy/database files
                         Default is the current working directory. This is not
                         used with the main input and output filenames.
+						
+  --pi=PI               this is a threshold for determining likely
+                        contanimants. e.g. if it is greater than pi percentage
+                        identityt than it may be contanimantion.  or a very
+                        recent HGT. Default = 70.
   --tax_filter_out=TAX_FILTER_OUT
                         The tax ID to filter out: for this analysis the Phylum
                         which your BEASTof interest if found. e.g. Aphids are
