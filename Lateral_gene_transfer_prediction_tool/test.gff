@@ -1,0 +1,7 @@
+Rp1_bad	AUGUSTUS	gene	8529	9092	.	-	.	ID=g1.t1.gene1;Parent=g1.t1;
+Rp2_good	AUGUSTUS	gene	9225	9442	.	-	.	ID=g2.t1.gene2;Parent=g1.t1;
+Rp2_good	AUGUSTUS	gene	9539	9874	.	-	.	ID=g3.t1.gene3;Parent=g1.t1;
+Rp3_bad	AUGUSTUS	gene	9941	10133	.	-	.	ID=g4.t1.gene4;Parent=g1.t1;
+Rp3_bad	AUGUSTUS	gene	10227	10529	.	-	.	ID=g5.t1.gene5;Parent=g1.t1;
+Rp4	AUGUSTUS	gene	13637	15133	.	-	.	ID=g6.t1.gene6;Parent=g1.t1;
+Rp4	AUGUSTUS	gene	17488	17709	.	-	.	ID=g7.t1.gene7;Parent=g1.t1;

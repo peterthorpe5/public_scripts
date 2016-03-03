@@ -141,3 +141,42 @@ Maybe an alterantive LOG is used.
 TO DO:
 
 This script does not yet bin the blast hits to kingdom. Im not entirely sure why this is done.
+
+
+===================================================================================================
+
+READme check contaminants_on_contigs
+====================================
+
+basic usage:
+
+``./check_contaminants_on_contigs.py`` -h 
+
+
+check_contaminants_on_contigs.py --gff ../augustus.gff3 -LTG LTG_LGT_candifates.out (default)
+
+Title:
+script to open gff and create a dictionary of {scaffold: set([gene1, gene2])
+ this can then be used to see if all genes on a scaff are predicted to be HGT and therefore
+ the whole scaffold is most likely contamination. 
+ The script will output a file with contigs that only have contigs/scaffolds
+ that are HGT/LTG genes
+
+ 
+Options:
+  -h, --help            show this help message and exit
+  --gff=FILE            hintsfile
+  --LTG=FILE            LTG outfile.
+  -o OUT_FILE, --out_file=OUT_FILE
+                        outfile to list the bad contigs
+
+
+You may have to tidy and sort your GFF to a GFF3. Use GenomeTools
+
+STEPS 1)
+
+convert augustus.gft to gff3
+
+gt gtf_to_gff3 -o test.gff3 -tidy augustus.gtf
+or
+gt gff3 -sort -tidy augustus.gff > formatted.gff3
