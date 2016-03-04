@@ -414,7 +414,7 @@ def precursor_score_calculator (Evalue):
 
 ################################################################################################################################################
 
-def find_true_alien_score(filename_with_precursor_values, outfile, percentage_identify_threshold):
+def find_true_alien_score(filename_with_precursor_values, outfile, percentage_identify_threshold, alien_index_threshold):
     """ This function opens up the output of the function above (parse_blast_tab_file_to_get_Alien_precursor_value)
     and works out the Alien index score based on sequence name identify. It check that the name above is metazoan,
     by testing if this is nonmetazoan
@@ -426,6 +426,9 @@ def find_true_alien_score(filename_with_precursor_values, outfile, percentage_id
     # this is user defined threshold for determining what could be contamination, eg.
     #70 pi to its hit or greater = contamintation. 
     percentage_identify_threshold = float(percentage_identify_threshold)
+
+    #alien_index_threshold - threshold for what is a HGT candidate
+    alien_index_threshold = int(alien_index_threshold)
     blast_file = open (filename_with_precursor_values, "r")
     LTG_out_new_name = filename_with_precursor_values.split("_")[0]+"_LGT_candifates.out"
     LGT_out = open(LTG_out_new_name, "w")
@@ -472,7 +475,7 @@ def find_true_alien_score(filename_with_precursor_values, outfile, percentage_id
                                                             meta_kingdom,meta_catorgory, alien_index, meta_species_sci, \
                                                             meta_description)    
                 out_file.write(data_formatted)
-                if alien_index > 0:
+                if alien_index > alien_index_threshold:
                     if float(percentage_identity) > percentage_identify_threshold:
                         comment = "potential_CONTAMINATION"
                     else:
@@ -610,6 +613,9 @@ parser.add_option("--pi", dest="pi", default=70,
                   help="this is a threshold for determining likely contanimants. e.g. if "
                   "it is greater than pi percentage identityt than it may be contanimantion. "
                   " or a very recent HGT. Default = 70.")
+parser.add_option("-a", "--alien", dest="alien_index_threshold", default=30,
+                  help="this is a threshold for determining the alien_index_threshold "
+                  " any value greater than this will be put into the outfile. Default = 30.")
 
 parser.add_option("--tax_filter_out", dest="tax_filter_out", default="6656",
                   help="The tax ID to filter out: for this analysis the Phylum which your BEAST"
@@ -666,6 +672,7 @@ tax_filter_up_to = options.tax_filter_up_to
 tax_coloumn = options.tax_coloumn
 outfile = options.outfile
 percentage_identify_threshold = options.pi
+alien_index_threshold = options.alien_index_threshold
 
 taxonomy_filename = os.path.join(path, "nodes.dmp")
 if not os.path.isfile(taxonomy_filename):
@@ -695,7 +702,7 @@ parse_blast_tab_file(blast_tab_output, outfile, tax_filter_out, tax_filter_up_to
 parse_blast_tab_file_to_get_Alien_precursor_value(outfile, outfile+"_precursor_value.temp")
 #call_function - finally get the alien scores
 final_gene_of_interest = outfile.split("_")[0]+"_Alien_index.out"
-find_true_alien_score(outfile+"_precursor_value.temp", outfile+"_Alien_index.out", percentage_identify_threshold)
+find_true_alien_score(outfile+"_precursor_value.temp", outfile+"_Alien_index.out", percentage_identify_threshold, alien_index_threshold)
 
 print '\n\tdone... go to the pub\n'
 
