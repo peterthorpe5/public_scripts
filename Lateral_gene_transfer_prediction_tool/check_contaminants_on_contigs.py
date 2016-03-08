@@ -12,6 +12,13 @@ import numpy
 import subprocess
 import datetime
 
+import datetime
+import os
+from Bio.Seq import Seq
+from Bio.SeqRecord import SeqRecord
+from Bio import SeqIO
+import numpy
+
 #Title:
 #script to open gff and create a dictionary of {scaffold: set([gene1, gene2])"
 # this can then be used to see if all genes on a scaff are predicted to be HGT and therefor
@@ -44,12 +51,18 @@ def split_gff_gene_names(gene_info):
     try:
         gene = gene_info.split("ID=")[1]
     except:
+        gene = gene_info
+    try:
         gene = gene_info.split("Parent=")[1]
+    except:
+        gene = gene
     gene = gene.split(".gene")[0]
     gene = gene.split(".exon")[0]
     gene = gene.split(";")[0]
     gene = gene.split(";")[0]
     gene = gene.split(".CDS")[0]
+    #some data set require this to be uncommented
+    #gene = gene.split(".t")[0]
     gene = gene.rstrip("\n")
     return gene
 
@@ -98,40 +111,45 @@ def LTG_file(LTG):
     # if so, maybe a contamination?
     gene_to_comment_dict = dict()
     HGT_predicted_gene_set = set([])
+    gene_to_HGTspeces_discription_dict = dict()
+    gene_to_AI = dict()
     for line in f_in:
         if line.startswith("#"):
             continue
         gene = line.split("\t")[0]
+        #call function to format gene name
+        gene = split_gff_gene_names(gene)
         comment = line.split("\t")[-1]
+        species = line.split("\t")[-3]
+        description = line.split("\t")[-2]
+        AI = line.split("\t")[7]
         kingdom = line.split("\t")[5]
         gene = gene.replace("ID=", "").split("gene=g")[0]
         gene = gene.rstrip()
         if not ".t" in gene:
             gene = gene.replace("t", ".t")
         HGT_predicted_gene_set.add(gene)
-        data_out_formatted = "%s\t%s" %(comment.rstrip("\n"), kingdom)
+        data_out_formatted2 = "%s\t%s" %(species, description)
+        data_out_formatted = "%s\t%s" %(comment.rstrip("\n"),kingdom)
+        gene_to_HGTspeces_discription_dict[gene] = data_out_formatted2
         gene_to_comment_dict[gene] = data_out_formatted
-    #print HGT_predicted_gene_set
+        gene_to_AI[gene] = AI
+    #print (HGT_predicted_gene_set)
     f_in.close()
-    return HGT_predicted_gene_set, gene_to_comment_dict
+    return HGT_predicted_gene_set, gene_to_comment_dict, gene_to_HGTspeces_discription_dict, gene_to_AI
 
 def get_stats_on_AT_content(dna_file):
     """function to get the mean at standard dev for AT content across
     all genes"""
-    from Bio.Seq import Seq
-    from Bio.SeqRecord import SeqRecord
-    from Bio import SeqIO
-    import numpy
+
     gene_AT_cont_dic = dict()
-
     AT_content_list = []
-
     for seq_record in SeqIO.parse(dna_file, "fasta"):
         seq_record.seq = seq_record.upper()
         sequence = str(seq_record.seq)
         a_count = sequence.count('A')
         t_count = sequence.count('T')
-        #count AT content
+        ##count AT content
         AT = a_count+t_count/len(seq_record.seq)
         #put that in a list 
         AT_content_list.append(AT)
@@ -155,20 +173,47 @@ def parse_rnaseq(rnaseq):
         for line in handle:
             if line.startswith("#"):
                 continue
+
             Name, Length, TPM, NumReads = line.rstrip("\n").split()
+            ##call function to format gene name
+            #Name = split_gff_gene_names(Name)
             data_formatted = "%s\tNumReads = %s" %(TPM, NumReads)
             gene_to_expression[Name]= data_formatted
     return gene_to_expression
 
+def how_many_sd_from_mean(mean, sd, AT_content):
+    "function to retunr the number of sd a value is from the mean"
+    return (float(mean) - AT_content)/float(sd)
+    
 
-def check_HGT_AT_vs_global_AT(gene_AT_cont_dic, the_mean, standard_dev,
+def check_genomic_cov(mean, sd, genomic_cov):
+    "function to check the genomic cov of gene of interest"
+
+    NUmber_of_sd_from_mean = how_many_sd_from_mean(mean, sd, genomic_cov)
+    
+
+
+def check_HGT_AT_vs_global_AT(gene_AT_cont_dic, AI, the_mean, standard_dev,
                               gene_of_interest, comment, sd_numbers, gene_to_expression,
-                              gene_to_exon_count):
+                              gene_to_exon_count, gene_to_HGTspeces_discription_dict,\
+                              genomic_cov_from_mean):
     """function to check the AT content of a gene of interest vs the global
     AT using the mean and SD already generated"""
+    
     # user defined number of standard deviations away from the mean for the stats
+
     sd_numbers = float(sd_numbers)
     current_gene_AT = gene_AT_cont_dic[gene_of_interest]
+
+    AI = float(AI)
+
+    num_sd_from_mean = how_many_sd_from_mean(the_mean, standard_dev, current_gene_AT)
+    assert  how_many_sd_from_mean(10,2,2) ==4
+
+    HGTspecies_description = gene_to_HGTspeces_discription_dict[gene_of_interest]
+    HGTspecies = HGTspecies_description.split("\t")[0]
+    description = HGTspecies_description.split("\t")[1]
+    #description = description.split("[")[0]
     #print "gene_of_interest %s has AT cont of %d" %(gene_of_interest, current_gene_AT)
     lower_threshold = float(the_mean) - (sd_numbers*float(standard_dev))
     upper_threshold = float(the_mean) + (sd_numbers*float(standard_dev))
@@ -178,8 +223,19 @@ def check_HGT_AT_vs_global_AT(gene_AT_cont_dic, the_mean, standard_dev,
         #call dict to get expression
         TPM = gene_to_expression[gene_of_interest]
         exons = gene_to_exon_count[gene_of_interest]
-        print "gene: %s\tAT_cont: %d\tcomment: ...%s... \texpression: %s\texons: %d"\
-                %(gene_of_interest, current_gene_AT, comment, TPM, exons)
+        #print "gene: %s\tAT_cont: %d\tcomment: ...%s... \texpression: %s\texons: %d\t%s\t%s"\
+                #%(gene_of_interest, current_gene_AT, comment, TPM, exons, HGTspecies, description)
+        print ("gene: %s\tAI = %s\tAT_cont: %d\tAT_cont_numSD_fromMean: %.2f\tgenomic_cov_from_mean: %.2f\t\texpression: %s\texons: %d\tcomment: ...%s...\t%s\t%s"\
+                %(gene_of_interest, AI,  current_gene_AT,\
+                  num_sd_from_mean, genomic_cov_from_mean, \
+                  TPM, exons, comment, HGTspecies, description))
+        HGT_info_dataformatted = "%s\t%.1f\t%d\t%.2f\t%.2f\t%s\t%d\t%s\t%s\t%s\n" %(gene_of_interest, AI,\
+                                                                                  current_gene_AT,\
+                                                  num_sd_from_mean, genomic_cov_from_mean, \
+                                                  TPM, exons, comment, HGTspecies, description)
+    
+    return HGT_info_dataformatted
+
         
 
 # main function
@@ -190,25 +246,32 @@ def check_scaffolds_for_only_HGT_genes(genome, gff, LTG, dna_file, sd_numbers, r
     of genes on scaffolds. A list of HGT/LTG genes and check the scaffolds
     to identify those that only have HGT genes on them. If so, then this
     is most likely a contaminant contig/scaffold"""
-    out = open(out_file, "w")
+    bad_scaffold_out = "bad_scaffold."+out_file
+    out = open(bad_scaffold_out, "w")
+
+    HGT_gene_info = "HGT.info."+out_file
+    f_out = open(HGT_gene_info, "w")
+    f_out.write("#gene\tAI\tAT_cont\tAT_cont_numSD_fromMean\tgenomic_cov_from_mean\texpression\tnum_RNAseq_reads\texons\tcomment\tHGT_closest_species_hit\tBLAST_description\n")
+
     
     #call function to get the scaffold to gene dict
     scaffold_to_gene_dict, gene_to_exon_count, gene_start_stop_dict = parse_gff(gff)
            
     #call function to get gene_set, gene_to_comment_dict
-    HGT_predicted_gene_set, gene_to_comment_dict = LTG_file(LTG)
+    HGT_predicted_gene_set, gene_to_comment_dict,\
+                    gene_to_HGTspeces_discription_dict, gene_to_AI= LTG_file(LTG)
 
     #get_scaffold_coverage from import coverage.py
     if bam_file:
         overall_coverage = "overall_coverage.txt"
         overall_expression_dic = get_total_coverage(bam_file, overall_coverage)
-        scaffold_coverage_dict, mean_scaf_cov, sd_scaf_cov = get_scaffold_coverage(genome, \
-                                                            gene_start_stop_dict,\
-                                                            bam_file, overall_expression_dic,\
-                                                            HGT_predicted_gene_set)
+        HGT_gene_to_genic_cov_dic, scaffold_mean_SD_cov_dict, \
+                                   mean_genomic_cov, standard_dev_genomic_cov = get_scaffold_coverage(genome, \
+                                                    scaffold_to_gene_dict, gene_start_stop_dict,\
+                                                    bam_file, overall_expression_dic,\
+                                                    HGT_predicted_gene_set)
 
     #print gene_to_exon_count
-
     #call function to get rna seq mapping TPM
     gene_to_expression = parse_rnaseq(rnaseq)
 
@@ -217,9 +280,22 @@ def check_scaffolds_for_only_HGT_genes(genome, gff, LTG, dna_file, sd_numbers, r
     print "the AVR AT = %f with SD %f " %(the_mean, standard_dev)
     
     for gene, comment in gene_to_comment_dict.items():
-        check_HGT_AT_vs_global_AT(gene_AT_cont_dic, the_mean,
+        if bam_file:
+            genomic_cov_from_mean = how_many_sd_from_mean(mean_genomic_cov, \
+                                                      standard_dev_genomic_cov, \
+                                                 HGT_gene_to_genic_cov_dic[gene])
+        else:
+            mean_genomic_cov = 0
+            standard_dev_genomic_cov=0
+            genomic_cov_from_mean=0
+        AI = gene_to_AI[gene]
+            
+        HGT_info_dataformatted = check_HGT_AT_vs_global_AT(gene_AT_cont_dic, AI, the_mean,
                                   standard_dev, gene, comment,
-                                  sd_numbers, gene_to_expression, gene_to_exon_count)
+                                  sd_numbers, gene_to_expression, \
+                                  gene_to_exon_count, gene_to_HGTspeces_discription_dict, \
+                                  genomic_cov_from_mean)
+        f_out.write(HGT_info_dataformatted)
         
 
     for scaffold, genes in scaffold_to_gene_dict.items():
@@ -231,7 +307,7 @@ def check_scaffolds_for_only_HGT_genes(genome, gff, LTG, dna_file, sd_numbers, r
 
         if bad_contig == True:
             data_formatted = "%s\tBad scaffold\n" %(scaffold)
-            print "Bad scaffold = %s" %(scaffold)
+            print ("Bad scaffold = %s" %(scaffold))
             out.write(data_formatted)
     out.close()
 
@@ -244,20 +320,43 @@ if "-v" in sys.argv or "--version" in sys.argv:
 
 usage = """Use as follows:
 
+Tool to refine the HGT predicted gene based on RNAseq cov, genomic cov, exon number, percentage identity to best non-metazoan hit and AT content that differes from normal.
+
 $ python ~/misc_python/Lateral_gene_transfer_prediction_tool/check_contaminants_on_contigs.py --gff ../augustus.gff3 -LTG LTG_LGT_candifates.out (default)
 
+python ~/misc_python/Lateral_gene_transfer_prediction_tool/check_contaminants_on_contigs.py --bam sorted.bam --gff augustus.gff3 --LTG LTG_LGT_candifates_AI_30plus.out -s 0 -r Rp.nt.fasta_quant.sf -g Rp.v1_alt.fasta --dna Rp.nt.fasta -o test
+
+
 Requires:
-samtools 1.2 or later for Bam file - default is not to try this
+samtools 1.2 or later for Bam file
 Biopython
 NUmpy
 
+1) GENRATE bam file with genomic reads mapped to it:
+How ever you want to do it, but sort and index your bam file
+transrate --assembly genome.fasta --left genomic_reads.r1.fq.gz --right genomic_reads.r2.fq.gz --threads 12
 
+BAM file is not need and can be run without it.  = much faster!!
+
+2) GFF3
 You may have to tidy and sort your GFF to a GFF3. Use GenomeTools
-1) convert augustus.gft to gff3
-gt gtf_to_gff3 -o test.gff3 -tidy augustus.gtf
+.. convert augustus.gft to gff3
+.. gt gtf_to_gff3 -o test.gff3 -tidy augustus.gtf
 or
-gt gff3 -sort -tidy augustus.gff > formatted.gff3
+.. gt gff3 -sort -tidy augustus.gff > formatted.gff3
 
+3) LTG_LGT_candifates_AI_30plus.out:
+This is the ouput from the Lateral_gene_transfer prediction tool. Precurser to this script.
+
+4) RNAseq_coverage:
+Agin, however you want to generate it. e.g. 
+transrate --assembly gene.cds --left rnaseq_r1.fq.gz --right rnaseq_r2.fq.gz --threads 12
+
+5) Genome seq -g
+
+6) cds of genes:
+If you dont have it can use:
+gffread *gff -g genome.fasta -x nt.fa -y aa.fa
 
 """
 
@@ -275,10 +374,10 @@ parser.add_option("--dna", dest="dna", default=None,
 parser.add_option("-g", "--genome", dest="genome", default=None,
                   help="genome.fasta ",
                   metavar="FILE")
-parser.add_option("-s", dest="sd_numbers", default=3,
+parser.add_option("-s", dest="sd_numbers", default=0,
                   help="the number of stadard deviations away from the mean"
                   " for identifying genes "
-                  " that differ from normal AT content. default=3")
+                  " that differ from normal AT content. default=0")
 parser.add_option("-r", "--rnaseq", dest="rnaseq", default=None,
                   help="RNAseq expression profile for genes. "
                   " in format # Name	Length	TPM	NumReads ")
