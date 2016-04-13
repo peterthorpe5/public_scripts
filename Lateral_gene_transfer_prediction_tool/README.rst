@@ -168,20 +168,72 @@ script to open gff and create a dictionary of {scaffold: set([gene1, gene2])
  that are HGT/LTG genes
 
  
+Tool to refine the HGT predicted gene based on RNAseq cov, genomic cov, exon number, percentage identity to best non-metazoan hit and AT content that differes from normal.
+
+``python ~/misc_python/Lateral_gene_transfer_prediction_tool/check_contaminants_on_contigs.py`` --gff ../augustus.gff3 -LTG LTG_LGT_candifates.out (default)
+
+``python ~/misc_python/Lateral_gene_transfer_prediction_tool/check_contaminants_on_contigs.py`` --bam sorted.bam --gff augustus.gff3 --LTG LTG_LGT_candifates_AI_30plus.out -s 0 -r Rp.nt.fasta_quant.sf -g Rp.v1_alt.fasta --dna Rp.nt.fasta -o test
+
+
+Requires:
+samtools 1.2 or later for Bam file
+Biopython
+NUmpy
+
+
 Options:
   -h, --help            show this help message and exit
-  --gff=FILE            hintsfile
-  --LTG=FILE            LTG outfile.
+  --gff=FILE            gff file for predicted genes.
+  --LTG=FILE            LTG outfile. This is the output generated  from the
+                        Lateral_gene_transfer_prediction_tool
+  --dna=FILE            predicted cds nucleotide genes for AT content stats
+  -g FILE, --genome=FILE
+                        genome.fasta
+  -s SD_NUMBERS         the number of stadard deviations away from the mean
+                        for identifying genes  that differ from normal AT
+                        content. default=0
+  -r RNASEQ, --rnaseq=RNASEQ
+                        RNAseq expression profile for genes.  in format # Name
+                        Length  TPM     NumReads  standard Sailfish output.
+  -b BAM_FILE, --bam=BAM_FILE
+                        bam file (sorted, indexed for samtools)  with genomic
+                        reads mapped to geneome  this is used to see if HGT
+                        genes have a different  genomic coverage compared to
+                        other gene. Requires  samtools 1.2 or later
   -o OUT_FILE, --out_file=OUT_FILE
                         outfile to list the bad contigs
 
 
+1) GENRATE bam file with genomic reads mapped to it:
+How ever you want to do it, but sort and index your bam file
+transrate --assembly genome.fasta --left genomic_reads.r1.fq.gz --right genomic_reads.r2.fq.gz --threads 12
+
+BAM file is not need and can be run without it.  = much faster!!
+
+2) GFF3
 You may have to tidy and sort your GFF to a GFF3. Use GenomeTools
-
-STEPS 1)
-
-convert augustus.gft to gff3
-
-gt gtf_to_gff3 -o test.gff3 -tidy augustus.gtf
+.. convert augustus.gft to gff3
+.. gt gtf_to_gff3 -o test.gff3 -tidy augustus.gtf
 or
-gt gff3 -sort -tidy augustus.gff > formatted.gff3
+.. gt gff3 -sort -tidy augustus.gff > formatted.gff3
+
+3) LTG_LGT_candifates_AI_30plus.out:
+This is the ouput from the Lateral_gene_transfer prediction tool. Precurser to this script.
+
+4) RNAseq_coverage:
+Agin, however you want to generate it. e.g.
+transrate --assembly gene.cds --left rnaseq_r1.fq.gz --right rnaseq_r2.fq.gz --threads 12
+
+5) Genome seq -g
+
+6) cds of genes:
+If you dont have it can use:
+gffread *gff -g genome.fasta -x nt.fa -y aa.fa
+
+BAD SCAFFOLDS??
+
+The script will check to see if a contig is only made up of LTG/HGT predicted genes. If so, then this contig is suspect
+and therefore should be considered as contimination.
+Users are encouraged to used Blobplots of the genome assemblies before they get to this point.
+
+

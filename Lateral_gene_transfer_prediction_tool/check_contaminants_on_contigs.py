@@ -190,6 +190,7 @@ def check_genomic_cov(mean, sd, genomic_cov):
     "function to check the genomic cov of gene of interest"
 
     NUmber_of_sd_from_mean = how_many_sd_from_mean(mean, sd, genomic_cov)
+    return NUmber_of_sd_from_mean
     
 
 
@@ -358,15 +359,22 @@ transrate --assembly gene.cds --left rnaseq_r1.fq.gz --right rnaseq_r2.fq.gz --t
 If you dont have it can use:
 gffread *gff -g genome.fasta -x nt.fa -y aa.fa
 
+BAD SCAFFOLDS??
+
+The script will check to see if a contig is only made up of LTG/HGT predicted genes. If so, then this contig is suspect
+and therefore should be considered as contimination.
+Users are encouraged to used Blobplots of the genome assemblies before they get to this point.
+
 """
 
 parser = OptionParser(usage=usage)
 
 parser.add_option("--gff", dest="gff", default="test.gff",
-                  help="hintsfile",
+                  help="gff file for predicted genes. ",
                   metavar="FILE")
 parser.add_option("--LTG", dest="LTG", default="test_LTG_LGT_candifates.out",
-                  help="LTG outfile. ",
+                  help="LTG outfile. This is the output generated "
+                  " from the Lateral_gene_transfer_prediction_tool",
                   metavar="FILE")
 parser.add_option("--dna", dest="dna", default=None,
                   help="predicted cds nucleotide genes for AT content stats ",
@@ -380,10 +388,11 @@ parser.add_option("-s", dest="sd_numbers", default=0,
                   " that differ from normal AT content. default=0")
 parser.add_option("-r", "--rnaseq", dest="rnaseq", default=None,
                   help="RNAseq expression profile for genes. "
-                  " in format # Name	Length	TPM	NumReads ")
+                  " in format # Name	Length	TPM	NumReads "
+                  " standard Sailfish output.")
 parser.add_option("-b", "--bam", dest="bam_file", default=False,
-                  help="RNAseq expression profile for genes. "
-                  "bam file (sorted) with genomic reads mapped to geneome "
+                  help="bam file (sorted, indexed for samtools) "
+                  " with genomic reads mapped to geneome "
                   " this is used to see if HGT genes have a different "
                   " genomic coverage compared to other gene. Requires "
                   " samtools 1.2 or later ")
