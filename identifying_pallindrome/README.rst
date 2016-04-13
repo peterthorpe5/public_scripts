@@ -1,16 +1,15 @@
 READme for finding pallindromes
 ==============================================
 
+Basic usage for all scripts
+
+``./name_of_script.py`` -h 
+
 Requirements:
 Biopython, numpy, scipy, reportlab(if you want to draw the genome diagrams)
 
 
-Basic usage for all scripts. 
-===========================
-``./name_of_script.py`` -h 
-
-
-This has multiple step:
+This has multiple steps:
 
 step 1: Indefity pallindromes
 ============================
@@ -25,7 +24,7 @@ allows missmtaches...
 
 The search will look for pallindromes from min_length to max_length
 
-The function called are found in
+The functions called are found in
 ``./palindrome_library.py`` 
 
 
