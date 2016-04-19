@@ -25,13 +25,7 @@ import numpy
 # the whole scaffold is contamination. 
 
 #############################################################################
-#functions
-##    try:
-##        diamond_tab_as_list = read_diamond_tab_file(diamond_tab_output)
-##    except IOError as ex:
-##        print("sorry, couldn't open the file: " + ex.strerror + "\n")
-##        print ("current working directory is :", os.getcwd() + "\n")
-##        print ("files are :", [f for f in os.listdir('.')])
+
 
 
 #make a temp_folder_for_all_the_out_files
@@ -64,6 +58,7 @@ def split_gff_gene_names(gene_info):
     #some data set require this to be uncommented
     #gene = gene.split(".t")[0]
     gene = gene.rstrip("\n")
+    gene = gene.replace(".t1", "")
     return gene
 
 def parse_gff(gff):
@@ -92,7 +87,7 @@ def parse_gff(gff):
             gene_start_stop_dict[gene] = start_stop_formatted
 
         #gene_to_exon_count
-        if line.split("\t")[2] == "exon":
+        if line.split("\t")[2] == "exon" or "CDS":
             if not gene in gene_to_exon_count:
                 gene_to_exon_count[gene] = count
             else:
@@ -230,8 +225,7 @@ def check_HGT_AT_vs_global_AT(gene_AT_cont_dic, AI, the_mean, standard_dev,
                 %(gene_of_interest, AI,  current_gene_AT,\
                   num_sd_from_mean, genomic_cov_from_mean, \
                   TPM, exons, comment, HGTspecies, description))
-        HGT_info_dataformatted = "%s\t%.1f\t%d\t%.2f\t%.2f\t%s\t%d\t%s\t%s\t%s\n" %(gene_of_interest, AI,\
-                                                                                  current_gene_AT,\
+        HGT_info_dataformatted = "%s\t%.1f\t%d\t%.2f\t%.2f\t%s\t%d\t%s\t%s\t%s\n" %(gene_of_interest, AI,current_gene_AT,\
                                                   num_sd_from_mean, genomic_cov_from_mean, \
                                                   TPM, exons, comment, HGTspecies, description)
     
@@ -248,11 +242,13 @@ def check_scaffolds_for_only_HGT_genes(genome, gff, LTG, dna_file, sd_numbers, r
     to identify those that only have HGT genes on them. If so, then this
     is most likely a contaminant contig/scaffold"""
     bad_scaffold_out = "bad_scaffold."+out_file
+    bad_scaff_title = "#%s\n#scaffold\tcomment\tGenes_on_scaffold\tAI_of_these_gene\tdescription\n" %(datetime.date.today())
     out = open(bad_scaffold_out, "w")
+    out.write(bad_scaff_title)
 
     HGT_gene_info = "HGT.info."+out_file
     f_out = open(HGT_gene_info, "w")
-    f_out.write("#gene\tAI\tAT_cont\tAT_cont_numSD_fromMean\tgenomic_cov_from_mean\texpression\tnum_RNAseq_reads\texons\tcomment\tHGT_closest_species_hit\tBLAST_description\n")
+    f_out.write("#%s\n#gene\tAI\tAT_cont\tAT_cont_numSD_fromMean\tgenomic_cov_from_mean\texpression_TMM\tnum_RNAseq_reads\texons\tcomment\tKingdom\tHGT_closest_species_hit\tBLAST_description\n" %(datetime.date.today()))
 
     
     #call function to get the scaffold to gene dict
@@ -289,7 +285,11 @@ def check_scaffolds_for_only_HGT_genes(genome, gff, LTG, dna_file, sd_numbers, r
             mean_genomic_cov = 0
             standard_dev_genomic_cov=0
             genomic_cov_from_mean=0
-        AI = gene_to_AI[gene]
+        try:
+            AI = gene_to_AI[gene]
+        except:
+            ValueError
+            AI = "NA"
             
         HGT_info_dataformatted = check_HGT_AT_vs_global_AT(gene_AT_cont_dic, AI, the_mean,
                                   standard_dev, gene, comment,
@@ -300,6 +300,9 @@ def check_scaffolds_for_only_HGT_genes(genome, gff, LTG, dna_file, sd_numbers, r
         
 
     for scaffold, genes in scaffold_to_gene_dict.items():
+        descrption_to_add = ""
+        genes_string = ""
+        AI_values = ""
         bad_contig = True
         for gene in genes:
             #print gene
@@ -307,8 +310,22 @@ def check_scaffolds_for_only_HGT_genes(genome, gff, LTG, dna_file, sd_numbers, r
                 bad_contig = False
 
         if bad_contig == True:
-            data_formatted = "%s\tBad scaffold\n" %(scaffold)
             print ("Bad scaffold = %s" %(scaffold))
+            #genes_string = ""
+            genes_on_scaffold = scaffold_to_gene_dict[scaffold]
+            #print "genes_on_scaffold", genes_on_scaffold
+            for member in genes_on_scaffold:
+                genes_string = genes_string+" "+member
+                try:
+                    AI = gene_to_AI[gene]
+                except:
+                    ValueError
+                    AI = "NA"
+                AI_values = AI_values+" "+AI
+                descrpt = gene_to_HGTspeces_discription_dict[gene]
+                descrption_to_add = descrption_to_add+" "+descrpt
+            data_formatted = "%s\tBad_scaffold\t%s\t%s\t%s\n" %(scaffold, genes_string, AI_values, descrption_to_add)
+
             out.write(data_formatted)
     out.close()
 
@@ -417,7 +434,11 @@ genome = options.genome
 #run the program
 
 if not os.path.isfile(gff):
-    sys_exit("Input gff file not found: %s" % gff)
+    print("sorry, couldn't open the file: " + ex.strerror + "\n")
+    print ("current working directory is :", os.getcwd() + "\n")
+    print ("files are :", [f for f in os.listdir('.')])
+    sys_exit("\n\nInput gff file not found: %s" % gff)
+
 
 if not os.path.isfile(LTG):
     sys_exit("Input LTG file not found: %s" % LTG)
