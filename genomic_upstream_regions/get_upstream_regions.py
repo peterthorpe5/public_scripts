@@ -60,6 +60,7 @@ def index_gene_scaffold_coordinates(coordinate_file):
         else:
             scaffold_cordinates = gff_info.split("\t")[:]
             coordinate_dict[gene] = scaffold_cordinates
+
     #print coordinate_dict
     return coordinate_dict
 
@@ -69,11 +70,18 @@ def iterate_through_coordinate_dictionary(coordinate_dict,gene_name, scaffold, c
     for gene, vals in coordinate_dict.items():
         #find the genes on the same scaffold
         if scaffold in vals[0]:
+            dictionary_scaffold = vals[0]
             gene = vals[4]
             #if its is the same gene as the stop
             if gene_name ==gene:
                 continue
+            if scaffold != dictionary_scaffold:
+                continue
+                
             else:
+                #debugging comment due to Roman numeral scaffold name being "within" eachother
+                #print "scaffold = ", scaffold, "acutally looking at", vals[0]
+
                 #cureent gene start
                 start = int(vals[1])
                 #cureent gene stop
@@ -323,7 +331,7 @@ if not os.path.isfile(genome_sequence):
     sys_exit("Input genome_sequence file not found: %s" % genome_sequence)
 
 if not os.path.isfile(genes_file):
-    sys_exit("Input genome_sequence file not found: %s" % genes_file)
+    sys_exit("Input genes_file file not found: %s" % genes_file)
 
 seq_getter(coordinate_file, genome_sequence, upstream, genes_file, outfile, user_defined_genic)
 
