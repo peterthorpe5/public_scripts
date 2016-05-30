@@ -1,13 +1,15 @@
 
 ######################################################################
-# Title: Script to bring back every 10000 sequences from a fastq file#
+# Title: Script to bring back every Nth reads from a fastq file      #
 ######################################################################
 
 """ This script uses Biopython magic to iterate through a fastq file
-and return every 10000 sequences.
+and return every Nth eg.(10000) sequences.
 
 why? : Sometimes it is good to work with a subset of data for time
-and CPU reasons, as the whole data set can take much longer"""
+and CPU reasons, as the whole data set can take much longer.
+
+Or subsample to see what data is missing when subsampling."""
 
 #imports
 from Bio.SeqIO.QualityIO import FastqGeneralIterator
@@ -25,7 +27,7 @@ def filter_my_fastq_file (in_fastq, number_of_seq, out_fastq):
     #creat a new fastq file to write to
     out_file = open(out_fastq, "w")
     # enumerate is a way of counting i
-    # iterate through the fatsq file
+    # iterate through the fastq file
     for i, (title, seq, qual) in enumerate(FastqGeneralIterator(in_file)):
         #python magic to identify every number_of_seq "loop"
         if i % number_of_seq ==0:
@@ -38,8 +40,8 @@ def filter_my_fastq_file (in_fastq, number_of_seq, out_fastq):
 #####################################################################
 
 
-
-#print filter_my_fastq_file(argv[1],argv[2))
+# sommand line sys arg version
+#print filter_my_fastq_file(argv[1],argv[2), argv[3))
 
 
 if "-v" in sys.argv or "--version" in sys.argv:
@@ -50,7 +52,18 @@ if "-v" in sys.argv or "--version" in sys.argv:
 usage = """Use as follows:
 
 
-python Filter....py -i infile.fastq -n every_n_number_of_seq -o outfile
+python Filter_fastq_for_every_nth_sequence.py -i infile.fastq -n every_n_number_of_seq -o outfile
+
+Title:
+This script iterates through a fastq file
+and return every Nth eg.(10000) sequence.
+
+why? : Sometimes it is good to work with a subset of data for time
+and CPU/RAM reasons, as the whole data set can take much longer.
+
+Or subsample to see what data is missing when subsampling
+
+requires Biopython
 """
 
 parser = OptionParser(usage=usage)
@@ -58,13 +71,11 @@ parser.add_option("-i", "--in", dest="in_file", default=None,
                   help="Output filename",
                   metavar="FILE")
 parser.add_option("-n", "--filter_every", dest="filter", default=None,
-                  help="a file with a list of gene names to get the upstream regions for")
+                  help="subsampling, filter every -n reads")
 
 parser.add_option("-o", "--output", dest="out_file", default=None,
                   help="Output filename",
                   metavar="FILE")
-
-
 
 
 
