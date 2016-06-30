@@ -168,8 +168,9 @@ def parse_rnaseq(rnaseq):
         for line in handle:
             if line.startswith("#"):
                 continue
-
+            #print line
             Name, Length, TPM, NumReads = line.rstrip("\n").split()
+            #Name = Name.replace(".t1", "")
             ##call function to format gene name
             #Name = split_gff_gene_names(Name)
             data_formatted = "%s\tNumReads = %s" %(TPM, NumReads)
@@ -199,6 +200,7 @@ def check_HGT_AT_vs_global_AT(gene_AT_cont_dic, AI, the_mean, standard_dev,
     # user defined number of standard deviations away from the mean for the stats
 
     sd_numbers = float(sd_numbers)
+    #print "gene_of_interest = ", gene_of_interest
     current_gene_AT = gene_AT_cont_dic[gene_of_interest]
 
     AI = float(AI)
@@ -310,7 +312,6 @@ def check_scaffolds_for_only_HGT_genes(genome, gff, LTG, dna_file, sd_numbers, r
                 bad_contig = False
 
         if bad_contig == True:
-            print ("Bad scaffold = %s" %(scaffold))
             #genes_string = ""
             genes_on_scaffold = scaffold_to_gene_dict[scaffold]
             #print "genes_on_scaffold", genes_on_scaffold
@@ -318,15 +319,24 @@ def check_scaffolds_for_only_HGT_genes(genome, gff, LTG, dna_file, sd_numbers, r
                 genes_string = genes_string+" "+member
                 try:
                     AI = gene_to_AI[gene]
+                    # HGT looswe threshold of 20 set here.. for further examination
+                    if int(AI) < 15:
+                        bad_contig = False
+                        continue
+    
                 except:
                     ValueError
+                    bad_contig = False
                     AI = "NA"
+                    continue
                 AI_values = AI_values+" "+AI
+
+            if bad_contig == True:
+                print ("Bad scaffold = %s" %(scaffold))
                 descrpt = gene_to_HGTspeces_discription_dict[gene]
                 descrption_to_add = descrption_to_add+" "+descrpt
-            data_formatted = "%s\tBad_scaffold\t%s\t%s\t%s\n" %(scaffold, genes_string, AI_values, descrption_to_add)
-
-            out.write(data_formatted)
+                data_formatted = "%s\tBad_scaffold\t%s\t%s\t%s\n" %(scaffold, genes_string, AI_values, descrption_to_add)
+                out.write(data_formatted)
     out.close()
 
 
@@ -386,12 +396,13 @@ Users are encouraged to used Blobplots of the genome assemblies before they get 
 
 parser = OptionParser(usage=usage)
 
-parser.add_option("--gff", dest="gff", default="test.gff",
+parser.add_option("--gff", "--GFF", dest="gff", default="test.gff",
                   help="gff file for predicted genes. ",
                   metavar="FILE")
 parser.add_option("--LTG", dest="LTG", default="test_LTG_LGT_candifates.out",
                   help="LTG outfile. This is the output generated "
-                  " from the Lateral_gene_transfer_prediction_tool",
+                  " from the Lateral_gene_transfer_prediction_tool "
+                  " (LTG_results.out_Alien_index.out)",
                   metavar="FILE")
 parser.add_option("--dna", dest="dna", default=None,
                   help="predicted cds nucleotide genes for AT content stats ",

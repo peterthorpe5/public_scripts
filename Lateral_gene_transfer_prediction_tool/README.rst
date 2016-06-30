@@ -17,7 +17,7 @@ author: Peter Thorpe September 2015. The James Hutton Insitute, Dundee, UK.
 ./Lateral_gene_transfer_predictor.py -h
 Usage: Use as follows:
 
-$ ``./Lateral_gene_transfer_predictor.py`` -i blast_w_tax_id.tab --tax_filter_out 6656 (e.g.arthropoda) --tax_filter_up_to 33208 (e.g. metazoan) -o LTG_results.out
+$ ``./Lateral_gene_transfer_predictor.py -i blast_w_tax_id.tab --tax_filter_out 6656 (e.g.arthropoda) --tax_filter_up_to 33208 (e.g. metazoan) -o LTG_results.out``
 
 
 - for info: taxid - 6231 (nematoda)
@@ -158,7 +158,7 @@ basic usage:
 ``./check_contaminants_on_contigs.py`` -h 
 
 
-``check_contaminants_on_contigs.py`` --gff ../augustus.gff3 -LTG LTG_LGT_candifates.out (default)
+check_contaminants_on_contigs.py --gff ../augustus.gff3 -LTG LTG_LGT_candifates.out (default)
 
 Title:
 script to open gff and create a dictionary of {scaffold: set([gene1, gene2])

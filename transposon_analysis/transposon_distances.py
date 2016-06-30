@@ -89,7 +89,7 @@ def parse_gff(gff):
     f_in.close()
     return gene_names, gene_to_scaffold_dict, scaffold_to_gene_dict, gene_start_stop_dict
 
-def LTG_file(LTG_file):
+def LTG_file_parse(LTG_file):
     """function to parse LTG prediction
     get a set of names, and a gene_to_comment_dict.
     The majority of this funcion was used for something else."""
@@ -159,7 +159,15 @@ def parse_gene_to_scaffold_matrix_vals(vals):
     stop = int(vals[4])
     return gene, AI, scaffold, start, stop
 
-def parseTransposon_info(transposon_info):
+def return_strict_transposonannot(anotation):
+    """funct to return only annotated transposons
+    rather than all repetive DNA.
+    repetive DNA will be : Name=DNA;Note=? """
+    if anotation == "DNA":
+        return True
+    return False
+
+def parseTransposon_info(transposon_info, strict):
     """function to parse the element of trasposon_file
     . The GFF output from the transposon finding pipeline
     is used here to define the coordinate and annot of the
@@ -170,6 +178,9 @@ def parseTransposon_info(transposon_info):
     Mc2825	Repeatmasker-OneCode	transposable_element	26019	26484	2108	-	.	ID=element156452;Name=DNA/hAT-Tip100;Note=?
     Mc2825	Repeatmasker-OneCode	transposable_element	27906	27982	300	-	.	ID=element156453;Name=DNA/RC;Note=?
     Mc2825	Repeatmasker-OneCode	transposable_element	6290	6427	488	-	.	ID=element156450;Name=DNA/hAT;Note=?
+
+    strcit default is faulse. The script will search through every thing. However, repeatmodeller and repeat masker
+    find repetitive DNA. To only return annotated and therefore known transposons, set --strict=True
     """
     #print transposon_info
     trans_scaffold = transposon_info[0]
@@ -178,6 +189,12 @@ def parseTransposon_info(transposon_info):
     trans_stop = int(transposon_info[4])
     tran_annotation = transposon_info[8]
     tran_annotation = tran_annotation.split(";Note")[0]
+    if strict != False:
+        if return_strict_transposonannot:
+            return False
+        else:
+            return trans_scaffold, transposon_type, trans_start, trans_stop, tran_annotation
+        
     # return the correct datatype
     return trans_scaffold, transposon_type, trans_start, trans_stop, tran_annotation
 
@@ -234,7 +251,7 @@ def disctance_dict(gene_3_primt_dict, gene_5_primt_dict, gene_distances_dict, ge
 
 
 def matrix_file_nearest_finder(matrix, \
-            scaffolf_to_gene_matrix, gene_to_scaffold_matrix, transposon_read):
+            scaffolf_to_gene_matrix, gene_to_scaffold_matrix, transposon_read, strict):
     """function to perform the task with a premade matrix"""
     matrix_file = open(matrix, "r")
     matrix_file_read = matrix_file.readlines()
@@ -260,17 +277,20 @@ def matrix_file_nearest_finder(matrix, \
             transposon_info = line.rstrip("\n").split("\t")
 
             #print "gene_line =", gene_line, "transpo = ,", line
-
-            trans_scaffold, transposon_type, trans_start, trans_stop, tran_annotation = parseTransposon_info(transposon_info)
+            try:
+                trans_scaffold, transposon_type, trans_start, trans_stop, tran_annotation = parseTransposon_info(transposon_info, strict)
             
-            if trans_scaffold == gene_scaffold:
-                gene_3_primt_dict, gene_5_primt_dict, gene_distances_dict = disctance_dict(gene_3_primt_dict, \
+                if trans_scaffold == gene_scaffold:
+                    gene_3_primt_dict, gene_5_primt_dict, gene_distances_dict = disctance_dict(gene_3_primt_dict, \
                                                     gene_5_primt_dict, gene_distances_dict, gene,\
                                                     gene_start, gene_stop, trans_start, trans_stop, AI, \
                                                     transposon_type, tran_annotation)
+            except:
+                ValueError
+                continue
     return gene_distances_dict
 
-def gff_file_nearest_finder(gene_gff, LTG_file, transposon_read):
+def gff_file_nearest_finder(gene_gff, LTG_file, transposon_read, strict):
     """function to perfomr the task using the gene gff"""
     gene_names, gene_to_scaffold_dict, scaffold_to_gene_dict, gene_start_stop_dict =  parse_gff(gene_gff)
     gene_names_list = gene_names.split("\n")
@@ -278,14 +298,15 @@ def gff_file_nearest_finder(gene_gff, LTG_file, transposon_read):
     gene_distances_dict = dict()
     gene_3_primt_dict = dict()
     gene_5_primt_dict = dict()
-    
+    gene_to_AI = LTG_file_parse(LTG_file)
+   
     for i in sorted(gene_names_list):
         if i =="":
             continue
         gene = i
         try:
-            gene_to_AI = LTG_file(LTG_file)
             AI = gene_to_AI[gene]
+            #print "gene: ", gene, "AI = ", AI
         except:
             ValueError
             AI = "NA"
@@ -303,19 +324,24 @@ def gff_file_nearest_finder(gene_gff, LTG_file, transposon_read):
             transposon_info = line.rstrip("\n").split("\t")
 
             #print "gene_line =", gene_line, "transpo = ,", line
+            try:
+                # this try is to accomodate the stict option. Only testing known transposons
+                # rather than all repetivie regions. 
+                trans_scaffold, transposon_type, trans_start, trans_stop, tran_annotation = parseTransposon_info(transposon_info, strict)
 
-            trans_scaffold, transposon_type, trans_start, trans_stop, tran_annotation = parseTransposon_info(transposon_info)
-            
-            if trans_scaffold == gene_scaffold:
-                gene_3_primt_dict, gene_5_primt_dict, gene_distances_dict = disctance_dict(gene_3_primt_dict, \
+                if trans_scaffold == gene_scaffold:
+                    gene_3_primt_dict, gene_5_primt_dict, gene_distances_dict = disctance_dict(gene_3_primt_dict, \
                                                     gene_5_primt_dict, gene_distances_dict, gene,\
                                                     int(gene_start), int(gene_stop), trans_start, trans_stop, AI, \
                                                     transposon_type, tran_annotation)
+            except:
+                ValueError
+                continue
     return gene_distances_dict
 
     
 
-def find_nearest_transposon(matrix, LTG_file, gene_gff, transposon_file_in):
+def find_nearest_transposon(matrix, LTG_file, gene_gff, transposon_file_in, strict):
     """function to find the nearest transposon"""
 
     #open the transposon GFF
@@ -326,10 +352,10 @@ def find_nearest_transposon(matrix, LTG_file, gene_gff, transposon_file_in):
         #note: gene_to_scaffold_matrix is the whole line of the matrix file
         scaffolf_to_gene_matrix, gene_to_scaffold_matrix = index_gene_matrix(matrix)
         gene_distances_dict = matrix_file_nearest_finder(matrix, \
-                                        scaffolf_to_gene_matrix, gene_to_scaffold_matrix, transposon_read)
+                                        scaffolf_to_gene_matrix, gene_to_scaffold_matrix, transposon_read, strict)
             
     else:
-        gene_distances_dict = gff_file_nearest_finder(gene_gff, LTG_file, transposon_read)
+        gene_distances_dict = gff_file_nearest_finder(gene_gff, LTG_file, transposon_read,strict)
 
     return gene_distances_dict
     
@@ -347,9 +373,13 @@ $ python transposon_distance.py -t transposon.gff -g gene.gff -o outfile.out
 
           can use -m instead of -g
 
+python ~/misc_python/transposon_analysis/transposon_distances.py -t R.padi_transposable_elements.gff3 -g Rpa.v1.gff -l LTG_results.out_Alien_index.out -o R.padi_transposon_distances.out
+
 script to find the nearest transposon to the genes in both 5 prime and
 3prime direction.
 This does not take into consideration gene direction
+
+use the random option to creat a lot of random interations. 
 """
 
 parser = OptionParser(usage=usage)
@@ -372,6 +402,12 @@ parser.add_option("-l", "--ltg", dest="LTG_file", default="LTG_results.out_Alien
 parser.add_option("--random", dest="random", default=False,
                   help="create random shuffles of gene names to genrate a "
                   " random set of value for stats ",
+                  metavar="FILE")
+parser.add_option("--strict", dest="strict", default=False,
+                  help="only return known transposon "
+                  " without this option the script will return all "
+                  " element. e.g. DNA;Note=? is repetitive DNA and not a known "
+                  " transposon. This will not return these :  --strict True",
                   metavar="FILE")
 parser.add_option("-i", "--iterations", dest="iterations", default=100,
                   help="number of random iterations to perform "
@@ -399,6 +435,10 @@ matrix= options.matrix
 random = options.random
 # -i
 iterations = options.iterations
+# --strict
+strict = options.strict
+
+print "strict transposon distance finding = ", strict, "\n if False, then this include all repetive regions specified in the GFF file"
 
 ##############################################################################################################################################################
         
@@ -410,7 +450,7 @@ overall_result = ""
 # GROS example
 #gene_distances_dict = find_nearest_transposon("AI_GT_zero_matrix.matrix", "nGr.v1.1_TEs_Thu_Dec__3_09_30_47_2015_Seb.gff")
 
-gene_distances_dict = find_nearest_transposon(matrix, LTG_file, gene_gff, transposons_gff)
+gene_distances_dict = find_nearest_transposon(matrix, LTG_file, gene_gff, transposons_gff, strict)
 
 
 for key, vals in gene_distances_dict.items():
@@ -420,7 +460,7 @@ for key, vals in gene_distances_dict.items():
         name = key.split("_three")[0]
     except:
         name = key.split("_five")[0]
-    dataformatted = "%s\t%s\t%s\t%s\t%s\n" %(name, prime, AI,disctance,tran_annotation.split(";Name=")[1])
+    dataformatted = "%s\t%s\t%s\t%s\t%s\n" %(name.split("_five_prime")[0], prime, AI,disctance,tran_annotation.split(";Name=")[1])
     overall_result = overall_result + dataformatted
 
 
