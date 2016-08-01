@@ -71,7 +71,7 @@ except OSError:
 
 folder_name = folder
 base_name = base_name
-repeats = 30
+repeats = 1000
 
 original_fasta = fasta 
 
@@ -82,7 +82,7 @@ try :
 except KeyError :
     print "Not a cluster job?"
     tasks = range(0, repeats+1)
-    test = True
+    test = False
 
 for task in tasks:
     if task==0 :
@@ -105,8 +105,9 @@ for task in tasks:
     print "Output: %s" % output_file
     start_time=time.time()
     genome_sequence = load_genome_sequence(input_file)
-    if test :
-        genome_sequence = genome_sequence[:500] #For testing
+    #if test :
+        #print ("this is in test mode and will not test the whole sequences")
+        #genome_sequence = genome_sequence[:500] #For testing
     probability_threshold= 1.0 / len(genome_sequence)
     
     ################ actual running from here (min_pallindrome_len, max_pallindrome_len - options)
