@@ -39,6 +39,10 @@ parser.add_option("--folder", dest="folder", default=os.getcwd(),
                   metavar="folder")
 parser.add_option("--base_name", dest="base_name", default=None,
                   help="base_name for the species")
+parser.add_option("--mask_NNN", dest="mask_NNN", default="False",
+                  help="do not return any N containing sequences")
+parser.add_option("--repeats", dest="repeats", default=500,
+                  help="number of repeats for random interations")
 parser.add_option("--min_pallindrome_len", dest="min_pallindrome_len", default=7,
                   help="min length to look for pallindrome. Default 7")
 parser.add_option("--max_pallindrome_len", dest="max_pallindrome_len", default=1000,
@@ -57,6 +61,10 @@ base_name = options.base_name
 max_pallindrome_len = options.max_pallindrome_len
 #--min_pallindrome_len
 min_pallindrome_len = options.min_pallindrome_len
+#--mask_NNN
+mask_NNN = options.mask_NNN
+#--repeats
+repeats = options.repeats
 
 ##########################################################################
 
@@ -71,7 +79,7 @@ except OSError:
 
 folder_name = folder
 base_name = base_name
-repeats = 1000
+repeats = int(repeats)
 
 original_fasta = fasta 
 
@@ -111,7 +119,8 @@ for task in tasks:
     probability_threshold= 1.0 / len(genome_sequence)
     
     ################ actual running from here (min_pallindrome_len, max_pallindrome_len - options)
-    palindrome_list = iteration_length(genome_sequence, min_pallindrome_len,max_pallindrome_len, probability_threshold)
-    write_palindromes_to_file(output_file, palindrome_list)
+    palindrome_list = iteration_length(genome_sequence, min_pallindrome_len,max_pallindrome_len,\
+                                       probability_threshold)
+    write_palindromes_to_file(output_file, mask_NNN, palindrome_list)
     end_time=time.time()
     print 'Task %i took %.3f' %(task, end_time - start_time)

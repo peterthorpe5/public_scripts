@@ -23,6 +23,9 @@ The coordinate file can be generated using a GFF3 file and a linux command line 
 
 grep "gene" name.gff3 | cut -f 1,4,5,7,9 > format_for_py_script.out
 
+or use the python script:
+``./re_format_GFF_Mcscanx.py`` -h re_format_GFF_Mcscanx.py
+
 
 yeilding this reulting file:
 

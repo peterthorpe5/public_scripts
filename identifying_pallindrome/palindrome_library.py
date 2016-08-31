@@ -155,6 +155,9 @@ def iteration_length(data, lower, higher, probability_threshold=None):
     """
     global complement_trans_table
     data_comp = data.translate(complement_trans_table)
+    #just make sure these are integers
+    lower = int(lower)
+    higher = int(higher)
 
     #call function to work out the codon bias to work out the probability
     #based on the codon bias of the whole genome...
@@ -205,7 +208,7 @@ def iteration_length(data, lower, higher, probability_threshold=None):
                     palindrome_list+=[(length,start,probability,mismatches,seq)]
     return palindrome_list
 
-def write_palindromes_to_file(outfilename,output):
+def write_palindromes_to_file(outfilename,mask_NNN, output):
     """ this is a function to write the results of a program to a defined file"""
     #this opens the destined file to write 'what we want' to it ('w')
     fh= open(outfilename, "w")
@@ -217,7 +220,16 @@ def write_palindromes_to_file(outfilename,output):
     #then printed to the desired file.
     print >> fh,"#length\tposition\tprobability\tmismatches\tpalindrome_seq"
     for i in output:
-        output_formated= '%d\t%d\t%.3e\t%d\t%s' %(i[0], i[1],i[2],i[3],i[4])
+        # if this is set to true NNN with not be returned
+        if mask_NNN:
+            sequence = i[4]
+            if "NNN" in sequence:
+                continue
+            else:
+                output_formated= '%d\t%d\t%.3e\t%d\t%s' %(i[0], i[1],i[2],i[3],i[4])
+
+        else:
+            output_formated= '%d\t%d\t%.3e\t%d\t%s' %(i[0], i[1],i[2],i[3],i[4])
         print >> fh, output_formated
         #this print statement write to out outfile
     

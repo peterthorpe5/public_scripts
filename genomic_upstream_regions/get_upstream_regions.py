@@ -45,22 +45,23 @@ def index_gene_scaffold_coordinates(coordinate_file):
     genes_coordinate = data.readlines()
     genes_coordinate = [line.replace("ID=", "").rstrip() for line in genes_coordinate
               if line.rstrip() != "" if not line.startswith("#")]
+    gene_list = []
     data.close()
     for gff_info in genes_coordinate:
         #print gff_info.split("\t")[4]
+        assert len(line.split("\t")) ==5 ,"GFF/ altered file fields wrong length should be 5"
         gene=gff_info.split("\t")[4]
         if ";" in gene:
             gene = gene.split(";")[0]
-            gene = gene.replace("id=", "")
-            gene = gene.replace(".t1", "")
-        #assert gff_info.split("\t")[4].startswith("g"), "this is not a gene column in the last element of -c file"
+        #check each gene only represented once
+        assert gene not in gene_list, "duplicate genes found. Reformat file -C file. "
+        gene_list.append(gene)
         if gene in coordinate_dict.values():
             print "repeated line in gff sub file"
             continue
         else:
             scaffold_cordinates = gff_info.split("\t")[:]
             coordinate_dict[gene] = scaffold_cordinates
-
     #print coordinate_dict
     return coordinate_dict
 

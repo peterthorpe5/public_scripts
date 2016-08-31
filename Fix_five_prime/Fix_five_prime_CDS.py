@@ -378,7 +378,7 @@ def average_standard_dev(positions):
 
 # function to walk along the transcript inframe as decided by the current reading frame for the cds
 #and find the next "ATG (+)" or    
-def find_positive_next_ATG(transcriptome_record, position, strand):
+def find_positive_next_ATG_b(transcriptome_record, position, strand):
     "function to find the next ATG"
     #print ("start position = %d" % position)
     transcriptome_record= transcriptome_record[position:]
@@ -482,6 +482,7 @@ def parse_transcriptome_file(genome, transcriptome_file, cds_file, bam, gff, min
         #test one: is the a cds predcited for this, if not move on
         try:
             cds_record = cds_index_database[transcriptome_record.id]
+            original_cds_record = cds_index_database[transcriptome_record.id]
         except KeyError:
             print ("no CDS was found for %s.. so moving on to the next" %(transcriptome_record.id)) #transdecoder uses cdhit 90% so some wont have cds...
             continue
@@ -545,9 +546,13 @@ def parse_transcriptome_file(genome, transcriptome_file, cds_file, bam, gff, min
             # if it cant find another ATG - dont change the data....
             if next_ATG_position == None:
                 # No alternative start, do nothing
+                #reset record
+                cds_record = original_cds_record
                 pass
             elif next_ATG_position > end_position-60:
                 # No alternative start within CDS, do nothing
+                #reset record
+                cds_record = original_cds_record
                 pass
             else:
                 assert next_ATG_position < end_position, "Was %i to %i, new start %i" % (start_position, end_position, next_ATG_position)
@@ -558,15 +563,19 @@ def parse_transcriptome_file(genome, transcriptome_file, cds_file, bam, gff, min
                           % (transcriptome_record.id, len(transcriptome_record.seq), next_ATG_position, end_position,
                                                         min(all_coverage), max(all_coverage),
                                                         the_mean,standard_dev,all_coverage[next_ATG_position]))
-                    cds_record.seq = transcriptome_record.seq[next_ATG_position:end_position] ########## <-------- I have added one to this, is that correct????????????? - TESTS work.
+                    cds_record.seq = transcriptome_record.seq[next_ATG_position:end_position] ########## <-------- - TESTS work.
                     cds_record.description = "Five_prime_altered "+cds_record.description
                 else:
                     another_ATG_position = find_downstream_start(str(transcriptome_record.seq), next_ATG_position, "+")
                     #if this new ATG comed witht the thresholds for "being" real
                     if another_ATG_position is None:
-                         print ("No alt start, cannot do anything with this %s -- we will leave the cds as is" %(transcriptome_record.id))
+                        #reset to original
+                        cds_record = original_cds_record
+                        print ("No alt start, cannot do anything with this %s -- we will leave the cds as is" %(transcriptome_record.id))
                     elif another_ATG_position > end_position:
-                # No alternative start within CDS, do nothing
+                        # No alternative start within CDS, do nothing
+                        #reset to original
+                        cds_record = original_cds_record
                         pass
                     elif all_coverage[another_ATG_position] > cut_off:
                         #set the new cds
@@ -577,7 +586,10 @@ def parse_transcriptome_file(genome, transcriptome_file, cds_file, bam, gff, min
                                                      the_mean,standard_dev,all_coverage[another_ATG_position]))                            
                     else:
                         print ("we cannot do anything with this %s -- we will leave the cds as is" %(transcriptome_record.id))
-        assert len(cds_record), "Trimmed to nothing?"
+                        #reset to original
+                        cds_record = original_cds_record
+        assert len(cds_record), "Trimmed to nothing? %s " %(transcriptome_record.id)
+        print ("im writing %s" %(transcriptome_record.id))
         SeqIO.write(cds_record, file_out, "fasta")
             
 
