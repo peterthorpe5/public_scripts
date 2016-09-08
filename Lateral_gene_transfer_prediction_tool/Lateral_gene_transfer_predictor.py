@@ -707,8 +707,8 @@ parser.add_option("-o", "--out", dest="outfile", default="_tab_blast_LGT_results
                   help="Output filename - default= infile__tab_blast_LGT_results",
                   metavar="FILE")
 parser.add_option("", dest="", default="metazoan",
-                  help="define kingdom name belonging to you choosing"
-                  "default is metazoan")
+                help="define taxonomic origin"
+                  "default is metazoan, non-variant will be automatically created")
 
 (options, args) = parser.parse_args()
 
