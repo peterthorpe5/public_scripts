@@ -706,7 +706,9 @@ parser.add_option("--tax_coloumn", dest="tax_coloumn", default="14",
 parser.add_option("-o", "--out", dest="outfile", default="_tab_blast_LGT_results.tab",
                   help="Output filename - default= infile__tab_blast_LGT_results",
                   metavar="FILE")
-
+parser.add_option("", dest="", default="metazoan",
+                  help="define kingdom name belonging to you choosing"
+                  "default is metazoan")
 
 (options, args) = parser.parse_args()
 
