@@ -686,12 +686,12 @@ parser.add_option("-a", "--alien", dest="alien_index_threshold", default=15,
                   help="this is a threshold for determining the alien_index_threshold "
                   " any value greater than this will be put into the outfile. Default = 15.")
 
-parser.add_option("--tax_filter_out", dest="tax_filter_out", default=None,
+parser.add_option("--tax_filter_out", dest="tax_filter_out", default=1036719,
                   help="The tax ID to filter out: for this analysis the Phylum which your BEAST"
                   "of interest if found. e.g. Aphids are from Arthropoda, therefore this would be "
                   "6656, whihc is the dwefault value. This will filter out all blast hit which are "
                   "from this phylum. It is possible to put a species/kingdom tax_id in here ... what"
-                  "ever floats your boat. (current default is None)")
+                  "ever floats your boat. (current default is Verticillium, 1036719)")
 
 
 parser.add_option("--tax_filter_up_to", dest="tax_filter_up_to", default="4751",
