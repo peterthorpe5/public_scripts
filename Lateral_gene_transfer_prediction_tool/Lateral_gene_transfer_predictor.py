@@ -128,11 +128,11 @@ def test_if_id_is_metazoan(tax_id_of_interst,final_tx_id_to_identify_up_to, tax_
         if parent == "32630":#32630
             return "In_filter_out_tax_id"
             break            
-        if parent == tax_to_filter_out:
+        if parent in tax_to_filter_out:
             #print "filtering out"
             return "In_filter_out_tax_id"
             break
-        if parent == final_tx_id_to_identify_up_to:
+        if parent in final_tx_id_to_identify_up_to:
             #print "......................... im here"
             return True
         elif parent == "1":
@@ -686,18 +686,22 @@ parser.add_option("-a", "--alien", dest="alien_index_threshold", default=15,
                   help="this is a threshold for determining the alien_index_threshold "
                   " any value greater than this will be put into the outfile. Default = 15.")
 
-parser.add_option("--tax_filter_out", dest="tax_filter_out", default="1036719",
-                  help="The tax ID to filter out: for this analysis the Phylum which your BEAST"
+parser.add_option("--tax_filter_out", dest="tax_filter_out", default={"1036719","5106","264599"},
+                  help="The tax IDs to filter out: for this analysis the Phylum which your BEAST"
                   "of interest if found. e.g. Aphids are from Arthropoda, therefore this would be "
                   "6656, whihc is the dwefault value. This will filter out all blast hit which are "
                   "from this phylum. It is possible to put a species/kingdom tax_id in here ... what"
-                  "ever floats your boat. (current default is Verticillium, 1036719)")
+                  "ever floats your boat."
+                  "It is also possible to add multiple IDs in the format \"ID no\",\"next ID no\"\""
+                  "(current default are all three Verticillium NCBI tax IDs, (1036719, 5106 & 264599))")
 
 
-parser.add_option("--tax_filter_up_to", dest="tax_filter_up_to", default="4751",
-                  help=" The tax_id to 'walk up to', to determine assignment. By default this is metazoa."
+parser.add_option("--tax_filter_up_to", dest="tax_filter_up_to", default={"4751"},
+                  help=" The tax IDs to 'walk up to', to determine assignment. By default this is metazoa."
                   "The script work out the best metazoan to non-metazoan hit. But this can be altered if "
-                  "you wish to alter this (current default is fungi, 4751)")
+                  "you wish to alter this." 
+                  "It is also possible to add multiple IDs in the format \"ID no\",\"next ID no\"\"etc."
+                  "(current default is fungi, 4751)")
 
 
 parser.add_option("--tax_coloumn", dest="tax_coloumn", default="14",
