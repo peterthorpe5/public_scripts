@@ -199,9 +199,9 @@ def meta_or_non_metazoan(tax_id,tax_id_filter_up_to, filter_out_tax_id):
         #print "in filter out phylum\n"
         return "N/A" # skip the code below
     elif test_if_id_is_metazoan(tax_id, tax_id_filter_up_to, filter_out_tax_id):
-        return "tax_of_interest"
+        return "phylum_of_interest"
     else:
-        return "non_tax_of_interest"
+        return "non_phylum_of_interest"
         #assert test_if_id_is_metazoan(tax_id, tax_id_filter_up_to, filter_out_tax_id) is False
     
 def reset_list_add_info(list_in, info)  :
@@ -227,7 +227,7 @@ def write_out_data(best_metazoan_hits, best_nonmetazoan_hits, tax_coloumn, out_f
             results_list = parse_blast_line(best_nonmetazoan_hits, tax_coloumn)
             query_name = results_list[0]
             query_name = query_name.split("gene=")[0]
-            data_formatted_top_meta_no_hit= "%s\t\t1.0\t\t\t\tmetazoan\t\tno_hit\n" %(query_name)
+            data_formatted_top_meta_no_hit= "%s\t\t1.0\t\t\t\tphylum_of_interest\t\tno_hit\n" %(query_name)
 
 
     if best_nonmetazoan_hits == []:
@@ -235,11 +235,11 @@ def write_out_data(best_metazoan_hits, best_nonmetazoan_hits, tax_coloumn, out_f
             results_list = parse_blast_line(best_metazoan_hits, tax_coloumn)
             query_name = results_list[0]
             query_name = query_name.split("gene=")[0]
-            data_formatted_top_nonmeta_no_hit= "%s\t\t1.0\t\t\t\tnonmetazoan\t\tno_hit\n" %(query_name)
+            data_formatted_top_nonmeta_no_hit= "%s\t\t1.0\t\t\t\tnon_phylum_of_interest\t\tno_hit\n" %(query_name)
 
 
     if best_metazoan_hits != []:
-        catorgory = "tax_of_interest"
+        catorgory = "phylum_of_interest"
         query_name, percentage_identity, Evalue, bit_score, description, tax_id, \
                 species_sci, species_common, \
                 kingdom = parse_blast_line(best_metazoan_hits, tax_coloumn)
@@ -252,7 +252,7 @@ def write_out_data(best_metazoan_hits, best_nonmetazoan_hits, tax_coloumn, out_f
 
             
     if best_nonmetazoan_hits != []:
-        catorgory = "non_tax_of_interest"
+        catorgory = "non_phylum_of_interest"
         query_name, percentage_identity, Evalue, bit_score, description, tax_id, \
                 species_sci, species_common, kingdom = parse_blast_line(best_nonmetazoan_hits, tax_coloumn)
         query_name = query_name.split("gene=")[0]
@@ -326,9 +326,9 @@ def parse_blast_tab_file(filename1, outfile, filter_out_tax_id, tax_id_filter_up
                 #print "best_nonmetazoan_hits line 322 = ", best_nonmetazoan_hits
                 #print "best_metazoan_hits line 323 = ", best_metazoan_hits
 
-            if key == "tax_of_interest":
+            if key == "phylum_of_interest":
                 best_metazoan_hits = reset_list_add_info(best_metazoan_hits, blast_line)
-            if key == "non_tax_of_interest":
+            if key == "non_phylum_of_interest":
                 best_nonmetazoan_hits = reset_list_add_info(best_nonmetazoan_hits, blast_line)
             last_gene_name = query_name
             #print "best_metazoan_hits == ", best_metazoan_hits, "\n"
@@ -346,13 +346,13 @@ def parse_blast_tab_file(filename1, outfile, filter_out_tax_id, tax_id_filter_up
                 #print "im here line 345 "
                 #print "KEY line 346= ", key, blast_line
             #print "KEY = ", key, blast_line
-            if key == "tax_of_interest":
+            if key == "phylum_of_interest":
                 if best_metazoan_hits == []:
                     best_metazoan_hits = reset_list_add_info(best_metazoan_hits, blast_line)                    
 
                 if float(bit_score) > float(best_metazoan_hits[0][11]):
                         best_metazoan_hits = reset_list_add_info(best_metazoan_hits, blast_line)
-            if key == "non_tax_of_interest":
+            if key == "non_phylum_of_interest":
                 if best_nonmetazoan_hits == []:
                     best_nonmetazoan_hits = reset_list_add_info(best_nonmetazoan_hits, blast_line)
                 old_bit_score = float(best_nonmetazoan_hits[0][11])
@@ -504,7 +504,7 @@ def find_true_alien_score(tax_filter_out, filename_with_precursor_values, outfil
         precursor_value = float(precursor_value)
 
         if query_name == last_query_name:
-            if catorgory == "non_tax_of_interest":
+            if catorgory == "non_phylum_of_interest":
                 Extra_info = ""
                 alien_index = last_precursor_value - precursor_value
                 # fungi  = tx id 4751
@@ -686,7 +686,7 @@ parser.add_option("-a", "--alien", dest="alien_index_threshold", default=15,
                   help="this is a threshold for determining the alien_index_threshold "
                   " any value greater than this will be put into the outfile. Default = 15.")
 
-parser.add_option("--tax_filter_out", dest="tax_filter_out", default=1036719,
+parser.add_option("--tax_filter_out", dest="tax_filter_out", default="1036719",
                   help="The tax ID to filter out: for this analysis the Phylum which your BEAST"
                   "of interest if found. e.g. Aphids are from Arthropoda, therefore this would be "
                   "6656, whihc is the dwefault value. This will filter out all blast hit which are "
@@ -695,9 +695,9 @@ parser.add_option("--tax_filter_out", dest="tax_filter_out", default=1036719,
 
 
 parser.add_option("--tax_filter_up_to", dest="tax_filter_up_to", default="4751",
-                  help=" The tax_id to 'walk up to', to determine assignment. By default this is fungi."
+                  help=" The tax_id to 'walk up to', to determine assignment. By default this is metazoa."
                   "The script work out the best metazoan to non-metazoan hit. But this can be altered if "
-                  "you wish to alter this (current default is fungi)")
+                  "you wish to alter this (current default is fungi, 4751)")
 
 
 parser.add_option("--tax_coloumn", dest="tax_coloumn", default="14",
