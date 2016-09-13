@@ -512,13 +512,13 @@ def find_true_alien_score(tax_filter_out, filename_with_precursor_values, outfil
                 #test_if_id_is_metazoan(tax_id_of_interst,final_tx_id_to_identify_up_to,\
                     #tax_to_filter_out)
                 if tax_id != "":
-                    if test_if_id_is_metazoan(tax_id,"3193", tax_filter_out):
+                    if test_if_id_is_metazoan(tax_id,{"3193"}, tax_filter_out):
                         Extra_info = "Plant_"
-                    if test_if_id_is_metazoan(tax_id,"4751", tax_filter_out):
+                    if test_if_id_is_metazoan(tax_id,{"4751"}, tax_filter_out):
                         Extra_info = "Fungal_"
-                    if test_if_id_is_metazoan(tax_id,"33634", tax_filter_out):
+                    if test_if_id_is_metazoan(tax_id,{"33634"}, tax_filter_out):
                         Extra_info = "Stramenopiles_"
-                    if test_if_id_is_metazoan(tax_id,"4762", tax_filter_out):
+                    if test_if_id_is_metazoan(tax_id,{"4762"}, tax_filter_out):
                         Extra_info = "Oomycetes_"
 
                 meta_query_name, meta_percentage_identity, meta_Evalue, \
@@ -693,7 +693,7 @@ parser.add_option("--tax_filter_out", dest="tax_filter_out", default={"1036719",
                   "from this phylum. It is possible to put a species/kingdom tax_id in here ... what"
                   "ever floats your boat."
                   "It is also possible to add multiple IDs in the format \"ID no\",\"next ID no\"\""
-                  "(current default are all three Verticillium NCBI tax IDs, (1036719, 5106 & 264599))")
+                  "(current default is a set containing all three Verticillium NCBI tax IDs, (1036719, 5106 & 264599))")
 
 
 parser.add_option("--tax_filter_up_to", dest="tax_filter_up_to", default={"4751"},
@@ -701,7 +701,7 @@ parser.add_option("--tax_filter_up_to", dest="tax_filter_up_to", default={"4751"
                   "The script work out the best metazoan to non-metazoan hit. But this can be altered if "
                   "you wish to alter this." 
                   "It is also possible to add multiple IDs in the format \"ID no\",\"next ID no\"\"etc."
-                  "(current default is fungi, 4751)")
+                  "(current default is a set containing fungi, 4751)")
 
 
 parser.add_option("--tax_coloumn", dest="tax_coloumn", default="14",
@@ -784,6 +784,7 @@ find_true_alien_score(tax_filter_out, outfile+"_precursor_value.temp", \
                       alien_index_threshold)
 
 print '\n\tdone... go to the pub\n'
+print tax_filter_out
 
 ### extra info:
 
