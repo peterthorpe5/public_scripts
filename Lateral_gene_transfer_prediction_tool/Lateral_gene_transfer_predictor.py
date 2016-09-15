@@ -172,8 +172,8 @@ def parse_blast_line(blast_line_as_list, tax_coloumn):
     if len(blast_line_as_list) == 1:
         blast_line_as_list = blast_line_as_list[0]
     blast_line = blast_line_as_list
-    Evalue = float(blast_line[10])
-    bit_score = float(blast_line[11])
+    Evalue = float(blast_line[9])
+    bit_score = float(blast_line[10])
     # tax id can have a whole load of value e.g.
     #5141;367110;510951;510952;771870.
     #Thefore we split it and take the first one
@@ -183,7 +183,7 @@ def parse_blast_line(blast_line_as_list, tax_coloumn):
         #print "RAW BLAST line = ", query_name, blast_line
     percentage_identity = blast_line[2]
     description = blast_line[12]
-    tax_id = blast_line[tax_coloumn].split(";")[0]
+    tax_id = blast_line[tax_coloumn].split("_")[1]
     species_sci = blast_line[-3]
     species_common = blast_line[-2]
     kingdom = blast_line[-1]
@@ -704,9 +704,11 @@ parser.add_option("--tax_filter_up_to", dest="tax_filter_up_to", default={"4751"
                   "(current default is a set containing fungi, 4751)")
 
 
-parser.add_option("--tax_coloumn", dest="tax_coloumn", default="14",
-                  help="the coloumn with the tax_id info. Defulat is 14"
-                  "(as counted by a human/ not a computer")
+parser.add_option("--tax_coloumn", dest="tax_coloumn", default="2",
+                  help="the column with the tax_id info. Default is 14"
+                  "(as counted by a human, not a computer)"
+                  "(current default is 2 with a split on _)")
+                    
 parser.add_option("-o", "--out", dest="outfile", default="_tab_blast_LGT_results.tab",
                   help="Output filename - default= infile__tab_blast_LGT_results",
                   metavar="FILE")
