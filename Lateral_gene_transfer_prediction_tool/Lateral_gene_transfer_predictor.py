@@ -93,7 +93,7 @@ dictionary for later use"""
 
 ###########################################################################################################################################################################################
 
-def test_if_id_is_metazoan(tax_id_of_interst,final_tx_id_to_identify_up_to, tax_to_filter_out):
+def test_if_id_is_metazoan(tax_id_of_interest,final_tx_id_to_identify_up_to, tax_to_filter_out):
     """function to get a list of tax id of interest from the tax_dictionary
     which is produced in the parse_function (parse_NCBI_nodes_tab_file)
     nodes.dmp file. . The tax id
@@ -101,17 +101,17 @@ def test_if_id_is_metazoan(tax_id_of_interst,final_tx_id_to_identify_up_to, tax_
     """
     #print "filtering up to =", final_tx_id_to_identify_up_to
     #print "filtering out = ", tax_to_filter_out
-    if tax_id_of_interst == "N/A":
+    if tax_id_of_interest == "N/A":
         raise ValueError("N/A as taxonomy ID")
-    if tax_id_of_interst == "0":
-        tax_id_of_interst =="32644"#assign an unknown id
+    if tax_id_of_interest == "0":
+        tax_id_of_interest =="32644"#assign an unknown id
         return "In_filter_out_tax_id" 
     #call the function to parse nodes file and assign to variable
     #tax_dictionary = parse_NCBI_nodes_tab_file(nodes_dmp)
     #empty list to add tax id to
     #list_of_tx_id_identified_that_we_want = []
     #get the "master" parent id
-    parent = tax_dictionary[tax_id_of_interst]
+    parent = tax_dictionary[tax_id_of_interest]
     #print parent
 
     #list_of_tx_id_identified_that_we_want.append(parent)
@@ -119,7 +119,7 @@ def test_if_id_is_metazoan(tax_id_of_interst,final_tx_id_to_identify_up_to, tax_
     #for keys in tax_dictionary:
         #print "parent = ", parent, "\n"
         parent = tax_dictionary[parent]
-        if tax_id_of_interst == "N/A":
+        if tax_id_of_interest == "N/A":
             raise ValueError("N/A as taxonomy ID")
         #list_of_tx_id_identified_that_we_want.append(parent)
         #print list_of_tx_id_identified_that_we_want
@@ -141,7 +141,7 @@ def test_if_id_is_metazoan(tax_id_of_interst,final_tx_id_to_identify_up_to, tax_
   
 ###########################################################################################################################################################################################
                 
-def test_id_of_interst(tax_id_of_interst,\
+def test_id_of_interst(tax_id_of_interest,\
                         final_tx_id_to_identify_up_to,out_file):
     #test pea aphid is in metazoa, should be true
     assert test_if_id_is_metazoan(nodes_dmp,"7029","33208") is True
@@ -151,12 +151,12 @@ def test_id_of_interst(tax_id_of_interst,\
     assert test_if_id_is_metazoan(nodes_dmp,"7029","4783") is False
 
 
-    if test_if_id_is_metazoan(tax_id_of_interst,\
+    if test_if_id_is_metazoan(tax_id_of_interest,\
                             final_tx_id_to_identify_up_to) is True:
 
-        #print "......it worked", tax_id_of_interst
+        #print "......it worked", tax_id_of_interest
         return True
-    if test_if_id_is_metazoan(tax_id_of_interst,\
+    if test_if_id_is_metazoan(tax_id_of_interest,\
                             final_tx_id_to_identify_up_to) is False:
         return False
     
@@ -172,8 +172,8 @@ def parse_blast_line(blast_line_as_list, tax_column):
     if len(blast_line_as_list) == 1:
         blast_line_as_list = blast_line_as_list[0]
     blast_line = blast_line_as_list
-    Evalue = float(blast_line[9])
-    bit_score = float(blast_line[10])
+    Evalue = float(blast_line[10])
+    bit_score = float(blast_line[11])
     # tax id can have a whole load of value e.g.
     #5141;367110;510951;510952;771870.
     #Therefore we split it and take the first one
@@ -183,7 +183,7 @@ def parse_blast_line(blast_line_as_list, tax_column):
         #print "RAW BLAST line = ", query_name, blast_line
     percentage_identity = blast_line[2]
     description = blast_line[12]
-    tax_id = blast_line[tax_column].split("_")[1]
+    tax_id = blast_line[tax_column].split(";")[0]
     species_sci = blast_line[-3]
     species_common = blast_line[-2]
     kingdom = blast_line[-1]
@@ -394,7 +394,7 @@ def parse_blast_tab_file_to_get_Alien_precursor_value(filtered_blast_results_fil
     """this is a function to open up a tab file blast results produced by
     parse_blast_tab_file, which works out if the blast hit is metazoan,
     nonmetazoan and excludes those in the phylum of interest, it also
-    exclude a synthestic organism.... and  produce alien index scores
+    exclude a synthetic organism.... and  produce alien index scores
     based on the e-value of the hit"""
     #open files, read and write.
     blast_file = open (filtered_blast_results_file, "r")
@@ -509,7 +509,7 @@ def find_true_alien_score(tax_filter_out, filename_with_precursor_values, outfil
                 alien_index = last_precursor_value - precursor_value
                 # Fungi  = tax_id 4751
                 #plant (higher)Embryophyta  = tax_id 3193
-                #test_if_id_is_metazoan(tax_id_of_interst,final_tx_id_to_identify_up_to,\
+                #test_if_id_is_metazoan(tax_id_of_interest,final_tx_id_to_identify_up_to,\
                     #tax_to_filter_out)
                 if tax_id != "":
                     if test_if_id_is_metazoan(tax_id,{"3193"}, tax_filter_out):
@@ -704,10 +704,10 @@ parser.add_option("--tax_filter_up_to", dest="tax_filter_up_to", default={"4751"
                   "(current default is a set containing Fungi, 4751)")
 
 
-parser.add_option("--tax_column", dest="tax_column", default="2",
+parser.add_option("--tax_column", dest="tax_column", default="14",
                   help="the column with the tax_id info. Default is 14"
-                  "(as counted by a human, not a computer)"
-                  "(current default is 2 with a split on _)")
+                  "(as counted by a human, not a computer)")
+                  #"(current default is 2 with a split on _)")
                     
 parser.add_option("-o", "--out", dest="outfile", default="_tab_blast_LGT_results.tab",
                   help="Output filename - default= infile__tab_blast_LGT_results",
