@@ -176,7 +176,7 @@ def parse_blast_line(blast_line_as_list, tax_column):
     bit_score = float(blast_line[10])
     # tax id can have a whole load of value e.g.
     #5141;367110;510951;510952;771870.
-    #Thefore we split it and take the first one
+    #Therefore we split it and take the first one
     query_name = blast_line[0]
     query_name = query_name.split("gene=")[0]
     #if "g3392" in query_name:
@@ -192,7 +192,7 @@ def parse_blast_line(blast_line_as_list, tax_column):
 
 def meta_or_non_metazoan(tax_id,tax_id_filter_up_to, filter_out_tax_id):
     "function to return metazoan or non-metazoan"
-    # call the function to test if the id of interst falls in metazoa or not
+    # call the function to test if the id of interest falls in metazoa or not
     if tax_id =="N/A":
         return "N/A"
     elif test_if_id_is_metazoan(tax_id, tax_id_filter_up_to, filter_out_tax_id) == "In_filter_out_tax_id":
