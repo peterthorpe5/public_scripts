@@ -63,7 +63,7 @@ import datetime
 def parse_NCBI_nodes_tab_file(folder):
     """this is a function to open nodes.dmp from the NCBI taxonomy
 database and find the parent child relationship....returns a
-disctionary for later use"""
+dictionary for later use"""
 
     #open file - read.
     #nodes.dmp - this file is separated by \t|\t
