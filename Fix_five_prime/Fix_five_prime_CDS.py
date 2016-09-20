@@ -292,15 +292,27 @@ def find_longest_components(filename1, cds_database, out_filename):
     #set up variables to assgn lastest values to ...
     transcriptome_Genes_names = set([])
     last_gene_name = ""
-    last_component = ""    
+    last_component = ""
+    loop_count = 0
     for seq_record in SeqIO.parse(filename1, "fasta"):
         sequence_len = len(seq_record)
         sequence_name = seq_record.id
-        component = strip_to_match_transcript_name(sequence_name)        
+        component = strip_to_match_transcript_name(sequence_name)
+        #first time we see any record, save the values:
+        if loop_count == 0:
+            loop_count = loop_count+1
+            last_gene_name = sequence_name
+            current_lenth = sequence_len
+            last_component= component
+            top_hits.append(seq_record.id)
+            
         ##############################################################################
         #first block: if the names are the same, is the new length of sequence longer?
         if component == last_component:
+            #print "yes:", component, "component",  last_component, "last_component", seq_record.id
+            #print "current_lenth", current_lenth
             if sequence_len > current_lenth:
+                #print "sequence_len > current_lenth", sequence_len, current_lenth
                 del top_hits[-1]
                 top_hits.append(seq_record.id) 
         #############################################################################
@@ -308,9 +320,9 @@ def find_longest_components(filename1, cds_database, out_filename):
         # use this sequence-length as the new one to "beat"
         else:
             top_hits.append(seq_record.id)
-        last_gene_name = sequence_name
-        current_lenth = sequence_len
-        last_component= component
+            last_gene_name = sequence_name
+            current_lenth = sequence_len
+            last_component= component
     outfile = open(out_filename,"w")
     for i in top_hits:
         seq_record =  cds_database[i]
