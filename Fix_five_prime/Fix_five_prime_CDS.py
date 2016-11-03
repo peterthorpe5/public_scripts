@@ -576,10 +576,12 @@ def parse_transcriptome_file(genome, transcriptome_file, cds_file, bam, gff, min
                                                         min(all_coverage), max(all_coverage),
                                                         the_mean,standard_dev,all_coverage[next_ATG_position]))
                     cds_record.seq = transcriptome_record.seq[next_ATG_position:end_position] ########## <-------- - TESTS work.
-                    cds_record.description = "Five_prime_altered "+cds_record.description
+                    cds_record.description = "Five_prime_altered new coordinates: %d - %d\t" % \
+                                             (next_ATG_position, end_position) \
+                                             + cds_record.description
                     if len(cds_record) > end_position-60:
                             #reset to original
-                            print("houston, mno resetting it!!!2:")
+                            print("houston, im not resetting it!!!2:")
                             cds_record = original_cds_record
                 else:
                     another_ATG_position = find_downstream_start(str(transcriptome_record.seq), next_ATG_position, "+")
@@ -595,11 +597,14 @@ def parse_transcriptome_file(genome, transcriptome_file, cds_file, bam, gff, min
                         pass
                     elif all_coverage[another_ATG_position] > cut_off:
                         #set the new cds
+                        cds_record.description = original_cds_record.description
                         cds_record.seq = transcriptome_record.seq[another_ATG_position:end_position]
-                        cds_record.description = "Five_prime_altered2 "+cds_record.description
                         print("houston, may have fixed the problem!!2: %s another_ATG_position_NEW start. Has coverage min %i, max %i, For sliced section: mean %0.2f, std %0.2f, another_ATG_position %0.2f\n" % (transcriptome_record.id,
                                                         min(all_coverage), max(all_coverage),
                                                      the_mean,standard_dev,all_coverage[another_ATG_position]))
+                        cds_record.description = "Five_prime_altered2 new coordinates: %d - %d\t" % \
+                                             (another_ATG_position, end_position) \
+                                             + cds_record.description
                         if len(cds_record) > end_position-60:
                             #reset to original
                             print("houston, mno resetting it!!!2:")
@@ -609,6 +614,10 @@ def parse_transcriptome_file(genome, transcriptome_file, cds_file, bam, gff, min
                         print ("we cannot do anything with this %s -- we will leave the cds as is" %(transcriptome_record.id))
                         #reset to original
                         cds_record = original_cds_record
+        if not len(cds_record):
+            #reset to original
+            cds_record = original_cds_record
+            
         assert len(cds_record), "Trimmed to nothing? %s " %(transcriptome_record.id)
         print ("im writing %s" %(transcriptome_record.id))
         SeqIO.write(cds_record, file_out, "fasta")
