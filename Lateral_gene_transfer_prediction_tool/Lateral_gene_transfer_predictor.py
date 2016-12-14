@@ -443,7 +443,7 @@ def precursor_score_calculator (Evalue):
     
     # AI = log((Best E-value for Metazoa)+e-200)-log((Best E-value for Non-Metazoa)+e-200)
     Evalue = float(Evalue)
-    e_minus_200 = float(exp(-200))
+    e_minus_200 = 1e-200
     precursor_score_calculator_value = math.log((Evalue)+e_minus_200, 10)
     #print Alien_index_precursor_score_calculator_value
     #Alien_index_precursor_score_calculator_value is basically
