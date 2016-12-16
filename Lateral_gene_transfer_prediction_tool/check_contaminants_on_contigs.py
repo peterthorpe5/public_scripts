@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-#author: Peter Thorpe September 2016. The James Hutton Insitute, Dundee, UK.
+# author: Peter Thorpe September 2016. The James Hutton Insitute, Dundee, UK.
 
-#imports
+# imports
 import os
 import sys
 from sys import stdin,argv
@@ -19,16 +19,15 @@ from Bio.SeqRecord import SeqRecord
 from Bio import SeqIO
 import numpy
 
-#Title:
-#script to open gff and create a dictionary of {scaffold: set([gene1, gene2])"
-# this can then be used to see if all genes on a scaff are predicted to be HGT and therefor
+# Title:
+# script to open gff and create a dictionary of {scaffold: set([gene1, gene2])"
+# this can then be used to see if all genes on a scaff are predicted to be
+# HGT and therefor
 # the whole scaffold is contamination. 
 
 #############################################################################
 
-
-
-#make a temp_folder_for_all_the_out_files
+# make a temp_folder_for_all_the_out_files
 file_name = 'test.txt'
 working_dir = os.getcwd()
 dest_dir = os.path.join(working_dir, 'temp')
@@ -40,7 +39,7 @@ except OSError:
 #############################################################################
 
 def split_gff_gene_names(gene_info):
-    "function to hopefully return just the gene name"
+    """function to return just the gene name"""
     #print gene_info
     try:
         gene = gene_info.split("ID=")[1]
@@ -55,14 +54,16 @@ def split_gff_gene_names(gene_info):
     gene = gene.split(";")[0]
     gene = gene.split(";")[0]
     gene = gene.split(".CDS")[0]
-    #some data set require this to be uncommented
-    #gene = gene.split(".t")[0]
+    # some data set require this to be uncommented
+    # gene = gene.split(".t")[0]
     gene = gene.rstrip("\n")
     gene = gene.replace(".t1", "")
     return gene
 
 def parse_gff(gff):
-    "function to parse GFF and produce a scaffold_to_gene_dict"
+    """function to parse GFF and produce a scaffold_to_gene_dict
+    3 dictionaries are returned:
+    scaffold_to_gene_dict, gene_to_exon_count, gene_start_stop_dict"""
     f_in = open(gff, "r")
     # data to output of function
     scaffold_to_gene_dict = dict()
@@ -73,6 +74,8 @@ def parse_gff(gff):
     for line in f_in:
         if line.startswith("#"):
             continue
+        if not line.strip():
+                continue #if the last line is blank
         scaffold,aug,cds_type,start,stop,e,f,g,gene_info = line.split("\t")
         gene = split_gff_gene_names(gene_info)
         #print gene
@@ -83,7 +86,8 @@ def parse_gff(gff):
                 scaffold_to_gene_dict[scaffold]=[gene]
             else:
                 scaffold_to_gene_dict[scaffold].append(gene)
-            start_stop_formatted = "%s\t%d\t%d" %(scaffold, int(start), int(stop))
+            start_stop_formatted = "%s\t%d\t%d" %(scaffold, int(start),
+                                                  int(stop))
             gene_start_stop_dict[gene] = start_stop_formatted
 
         #gene_to_exon_count
@@ -94,7 +98,8 @@ def parse_gff(gff):
                 gene_to_exon_count[gene]= count +1
     #print scaffold_to_gene_dict
     f_in.close()
-    return scaffold_to_gene_dict, gene_to_exon_count, gene_start_stop_dict
+    return scaffold_to_gene_dict, gene_to_exon_count,\
+           gene_start_stop_dict
 
 
 def LTG_file(LTG):
@@ -104,6 +109,7 @@ def LTG_file(LTG):
     f_in = open(LTG, "r")
     # is the gene >70% identical to it's blast hit?
     # if so, maybe a contamination?
+    gene_to_HGT_percent_identity = dict()
     gene_to_comment_dict = dict()
     HGT_predicted_gene_set = set([])
     gene_to_HGTspeces_discription_dict = dict()
@@ -111,9 +117,12 @@ def LTG_file(LTG):
     for line in f_in:
         if line.startswith("#"):
             continue
+        if not line.strip():
+            continue #if the last line is blank
         gene = line.split("\t")[0]
         #call function to format gene name
         gene = split_gff_gene_names(gene)
+        HGT_percent_identity = line.split("\t")[1]
         comment = line.split("\t")[-1]
         species = line.split("\t")[-3]
         description = line.split("\t")[-2]
@@ -129,9 +138,12 @@ def LTG_file(LTG):
         gene_to_HGTspeces_discription_dict[gene] = data_out_formatted2
         gene_to_comment_dict[gene] = data_out_formatted
         gene_to_AI[gene] = AI
+        gene_to_HGT_percent_identity[gene] = HGT_percent_identity
     #print (HGT_predicted_gene_set)
     f_in.close()
-    return HGT_predicted_gene_set, gene_to_comment_dict, gene_to_HGTspeces_discription_dict, gene_to_AI
+    return HGT_predicted_gene_set, gene_to_comment_dict,\
+           gene_to_HGTspeces_discription_dict, gene_to_AI, \
+           gene_to_HGT_percent_identity
 
 def get_stats_on_AT_content(dna_file):
     """function to get the mean at standard dev for AT content across
@@ -161,7 +173,8 @@ def parse_rnaseq(rnaseq):
     Take data in like this:
     # Name	Length	TPM	NumReads
     g1.t1	3333	82.2211	186993. May need to be modified to suit
-    program output of choice. """
+    program output of choice.
+    returns a dictionary of gen to expression values"""
 
     gene_to_expression = dict()
     with open(rnaseq, "r") as handle:
@@ -189,48 +202,70 @@ def check_genomic_cov(mean, sd, genomic_cov):
     return NUmber_of_sd_from_mean
     
 
-
 def check_HGT_AT_vs_global_AT(gene_AT_cont_dic, AI, the_mean, standard_dev,
-                              gene_of_interest, comment, sd_numbers, gene_to_expression,
-                              gene_to_exon_count, gene_to_HGTspeces_discription_dict,\
-                              genomic_cov_from_mean):
+                              gene_of_interest, comment, sd_numbers,
+                              gene_to_expression,
+                              gene_to_exon_count,
+                              gene_to_HGTspeces_discription_dict,
+                              genomic_cov_from_mean,
+                              gene_to_HGT_percent_identity):
     """function to check the AT content of a gene of interest vs the global
     AT using the mean and SD already generated"""
     
-    # user defined number of standard deviations away from the mean for the stats
-
+    # user defined number of standard deviations away from
+    # the mean for the stats
     sd_numbers = float(sd_numbers)
-    #print "gene_of_interest = ", gene_of_interest
+    # print "gene_of_interest = ", gene_of_interest
     current_gene_AT = gene_AT_cont_dic[gene_of_interest]
 
     AI = float(AI)
 
-    num_sd_from_mean = how_many_sd_from_mean(the_mean, standard_dev, current_gene_AT)
+    num_sd_from_mean = how_many_sd_from_mean(the_mean, standard_dev,
+                                             current_gene_AT)
     assert  how_many_sd_from_mean(10,2,2) ==4
-
     HGTspecies_description = gene_to_HGTspeces_discription_dict[gene_of_interest]
     HGTspecies = HGTspecies_description.split("\t")[0]
     description = HGTspecies_description.split("\t")[1]
-    #description = description.split("[")[0]
-    #print "gene_of_interest %s has AT cont of %d" %(gene_of_interest, current_gene_AT)
+    # description = description.split("[")[0]
     lower_threshold = float(the_mean) - (sd_numbers*float(standard_dev))
     upper_threshold = float(the_mean) + (sd_numbers*float(standard_dev))
-    #print lower_threshold, upper_threshold
-    
+    # print lower_threshold, upper_threshold
     if current_gene_AT < lower_threshold or current_gene_AT > upper_threshold:
-        #call dict to get expression
-        TPM = gene_to_expression[gene_of_interest]
-        exons = gene_to_exon_count[gene_of_interest]
+        # if calling with RNAseq assembly
+        transcript = gene_of_interest.split("|")[0]
+        # call dict to get expression
+        try:
+            TPM = gene_to_expression[gene_of_interest]
+        except:
+            ValueError #Rnaseq assebmly not genome
+            TPM = gene_to_expression[transcript]
+        try:
+            exons = gene_to_exon_count[gene_of_interest]
+        except:
+            ValueError
+            exons = gene_to_exon_count[transcript]
+        try:
+            per_ident = gene_to_HGT_percent_identity[gene_of_interest]
+        except:
+            ValueError
+            per_ident = gene_to_HGT_percent_identity[transcript]
         #print "gene: %s\tAT_cont: %d\tcomment: ...%s... \texpression: %s\texons: %d\t%s\t%s"\
                 #%(gene_of_interest, current_gene_AT, comment, TPM, exons, HGTspecies, description)
-        print ("gene: %s\tAI = %s\tAT_cont: %d\tAT_cont_numSD_fromMean: %.2f\tgenomic_cov_from_mean: %.2f\t\texpression: %s\texons: %d\tcomment: ...%s...\t%s\t%s"\
-                %(gene_of_interest, AI,  current_gene_AT,\
-                  num_sd_from_mean, genomic_cov_from_mean, \
-                  TPM, exons, comment, HGTspecies, description))
-        HGT_info_dataformatted = "%s\t%.1f\t%d\t%.2f\t%.2f\t%s\t%d\t%s\t%s\t%s\n" %(gene_of_interest, AI,current_gene_AT,\
-                                                  num_sd_from_mean, genomic_cov_from_mean, \
-                                                  TPM, exons, comment, HGTspecies, description)
-    
+        print ("gene: %s\tAI = %s\tAT_cont: %d\tAT_cont_numSD_fromMean: %.2f\tgenomic_cov_from_mean: %.2f\t\texpression: %s\texons: %d\tcomment: ...%s...\t%s\t%s" %(gene_of_interest,
+                      AI,  current_gene_AT,\
+                      num_sd_from_mean, genomic_cov_from_mean, \
+                      TPM, exons, comment, HGTspecies, description))
+        HGT_info_dataformatted = "%s\t%s\t%.1f\t%d\t%.2f\t%.2f\t%s\t%d\t%s\t%s\t%s\n" %(gene_of_interest,
+                                                                                        per_ident,
+                                                                                        AI,
+                                                                                        current_gene_AT,
+                                                                                        num_sd_from_mean,
+                                                                                        genomic_cov_from_mean,
+                                                                                        TPM,
+                                                                                        exons,
+                                                                                        comment,
+                                                                                        HGTspecies,
+                                                                                        description)
     return HGT_info_dataformatted
 
         
@@ -250,22 +285,20 @@ def check_scaffolds_for_only_HGT_genes(genome, gff, LTG, dna_file, sd_numbers, r
 
     HGT_gene_info = "HGT.info."+out_file
     f_out = open(HGT_gene_info, "w")
-    f_out.write("#%s\n#gene\tAI\tAT_cont\tAT_cont_numSD_fromMean\tgenomic_cov_from_mean\texpression_TMM\tnum_RNAseq_reads\texons\tcomment\tKingdom\tHGT_closest_species_hit\tBLAST_description\n" %(datetime.date.today()))
+    f_out.write("#%s\n#gene\tPerc_identity_to_HGT_hit\tAI\tAT_cont\tAT_cont_numSD_fromMean\tgenomic_cov_from_mean\texpression_TMM\tnum_RNAseq_reads\texons\tcomment\tKingdom\tHGT_closest_species_hit\tBLAST_description\n" %(datetime.date.today()))
 
-    
     #call function to get the scaffold to gene dict
-    scaffold_to_gene_dict, gene_to_exon_count, gene_start_stop_dict = parse_gff(gff)
-           
+    scaffold_to_gene_dict, gene_to_exon_count, gene_start_stop_dict = parse_gff(gff)    
     #call function to get gene_set, gene_to_comment_dict
     HGT_predicted_gene_set, gene_to_comment_dict,\
-                    gene_to_HGTspeces_discription_dict, gene_to_AI= LTG_file(LTG)
-
+        gene_to_HGTspeces_discription_dict, gene_to_AI, \
+        gene_to_HGT_percent_identity = LTG_file(LTG)
     #get_scaffold_coverage from import coverage.py
     if bam_file:
         overall_coverage = "overall_coverage.txt"
         overall_expression_dic = get_total_coverage(bam_file, overall_coverage)
         HGT_gene_to_genic_cov_dic, scaffold_mean_SD_cov_dict, \
-                                   mean_genomic_cov, standard_dev_genomic_cov = get_scaffold_coverage(genome, \
+        mean_genomic_cov, standard_dev_genomic_cov = get_scaffold_coverage(genome, \
                                                     scaffold_to_gene_dict, gene_start_stop_dict,\
                                                     bam_file, overall_expression_dic,\
                                                     HGT_predicted_gene_set)
@@ -294,12 +327,13 @@ def check_scaffolds_for_only_HGT_genes(genome, gff, LTG, dna_file, sd_numbers, r
             AI = "NA"
             
         HGT_info_dataformatted = check_HGT_AT_vs_global_AT(gene_AT_cont_dic, AI, the_mean,
-                                  standard_dev, gene, comment,
-                                  sd_numbers, gene_to_expression, \
-                                  gene_to_exon_count, gene_to_HGTspeces_discription_dict, \
-                                  genomic_cov_from_mean)
+                                                           standard_dev, gene, comment,
+                                                           sd_numbers, gene_to_expression, \
+                                                           gene_to_exon_count,
+                                                           gene_to_HGTspeces_discription_dict, \
+                                                           genomic_cov_from_mean,
+                                                           gene_to_HGT_percent_identity)
         f_out.write(HGT_info_dataformatted)
-        
 
     for scaffold, genes in scaffold_to_gene_dict.items():
         descrption_to_add = ""
@@ -323,7 +357,6 @@ def check_scaffolds_for_only_HGT_genes(genome, gff, LTG, dna_file, sd_numbers, r
                     if int(AI) < 15:
                         bad_contig = False
                         continue
-    
                 except:
                     ValueError
                     bad_contig = False
@@ -335,7 +368,10 @@ def check_scaffolds_for_only_HGT_genes(genome, gff, LTG, dna_file, sd_numbers, r
                 print ("Bad scaffold = %s" %(scaffold))
                 descrpt = gene_to_HGTspeces_discription_dict[gene]
                 descrption_to_add = descrption_to_add+" "+descrpt
-                data_formatted = "%s\tBad_scaffold\t%s\t%s\t%s\n" %(scaffold, genes_string, AI_values, descrption_to_add)
+                data_formatted = "%s\tBad_scaffold\t%s\t%s\t%s\n" %(scaffold,
+                                                                    genes_string,
+                                                                    AI_values,
+                                                                    descrption_to_add)
                 out.write(data_formatted)
     out.close()
 
@@ -348,11 +384,15 @@ if "-v" in sys.argv or "--version" in sys.argv:
 
 usage = """Use as follows:
 
-Tool to refine the HGT predicted gene based on RNAseq cov, genomic cov, exon number, percentage identity to best non-metazoan hit and AT content that differes from normal.
+Tool to refine the HGT predicted gene based on RNAseq cov, genomic cov, exon number, percentage
+identity to best non-metazoan hit and AT content that differes from normal.
 
-$ python ~/misc_python/Lateral_gene_transfer_prediction_tool/check_contaminants_on_contigs.py --gff ../augustus.gff3 -LTG LTG_LGT_candifates.out (default)
+$ python ~/misc_python/Lateral_gene_transfer_prediction_tool/check_contaminants_on_contigs.py
+        --gff ../augustus.gff3 -LTG LTG_LGT_candifates.out (default)
 
-python ~/misc_python/Lateral_gene_transfer_prediction_tool/check_contaminants_on_contigs.py --bam sorted.bam --gff augustus.gff3 --LTG LTG_LGT_candifates_AI_30plus.out -s 0 -r Rp.nt.fasta_quant.sf -g Rp.v1_alt.fasta --dna Rp.nt.fasta -o test
+python ~/misc_python/Lateral_gene_transfer_prediction_tool/check_contaminants_on_contigs.py
+    --bam sorted.bam --gff augustus.gff3 --LTG LTG_LGT_candifates_AI_30plus.out -s 0
+    -r Rp.nt.fasta_quant.sf -g Rp.v1_alt.fasta --dna Rp.nt.fasta -o test
 
 
 Requires:
@@ -388,7 +428,8 @@ gffread *gff -g genome.fasta -x nt.fa -y aa.fa
 
 BAD SCAFFOLDS??
 
-The script will check to see if a contig is only made up of LTG/HGT predicted genes. If so, then this contig is suspect
+The script will check to see if a contig is only made up of LTG/HGT predicted genes.
+If so, then this contig is suspect
 and therefore should be considered as contimination.
 Users are encouraged to used Blobplots of the genome assemblies before they get to this point.
 
@@ -457,6 +498,7 @@ if not os.path.isfile(dna):
     sys_exit("Input dna file not found: %s" % dna)
     
     
-check_scaffolds_for_only_HGT_genes(genome, gff, LTG, dna, sd_numbers, rnaseq, bam_file, out_file)
+check_scaffolds_for_only_HGT_genes(genome, gff, LTG, dna, sd_numbers,
+                                   rnaseq, bam_file, out_file)
 
 
