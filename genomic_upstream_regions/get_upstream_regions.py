@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 
-########################################################################################################
-#####: TITLE: script to get the upstream regions of genes of interest ##################################
+#################################################################################
+#####: TITLE: script to get the upstream regions of genes of interest ###########
 #script will return upt to the gene if the full length falls within that gene.
 #also, script will return reverse complemnet of negative strand coded genes.
 
 #author: Peter Thorpe September 2015. The James Hutton Insitute, Dundee, UK.
 
 """
-script to return a user defined threshoold upstream number of nucleotides of genes of interest
-from the genome seq using a modified GFF output. 
+script to return a user defined threshoold upstream number of nucleotides of
+genes of interest from the genome seq using a modified GFF output. 
 """
 
 #biopython imports
@@ -23,7 +23,7 @@ import sys
 from optparse import OptionParser
 
 
-########################################################################################################
+####################################################################################
 def wanted_genes(genes_file):
     "function to return a list of wanted genes from file"
     wanted = open(genes_file, "r")
@@ -39,12 +39,13 @@ def wanted_genes(genes_file):
     return wanted_set
 
 def index_gene_scaffold_coordinates(coordinate_file):
-    "function to return dictionary genes and coordinates without directions"
+    """function to return dictionary genes and coordinates
+    without directions"""
     coordinate_dict = dict()
     data = open(coordinate_file, "r")
     genes_coordinate = data.readlines()
     genes_coordinate = [line.replace("ID=", "").rstrip() for line in genes_coordinate
-              if line.rstrip() != "" if not line.startswith("#")]
+                        if line.rstrip() != "" if not line.startswith("#")]
     gene_list = []
     data.close()
     for gff_info in genes_coordinate:
@@ -54,6 +55,8 @@ def index_gene_scaffold_coordinates(coordinate_file):
         if ";" in gene:
             gene = gene.split(";")[0]
         #check each gene only represented once
+        #if gene in gene_list: # if the following assert is a problem and you know why you can replace with this
+           # continue
         assert gene not in gene_list, "duplicate genes found. Reformat file -C file. Problem gene is: %s" % (gene)
         gene_list.append(gene)
         if gene in coordinate_dict.values():
@@ -66,7 +69,8 @@ def index_gene_scaffold_coordinates(coordinate_file):
     return coordinate_dict
 
   
-def iterate_through_coordinate_dictionary(coordinate_dict,gene_name, scaffold, coordinates):
+def iterate_through_coordinate_dictionary(coordinate_dict,gene_name, scaffold,
+                                          coordinates):
     "check to see if the scaffold and new coordinate hits a predicted gene"
     for gene, vals in coordinate_dict.items():
         #find the genes on the same scaffold
@@ -80,7 +84,8 @@ def iterate_through_coordinate_dictionary(coordinate_dict,gene_name, scaffold, c
                 continue
                 
             else:
-                #debugging comment due to Roman numeral scaffold name being "within" eachother
+                #debugging comment due to Roman numeral scaffold
+                # name being "within" eachother
                 #print "scaffold = ", scaffold, "acutally looking at", vals[0]
 
                 #cureent gene start
@@ -89,10 +94,13 @@ def iterate_through_coordinate_dictionary(coordinate_dict,gene_name, scaffold, c
                 stop = int(vals[2])
                 coordinates = int(coordinates)
                 direction = vals[3]
-                #print "coordinates=%s, start=%s, stop=%s , gene_query=%s, gene_GFF=%s" %(coordinates, start, stop, gene_name, gene)
+                #print "coordinates=%s, start=%s, stop=%s , gene_query=%s, gene_GFF=%s" %(coordinates,
+                                                                                          #start, stop, gene_name, gene)
                 #basically does the coordinate fall in the current coordinate for a gene
                 if coordinates >= start and coordinates <= stop:
-                    print "\n%s gene upstream coordinate falls in the genic regions of %s on %s scaffold\n" % (gene_name,gene,scaffold)
+                    print "\n%s gene upstream coordinate falls in the genic regions of %s on %s scaffold\n" % (gene_name,
+                                                                                                               gene,
+                                                                                                               scaffold)
                     data = coordinate_dict[gene_name]
                     if "+" in data:
                         #+ coding gene, upstream will be returned as the end (stop) of the preceding gene
@@ -114,7 +122,8 @@ def parse_through_gene_coordinates(coordinate_file):
     return genes_coordinate
 
 
-def seq_getter(coordinate_file, genome_sequence, upstream, genes_file, outfile, user_defined_genic=0):
+def seq_getter(coordinate_file, genome_sequence, upstream, genes_file, outfile,
+               user_defined_genic=0):
     """this is a function returns the upstream regions of the list of genes of interest
      - a user defined threshold for the number of nucleotides upstream is also used"""
     f= open(outfile, 'w')
@@ -147,7 +156,8 @@ def seq_getter(coordinate_file, genome_sequence, upstream, genes_file, outfile, 
         assert DNA_start<DNA_stop, "are you sure the start stop coordinates are correct?"
         upstream = (DNA_start)-threshold
         if upstream<2:
-            print "\nWARNING: %s upstream region may fall off start of contigs %s. Check this\n" % (gene_name, contig)
+            print "\nWARNING: %s upstream region may fall off start of contigs %s. Check this\n" % (gene_name,
+                                                                                                    contig)
             
     
         # yes DNA_stop - this is how it is coded in GFF files
@@ -158,7 +168,8 @@ def seq_getter(coordinate_file, genome_sequence, upstream, genes_file, outfile, 
         DNA_region_of_interest = Genome_seq_record.seq
 
         if neagtive_strand_upstream > length_of_contig:
-            print "WARNING: %s upstream region may fall off end of contig %s. Check this\n" % (gene_name,contig)
+            print "WARNING: %s upstream region may fall off end of contig %s. Check this\n" % (gene_name,
+                                                                                               contig)
             
                    #test if the "upstream region hits a gene
 
@@ -237,9 +248,11 @@ def seq_getter(coordinate_file, genome_sequence, upstream, genes_file, outfile, 
 
 
 
-#####################################################################################################
+###############################################################################################
+
 start_time=time.time()
-###################################################################################################
+###############################################################################################
+
 
 
 if "-v" in sys.argv or "--version" in sys.argv:
