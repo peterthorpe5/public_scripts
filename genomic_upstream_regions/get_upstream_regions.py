@@ -54,7 +54,7 @@ def index_gene_scaffold_coordinates(coordinate_file):
         if ";" in gene:
             gene = gene.split(";")[0]
         #check each gene only represented once
-        assert gene not in gene_list, "duplicate genes found. Reformat file -C file. "
+        assert gene not in gene_list, "duplicate genes found. Reformat file -C file. Problem gene is: %s" % (gene)
         gene_list.append(gene)
         if gene in coordinate_dict.values():
             print "repeated line in gff sub file"
@@ -191,8 +191,6 @@ def seq_getter(coordinate_file, genome_sequence, upstream, genes_file, outfile, 
             else:
             #(-) ... downstream is (DNA_stop) + threshold"
                 if len(DNA_region_of_interest_negative_upstream) >50:
-                    if gene_name == "GROS_g06661":
-                        print "GROS_g06661 hhheeerr"
                     print >> f, '>%s\t|%s\t[%s:%s]%sbp_upstream - strand\n%s' % \
                             (gene_name,contig,(DNA_stop-user_defined_genic),
                              neagtive_strand_upstream, threshold,
