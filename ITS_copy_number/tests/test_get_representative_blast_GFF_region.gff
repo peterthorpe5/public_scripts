@@ -1,0 +1,27 @@
+supercont1	P1	ITS_blast_hit_208	1000	1300	.	+	.	earliest_start final end
+supercont1	P1	ITS_blast_hit_309	1010	1290	.	+	.	should_be_removed_completely
+supercont1	P1	ITS_blast_hit_310	1010	1290	.	+	.	should_be_removed_completely
+##
+#
+supercont1	P1	ITS_blast_hit_998	11010	11290	.	+	.	included. hit later on
+
+supercont1	P1	ITS_blast_hit_999	11015	11289	.	+	.	removed!!!!!!!!!!!!!!
+
+#
+## should not see this at all
+##another test later in the scaffold
+
+supercont1	P1	ITS_blast_hit_1	1111010	1111290	.	+	.	removed - but best start 1111010 - 1111299
+supercont1	P1	ITS_blast_hit_2	1111010	1111291	.	+	.	removed 1111010 - 1111299
+supercont1	P1	ITS_blast_hit_3	1111010	1111292	.	+	.	removed 1111010 - 1111299
+supercont1	P1	ITS_blast_hit_4	1111015	1111299	.	+	.	best end 1111010 - 1111299
+supercont1	P1	ITS_blast_hit_5	1111020	1111299	.	+	.	no further change
+
+#
+supercont2	P1	ITS_blast_hit_94	90	310	.	+	.	earliest_start
+supercont2	P1	ITS_blast_hit_502	100	300	.	+	.	removed
+#
+supercont3	P1	ITS_blast_hit_183	123	345	.	+	.	included
+#
+supercont4	P1	ITS_blast_hit_287	123	345	.	+	.	included_test_for_same_coordinates_on_diff_scaff
+supercont4	P1	ITS_blast_hit_288	600	746	.	+	.	extra hit in final scaffold
