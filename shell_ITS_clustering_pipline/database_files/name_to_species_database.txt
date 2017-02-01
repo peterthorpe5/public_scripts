@@ -1,0 +1,555 @@
+PD_00050 	Phytophthora alni subsp. alni
+PD_00908 	Phytophthora alni subsp. alni
+PD_02131 	Phytophthora alni subsp. uniformis
+PD_02801 	Phytophthora alni subsp. multiformis
+PD_01642 	Phytophthora alticola 
+PD_02827 	Phytophthora amnicola 
+PD_01654 	Phytophthora andina 
+PD_01011 	Phytophthora andina 
+PD_01013 	Phytophthora andina 
+PD_01656 	Phytophthora andina 
+PD_02802 	Phytophthora aquimorbida 
+PD_02825 	Phytophthora arenaria 
+PD_01849 	Phytophthora asparagi 
+PD_01281 	Phytophthora asparagi 
+PD_02751 	Phytophthora asparagi 
+PD_01657 	Phytophthora austrocedrae 
+PD_01648 	Phytophthora austrocedrae 
+PD_02803 	Phytophthora bilorbang 
+PD_01678 	Phytophthora bisheria 
+PD_00181 	Phytophthora boehmeriae 
+PD_01665 	Phytophthora boehmeriae 
+PD_01666 	Phytophthora boehmeriae 
+PD_01659 	Phytophthora boehmeriae 
+PD_02814 	Phytophthora borealis 
+PD_02804 	Phytophthora borealis 
+PD_02813 	Phytophthora borealis 
+PD_00144 	Phytophthora botryosa 
+PD_02141 	Phytophthora botryosa 
+PD_02140 	Phytophthora botryosa 
+PD_00028 	Phytophthora  sp. "brasiliensis"
+PD_01931 	Phytophthora  sp. "brasiliensis"
+PD_00109 	Phytophthora brassicae 
+PD_00004 	Phytophthora brassicae 
+PD_01670 	Phytophthora brassicae 
+PD_00347 	Phytophthora cactorum 
+PD_02154 	Phytophthora cactorum 
+PD_02150 	Phytophthora cactorum 
+PD_00936 	Phytophthora cactorum 
+PD_00950 	Phytophthora cactorum 
+PD_00959 	Phytophthora cactorum 
+PD_00932 	Phytophthora cactorum 
+PD_00281 	Phytophthora cactorum 
+PD_00301 	Phytophthora cactorum 
+PD_00994_2 	Phytophthora cactorum 
+PD_00410 	Phytophthora cactorum 
+PD_00425 	Phytophthora cactorum 
+PD_00656 	Phytophthora cactorum 
+PD_00512 	Phytophthora cactorum 
+PD_00565 	Phytophthora cactorum 
+PD_00994 	Phytophthora cactorum 
+PD_02156 	Phytophthora cajani 
+PD_02158 	Phytophthora cajani 
+PD_02163 	Phytophthora cambivora 
+PD_00767 	Phytophthora cambivora 
+PD_02161 	Phytophthora cambivora 
+PD_00708 	Phytophthora cambivora 
+PD_00691 	Phytophthora cambivora 
+PD_00094 	Phytophthora  sp. "canalensis"
+PD_02681 	Phytophthora capensis 
+PD_01677 	Phytophthora capsici 
+PD_00710 	Phytophthora capsici 
+PD_00187 	Phytophthora capsici 
+PD_00009 	Phytophthora capsici 
+PD_01676 	Phytophthora capsici 
+PD_00011 	Phytophthora capsici 
+PD_01963 	Phytophthora capsici 
+PD_01975 	Phytophthora capsici 
+PD_00674 	Phytophthora capsici 
+PD_00442 	Phytophthora capsici 
+PD_00443 	Phytophthora capsici 
+PD_00445 	Phytophthora capsici 
+PD_00693 	Phytophthora capsici 
+PD_00694 	Phytophthora capsici 
+PD_00695 	Phytophthora capsici 
+PD_00444 	Phytophthora capsici 
+PD_00186 	Phytophthora captiosa 
+PD_02805 	Phytophthora chrysanthemi 
+PD_00712 	Phytophthora cinnamomi 
+PD_01145 	Phytophthora cinnamomi 
+PD_00713 	Phytophthora cinnamomi 
+PD_00718 	Phytophthora cinnamomi 
+PD_00982 	Phytophthora cinnamomi 
+PD_00120 	Phytophthora cinnamomi 
+PD_00998 	Phytophthora cinnamomi 
+PD_00455 	Phytophthora cinnamomi 
+PD_00188 	Phytophthora cinnamomi var parvispora
+PD_01682 	Phytophthora cinnamomi var parvispora
+PD_02006 	Phytophthora cinnamomi var. robiniae
+PD_01136 	Phytophthora citricola 
+PD_01862 	Phytophthora citricola 
+PD_02180 	Phytophthora citricola 
+PD_02185 	Phytophthora citricola 
+PD_02187 	Phytophthora citricola 
+PD_02196 	Phytophthora citricola 
+PD_00233 	Phytophthora citricola 
+PD_00615 	Phytophthora citricola 
+PD_00041 	Phytophthora citrophthora 
+PD_01695 	Phytophthora citrophthora 
+PD_01704 	Phytophthora citrophthora 
+PD_01705 	Phytophthora citrophthora 
+PD_00524 	Phytophthora citrophthora 
+PD_00448 	Phytophthora citrophthora 
+PD_00134 	Phytophthora clandestina 
+PD_00139 	Phytophthora colocasiae 
+PD_01909 	Phytophthora colocasiae 
+PD_00303 	Phytophthora colocasiae 
+PD_02209 	Phytophthora colocasiae 
+PD_00176 	Phytophthora colocasiae 
+PD_02214 	Phytophthora colocasiae 
+PD_00024 	Phytophthora colocasiae 
+PD_00314 	Phytophthora colocasiae 
+PD_00338 	Phytophthora colocasiae 
+PD_00300 	Phytophthora colocasiae 
+PD_00370 	Phytophthora colocasiae 
+PD_00270 	Phytophthora colocasiae 
+PD_00591 	Phytophthora colocasiae 
+PD_00550 	Phytophthora colocasiae 
+PD_00273 	Phytophthora colocasiae 
+PD_02826 	Phytophthora constricta 
+PD_00031 	Phytophthora cryptogea 
+PD_01758 	Phytophthora cryptogea 
+PD_01763 	Phytophthora cryptogea 
+PD_01227 	Phytophthora cryptogea 
+PD_01770 	Phytophthora cryptogea 
+PD_01767 	Phytophthora cryptogea 
+PD_01764 	Phytophthora cryptogea 
+PD_01725 	Phytophthora cryptogea 
+PD_00661 	Phytophthora cryptogea 
+PD_00511 	Phytophthora cryptogea 
+PD_00659_2 	Phytophthora cryptogea 
+PD_00697 	Phytophthora cryptogea 
+PD_00242 	Phytophthora cryptogea 
+PD_00476 	Phytophthora cryptogea 
+PD_00579 	Phytophthora cryptogea 
+PD_02697 	Phytophthora cryptogea 
+PD_01117 	Phytophthora  sp. "cuyabensis"
+PD_00319 	Phytophthora drechsleri 
+PD_00086 	Phytophthora drechsleri 
+PD_00498 	Phytophthora drechsleri 
+PD_00469 	Phytophthora drechsleri 
+PD_00441 	Phytophthora drechsleri 
+PD_00597 	Phytophthora drechsleri 
+PD_00633 	Phytophthora drechsleri 
+PD_00527 	Phytophthora drechsleri 
+PD_02759 	Phytophthora elongata 
+PD_02035 	Phytophthora  sp. "erwinii"
+PD_00030 	Phytophthora erythroseptica 
+PD_00014 	Phytophthora erythroseptica 
+PD_00036 	Phytophthora erythroseptica 
+PD_02252 	Phytophthora erythroseptica 
+PD_00084 	Phytophthora europaea 
+PD_00082 	Phytophthora europaea 
+PD_00162 	Phytophthora fallax 
+PD_00401 	Phytophthora fallax 
+PD_02806 	Phytophthora fluvialis 
+PD_00112 	Phytophthora foliorum 
+PD_00110 	Phytophthora foliorum 
+PD_00111 	Phytophthora foliorum 
+PD_02833 	Phytophthora taxon Forestsoil
+PD_00922 	Phytophthora fragariae 
+PD_02042 	Phytophthora fragariae 
+PD_00914 	Phytophthora fragariae 
+PD_01647 	Phytophthora frigida 
+PD_02776 	Phytophthora gallica 
+PD_02807 	Phytophthora gemini 
+PD_02714 	Phytophthora gibbosa 
+PD_02711 	Phytophthora gibbosa 
+PD_01112 	Phytophthora glovera 
+PD_01945 	Phytophthora glovera 
+PD_01935 	Phytophthora glovera 
+PD_00783 	Phytophthora gonapodyides 
+PD_02276 	Phytophthora gonapodyides 
+PD_01776 	Phytophthora gonapodyides 
+PD_00481 	Phytophthora gonapodyides 
+PD_02715 	Phytophthora gregata 
+PD_02717 	Phytophthora gregata 
+PD_02720 	Phytophthora gregata 
+PD_00166 	Phytophthora hedraiandra 
+PD_02282 	Phytophthora hedraiandra 
+PD_00280 	Phytophthora hedraiandra 
+PD_00969 	Phytophthora heveae 
+PD_00971 	Phytophthora heveae 
+PD_00972 	Phytophthora heveae 
+PD_00010 	Phytophthora hibernalis 
+PD_02808 	Phytophthora himalsilva 
+PD_00018 	Phytophthora humicola 
+PD_01783 	Phytophthora humicola 
+PD_02777 	Phytophthora hydropathica 
+PD_00495 	Phytophthora hydropathica 
+PD_00177 	Phytophthora idaei 
+PD_02053 	Phytophthora ilicis 
+PD_00133 	Phytophthora ilicis 
+PD_00795 	Phytophthora infestans 
+PD_00806 	Phytophthora infestans 
+PD_00823 	Phytophthora infestans 
+PD_00826 	Phytophthora infestans 
+PD_00897 	Phytophthora infestans 
+PD_00907 	Phytophthora infestans 
+PD_01095 	Phytophthora infestans 
+PD_00102 	Phytophthora infestans 
+PD_00793 	Phytophthora infestans 
+PD_00808 	Phytophthora infestans 
+PD_00822 	Phytophthora infestans 
+PD_00842 	Phytophthora infestans 
+PD_00870 	Phytophthora infestans 
+PD_02365 	Phytophthora infestans 
+PD_00799 	Phytophthora infestans 
+PD_00804 	Phytophthora infestans 
+PD_00850 	Phytophthora infestans 
+PD_01634 	Phytophthora inflata 
+PD_01296 	Phytophthora insolita 
+PD_00145 	Phytophthora inundata 
+PD_01804 	Phytophthora inundata 
+PD_00080 	Phytophthora ipomoeae 
+PD_00078 	Phytophthora ipomoeae 
+PD_00173 	Phytophthora iranica 
+PD_02778 	Phytophthora irrigata 
+PD_00128 	Phytophthora katsurae 
+PD_02400 	Phytophthora katsurae 
+PD_02412 	Phytophthora katsurae 
+PD_01797 	Phytophthora  sp. "kelmania"
+PD_01722 	Phytophthora  sp. "kelmania"
+PD_01746 	Phytophthora  sp. "kelmania"
+PD_00239 	Phytophthora  sp. "kelmania"
+PD_00105 	Phytophthora kernoviae 
+PD_00164 	Phytophthora kernoviae 
+PD_02068 	Phytophthora  sp. "lacrimae"
+PD_00040 	Phytophthora lacustris 
+PD_01300 	Phytophthora  sp. "lagoariana"
+PD_01821 	Phytophthora lateralis 
+PD_01829 	Phytophthora lateralis 
+PD_02732 	Phytophthora litoralis 
+PD_02734 	Phytophthora litoralis 
+PD_00156 	Phytophthora macrochlamydospora 
+PD_01249 	Phytophthora macrochlamydospora 
+PD_02422 	Phytophthora meadii 
+PD_00135 	Phytophthora meadii 
+PD_00015 	Phytophthora medicaginis 
+PD_01831 	Phytophthora medicaginis 
+PD_00059 	Phytophthora medicaginis 
+PD_00705 	Phytophthora medicaginis 
+PD_00784 	Phytophthora medicaginis x cryptogae 
+PD_00453 	Phytophthora medicaginis x cryptogae 
+PD_00519 	Phytophthora medicaginis x cryptogae 
+PD_01832 	Phytophthora megakarya 
+PD_00147 	Phytophthora megakarya 
+PD_00489 	Phytophthora megakarya 
+PD_00785 	Phytophthora megasperma 
+PD_00023 	Phytophthora megasperma 
+PD_00021 	Phytophthora megasperma 
+PD_02428 	Phytophthora megasperma 
+PD_02432 	Phytophthora megasperma 
+PD_02076 	Phytophthora megasperma 
+PD_02431 	Phytophthora megasperma 
+PD_00704 	Phytophthora megasperma 
+PD_00468 	Phytophthora megasperma 
+PD_00467 	Phytophthora megasperma 
+PD_00033 	Phytophthora melonis 
+PD_00114 	Phytophthora melonis 
+PD_02698 	Phytophthora mengei 
+PD_02453 	Phytophthora mengei 
+PD_00061 	Phytophthora mexicana 
+PD_00122 	Phytophthora mirabilis 
+PD_02809 	Phytophthora morindae 
+PD_00001 	Phytophthora multivesiculata 
+PD_00778 	Phytophthora multivora 
+PD_00019 	Phytophthora multivora 
+PD_00096 	Phytophthora multivora 
+PD_02700 	Phytophthora multivora 
+PD_01852 	Phytophthora  sp. "napoensis"
+PD_00081 	Phytophthora nemorosa 
+PD_00099 	Phytophthora nemorosa 
+PD_00296 	Phytophthora nicotianae 
+PD_02084 	Phytophthora nicotianae 
+PD_01839 	Phytophthora nicotianae 
+PD_02463 	Phytophthora nicotianae 
+PD_00016 	Phytophthora nicotianae 
+PD_00312 	Phytophthora nicotianae 
+PD_00322 	Phytophthora nicotianae 
+PD_00588 	Phytophthora nicotianae 
+PD_00677 	Phytophthora nicotianae 
+PD_00403 	Phytophthora nicotianae 
+PD_00651 	Phytophthora nicotianae 
+PD_00652 	Phytophthora nicotianae 
+PD_00581 	Phytophthora nicotianae 
+PD_00449 	Phytophthora nicotianae 
+PD_00589 	Phytophthora nicotianae 
+PD_00450 	Phytophthora nicotianae 
+PD_00554 	Phytophthora nicotianae 
+PD_02092 	Phytophthora  sp. "niederhauserii"
+PD_01720 	Phytophthora  sp. "niederhauserii"
+PD_00466 	Phytophthora  sp. "niederhauserii"
+PD_01856 	Phytophthora  sp. "novaeguine"
+PD_02832 	Phytophthora taxon Oaksoil
+PD_02810 	Phytophthora obscura 
+PD_01627 	Phytophthora  sp. "ohioensis"
+PD_00075 	Phytophthora palmivora 
+PD_00022 	Phytophthora palmivora 
+PD_00491 	Phytophthora palmivora 
+PD_02096 	Phytophthora parsiana 
+PD_01114 	Phytophthora  sp. "personii"
+PD_01803 	Phytophthora  sp. "personii"
+PD_00456 	Phytophthora  sp. "personii"
+PD_01628 	Phytophthora taxon Pgchlamydo
+PD_01906 	Phytophthora taxon Pgchlamydo
+PD_01777 	Phytophthora taxon Pgchlamydo
+PD_00472 	Phytophthora taxon Pgchlamydo
+PD_00419 	Phytophthora taxon Pgchlamydo
+PD_00421 	Phytophthora taxon Pgchlamydo
+PD_00416 	Phytophthora taxon Pgchlamydo
+PD_00420 	Phytophthora taxon Pgchlamydo
+PD_00067 	Phytophthora phaseoli 
+PD_00069 	Phytophthora phaseoli 
+PD_00380 	Phytophthora pini 
+PD_02181 	Phytophthora pini 
+PD_02811 	Phytophthora pini 
+PD_00287 	Phytophthora pini 
+PD_00344 	Phytophthora pini 
+PD_00637 	Phytophthora pini 
+PD_00530 	Phytophthora pini 
+PD_00567 	Phytophthora pini 
+PD_00292 	Phytophthora pini 
+PD_00371 	Phytophthora pini 
+PD_00235 	Phytophthora pini 
+PD_00202 	Phytophthora pini 
+PD_02100 	Phytophthora pinifolia 
+PD_02741 	Phytophthora pinifolia 
+PD_01119 	Phytophthora pistaciae 
+PD_01132 	Phytophthora plurivora 
+PD_00395 	Phytophthora plurivora 
+PD_00232 	Phytophthora plurivora 
+PD_00283 	Phytophthora plurivora 
+PD_00284 	Phytophthora plurivora 
+PD_00272 	Phytophthora plurivora 
+PD_00373 	Phytophthora plurivora 
+PD_00553 	Phytophthora plurivora 
+PD_00446 	Phytophthora plurivora 
+PD_00531 	Phytophthora plurivora 
+PD_00231 	Phytophthora plurivora 
+PD_01107 	Phytophthora polonica 
+PD_02104 	Phytophthora porri 
+PD_02507 	Phytophthora porri 
+PD_02506 	Phytophthora porri 
+PD_02508 	Phytophthora porri 
+PD_00076 	Phytophthora primulae 
+PD_00025 	Phytophthora primulae 
+PD_02105 	Phytophthora pseudosyringae 
+PD_00093 	Phytophthora pseudosyringae 
+PD_00151 	Phytophthora pseudotsugae 
+PD_00029 	Phytophthora pseudotsugae 
+PD_00039 	Phytophthora psychrophila 
+PD_01143 	Phytophthora quercetorum 
+PD_01138 	Phytophthora quercina 
+PD_01270 	Phytophthora quercina 
+PD_00035 	Phytophthora quercina 
+PD_00126 	Phytophthora quininea 
+PD_00172 	Phytophthora quininea 
+PD_00048 	Phytophthora ramorum 
+PD_00064 	Phytophthora ramorum 
+PD_00065 	Phytophthora ramorum 
+PD_00119 	Phytophthora richardiae 
+PD_02819 	Phytophthora riparia 
+PD_02817 	Phytophthora riparia 
+PD_02831 	Phytophthora taxon Riversoil
+PD_02743 	Phytophthora rosacearum 
+PD_02041 	Phytophthora rubi 
+PD_01115 	Phytophthora sansomeana 
+PD_01636 	Phytophthora siskiyouensis 
+PD_02516 	Phytophthora siskiyouensis 
+PD_00124 	Phytophthora sojae 
+PD_01283 	Phytophthora sojae 
+PD_00506 	Phytophthora sojae 
+PD_00508 	Phytophthora sojae 
+PD_00507 	Phytophthora sojae 
+PD_00509 	Phytophthora sojae 
+PD_01297 	Phytophthora  sp. "sulawesiensis"
+PD_01865 	Phytophthora syringae 
+PD_00764 	Phytophthora syringae 
+PD_00044 	Phytophthora syringae 
+PD_01124 	Phytophthora syringae 
+PD_00788 	Phytophthora syringae 
+PD_02824 	Phytophthora taxon aquatilis
+PD_02710 	Phytophthora taxon emzansi
+PD_00146 	Phytophthora tentaculata 
+PD_00095 	Phytophthora thermophila 
+PD_02745 	Phytophthora thermophila 
+PD_00179 	Phytophthora trifolii 
+PD_01861 	Phytophthora tropicalis 
+PD_01272 	Phytophthora tropicalis 
+PD_00392 	Phytophthora tropicalis 
+PD_00152 	Phytophthora tropicalis 
+PD_00317 	Phytophthora tropicalis 
+PD_00540 	Phytophthora tropicalis 
+PD_00471 	Phytophthora tropicalis 
+PD_00539 	Phytophthora tropicalis 
+PD_00628 	Phytophthora tropicalis 
+PD_00675 	Phytophthora tropicalis 
+PD_00520 	Phytophthora tropicalis 
+PD_00012 	Phytophthora uliginosa 
+PD_01122 	Phytophthora undulata 
+PD_00123 	Phytophthora vignae 
+PD_02830 	Phytophthora taxon Walnut
+1Phytophthora_aff_infestans_P13660	1Phytophthora_aff_infestans_P13660
+1Phytophthora_infestans_CBS36651	1Phytophthora_infestans_CBS36651
+1Phytophthora_ipomoeae_P10225	1Phytophthora_ipomoeae_P10225
+1Phytophthora_mirabilis_CBS67885	1Phytophthora_mirabilis_CBS67885
+1Phytophthora_phaseoli_CBS55688	1Phytophthora_phaseoli_CBS55688
+1Phytophthora_sp_andina_EC3163	1Phytophthora_sp_andina_EC3163
+1Phytophthora_cactorum_CBS113344	1Phytophthora_cactorum_CBS113344
+1Phytophthora_hedraiandra_CBS118732	1Phytophthora_hedraiandra_CBS118732
+1Phytophthora_idaei_P6767	1Phytophthora_idaei_P6767
+1Phytophthora_nicotianae_CBS30329	1Phytophthora_nicotianae_CBS30329
+1Phytophthora_tabaci_CBS30529	1Phytophthora_tabaci_CBS30529
+1Phytophthora_tentaculata_CBS100411	1Phytophthora_tentaculata_CBS100411
+1Phytophthora_clandestina_P3942	1Phytophthora_clandestina_P3942
+1Phytophthora_iranica_CBS37472	1Phytophthora_iranica_CBS37472
+2Phytophthora_frigida_P16051	2Phytophthora_frigida_P16051
+2Phytophthora_bisheria_P10117	2Phytophthora_bisheria_P10117
+2Phytophthora_multivesiculata_CBS54596	2Phytophthora_multivesiculata_CBS54596
+2Phytophthora_botryosa_CBS58169	2Phytophthora_botryosa_CBS58169
+2Phytophthora_citrophthora_CBS111338	2Phytophthora_citrophthora_CBS111338
+2Phytophthora_colocasiae_P6290	2Phytophthora_colocasiae_P6290
+2Phytophthora_meadii_CBS21988	2Phytophthora_meadii_CBS21988
+2Phytophthora_aff_meadii_CBS23530	2Phytophthora_aff_meadii_CBS23530
+2Phytophthora_citricola_CBS22188	2Phytophthora_citricola_CBS22188
+2Phytophthora_multivora_CBS113347	2Phytophthora_multivora_CBS113347
+2Phytophthora_pini_CBS18125	2Phytophthora_pini_CBS18125
+2Phytophthora_plurivora_CBS37961	2Phytophthora_plurivora_CBS37961
+2Phytophthora_sp_nov_CBS36879	2Phytophthora_sp_nov_CBS36879
+2Phytophthora_mengei_P10139	2Phytophthora_mengei_P10139
+2Phytophthora_siskiyouensis_P15122	2Phytophthora_siskiyouensis_P15122
+2Phytophthora_sp_nov_P1212	2Phytophthora_sp_nov_P1212
+2Phytophthora_mexicana_P0646	2Phytophthora_mexicana_P0646
+2Phytophthora_tropicalis_CBS43491	2Phytophthora_tropicalis_CBS43491
+2Phytophthora_capsici_CBS12823	2Phytophthora_capsici_CBS12823
+2Phytophthora_sp_glovera_P10618	2Phytophthora_sp_glovera_P10618
+2Phytophthora_acerina_BO57	2Phytophthora_acerina_BO57
+2Phytophthora_capensis_P1819	2Phytophthora_capensis_P1819
+2_Phytophthora_emanzi_CMW35510	2_Phytophthora_emanzi_CMW35510
+2Phytophthora_sp._FFM22.2	2Phytophthora_sp._FFM22.2
+2Phytophthora_sp._UK92615	2Phytophthora_sp._UK92615
+2Phytophthora_multivora_DDS3480	2Phytophthora_multivora_DDS3480
+2Phytophthora_multivora_VHS21011	2Phytophthora_multivora_VHS21011
+2Phytophthora_pini_CBS18125	2Phytophthora_pini_CBS18125
+2Phytophthora_citricola_CBS22188	2Phytophthora_citricola_CBS22188
+2Phytophthora_plurivora_CBS37961	2Phytophthora_plurivora_CBS37961
+3Phytophthora_ilicis_P3939	3Phytophthora_ilicis_P3939
+3Phytophthora_nemorosa_CBS114870	3Phytophthora_nemorosa_CBS114870
+3Phytophthora_pseudosyringae_391716	3Phytophthora_pseudosyringae_391716
+3Phytophthora_psychrophila_P10433	3Phytophthora_psychrophila_P10433
+4Phytophthora_alticola_P16052	4Phytophthora_alticola_P16052
+4Phytophthora_quercetorum_P15555	4Phytophthora_quercetorum_P15555
+4Phytophthora_megakarya_P1664	4Phytophthora_megakarya_P1664
+3Phytophthora_quercina_CBS78195	3Phytophthora_quercina_CBS78195
+3Phytophthora_sp_ohioensis_P16050	3Phytophthora_sp_ohioensis_P16050
+4Phytophthora_arecae_CBS30562	4Phytophthora_arecae_CBS30562
+4Phytophthora_palmivora_CBS17926	4Phytophthora_palmivora_CBS17926
+4Phytophthora_litchii_CBS10081	4Phytophthora_litchii_CBS10081
+5Phytophthora_katsurae_CBS58785	5Phytophthora_katsurae_CBS58785
+5Phytophthora_sp_novaeguinea_P1256	5Phytophthora_sp_novaeguinea_P1256
+5Phytophthora_heveae_CBS29629	5Phytophthora_heveae_CBS29629
+6Phytophthora_sp_nov_CBS114338	6Phytophthora_sp_nov_CBS114338
+6Phytophthora_sp_nov_BR333	6Phytophthora_sp_nov_BR333
+VHS17779	VHS17779
+P._gemini_CBS268.85	P._gemini_CBS268.85
+HSA2304	HSA2304
+P._humicolalike_PAB11.04	P._humicolalike_PAB11.04
+P._taxon_sedge__VHS25675_R1C	P._taxon_sedge__VHS25675_R1C
+P._taxon_personii_P11555	P._taxon_personii_P11555
+P._aff._rosacearum_DDS2909	P._aff._rosacearum_DDS2909
+P._rosacearum_P292	P._rosacearum_P292
+P._taxon_kwongon_TCH009	P._taxon_kwongon_TCH009
+P._taxon_kwongonlike_CLJO100	P._taxon_kwongonlike_CLJO100
+P._taxon_walnut_P281	P._taxon_walnut_P281
+Phytophthora_asparagi_VHS17644_EU301168	Phytophthora_asparagi_VHS17644_EU301168
+Phytophthora_humicola_P6702_FJ801938	Phytophthora_humicola_P6702_FJ801938
+Phytophthora_inundata_IMI390121_GU993898	Phytophthora_inundata_IMI390121_GU993898
+Phytophthora_amnicola_CBS131652_JQ029956	Phytophthora_amnicola_CBS131652_JQ029956
+P._amnicola_CBS131652	P._amnicola_CBS131652
+PPhytophthora_fluvialis_CBS129424_JF701436_	PPhytophthora_fluvialis_CBS129424_JF701436_
+Phytophthora_litoralis_CBS127953_HQ012948	Phytophthora_litoralis_CBS127953_HQ012948
+Phytophthora_thermophila_CBS127954_EU301155	Phytophthora_thermophila_CBS127954_EU301155
+Phytophthora_gonapodyides_H_14_02_JF912516	Phytophthora_gonapodyides_H_14_02_JF912516
+Phytophthora_megasperma_IMI133317_AF266794	Phytophthora_megasperma_IMI133317_AF266794
+Phytophthora_pinifolia_CMW26668_EU725806	Phytophthora_pinifolia_CMW26668_EU725806
+Phytophthora_taxon_paludosa_MUCC765_HQ012953	Phytophthora_taxon_paludosa_MUCC765_HQ012953
+Phytophthora_gibbosa_CBS127951_HQ012933	Phytophthora_gibbosa_CBS127951_HQ012933
+Phytophthora_gregata_CBS127952_HQ012942	Phytophthora_gregata_CBS127952_HQ012942
+Phytophthora_taxon_raspberry_P1050_AF541905	Phytophthora_taxon_raspberry_P1050_AF541905
+Phytophthora_taxon_PgChlamydo_VHS3753_EU301160	Phytophthora_taxon_PgChlamydo_VHS3753_EU301160
+Phytophthora_taxon_Forestsoil_H_6_02	Phytophthora_taxon_Forestsoil_H_6_02
+Phytophthora_taxon_hungarica_JA566	Phytophthora_taxon_hungarica_JA566
+Phytophthora_bilorbang_CBS161653_JQ256377	Phytophthora_bilorbang_CBS161653_JQ256377
+P._borealis_AKWA58.10708_HM004232	P._borealis_AKWA58.10708_HM004232
+P._riparia_VI_3100B9F_HM004225	P._riparia_VI_3100B9F_HM004225
+Phytophthora_lacustris_P245_AF266793	Phytophthora_lacustris_P245_AF266793
+7Phytophthora_alni_CBS117375	7Phytophthora_alni_CBS117375
+7Phytophthora_cambivora_P0592	7Phytophthora_cambivora_P0592
+7Phytophthora_europaea_BR1072	7Phytophthora_europaea_BR1072
+7Phytophthora_fragariae_CBS20946	7Phytophthora_fragariae_CBS20946
+7Phytophthora_rubi_CBS109892	7Phytophthora_rubi_CBS109892
+7Phytophthora_uliginosa_P10413	7Phytophthora_uliginosa_P10413
+7Phytophthora_cinnamomi_CBS14422	7Phytophthora_cinnamomi_CBS14422
+7Phytophthora_sp_nov_P3600	7Phytophthora_sp_nov_P3600
+7Phytophthora_cinnamomi_var_parvispora_CBS41196	7Phytophthora_cinnamomi_var_parvispora_CBS41196
+7Phytophthora_cinnamomi_var_robiniae_P16351	7Phytophthora_cinnamomi_var_robiniae_P16351
+7Phytophthora_melonis_CBS58269	7Phytophthora_melonis_CBS58269
+7Phytophthora_sinensis_CBS55788	7Phytophthora_sinensis_CBS55788
+7Phytophthora_pistaciae_P6196	7Phytophthora_pistaciae_P6196
+7Phytophthora_cajani_P3105	7Phytophthora_cajani_P3105
+7Phytophthora_sojae_CBS38261	7Phytophthora_sojae_CBS38261
+7Phytophthora_sp_niederhauserii_P10279	7Phytophthora_sp_niederhauserii_P10279
+7Phytophthora_vignae_P7471	7Phytophthora_vignae_P7471
+8Phytophthora_cryptogea_CBS11319	8Phytophthora_cryptogea_CBS11319
+8Phytophthora_drechsleri_P10331	8Phytophthora_drechsleri_P10331
+8Phytophthora_erythroseptica_CBS111343	8Phytophthora_erythroseptica_CBS111343
+8Phytophthora_himalayensis_CBS35759	8Phytophthora_himalayensis_CBS35759
+8Phytophthora_sp_kelmania_CBS30762	8Phytophthora_sp_kelmania_CBS30762
+8Phytophthora_sansomeana_CBS95787	8Phytophthora_sansomeana_CBS95787
+8Phytophthora_medicaginis_BR610	8Phytophthora_medicaginis_BR610
+8Phytophthora_trifolii_CBS117688	8Phytophthora_trifolii_CBS117688
+8Phytophthora_hibernalis_CBS119904	8Phytophthora_hibernalis_CBS119904
+8Phytophthora_sp_nov_CBS111346	8Phytophthora_sp_nov_CBS111346
+8Phytophthora_lateralis_Lev1213	8Phytophthora_lateralis_Lev1213
+8Phytophthora_austrocedrae_P15132	8Phytophthora_austrocedrae_P15132
+8Phytophthora_aff_primulae_P6817	8Phytophthora_aff_primulae_P6817
+8Phytophthora_brassicae_CBS112277	8Phytophthora_brassicae_CBS112277
+8Phytophthora_ramorum_CBS101553	8Phytophthora_ramorum_CBS101553
+8Phytophthora_foliorum_P10969	8Phytophthora_foliorum_P10969
+8Phytophthora_syringae_CBS110161	8Phytophthora_syringae_CBS110161
+8Phytophthora_porri_CBS14287	8Phytophthora_porri_CBS14287
+8Phytophthora_primulae_CBS110162	8Phytophthora_primulae_CBS110162
+8Phytophthora_sp_nov_P10728	8Phytophthora_sp_nov_P10728
+8Phytophthora_sp_nov_P6207	8Phytophthora_sp_nov_P6207
+10Phytophthora_gallica_GU983636	10Phytophthora_gallica_GU983636
+10Phytophthora_morindae_GQ166764	10Phytophthora_morindae_GQ166764
+10Phytophthora_kernoviae_393172	10Phytophthora_kernoviae_393172
+10Phytophthora_boehmeriae_CBS29129	10Phytophthora_boehmeriae_CBS29129
+9Phytophthora_quininea_HQ261661	9Phytophthora_quininea_HQ261661
+9Phytophthora_richardiae_FJ801391	9Phytophthora_richardiae_FJ801391
+9Phytophthora_macrochlamydospora_351473	9Phytophthora_macrochlamydospora_351473
+9Phytophthora_constricta_HQ013225	9Phytophthora_constricta_HQ013225
+9Phytophthora_captiosa_P10719	9Phytophthora_captiosa_P10719
+9Phytophthora_fallax_P10722	9Phytophthora_fallax_P10722
+9Phytophthora_insolita_288805	9Phytophthora_insolita_288805
+9Phytophthora_polonica_P15005	9Phytophthora_polonica_P15005
+9Phytophthora_aquimorbida_40F9_FJ666129	9Phytophthora_aquimorbida_40F9_FJ666129
+9Phytophthora_chrysanthemi_AB511826TYPE	9Phytophthora_chrysanthemi_AB511826TYPE
+9Phytophthora_hydropathica_EU583793TYPE	9Phytophthora_hydropathica_EU583793TYPE
+9Phytophthora_irrigata_FJ196758TYPE	9Phytophthora_irrigata_FJ196758TYPE
+9Phytophthora_sp_cuyabensis_P8213	9Phytophthora_sp_cuyabensis_P8213
+9Phytophthora_sp_lagoariana_P8220	9Phytophthora_sp_lagoariana_P8220
+9Phytophthora_sp_napoensis_P8221	9Phytophthora_sp_napoensis_P8221
+9Phytophthora_parsiana_AY659739TYPE	9Phytophthora_parsiana_AY659739TYPE
+9Phytophthora_sp_thermophilum_P10457	9Phytophthora_sp_thermophilum_P10457
