@@ -1,0 +1,18 @@
+# Fix program
+
+#cd $HOME/Mpersicae/genotypeO/Fix_5_prime/test_data
+python ~/misc_python/Fix_five_prime/Fix_five_prime_CDS.py -t test_sequences.fasta --bam test_mapped100.sorted.bam --cds cds.test_sequences.fasta --std 3 -o test.sd3.fasta
+python ~/misc_python/Fix_five_prime/Fix_five_prime_CDS.py -t test_sequences.fasta --bam test_mapped100.sorted.bam --cds cds.test_sequences.fasta --std 5 -o test.sd5.fasta
+
+
+# all the RNAseq mapped back. 
+#python ~/misc_python/Fix_five_prime/Fix_five_prime_CDS.py -t test_sequences.fasta --bam ../test_mapped.sorted.bam --cds 
+longest_representative_seq.fasta --std 3 -o new_tes
+
+
+
+#
+#whole test!!!!!!
+
+cd $HOME/Mpersicae/genotypeO/Fix_5_prime/whole_transcriptome_test 
+python ~/misc_python/Fix_five_prime/Fix_five_prime_CDS.py -t $HOME/Mpersicae/genotypeO/Fix_5_prime/Mp_O_transcriptome_mapped/Mp_O_Trinti_nr_lowest_expre_rmvod_Transcriptome.fasta --bam $HOME/Mpersicae/genotypeO/Fix_5_prime/Mp_O_transcriptome_mapped/Mp_O_mapped.sorted.bam --cds $HOME/Mpersicae/genotypeO/Fix_5_prime/Mp_O_transcriptome_mapped/Mp_O_Trinti_nr_lowest_expre_rmvod_Transcriptome.fasta.transdecoder.cds --std 3 -o Mp_O_five_prime_fixed_cds.fasta

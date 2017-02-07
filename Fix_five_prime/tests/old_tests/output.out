@@ -1,0 +1,60 @@
+folder already exists, I will write over what is in there!!
+Running samtools depth -r "Mp_O_20647_c0_seq2" "../test_mapped.sorted.bam" > "./temp_fix_five_prime/depth.tmp"
+we should be looking at this as a neagtive coded cds
+coord_lower = 144	start_postition_negative = 576
+('coord_lower:coord_upper', 144, 566)
+Mp_O_20647_c0_seq2 has coverage min 285, max 8015, For sliced section: mean 7655.23, std 797.76 - (-) coding strand
+
+houston we have a problem!!: Mp_O_20647_c0_seq2 different expression. Has coverage min 285, max 8015, For sliced section: mean 7655.23, std 797.76, current starting position 416.00
+
+start position = 576
+Running samtools depth -r "Mp_O_33446_c0_seq3" "../test_mapped.sorted.bam" > "./temp_fix_five_prime/depth.tmp"
+coord_lower = 781	start_postition = 99
+Mp_O_33446_c0_seq3 has coverage min 0, max 571, For sliced section: mean 313.32, std 101.72 - (+) coding strand
+
+Running samtools depth -r "Mp_O_29919_c0_seq4" "../test_mapped.sorted.bam" > "./temp_fix_five_prime/depth.tmp"
+we should be looking at this as a neagtive coded cds
+coord_lower = 271	start_postition_negative = 1030
+('coord_lower:coord_upper', 271, 1020)
+Mp_O_29919_c0_seq4 has coverage min 2, max 784, For sliced section: mean 435.66, std 192.80 - (-) coding strand
+
+Running samtools depth -r "Mp_O_22673_c0_seq1" "../test_mapped.sorted.bam" > "./temp_fix_five_prime/depth.tmp"
+we should be looking at this as a neagtive coded cds
+coord_lower = 244	start_postition_negative = 975
+('coord_lower:coord_upper', 244, 965)
+Mp_O_22673_c0_seq1 has coverage min 3, max 7993, For sliced section: mean 6372.79, std 1694.16 - (-) coding strand
+
+houston we have a problem!!: Mp_O_22673_c0_seq1 different expression. Has coverage min 3, max 7993, For sliced section: mean 6372.79, std 1694.16, current starting position 3.00
+
+start position = 975
+Running samtools depth -r "Mp_O_5400_c0_seq1" "../test_mapped.sorted.bam" > "./temp_fix_five_prime/depth.tmp"
+coord_lower = 283	start_postition = 39
+Mp_O_5400_c0_seq1 has coverage min 1, max 8046, For sliced section: mean 4371.04, std 3133.21 - (+) coding strand
+
+Running samtools depth -r "Mp_O_24178_c0_seq5" "../test_mapped.sorted.bam" > "./temp_fix_five_prime/depth.tmp"
+coord_lower = 263	start_postition = 47
+Mp_O_24178_c0_seq5 has coverage min 0, max 865, For sliced section: mean 490.34, std 210.86 - (+) coding strand
+
+Running samtools depth -r "Mp_O_36364_c0_seq1" "../test_mapped.sorted.bam" > "./temp_fix_five_prime/depth.tmp"
+coord_lower = 261	start_postition = 1
+Mp_O_36364_c0_seq1 has coverage min 8, max 8026, For sliced section: mean 7515.23, std 577.75 - (+) coding strand
+
+houston we have a problem!!: Mp_O_36364_c0_seq1 different expression. Has coverage min 8, max 8026, For sliced section: mean 7515.23, std 577.75, current starting position 185.00
+
+start, end:  3 6
+start, end:  6 9
+start, end:  9 12
+start, end:  12 15
+start, end:  15 18
+start, end:  18 21
+start, end:  21 24
+start, end:  24 27
+start, end:  27 30
+start, end:  30 33
+start, end:  33 36
+start, end:  36 39
+start, end:  39 42
+start, end:  42 45
+next_ATG_position  = 42
+may have fixed the problem!!: Mp_O_36364_c0_seq1 NEW start. Has coverage min 8, max 8026, For sliced section: mean 7515.23, std 577.75, next_ATG_position 8013.00
+
