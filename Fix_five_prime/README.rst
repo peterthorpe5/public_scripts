@@ -7,13 +7,14 @@ basic usage:
 
 Usage: Use as follows:
 
-``./python Fix_five_prime_CDS.py`` -t trnascriptome --cds nt_coding_seq --bam index_sorted_bam_file.bam
+``python Fix_five_prime_CDS.py`` -t transcriptome --cds nt_coding_seq --bam indexed_sorted_bam_file.bam
     --gff if_you_have_one --exp outfile_name_for_expression_values (default: overall_reads_mapped_per_sequences.txt)
     --prot (protein_cds_not_currently_used) -o outfile
 
 Fix five prime cds based on read depth coverage v0.1.0:
-why? Sometime the 5 prime end is not correctly predicted. This is really important to our
-research (signal peptides etc ... Can we imporve this?
+why? Sometimes the 5 prime end is not correctly predicted. This is really important to our
+research (signal peptides etc ...) Can we imporve this? See tests for real examples.
+Read the files in the tests to download a test .bam file.
 
 Requires:
 samtools
@@ -38,20 +39,23 @@ steps:
 How?
 
 This script looks at the number of reads that map per base for your transcript of interest.
-If the number of mapped reads is greater than "threshold (default=10)" then it performs statistical
-analysis on this to determine if the starting methionoine (as found in the predicted cds)
-has significantly lower expression that the rest of the transcript.
+If the number of mapped reads is greater than "threshold (default=100, reads mapped per current base)" then it performs statistical
+analysis on this to determine if the starting methionoine (as found in the current predicted cds)
+has significantly lower expression that the rest of the transcript. The script will take the avergae coverage per base of this A,T,G 
+starting codon and compare this coverage to the mean of the middle 50% of the transcript. If this sum(ATG)/3 has less then "threshold" number of 
+standard deviations of coverage less than the middle 50% of the transcript then this may not be the correct starting codon.
 
-If it has, then this "ATG" may not be the coreect starting postion. It then looks for the next "ATG"
-and performs statistical analysis to determine if this is a sensible starting postiton.
+As said, this "ATG" may not be the coreect starting postion. The program will then looks for the next "ATG"
+and performs statistical analysis to determine if this is a sensible starting postiton. If the next starting ATG is within the threshold number of standard deviations 
+from the mean of the middle 50% of the transcript, then this is set to the new starting codon.
+
+If this criteria is not met. Nothing is changed!
 
 TO DO:
-
-look upstream in transcript if CDS does not start with ATG, based on expression, could there be a good
-candidate?
+perform the same logic on the stop codon. Perform stats on the coverage across the transcrip to identify fusions based on significantly different expression profiles.
+Travis testing. Codcov, pep8.
 
 FIX five prime start in genomic regions based on this methodology
-
 
 
 Options:
@@ -84,5 +88,6 @@ Options:
                         map to the sequence of interest. Default:
                         overall_reads_mapped_per_sequences.txt
   -o FILE, --out=FILE   Output filename (default: results.out)
+
 
 
