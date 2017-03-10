@@ -7,17 +7,21 @@
 why? Sometime the 5 prime end is not correctly predcited.
 This is really important to our
 research. Can we imporve this?
-
 """
-
 #############################################################################
 # imports
-
 import sys
 import os
 from optparse import OptionParser
-
 from Bio.Seq import reverse_complement
+from Bio.Seq import Seq
+from Bio.SeqRecord import SeqRecord
+from Bio import SeqIO
+import numpy
+import subprocess
+import tempfile
+from collections import deque
+import datetime
 
 
 if "-v" in sys.argv or "--version" in sys.argv:
@@ -54,21 +58,34 @@ steps:
 
 How?
 
-This script looks at the number of reads that map per base for your transcript
-of interest. If the number of mapped reads is greater than "threshold (default=10)"
-then it performs statistical analysis on this to determine if the starting methionoine
-(as found in the predicted cds)
-has significantly lower expression that the rest of the transcript.
+This script looks at the number of reads that map per base for your transcript of
+interest.
+If the number of mapped reads is greater than "threshold (default=100, reads
+mapped per current base)" then it performs statistical
+analysis on this to determine if the starting methionoine (as found in the
+current predicted cds)
+has significantly lower expression that the rest of the transcript. The
+script will take the avergae coverage per base of this A,T,G
+starting codon and compare this coverage to the mean of the middle 50%
+of the transcript. If this sum(ATG)/3 has less then "threshold" number of
+standard deviations of coverage less than the middle 50% of the transcript
+then this may not be the correct starting codon.
 
-If it has, then this "ATG" may not be the coreect starting postion. It then looks
-for the next "ATG" and performs statistical analysis to determine if this is a sensible
-starting postiton.
+As said, this "ATG" may not be the coreect starting postion. The program
+will then looks for the next "ATG"
+and performs statistical analysis to determine if this is a sensible starting
+postiton. If the next starting ATG is within the threshold number of standard
+deviations
+from the mean of the middle 50% of the transcript, then this is set to the new
+starting codon.
+
+If this criteria is not met. Nothing is changed!
 
 TO DO:
-
-look upstream in transcript if CDS does not start with ATG, based on expression,
-could there be a good
-candidate?
+perform the same logic on the stop codon. Perform stats on the coverage across
+the transcrip to identify fusions based on significantly different expression
+profiles.
+Travis testing. Codcov, pep8.
 
 FIX five prime start in genomic regions based on this methodology
 
@@ -76,16 +93,7 @@ FIX five prime start in genomic regions based on this methodology
     cmd = "samtools 2>&1 | grep -i ^Version"
     sys.exit(os.system(cmd))
 
-#####################################################################################
-#imports for functions
-from Bio.Seq import Seq
-from Bio.SeqRecord import SeqRecord
-from Bio import SeqIO
-import numpy
-import subprocess
-import tempfile
-from collections import deque
-import datetime
+
 
 # make a temp_folder_for_all_the_out_files
 file_name = 'test.txt'
@@ -97,7 +105,7 @@ except OSError:
     print ("folder already exists, I will write over what is in there!!")
 
 ########################################################################################
-# functions 
+# functions
 ########################################################################################
 
 try:
@@ -112,65 +120,11 @@ except ImportError:
 
 assert mean([1,2,3,4,5]) == 3
 
-if "-v" in sys.argv or "--version" in sys.argv:
-    print("Fix five prime cds based on read depth coverage v0.1.0")
-    cmd = "samtools 2>&1 | grep -i ^Version"
-    sys.exit(os.system(cmd))
-
-if "--help_full" in sys.argv:
-    print("""Fix five prime cds based on read depth coverage v0.1.0:
-why? Sometime the 5 prime end is not correctly predcited. This is really
-important to our research. Can we imporve this?
-
-Requires:
-samtools
-Biopython
-numpy
-some of these functions were taken from Peter Cock:
-
-https://github.com/peterjc/pico_galaxy/tree/master/tools/coverage_stats
-
-steps:
-
-1) Index your transcriptome and map your reads back to your transcriptome:
-    bowtie-build -f test_sequences.fasta test_sequences
-    bowtie -S -p 8 test_sequences -1 R1.fq -2 R2.fq test_mapped.sam
-2) Samtool index your transcriptome
-    samtools faidx transcriptome.fasta
-3) convert sam to bam
-    samtools view -S -b -o unsorted.bam test_mapped.sam
-4) sort your bam out!
-    samtools sort unsorted.bam sorted.bam
-5) Index your sorted.bam
-    samtools index sorted.bam
-
-How?
-
-This script looks at the number of reads that map per base for your transcript of interest.
-If the number of mapped reads is greater than "threshold (default=10)" then it performs statistical
-analysis on this to determine if the starting methionoine (as found in the predicted cds)
-has significantly lower expression that the rest of the transcript.
-
-If it has, then this "ATG" may not be the coreect starting postion. It then looks for the next "ATG"
-and performs statistical analysis to determine if this is a sensible starting postiton.
-
-TO DO:
-
-look upstream in transcript if CDS does not start with ATG, based on expression, could there be a good
-candidate?
-
-FIX five prime start in genomic regions based on this methodology
-
-    """)
-    cmd = "samtools 2>&1 | grep -i ^Version"
-    sys.exit(os.system(cmd))
-
 
 def sys_exit(msg, error_level=1):
    """Print error message to stdout and quit with given error level."""
    sys.stderr.write("%s\n" % msg)
    sys.exit(error_level)
-
 
 
 def get_stats_no_window(depth_iterator, length):
@@ -225,7 +179,8 @@ def get_stats_window(depth_iterator, length, window_size):
         except StopIteration:
             raise ValueError("Not enough depth values to fill %i window" % window_size)
         prev_pos += 1
-        assert pos == prev_pos, "Discontinuity in coverage values for %s position %i" % (ref, pos)
+        assert pos == prev_pos, "Discontinuity in coverage values for %s position %i" % (ref,
+                                                                                         pos)
         total_cov += depth
         if min_cov is None:
             min_cov = depth
@@ -238,7 +193,8 @@ def get_stats_window(depth_iterator, length, window_size):
     min_win = max_win = mean(window)
     for ref, pos, depth in depth_iterator:
         prev_pos += 1
-        assert pos == prev_pos, "Discontinuity in coverage values for %s position %i" % (ref, pos)
+        assert pos == prev_pos, "Discontinuity in coverage values for %s position %i" % (ref,
+                                                                                         pos)
         total_cov += depth
         min_cov = min(min_cov, depth)
         max_cov = max(max_cov, depth)
@@ -277,7 +233,8 @@ def get_total_coverage(bam_file, outfile):
             transcript = data[0]
             overall_expression_dic[transcript] = [int(x) for x in data[1:]]
     # print overall_expression_dic["Mp_O_20647_c0_seq2"]
-    # returns a dictionary: key[transcript], vals = ['577', '274', '0'] len, reads_mapped, last_coloumn
+    # returns a dictionary: key[transcript], vals = ['577', '274', '0'] len,
+    # reads_mapped, last_coloumn
     return overall_expression_dic
 
 
@@ -311,16 +268,17 @@ def find_longest_components(filename1, cds_database, out_filename):
             current_lenth = sequence_len
             last_component= component
             top_hits.append(seq_record.id)
-            
+
         ##########################################################################
         # first block: if the names are the same, is the new length of sequence longer?
         if component == last_component:
-            # print "yes:", component, "component",  last_component, "last_component", seq_record.id
-            # print "current_lenth", current_lenth
+            # print ("yes:", component, "component",  last_component,
+            # "last_component", seq_record.id)
+            # print ("current_lenth", current_lenth)
             if sequence_len > current_lenth:
                 # print "sequence_len > current_lenth", sequence_len, current_lenth
                 del top_hits[-1]
-                top_hits.append(seq_record.id) 
+                top_hits.append(seq_record.id)
         ###########################################################################
         # second block: if the name is new, put it in the name set.
         # use this sequence-length as the new one to "beat"
@@ -378,7 +336,7 @@ def index_gff_file(gff_file):
             if not line.strip():
                 continue #if the last line is blank
             if line.startswith("#"):
-                continue 
+                continue
             transcript_data = line.rstrip("\n").split()
             name = transcript_data[0]
             if transcript_data[2] == "CDS":
@@ -402,8 +360,9 @@ def average_standard_dev(positions):
     return the_mean, standard_dev
 
 
-# function to walk along the transcript inframe as decided by the current reading frame for the cds
-# and find the next "ATG (+)" or    
+# function to walk along the transcript inframe as decided by the current
+# reading frame for the cds
+# and find the next "ATG (+)" or
 def find_positive_next_ATG_b(transcriptome_record, position, strand):
     "function to find the next ATG"
     # print ("start position = %d" % position)
@@ -466,15 +425,15 @@ def find_downstream_start(transcript, current_start, strand):
         return len(transcript) - new
     else:
         raise ValueError("Bad strand value %r" % strand)
-        
-    
+
+
 
 def mean_coverage(coverage_array, slice_start, slice_end):
     """function to get the mean coverage for a sliced region"""
     selected_coverage = coverage_array[slice_start:slice_end]
     return mean(selected_coverage)
 
-##### main function 
+##### main function
 def parse_transcriptome_file(genome, transcriptome_file, cds_file, bam, gff,
                              min_read_count, min_max_cov_per_base,
                              stand_dev_threshold, outfile,
@@ -500,7 +459,7 @@ def parse_transcriptome_file(genome, transcriptome_file, cds_file, bam, gff,
 
     # threshold for min_read_count
     min_read_count_threshold = int(min_read_count) # default is 30
-    
+
     for transcriptome_record in SeqIO.parse(transcriptome_file, "fasta"):
         # get the overall expression from dict for the transcriptome reocrd of interest
         transcript_expression = overall_expression_dic[transcriptome_record.id]
@@ -509,18 +468,18 @@ def parse_transcriptome_file(genome, transcriptome_file, cds_file, bam, gff,
         length, read_count, last_coloumn = transcript_expression
         # santity check that the length match up
         assert length == len(transcriptome_record.seq)
-        
+
         # basically if it has less than ~30? reads mapped we cant really do stats on it
         if read_count < min_read_count_threshold:
             continue
-        
+
         # test one: is the a cds predcited for this, if not move on
         try:
             cds_record = cds_index_database[transcriptome_record.id]
             original_cds_record = cds_index_database[transcriptome_record.id]
         except KeyError:
             # transdecoder uses cdhit 90% so some wont have cds...
-            print ("no CDS was found for %s.. so moving on to the next" %(transcriptome_record.id)) 
+            print ("no CDS was found for %s.. so moving on to the next" %(transcriptome_record.id))
             continue
         # call samtools to get the depth per posititon for the transcript of interest
         depth_filename = "./temp_fix_five_prime/depth.tmp"
@@ -530,7 +489,7 @@ def parse_transcriptome_file(genome, transcriptome_file, cds_file, bam, gff,
         return_code = os.system(cmd)
         assert return_code == 0, """samtools says NO!!
         - something went wrong. Is your BAM file correct?"""
-        
+
         # assign zeros to all positions of the transcript,
         # as samtool does no report zeros
         all_coverage = [0]*len(transcriptome_record.seq)
@@ -538,7 +497,7 @@ def parse_transcriptome_file(genome, transcriptome_file, cds_file, bam, gff,
         for line in open(depth_filename):
             ref, possition, coverage = line.rstrip("\n").split("\t")
             possition = int(possition) - 1
-            
+
             # assign the correct coverage to the relavent postiton,
             # thus removing the zero value.
             # Or if there is no info, it remains as a zero.
@@ -556,7 +515,7 @@ def parse_transcriptome_file(genome, transcriptome_file, cds_file, bam, gff,
             # reverse complement the transcript for negative coding CDS
             transcriptome_record.seq = transcriptome_record.seq.reverse_complement()
             start_position = transcriptome_record.seq.find(cds_record.seq)
-    
+
         end_position = start_position +len(cds_record.seq)
         assert 0 <= start_position < end_position <= len(transcriptome_record)
         coord_lower, coord_upper = middle_portion_of_transcript(transcriptome_record.seq)
@@ -566,7 +525,7 @@ def parse_transcriptome_file(genome, transcriptome_file, cds_file, bam, gff,
             coord_lower = start_position+50
         if coord_lower + 30 >= coord_upper:
             continue
-            
+
         the_mean, standard_dev = average_standard_dev (all_coverage[coord_lower:coord_upper])
         print("%s: coverage min %i, max %i. Sliced section: mean %0.2f, std %0.2f -(+) coding strand\n" % (transcriptome_record.id,
                                                     min(all_coverage), max(all_coverage),
@@ -641,7 +600,7 @@ def parse_transcriptome_file(genome, transcriptome_file, cds_file, bam, gff,
                             #reset to original
                             print("houston, mno resetting it!!!2:")
                             cds_record = original_cds_record
-                            
+
                     else:
                         print ("we cannot do anything with this %s -- we will leave the cds as is" %(transcriptome_record.id))
                         #reset to original
@@ -649,11 +608,11 @@ def parse_transcriptome_file(genome, transcriptome_file, cds_file, bam, gff,
         if not len(cds_record):
             #reset to original
             cds_record = original_cds_record
-            
+
         assert len(cds_record), "Trimmed to nothing? %s " %(transcriptome_record.id)
         print ("im writing %s" %(transcriptome_record.id))
         SeqIO.write(cds_record, file_out, "fasta")
-          
+
 
 ###############################################################################################
 #to run it:
@@ -789,11 +748,11 @@ if not os.path.isfile(transcriptome_file):
 
 if not os.path.isfile(bam_file):
     sys_exit("Input BAM file not found: %s" % bam)
-                                                               
+
 
 overall_expression_dic = get_total_coverage(bam_file,
-                                            over_all_expression)                                        
-                
+                                            over_all_expression)
+
 parse_transcriptome_file(genome,
                          transcriptome_file,
                          cds_file,
@@ -801,7 +760,7 @@ parse_transcriptome_file(genome,
                          gff,
                          min_read_count,
                          min_max_cov_per_base,
-                         stand_dev_threshold, 
+                         stand_dev_threshold,
                          outfile,
                          overall_expression_dic,
                          outfile)
@@ -816,7 +775,7 @@ def translate_cds(fasta_file):
         seq_record.seq = seq_record.seq.translate()
         SeqIO.write(seq_record, file_out, "fasta")
     file_out.close()
-    
-translate_cds(outfile)        
-        
-    
+
+translate_cds(outfile)
+
+
