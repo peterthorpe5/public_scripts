@@ -281,3 +281,20 @@ echo python ${repository_path}/summary_stats.py --ITS ${genome_prefix}_genomic.I
 # get stats summary of coverages with BUSCO genes
 python ${repository_path}/summary_stats.py --ITS ${genome_prefix}_genomic.ITS.cov.values --geneGFF ${genome_prefix}_BUSCO_GENES.gene.gff --ITSGFF ${genome_prefix}.ITS.consensus.GFF --all_genes_cov ${genome_prefix}_BUSCO_GENES.gene.gff.genes.cov.values -o ${genome_prefix}_stats_BUSCO_versus_ITS.out
 echo python ${repository_path}/summary_stats.py --ITS ${genome_prefix}_genomic.ITS.cov.values --geneGFF ${genome_prefix}_BUSCO_GENES.gene.gff --ITSGFF ${genome_prefix}.ITS.consensus.GFF --all_genes_cov ${genome_prefix}_BUSCO_GENES.gene.gff.genes.cov.values -o ${genome_prefix}_stats_BUSCO_versus_ITS.out
+
+# run primersearch Emboss tools. http://www.ebi.ac.uk/Tools/emboss/  http://www.bioinformatics.nl/cgi-bin/emboss/primersearch
+#prepare your primer file as:
+#Name\tprimer\tprimer_rev
+#g12852(2)	GGCCGTGTTTCTATTGGACT	TCGTATGCGTAAGTGCCTTC
+mismatches="0
+3
+6
+9
+12
+"
+for m in ${mismatches}
+do
+	primer_cmd="primersearch -mismatchpercent ${m} -seqall ${genome_prefix}.fa -infile ${repository_path}/ITS_primers.txt -outfile  ${genome_prefix}.primersearch_${m}_perc_mismatch.txt"
+	echo ${primer_cmd}
+	eval ${primer_cmd}
+done
