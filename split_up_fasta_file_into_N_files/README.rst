@@ -1,4 +1,4 @@
-READme info for script to add taxonomic info to diamond blast ouptu
+READme info for script to split fasta file into N files
 ==============================================
 
 basic usage:
@@ -14,7 +14,8 @@ put the fasta files in there
 
 why?
 
-Can run many blast job instead of one 
+Can run many blast job instead of one
+Some tools require 1 fasta entry per file
 
 
 Options:
