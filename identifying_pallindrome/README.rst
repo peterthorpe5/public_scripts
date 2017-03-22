@@ -2,6 +2,7 @@ READme for finding pallindromes
 ==============================================
 
 Basic usage for all scripts
+For the theory , read the Word file in this repository
 
 ``./name_of_script.py`` -h 
 
