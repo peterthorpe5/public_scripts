@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #### Title: function to generate a random nucleotide sequence of specified
 # length using a given base composition
 
@@ -13,10 +14,20 @@ functions:      def base_composition(s)
                             output seq
 
 """
+# imports
+import sys
+import os
 import random
 from Bio.Seq import Seq
 from Bio import SeqIO
 from collections import Counter
+
+
+if "-v" in sys.argv or "--version" in sys.argv:
+    print("create random seq v0.1.0. This take a db calculates the " +
+          "average ATCG and average length, then creates N number of " +
+          "random sequence file")
+    sys.exit(os.system(cmd))
     
 ############################################################################
 ######## function 1: This works out the codon bias of the sequence in question
@@ -30,8 +41,10 @@ def base_composition(s):
     s1 = str(s).upper()
     #creat a empty dictionary to put the values of the bases to
     length = float (len(s1))
-    bc= {'A': (float (s1.count('A')/ length)), 'T': float(s1.count('T')/ length),\
-         'G': float(s1.count('G')/ length), 'C': float(s1.count('C')/ length)}
+    bc= {'A': (float (s1.count('A')/ length)),\
+         'T': float(s1.count('T')/ length),\
+         'G': float(s1.count('G')/ length),\
+         'C': float(s1.count('C')/ length)}
     return bc
 
 
@@ -200,7 +213,9 @@ for i in range(1, 50):
     name_out = "ITS_random_seq_%d.fasta" % (random_seq_num)
 
     f_out= open(name_out, 'w')
-    out_string = ">ITS_random_version_%d\tmean_len = %f BaseComp_average = %s\n" % (random_seq_num, mean_len, str(final_GC))
+    out_string = ">ITS_random_vers_%d\tmean_len = %f BaseComp_av = %s\n" % (random_seq_num,
+                                                                            mean_len,
+                                                                            str(final_GC))
     f_out.write(out_string)
     #Elegant approach to line wrapping, writing out line by line@
     for index in range(0, len(random_seq), 70) :
