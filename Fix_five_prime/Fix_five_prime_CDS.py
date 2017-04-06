@@ -35,7 +35,7 @@ why? Sometime the 5 prime end is not correctly predcited. This is really
 important to our research. Can we imporve this?
 
 Requires:
-samtools 1.3 or greater
+samtools 1.2 or greater
 Biopython
 numpy
 some of these functions were taken from Peter Cock:
@@ -605,7 +605,7 @@ def parse_transcriptome_file(genome, transcriptome_file, cds_file, bam, gff,
                     if len(cds_record.seq) < end_position-60:
                             #reset to original
                             print("houston, im not resetting it!!!2:")
-                            print("the length of the cds_record would be %d , the last accepted coordinate is %d" %(len(cds_record.seq),
+                            print("the length of the cds_record would be %d ,the last accepted coordinate is %d" %(len(cds_record.seq),
                                                                                                                     end_position-60))
                             cds_record = original_cds_record
                 else:
