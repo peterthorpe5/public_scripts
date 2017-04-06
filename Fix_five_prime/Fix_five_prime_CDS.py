@@ -35,7 +35,7 @@ why? Sometime the 5 prime end is not correctly predcited. This is really
 important to our research. Can we imporve this?
 
 Requires:
-samtools
+samtools 1.3 or greater
 Biopython
 numpy
 some of these functions were taken from Peter Cock:
@@ -790,7 +790,8 @@ if not os.path.isfile(bam_file):
 if __name__ == '__main__':
     if not os.path.isfile(transcriptome_file):
         sys_exit("Input transcriptome file not found: %s" % transcriptome)
-
+    if not os.path.isfile(cds_file):
+        sys_exit("Input cds_file file not found: %s" % cds_file)
     if not os.path.isfile(bam_file):
         sys_exit("Input BAM file not found: %s" % bam)
 
@@ -808,6 +809,7 @@ if __name__ == '__main__':
                              outfile,
                              overall_expression_dic,
                              outfile)
+    print ("translating the new cds file")
     translate_cds(outfile)
 
 
