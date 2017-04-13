@@ -133,25 +133,25 @@ Options:
 # This can be modified to return "all". But the file will be much larger and therefore require more RAM
 
 
-    BLAST DATA we be returned as:
+    BLAST DATA we be returned as Coloumns:
 
-qseqid = Query Seq-id (ID of your sequence)
-sseqid = Subject Seq-id (ID of the database hit)
-pident = Percentage of identical matches
-length = Alignment length
-mismatch = Number of mismatches
-gapopen = Number of gap openings
-qstart = Start of alignment in query
-qend = End of alignment in query
-sstart = Start of alignment in subject (database hit)
-send = End of alignment in subject (database hit)
-evalue = Expectation value (E-value)
-bitscore = Bit score
-salltitles = TOP description of the blast hit
-staxids = tax_id
-scientific_name
-scomnames = common_name
-sskingdoms = kingdom
+1)qseqid = Query Seq-id (ID of your sequence)
+2)sseqid = Subject Seq-id (ID of the database hit)
+3)pident = Percentage of identical matches
+4)length = Alignment length
+5)mismatch = Number of mismatches
+6)gapopen = Number of gap openings
+7)qstart = Start of alignment in query
+8)qend = End of alignment in query
+9)sstart = Start of alignment in subject (database hit)
+10)send = End of alignment in subject (database hit)
+11)evalue = Expectation value (E-value)
+12)bitscore = Bit score
+13)salltitles = TOP description of the blast hit
+14)staxids = tax_id
+15)scientific_name
+16)scomnames = common_name
+17)sskingdoms = kingdom
 
 
 TOP BLAST HITS FINDER:
