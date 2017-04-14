@@ -4,18 +4,18 @@
 # script to convert NR database to fasta files and make a diamond blastdatabse.
 
 
+cd $PWD
+# Fill these out
+
+
+#################################################################
+# Help with diamond
 # to install diamond from source
-#cd /path_to/Downloads/
-
 #wget http://github.com/bbuchfink/diamond/archive/v0.7.9.tar.gz
-
 #tar xzf v0.7.9.tar.gz
-
 #cd diamond-0.7.9/src
 # # optional, for installing Boost
-
 ##./install-boost 
-
 #make
 # 
  
@@ -42,8 +42,10 @@ echo nr fasta done
 
 echo im downloading files from NCBI
 
-wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/gi_taxid_prot.dmp.gz
-gunzip gi_taxid_prot.dmp.gz
+wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/prot.accession2taxid.gz.md5
+wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/prot.accession2taxid.gz
+md5sum -c prot.accession2taxid.gz.md5
+gunzip prot.accession2taxid.gz
 
 wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxcat.zip
 unzip taxcat.zip
@@ -53,9 +55,9 @@ tar -zxvf taxdump.tar.gz
 
 echo downloading and unzipping done
 
-python ~/misc_python/diamond_blast_to_kingdom/prepare_gi_to_description_databse.py
+python $PWD/Diamond_BLAST_add_taxonomic_info/prepare_accession_to_description_db.py
 
-echo single discription to gi number database done
+echo four discription to accession number database done
 
 #rm -rf nr.faa
 
