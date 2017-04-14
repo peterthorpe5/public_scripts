@@ -13,8 +13,10 @@ Phy_dir=$HOME/scratch/tree_health/ITS_ratio/WORKED_Phytophthora_infestans.ASM142
 
 known_fa="${Phy_dir}/tests.AA.fasta"
 known_fa_nucl="${Phy_dir}/Pi_T30_4nt.fa"
+prefix="Pinf"
 # default name
 test_fa="aa.fa"
+min_len_gene="20"
 threads=8
 python_directory=$HOME/public_scripts/gene_model_testing
 Working_directory=$HOME/scratch/Pi/
@@ -45,12 +47,18 @@ right_reads="${Phy_dir}//RNAseq_reads/R2.fq.gz"
 
 cd ${Working_directory}
 
+# for now in testing
+ rm -rf gff_stats known_fa_all_hits
+
+
 echo "For this program you need:
 Genome tools. Blast. gffread (cufflinks). Python. Biopython. diamond"
 
+mkdir gff_stats
+
 # genome tools to check and reformat the gff - essential step!
 echo "prepare the amino acid seq from the GFF. First check gff"
-gt_cmd="gt gff3 -sort -tidy -addids -sortnum -fixregionboundaries 
+gt_cmd="gt gff3 -sort -retainids -tidy -addids -sortnum -fixregionboundaries 
 	   -addintrons -force -o ${test_gff}_reformatted.gff3 ${test_gff}"
 echo ${gt_cmd}
 eval ${gt_cmd}
@@ -95,18 +103,37 @@ echo ${gt}
 eval ${gt}
 wait
 
-mkdir gff_stats
 mv *.STAT ./gff_stats
 
 rm temp
 
+# rename gff genes
+echo "step: rename the gene in the reformatted GFF file"
+rename_gff_genes="python ${python_directory}/re_name_genes.py 
+		        --gff ${test_gff}_reformatted.gff3 
+		        --prefix ${prefix}
+		        -o ${prefix}"
+echo ${rename_gff_genes}
+eval ${rename_gff_genes}
+wait
+
 # gffread to the the cds from the reformat the gff - essential step!
 echo "getting the AA and nt cds from the genome"
-gff_to_cds="gffread ${test_gff}_reformatted.gff3 
+gff_to_cds="gffread ${test_gff} 
 		   -g ${genome} -x nt.fa 
-		   -y aa.fa"
+		   -y temp.fa"
 echo ${gff_to_cds}
 eval ${gff_to_cds}
+wait
+
+# remove dots as stop codons
+echo "step: rename the gene in the reformatted GFF file"
+remove_stops="python ${python_directory}/rewrite_as_fasta.py 
+		      -i temp.fa
+			  -l ${min_len_gene}
+		      -o aa.fasta"
+echo ${remove_stops}
+eval ${remove_stops}
 wait
 
 #make blastdb
@@ -136,6 +163,13 @@ echo ${bl_p2}
 eval ${bl_p2}
 wait
 
+#blast 2 tab
+echo "step2b: blast to tab - top hit only"
+no_comment="grep -v '#' test_fa_vs_known_fa.tab > test_fa_vs_known_fa2.tab "
+echo ${no_comment}
+eval ${no_comment}
+wait
+
 # convert the xml
 echo "step3: convert the xml file"
 parse_xml="python ${python_directory}/BLAST_parser_return_hits_NAME_only.py 
@@ -150,6 +184,7 @@ echo "step4: get the seqs of the top hit."
 get_seq="python ${python_directory}/Get_sequence_from_tab_blast.py 
 	    -b test_fa_vs_known_fa.tab 
 		--known_fa ${known_fa}
+		--folder known_fa_all_hits
 		-p ${test_fa} 
 		-n ${test_fa}"
 echo ${get_seq}
@@ -157,7 +192,7 @@ eval ${get_seq}
 wait
 
 # change to where the file have been put
-cd $HOME/${Working_directory}/known_fa
+cd ./known_fa_all_hits
 
 filenames=*.fasta
 

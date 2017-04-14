@@ -37,9 +37,6 @@ is all the unique hit"
                     print >> f,'subject_length:', alignment.length
                     print >> f,'e value:', hsp.expect
                     percentage_hit = (hsp.identities)/float(alignment.length)*100
-                    if percentage_hit > 90:
-                        print 'Sequence:', alignment.title.split(" ")[1]#[19:36]
-                        print 'Query_name = ', blast_record.query
                     print >> f,"percent_identiy: %1d" %(percentage_hit )
                     print >> f, hsp.query[0:]
                     print >> f, hsp.match[0:]

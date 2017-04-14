@@ -36,8 +36,8 @@ def test_line(line):
 
 def open_blast_file(blast_file):
     """funtion to open the blast file.
-    returns a \n separeted list"""
-    """read in the tab file. Reads whole file into memory.
+    returns a \n separeted list
+    read in the tab file. Reads whole file into memory.
     Could be altered for more efficiency
     """
     with open(blast_file) as file:
@@ -48,7 +48,7 @@ def parse_blast_tab_hit(blast_line):
     """takes in a tab blast line. Splits at \t
     retunrs the names of the query and the db
     hit"""
-    data = line.rstrip("\n").split("\t")
+    data = blast_line.rstrip("\n").split("\t")
     gene = data[0]
     blast_hit_matches = data[1]
     return gene, blast_hit_matches
@@ -58,11 +58,11 @@ def get_known_name(KNOWN_FA):
     """takes in a fasta of known seq that we want to compare the
     gene models against. This funtion returns a list of names
     and a seq_IO_index of this file"""
-    name_list = []
+    known_name_list = []
     print("Indexing...%s" % KNOWN_FA)
     known_seq_db = SeqIO.index(KNOWN_FA, "fasta")
     for seq_record in known_seq_db:
-        name_list = name_list.append(seq_record.id)
+        known_name_list.append(seq_record)
     return known_seq_db, known_name_list
 
 
@@ -201,4 +201,4 @@ if __name__ == '__main__':
                PROTEIN_FILE,
                known_seq_db,
                known_name_list,
-               folder_name)
+               FOLDER_OUT)
