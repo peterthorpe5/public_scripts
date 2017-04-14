@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -euo pipefail
 
 # script to convert NR database to fasta files and make a diamond blastdatabse.
 

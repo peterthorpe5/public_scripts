@@ -1,6 +1,6 @@
 #!/bin/bash
 #$ -cwd
-#set -e
+set -euo pipefail
 # This is a simple shell to run command to test the program to post annotate diamond blast data
 # WARNIN: it assumes you have already run that taxid database download as in the readme. 
 

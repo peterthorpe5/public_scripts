@@ -1,6 +1,6 @@
 #!/bin/bash
 #$ -cwd
-#set -e
+set -euo pipefail
 # script to convert donwload NR
 
 echo " NR database could be around 80GB. Daimond DB will be around 70 GB
