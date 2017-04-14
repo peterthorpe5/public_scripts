@@ -228,12 +228,15 @@ def assign_taxon_to_dic(acc_taxid_prot):
     acc    acc_version   tax_id   GI
     XP_642131       XP_642131.1     352472  66816243"""
     acc_to_tax_id = dict()
-    with open(acc_taxid_prot, "r") as handle:
-        for line in handle:
+    # Not doing with open as. File is 14GB!!
+    # one line at a time
+    handle = open(acc_taxid_prot, "r")
+    for line in handle:
             if not test_line(line):
                 continue
             acc, acc_version, tax_id, GI = line.rstrip("\n").split()
-            acc_to_tax_id[int(gi)] = int(taxon)
+            acc_to_tax_id[acc_version] = int(tax_id)
+    handle.close()
     return acc_to_tax_id
 
 
