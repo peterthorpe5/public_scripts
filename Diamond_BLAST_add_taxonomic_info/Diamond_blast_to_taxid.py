@@ -577,7 +577,7 @@ def get_to_blast_hits(in_file,
 
 
 if "-v" in sys.argv or "--version" in sys.argv:
-    print "v0.0.4"
+    print("v0.0.4")
     sys.exit(0)
 
 usage = """Use as follows:
