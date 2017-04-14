@@ -194,6 +194,12 @@ wait
 # change to where the file have been put
 cd ./known_fa_all_hits
 
+# delete empty files
+delete_empty="find . -size 0 -delete"
+echo ${delete_empty}
+eval ${delete_empty}
+wait
+
 filenames=*.fasta
 
 for f in ${filenames}
