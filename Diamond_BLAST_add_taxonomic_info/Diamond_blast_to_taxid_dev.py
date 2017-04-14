@@ -45,8 +45,20 @@ TITLE_OF_COLOUMNS = "\t".join(['#qseqid',
                                'staxids',
                                'scientific_name',
                                'scomnames',
-                               'sskingdoms'])
+                               'sskingdoms\n'])
 TITLE_OF_COLOUMNS = DATE_TIME + TITLE_OF_COLOUMNS
+
+def format_Warning():
+    """warns of space sep blast output which is weird.
+    I have come across this once from someone else's
+    data. Dont know how it was produced."""
+    print ("Warning: You BLAST data is space separated. This is weird")
+
+
+def format_warning(file_name):
+    """warnings about a format. Break the program"""
+    print (("%s is not space of tab separated") %(file_name))
+    os._exit(0)
 
 
 def file_WARNING(problem_file):
@@ -259,7 +271,7 @@ def parse_blast_line(line):
     """
     if not test_line(line):
         return False
-    accession = get_accession_number(line)
+    accession, line = get_accession_number(line)
     return accession, line
 
 
@@ -269,15 +281,25 @@ def get_accession_number(line):
     gi|685832877|emb|CEF67798.1| .
     New data:
     ref|YP_009160410.1|"""
-    acces_column = line.split("\t")[1]
+    if "\t" in line:
+        acces_column = line.split("\t")[1]
+    else:
+        # Dont break the program
+        try:
+            acces_column = line.split()[1]
+            format_Warning()
+            # reformats it to tab separated
+            line = "\t".join(line.split())
+        except ValueError:
+            format_warning()
     if acces_column.startswith("gi"):
         # e.g. gi|66816243|ref|XP_642131.1|
         acc = acces_column.split("|")[3]
-        return acc.replace("|", "")
+        return acc.replace("|", ""), line
     else:
         # e.g. ref|YP_009160410.1|
         acc = acces_column.split("|")[1]
-        return acc.replace("|", "")
+        return acc.replace("|", ""), line
 
 
 # main function
@@ -315,6 +337,7 @@ def parse_diamond_tab(diamond_tab_output,
         if not parse_blast_line(line):
             continue
         accession, line = parse_blast_line(line)
+        print ("LINE = ", line)
         # use dictionary to get tax_id from gi number
         # Most of the GI numbers will match, expect them to be in dict...
         try:
@@ -345,27 +368,26 @@ def parse_diamond_tab(diamond_tab_output,
         except KeyError:
             # allow this to continue. Dont break it!
             common_name = ""
-        # get description  acc_to_description_dict[gi] = description
         try:
-            description = acc_to_description_dict[gi_number]
+            description = acc_to_description_dict[accession]
         except KeyError:
             # allow this to continue. Dont break it!
             description = ""
         # format the output for writing
         data_formatted = "\t".join([line.rstrip("\n"),
                                     description,
-                                    tax_id,
+                                    str(tax_id),
                                     scientific_name,
                                     common_name,
-                                    kingdom])
+                                    kingdom + "\n"])
         file_out.write(data_formatted)
     file_out.close()
 
 
-###################################################################################
-# function to get the top blast hits, kingdom and genus distribution of these.
-# They are not called by the main function above
-##################################################################################
+######################################################################
+# function to get the top blast hits, kingdom and genus distribution
+# of these. They are not called by the main function above
+#####################################################################
 
 def wanted_genes(blast_file):
     """function to retunr a list of wanted genes from file.
@@ -431,7 +453,9 @@ def get_to_blast_hits(in_file, outfile, bit_score_column="12",):
     """this is a function to open up a tab file blast results, and
     produce the percentage of kingdom blast hit based on the top
     blast match"""
-    get_top_blast_hit_based_on_order(in_file, outfile, bit_score_column)
+    # TODO: this is messy and too complex for one function
+    # we dont need to run this anymore -_blast_hit_based_on_order
+    # get_top_blast_hit_based_on_order(in_file, outfile, bit_score_column)
     # open files, read and write.
     blast_file = open (in_file, "r")
     out_file = open(outfile, "w")
