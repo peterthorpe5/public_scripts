@@ -17,18 +17,19 @@ import os
 import sys
 from optparse import OptionParser  # TODO: update to argparser
 import datetime
+from __future__ import print_function
 
 ###################################################################################
-print ("program started at %s" % time.asctime())
+print("program started at %s" % time.asctime())
 # this is how they are "described" in the catergories.dmp file
-kingdom_dic ={"A": "Archaea",
-              "B": "Bacteria",
-              "E": "Eukaryota",
-              "V": "Virus",
-              "U": "Unclassified",
-              "O": "Other"}
+kingdom_dic = {"A": "Archaea",
+               "B": "Bacteria",
+               "E": "Eukaryota",
+               "V": "Virus",
+               "U": "Unclassified",
+               "O": "Other"}
 
-DATE_TIME = "#%s\n"  %(datetime.date.today())
+DATE_TIME = "#%s\n"  % (datetime.date.today())
 TITLE_OF_COLOUMNS = "\t".join(['#qseqid',
                                'sseqid',
                                'pident',
@@ -52,30 +53,30 @@ def format_Warning():
     """warns of space sep blast output which is weird.
     I have come across this once from someone else's
     data. Dont know how it was produced."""
-    print ("Warning: You BLAST data is space separated. This is weird")
+    print("Warning: You BLAST data is space separated. This is weird")
 
 
 def format_warning(file_name):
     """warnings about a format. Break the program"""
-    print (("%s is not space of tab separated") %(file_name))
+    print(("%s is not space of tab separated") % (file_name))
     os._exit(0)
 
 
 def file_WARNING(problem_file):
     """funtion to warn about a broken or missing file
     and break the program run"""
-    print ("sorry, couldn't open the file: " + ex.strerror + "\n")
-    print ("problem file = %s" % problem_file)
-    print ("current working directory is :", os.getcwd() + "\n")
-    print ("files are :", [f for f in os.listdir('.')])
+    print("sorry, couldn't open the file: " + ex.strerror + "\n")
+    print("problem file = %s" % problem_file)
+    print("current working directory is :", os.getcwd() + "\n")
+    print("files are : ", [f for f in os.listdir('.')])
     sys.exit('cannot continue without a valid file')
 
 
 def tax_id_warning(accession):
     """function to report warning on tax_ids it cannot find"""
-    print ("try updating your tax info tax_id database file")
-    print (("tax_id for %s is not found in database") %(accession))
-    print ("changing to an Unknown tax_id 32644")
+    print("try updating your tax info tax_id database file")
+    print(("tax_id for %s is not found in database") % (accession))
+    print("changing to an Unknown tax_id 32644")
     return "32644"
 
 
@@ -93,7 +94,7 @@ def parse_NCBI_nodes_tab_file(folder):
     # In both cases, can take key as column 0 and value as column 1
     for filename in ["nodes.dmp", "merged.dmp"]:
         if not os.isfile(filename):
-            print ("Could not find %s. Please check this." % filename)
+            print("Could not find %s. Please check this." % filename)
             os._exit(0)
         with open(os.path.join(folder, filename)) as handle:
             for line in handle:
@@ -103,8 +104,8 @@ def parse_NCBI_nodes_tab_file(folder):
                 # second element
                 child = tax_info[0]
                 # add these to the dictionary {parent:child}
-                tax_dictionary[child]= parent
-    # print (tax_dictionary)
+                tax_dictionary[child] = parent
+    # print(tax_dictionary)
     return tax_dictionary
 
 
@@ -133,15 +134,15 @@ def taxomony_filter(tax_dictionary, tax_id_of_interst,
         raise ValueError("N/A as taxonomy ID")
     # get the "master" parent id
     parent = tax_dictionary[tax_id_of_interst]
-    # print (parent)
+    # print(parent)
     while True:
-        # print ("parent = ", parent, "\n")
+        # print("parent = ", parent, "\n")
         parent = tax_dictionary[parent]
         if tax_id_of_interst == "N/A":
             raise ValueError("N/A as taxonomy ID")
         # 32630 is a synthetic organism
         if parent == "32630":  # 32630
-            print ("warning synthetic organism taxid found. " +
+            print("warning synthetic organism taxid found. " +
                    "Removing this")
             return "In_filter_out_tax_id"
             break
@@ -149,7 +150,7 @@ def taxomony_filter(tax_dictionary, tax_id_of_interst,
             return "In_filter_out_tax_id"
             break
         if parent == final_tx_id_to_identify_up_to:
-            # print ("......................... im here")
+            # print("......................... im here")
             return True
         elif parent == "1":
             # Reached the root of the tree
@@ -160,12 +161,12 @@ def assign_cat_to_dic(categories):
     """function to add keys to a kingdom dic from catergory.dmp
     ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxcat.zip .
     This need to be pre downloaded and decompressed"""
-    print ("loading NCBI data files")
+    print("loading NCBI data files")
     kingdom_tax_id = dict()
     with open(categories, "r") as handle:
         for line in handle:
             kingdom, tax_species, tax_id = line.rstrip("\n").split()
-            kingdom_tax_id[int(tax_id)]= kingdom_dic[kingdom]
+            kingdom_tax_id[int(tax_id)] = kingdom_dic[kingdom]
     return kingdom_tax_id
 
 
@@ -216,7 +217,7 @@ def acc_to_description(acc_to_des):
     blastdbcmd -entry 'all' -db nr > nr.faa
     python prepare_accession_to_description_db.py
     """
-    print ("loading accession to description database. " +
+    print("loading accession to description database. " +
            "This takes a while!!")
     acc_to_description_dict = dict()
     # Not doing with open as. File is 7GB!!
@@ -323,7 +324,7 @@ def parse_diamond_tab(diamond_tab_output,
     tax_to_scientific_name_dic, \
         tax_to_common_name_dic = tax_to_scientific_name_dict(names)
     acc_to_description_dict = acc_to_description(acc_to_des)
-    print ("loaded gi to description database")
+    print("loaded gi to description database")
     tax_dictionary = parse_NCBI_nodes_tab_file
     file_out = open(outfile, "w")
     file_out.write(TITLE_OF_COLOUMNS)
@@ -334,7 +335,7 @@ def parse_diamond_tab(diamond_tab_output,
         file_WARNING(diamond_tab_output)
         os._exit(0)
     # iterate line by line through blast file
-    print ("Annotating tax id info to tab file")
+    print("Annotating tax id info to tab file")
     for line in diamond_tab_as_list:
         # get the accession number from the blast line
         if not parse_blast_line(line):
@@ -402,7 +403,7 @@ def wanted_genes(blast_file):
     blast_data = [line.rstrip() for line in names
                   if line.strip() != "" if not line.startswith("#")]
     wanted.close()
-    #print ("wanted_data :", blast_data)
+    #print("wanted_data :", blast_data)
     return blast_data
 
 
@@ -413,7 +414,7 @@ def get_top_blast_hit_based_on_order(in_file,
     Prints to a file reduced info.
     This uses two method. 1) assumes correct order.
     2) explicitly checks for the correct order"""
-    print ("Identifying top BLAST hits")
+    print("Identifying top BLAST hits")
     blast_data = wanted_genes(in_file)
     bit_score_column = int(bit_score_column) - 1
     got_list = set([])
@@ -422,7 +423,7 @@ def get_top_blast_hit_based_on_order(in_file,
     f.write(TITLE_OF_COLOUMNS)
     for line in blast_data:
         name = line.split("\t")[0]
-        #print (name)
+        #print(name)
         description = line.split("\t")[bit_score_column + 1]
         line = line.rstrip("\n")
         if not name in got_list:
@@ -492,22 +493,22 @@ def get_to_blast_hits(in_file,
     for line in blast_file:
         if line.startswith("#"):
             continue
-        # print (line)
+        # print(line)
         blast_line = line.rstrip("\n").split("\t")
         # names of the query seq
         blast_file_entry_Genes = blast_line[0]
         # print blast_file_entry_Genes
         bit_score = float(blast_line[bit_score_column])
         kings_names = blast_line[-1]
-        # print (kings_names)
+        # print(kings_names)
         ####################################################################
         # first block: if the names are the same, is the new bit score more?
         if blast_file_entry_Genes == last_gene_name:
-            # print ("im here")
+            # print("im here")
             if bit_score > current_bit_score:
-                # print ("current_bit_score", current_bit_score)
+                # print("current_bit_score", current_bit_score)
                 current_bit_score = bit_score
-                # print ("current_bit_score", current_bit_score)
+                # print("current_bit_score", current_bit_score)
                 # remove the last entry if so and put the new one in
                 del top_hits[-1]
                 top_hits.append(blast_line)
@@ -516,7 +517,7 @@ def get_to_blast_hits(in_file,
         # use this bit score as the new one to "beat"
         # print current_bit_score
         if not blast_file_entry_Genes in blast_file_entry_Genes_names:
-            # print (".......should be first line")
+            # print(".......should be first line")
             blast_file_entry_Genes_names.add(blast_file_entry_Genes)
             current_bit_score = bit_score
             top_hits.append(blast_line)
@@ -545,11 +546,11 @@ def get_to_blast_hits(in_file,
                                             # kings_names)
         # kingdoms_handles_counts[kings_names]+=1
 
-    print ("Kingdom hit distribution of top hits = ",
+    print("Kingdom hit distribution of top hits = ",
            kingdoms_handles_counts)
-    print ("number with blast hits =",
+    print("number with blast hits =",
            total_blast_hit_count)
-    # print ("genus distirbution =", genus_dict)
+    # print("genus distirbution =", genus_dict)
 
     top_hits_out_king = open("kingdom_top_hits.out", "w")
     file_tile = "#top kingdom hit for %s\n" %(in_file)
@@ -791,8 +792,8 @@ if __name__ == '__main__':
                      acc_to_des]
     for needed_file in filename_list:
         if not os.path.isfile(needed_file):
-            print ("sorry cannot find you %s file" % needed_file)
-            print ("please check this command again, " +
+            print("sorry cannot find you %s file" % needed_file)
+            print("please check this command again, " +
                    "with the full path if required")
             os._exit(0)
     parse_diamond_tab(diamond_tab_output,
@@ -805,8 +806,8 @@ if __name__ == '__main__':
     # fucntion to get the top hits and the kingdom and genus distribution
     top_hits_out = outfile + "top_blast_hits.out"
     get_to_blast_hits(outfile, top_hits_out)
-    print ("program finished at %s" % time.asctime())
-    print ("Results are in %s" % outfile)
+    print("program finished at %s" % time.asctime())
+    print("Results are in %s" % outfile)
 
 
 # more notes
