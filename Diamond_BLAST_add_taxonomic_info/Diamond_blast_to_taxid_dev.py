@@ -150,6 +150,15 @@ def assign_cat_to_dic(categories):
     return kingdom_tax_id
 
 
+def test_line(line):
+    """returns true lines. Not comments or blank line"""
+    if not line.strip():
+        return False  # if the last line is blank
+    if line.startswith("#"):
+        return False  # comment line
+    return line
+
+
 def tax_to_scientific_name_dict(names):
     """function to return a dict of speices info
     from
@@ -160,6 +169,8 @@ def tax_to_scientific_name_dict(names):
     tax_to_common_name = dict()
     with open(names, "r") as handle:
         for line in handle:
+            if not test_line(line):
+                continue
             fields = [x.strip() for x in line.rstrip("\t|\n").split("\t|\t")]
             assert len(fields) == 4, """error:
             names files is not formatted as expected. It should be:
@@ -190,6 +201,8 @@ def acc_to_description(acc_to_des):
     acc_to_description_dict = dict()
     with open(acc_to_des, "r") as handle:
         for line in handle:
+            if not test_line(line):
+                continue
             assert len(line.split("\t")) == 2, "Error, " +
             "acc_to_des.tab file is not formatted as expected. " +
             "It wants accession_string\tdescription. See help on how to " +
@@ -207,10 +220,8 @@ def assign_taxon_to_dic(acc_taxid_prot):
     gi_to_taxon = dict()
     with open(acc_taxid_prot, "r") as handle:
         for line in handle:
-            if not line.strip():
-                continue  # if the last line is blank
-            if line.startswith("#"):
-                continue  # comment line
+            if not test_line(line):
+                continue
             gi, taxon = line.rstrip("\n").split()
             gi_to_taxon[int(gi)] = int(taxon)
     return gi_to_taxon
@@ -228,10 +239,8 @@ def parse_blast_line(line):
     comment or blank and returns the line, plus the
     accession number
     """
-    if not line.strip():
-        return False  # if the last line is blank
-    if line.startswith("#"):
-        return False  # comment line
+    if not test_line(line):
+        continue
     get_accession_number(line)
     
 
@@ -240,10 +249,9 @@ def get_accession_number(line):
     """gi number are embeded in the second column
     so need to split it up to get to it e.g.
     gi|685832877|emb|CEF67798.1| """
-    gi_column = line.split("\t")[1]
-    if not gi_column.startswith("gi"):
-        raise ValueError("""colomn 2 did not start with "gi",
-    is this tab output formatted correctly""")
+    acces_column = line.split("\t")[1]
+    if gi_column.startswith("gi"):
+        
     return int(gi_column.split("|")[1])
 
 
