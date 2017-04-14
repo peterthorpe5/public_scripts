@@ -221,17 +221,20 @@ def acc_to_description(acc_to_des):
 
 def assign_taxon_to_dic(acc_taxid_prot):
     """function to convert taxon info to dictionary.
-    Takes in the acc_taxid_prot file downloaded from NCBI.
+    Takes in the prot.accession2taxid file downloaded from NCBI.
     Returns a dictionary:
-    gi number to tax id. """
-    gi_to_taxon = dict()
+    accession to tax id.
+    The file is formatted as so: 
+    acc    acc_version   tax_id   GI
+    XP_642131       XP_642131.1     352472  66816243"""
+    acc_to_tax_id = dict()
     with open(acc_taxid_prot, "r") as handle:
         for line in handle:
             if not test_line(line):
                 continue
-            gi, taxon = line.rstrip("\n").split()
-            gi_to_taxon[int(gi)] = int(taxon)
-    return gi_to_taxon
+            acc, acc_version, tax_id, GI = line.rstrip("\n").split()
+            acc_to_tax_id[int(gi)] = int(taxon)
+    return acc_to_tax_id
 
 
 def read_diamond_tab_file(diamond_tab_output):
@@ -284,7 +287,7 @@ def parse_diamond_tab(diamond_tab_output,
     which does not have tax id data.
     This function call a number of other functions"""
     taxon_to_kingdom = assign_cat_to_dic(categories)
-    gi_to_taxon = assign_taxon_to_dic(acc_taxid_prot)
+    acc_to_tax_id = assign_taxon_to_dic(acc_taxid_prot)
     tax_to_scientific_name_dic, \
         tax_to_common_name_dic = tax_to_scientific_name_dict(names)
     acc_to_description_dict = acc_to_description(acc_to_des)
@@ -306,7 +309,7 @@ def parse_diamond_tab(diamond_tab_output,
         # use dictionary to get tax_id from gi number
         # Most of the GI numbers will match, expect them to be in dict...
         try:
-            tax_id = gi_to_taxon[accession]
+            tax_id = acc_to_tax_id[accession]
         except KeyError:
             tax_id = tax_id = tax_id_warning(accession)  # unknown tax_id
         # TODO ADD TAX FILTER
