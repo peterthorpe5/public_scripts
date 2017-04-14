@@ -4,7 +4,7 @@ set -e
 
 #echo Running on $HOSTNAME
 #echo Current PATH is $PATH
-#source ~/.bash_profile
+#source $HOME/.bash_profile
 
 ################################################################
 # Variables: FILLL IN DOWN TO THE END OF VARIABLES
@@ -234,7 +234,7 @@ mv *_refine.fasta ./alignments
 cd ${Working_directory}
 
 echo "running diamond-BLAST against NR"
-diam_p="diamond blastp -p 16 --sensitive -e 0.00001 
+diam_p="diamond blastp -p ${threads} --sensitive -e 0.00001 
 	   -v -q aa.fa 
 	   -d /mnt/shared/scratch/pt40963/blast_databases/nr.dmnd 
 	   -a aa.fasta_vs_nr.da"
@@ -249,20 +249,20 @@ eval ${diam_v}
 wait
 
 echo "adding tx_id and descriptions to diamond-BLAST output"
-tax="python ~/misc_python/diamond_blast_to_kingdom/Diamond_blast_to_taxid_add_kingdom_add_species_description.py 
+tax="python $HOME/misc_python/diamond_blast_to_kingdom/Diamond_blast_to_taxid_add_kingdom_add_species_description.py 
 	-i aa.fasta_vs_nr.tab 
-	-p /home/pt40963/Downloads/blast_databases
+	-p $HOME/Downloads/blast_databases
 	-o aa.fasta_vs_nr_tax.tab"
 echo ${tax}
 eval ${tax}
 wait
 
 echo "predicting HGT"
-HGT="python /home/pt40963/misc_python/Lateral_gene_transfer_prediction_tool/Lateral_gene_transfer_predictor.py 
+HGT="python $HOME/misc_python/Lateral_gene_transfer_prediction_tool/Lateral_gene_transfer_predictor.py 
 		-i *_vs_nr_tax.tab 
 		--tax_filter_out ${tax_filter_out} 
 		--tax_filter_up_to ${tax_filter_up_to}
-		-p /home/pt40963/Downloads/blast_databases -o LTG_results.out"
+		-p $HOME/Downloads/blast_databases -o LTG_results.out"
 
 echo ${HGT}
 eval ${HGT}
@@ -271,19 +271,19 @@ wait
 
 #Filter taxomony commands:
 echo "filtering blast results"
-filter_top_blasts="python ~/misc_python/BLAST_output_parsing/top_BLAST_hit_filter_out_tax_id.py 
+filter_top_blasts="python $HOME/misc_python/BLAST_output_parsing/top_BLAST_hit_filter_out_tax_id.py 
 				  -i *_vs_nr_tax.tab 
 				  -t ${tax_filter_out} 
-				  -p /home/pt40963/Downloads/blast_databases 
+				  -p $HOME/Downloads/blast_databases 
 				  -o top_not_phylum_${tax_filter_out}.hits"
 echo ${filter_top_blasts}
 eval ${filter_top_blasts}
 wait
 
-filter_species="python ~/misc_python/BLAST_output_parsing/top_BLAST_hit_filter_out_tax_id.py 
+filter_species="python $HOME/misc_python/BLAST_output_parsing/top_BLAST_hit_filter_out_tax_id.py 
 			   -i *_vs_nr_tax.tab 
 			   -t ${species_tx_id}
-			   -p /home/pt40963/Downloads/blast_databases 
+			   -p $HOME/Downloads/blast_databases 
 			   -o top_not_species_tx_id_${species_tx_id}.hits"
 echo ${filter_species}
 eval ${filter_species}
