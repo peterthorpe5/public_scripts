@@ -206,16 +206,19 @@ def acc_to_description(acc_to_des):
     print ("loading accession to description database. " +
            "This takes a while!!")
     acc_to_description_dict = dict()
-    with open(acc_to_des, "r") as handle:
-        for line in handle:
-            if not test_line(line):
-                continue
-            assert len(line.split("\t")) == 2, "Error, " +
-            "acc_to_des.tab file is not formatted as expected. " +
-            "It wants accession_string\tdescription. See help on how to " +
-            "make this file, or use the shell script."
-            gi, description = line.rstrip("\n").split("\t")
-            acc_to_description_dict[int(gi)] = description
+    # Not doing with open as. File is 7GB!!
+    # one line at a time
+    handle = open(acc_to_des, "r")
+    for line in handle:
+        if not test_line(line):
+            continue
+        assert len(line.split("\t")) == 2, ("Error, " +
+        "acc_to_des.tab file is not formatted as expected. " +
+        "It wants accession_string\tdescription. See help on how to " +
+        "make this file, or use the shell script.")
+        gi, description = line.rstrip("\n").split("\t")
+        acc_to_description_dict[int(gi)] = description
+    handle.close()
     return acc_to_description_dict
 
 
