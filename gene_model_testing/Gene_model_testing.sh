@@ -1,6 +1,6 @@
 #!/bin/bash
 #Abort on any error,
-#set -e
+set -e
 
 #echo Running on $HOSTNAME
 #echo Current PATH is $PATH
@@ -11,14 +11,17 @@
 
 Phy_dir=$HOME/scratch/tree_health/ITS_ratio/WORKED_Phytophthora_infestans.ASM14294v1.31
 
-known_fa=""
+known_fa="${Phy_dir}/tests.AA.fasta"
+known_fa_nucl="${Phy_dir}/Pi_T30_4nt.fa"
 # default name
 test_fa="aa.fa"
 threads=8
 python_directory=$HOME/public_scripts/gene_model_testing
 Working_directory=$HOME/scratch/Pi/
-test_gff=""
-genome="${Phy_dir}/Phytophthora_infestans.ASM14294v1.31.fa"
+test_gff="${Phy_dir}/repeat_masking/Pi.models_RNAseq.v1.VERY.short_NOT_BOTH_STRANDS.gff"
+# for the repeat masking and GFF I used a altered gene name version
+genome="${Phy_dir}/repeat_masking/Pi_alt.fasta"
+#genome="${Phy_dir}/Phytophthora_infestans.ASM14294v1.31.fa"
 
 # FOR HGT
 # tax_filter_out is the phylum your beast lives in, or clade if you want to get a more refined HGT result
@@ -120,7 +123,7 @@ eval ${bl_p}
 wait
 
 mkdir known_fa_all_hits
-mv known_fa ./known_fa_all_hits
+cp ${known_fa} ./known_fa_all_hits/${known_fa}
 
 #blast 2 tab
 echo "step2b: blast to tab - top hit only"
@@ -142,8 +145,9 @@ wait
 
 # get the matches seq for the tab blast to the effectors
 echo "step4: get the seqs of the top hit."
-get_seq="python ${python_directory}/Get_effector_seq_using_SeqIO_dic.py 
+get_seq="python ${python_directory}/Get_sequence_from_tab_blast.py 
 	    -b test_fa_vs_known_fa.tab 
+		--known_fa ${known_fa}
 		-p ${test_fa} 
 		-n ${test_fa}"
 echo ${get_seq}
@@ -183,7 +187,7 @@ mkdir alignments
 mv *_refine.fasta ./alignments
 
 ###########################################################################
-# diamond balst aginst NR?
+# diamond blast aginst NR?
 echo "running diamond-BLAST against NR"
 diam_p="diamond blastp -p 16 --sensitive -e 0.00001 
 	   -v -q aa.fa 
