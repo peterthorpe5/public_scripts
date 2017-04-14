@@ -11,6 +11,8 @@ slepp 10
 
 cd $PWD
 
+echo "I DONT RECOMMEND THIS APPROACH. USE AT YOUR OWN RISK!!! This is not tested due to data size"
+
 echo "im downloading files from NCBI"
 
 wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/prot.accession2taxid.gz.md5
