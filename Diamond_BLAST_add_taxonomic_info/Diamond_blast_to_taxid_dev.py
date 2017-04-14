@@ -170,7 +170,7 @@ def acc_to_description(acc_to_des):
     This, along with other functions a re RAM hungry.
     export BLASTDB=/PATH_TO/ncbi/extracted
     blastdbcmd -entry 'all' -db nr > nr.faa
-    python prepare_accession_to_description_db.py 
+    python prepare_accession_to_description_db.py
     """
     acc_to_description_dict = dict()
     with open(acc_to_des, "r") as handle:
@@ -344,7 +344,7 @@ def get_top_blast_hit_based_on_order(in_file, outfile,
             got_list.add(name)
     f.close()
 
-##############################################################################################
+#########################################################################
 
 
 def get_genus_count(genus_dict, blast_line, sci_name_column="15"):
@@ -489,20 +489,24 @@ if "-v" in sys.argv or "--version" in sys.argv:
 usage = """Use as follows:
 # warning: running to script uses a lot of RAM ~25GB.
 
-$ python Diamond_blast_to_taxid.py -i diamond_tab_output -t /PATH_TO/NCBI_acc_taxid_prot.dmp
+$ python Diamond_blast_to_taxid.py -i diamond_tab_output
+-t /PATH_TO/NCBI_acc_taxid_prot.dmp
     -c /PATH/To/categories.dmp
 -n /PATH/To/names.dmp -d /PATH_TO_/description_database -o outfile.tab
 
         or
 
-$ python Diamond_blast_to_taxid.py -i diamond_tab_output -p /PATH_TO/FILES -o outfile.tab
+$ python Diamond_blast_to_taxid.py -i diamond_tab_output -p /PATH_TO/FILES
+-o outfile.tab
 
 
-This script opens up a diamond tab output (-i) and looks up the relavant tax_id info (-t),
+This script opens up a diamond tab output (-i) and looks up the relavant
+tax_id info (-t),
 look up the kingdom (-c)
 looks for the species names (-n), looks up the descrtiption of the blast hit (-d):
 
-# NOTE: this will also work on standard blast output which does not have kingdom assignmnets.
+# NOTE: this will also work on standard blast output which does not have
+kingdom assignmnets.
 
     Prot to tax_id: ftp://ftp.ncbi.nih.gov/pub/taxonomy/acc_taxid_prot.dmp.gz).
     catergories file: ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxcat.zip
@@ -512,25 +516,26 @@ all files need to be uncompressed
 
 do the following:
 
-    wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/acc_taxid_prot.dmp.gz
-    gunzip acc_taxid_prot.dmp.gz
+wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/prot.accession2taxid.gz.md5
+wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/prot.accession2taxid.gz
+md5sum -c prot.accession2taxid.gz.md5
+gunzip prot.accession2taxid.gz
 
-    wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxcat.zip
-    unzip taxcat.zip
+wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxcat.zip
+unzip taxcat.zip
 
-    wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz
-    tar -zxvf taxdump.tar.gz
+wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz
+tar -zxvf taxdump.tar.gz
 
 
 To generate the acc_to_des.tab databse:
 blastdbcmd -entry 'all' -db nr > nr.faa
 
-
-python ~/misc_python/diamond_blast_to_kingdom/prepare_acc_to_description_databse.py
-
-# Note: this return the top description in the NR discrition for each fasta file entry.
-This can be modified to return "all".
-But the file will be much larger and therefore require more RAM
+python prepare_acc_to_description_databse.py
+descriptions = number of blast descriptions (default is 4) to return
+which are asscosiated with this accession number.
+More will be useful but your
+file will get very big. Quickly!
 
 
     BLAST DATA we be returned as:
@@ -558,11 +563,13 @@ TOP BLAST HITS FINDER:
 By default this script will find the top hits by two methods.
 1) assuming order in BLAST out file
 2) Explicitly looking for the BLAST entry with the greatest bit score per query.
-Script will also return the distribution of the kindgom and genus for these top hits.
+Script will also return the distribution of the kindgom and genus for
+these top hits.
 
 
 Some notes on using Diamond:
-# script to get the latest NR database and NT database and make a diamond blastdatabse.
+# script to get the latest NR database and NT database and make a
+diamond blastdatabse.
 
 # to install diamond from source
 export BLASTDB=/PATH/TO/ncbi/extracted
@@ -702,13 +709,12 @@ if __name__ == '__main__':
                       names,
                       acc_to_des,
                       outfile)
+    # fucntion to get the top hits and the kingdom and genus distribution
+    top_hits_out = outfile + "top_blast_hits.out"
+    get_to_blast_hits(outfile, top_hits_out)
+    print ("program finished at %s" % time.asctime())
+    print ("Results are in %s" % outfile)
 
-# fucntion to get the top hits and the kingdom and genus distribution
-top_hits_out = outfile + "top_blast_hits.out"
-get_to_blast_hits(outfile, top_hits_out)
-
-print ("program finished at %s" % time.asctime())
-print ("Results are in %s" % outfile)
 
 # more notes
 """##########################################################################
