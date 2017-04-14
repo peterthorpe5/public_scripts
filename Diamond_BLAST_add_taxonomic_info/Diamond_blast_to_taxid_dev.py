@@ -337,7 +337,6 @@ def parse_diamond_tab(diamond_tab_output,
         if not parse_blast_line(line):
             continue
         accession, line = parse_blast_line(line)
-        print ("LINE = ", line)
         # use dictionary to get tax_id from gi number
         # Most of the GI numbers will match, expect them to be in dict...
         try:
@@ -404,7 +403,8 @@ def wanted_genes(blast_file):
     return blast_data
 
 
-def get_top_blast_hit_based_on_order(in_file, outfile,
+def get_top_blast_hit_based_on_order(in_file,
+                                     outfile,
                                      bit_score_column="12"):
     """parse through file and get top hit.
     Prints to a file reduced info.
@@ -431,7 +431,9 @@ def get_top_blast_hit_based_on_order(in_file, outfile,
 #########################################################################
 
 
-def get_genus_count(genus_dict, blast_line, sci_name_column="15"):
+def get_genus_count(genus_dict,
+                    blast_line,
+                    sci_name_column="15"):
     """this function count the distribution of the genus for the top hit.
     Take in the genus dictionary created from another function, the
     blast line and the coloumn which has the sci name. default = 15
@@ -449,7 +451,9 @@ def get_genus_count(genus_dict, blast_line, sci_name_column="15"):
     return genus_dict
 
 
-def get_to_blast_hits(in_file, outfile, bit_score_column="12",):
+def get_to_blast_hits(in_file,
+                      outfile,
+                      bit_score_column="12",):
     """this is a function to open up a tab file blast results, and
     produce the percentage of kingdom blast hit based on the top
     blast match"""
