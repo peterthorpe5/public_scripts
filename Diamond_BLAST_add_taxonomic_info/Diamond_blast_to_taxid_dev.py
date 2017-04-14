@@ -306,7 +306,7 @@ def parse_diamond_tab(diamond_tab_output,
         # use dictionary to get tax_id from gi number
         # Most of the GI numbers will match, expect them to be in dict...
         try:
-            tax_id = gi_to_taxon[gi_number]
+            tax_id = gi_to_taxon[accession]
         except KeyError:
             tax_id = tax_id = tax_id_warning(accession)  # unknown tax_id
         # TODO ADD TAX FILTER
