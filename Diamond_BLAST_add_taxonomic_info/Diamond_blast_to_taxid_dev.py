@@ -260,7 +260,7 @@ def parse_blast_line(line):
     if not test_line(line):
         return False
     accession = get_accession_number(line)
-    return accession
+    return accession, line
 
 
 def get_accession_number(line):
@@ -312,6 +312,8 @@ def parse_diamond_tab(diamond_tab_output,
     print ("Annotating tax id info to tab file")
     for line in diamond_tab_as_list:
         # get the accession number from the blast line
+        if not parse_blast_line(line):
+            continue
         accession, line = parse_blast_line(line)
         # use dictionary to get tax_id from gi number
         # Most of the GI numbers will match, expect them to be in dict...
