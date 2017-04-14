@@ -95,6 +95,9 @@ echo ${gt}
 eval ${gt}
 wait
 
+mkdir gff_stats
+mv *.STAT ./gff_stats
+
 rm temp
 
 # gffread to the the cds from the reformat the gff - essential step!
@@ -123,7 +126,6 @@ eval ${bl_p}
 wait
 
 mkdir known_fa_all_hits
-cp ${known_fa} ./known_fa_all_hits/${known_fa}
 
 #blast 2 tab
 echo "step2b: blast to tab - top hit only"
