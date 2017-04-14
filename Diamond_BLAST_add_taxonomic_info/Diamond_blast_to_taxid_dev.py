@@ -191,7 +191,8 @@ def tax_to_scientific_name_dict(names):
                 tax_to_common_name[taxid] = fields[1]
 
     # print("Loaded %i scientific names, and %i common names"
-          # % (len(tax_to_scientific_name_dict), len(tax_to_common_name)))
+           # % (len(tax_to_scientific_name_dict),
+           # len(tax_to_common_name)))
     return tax_to_scientific_name_dict, tax_to_common_name
 
 
@@ -272,11 +273,11 @@ def get_accession_number(line):
     if acces_column.startswith("gi"):
         # e.g. gi|66816243|ref|XP_642131.1|
         acc = acces_column.split("|")[3]
-        return acc.replace("|")
+        return acc.replace("|", "")
     else:
         # e.g. ref|YP_009160410.1|
         acc = acces_column.split("|")[1]
-        return acc.replace("|")
+        return acc.replace("|", "")
 
 
 # main function
