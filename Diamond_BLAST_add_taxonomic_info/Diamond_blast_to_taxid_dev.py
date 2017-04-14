@@ -49,6 +49,16 @@ TITLE_OF_COLOUMNS = "\t".join(['#qseqid',
 TITLE_OF_COLOUMNS = DATE_TIME + TITLE_OF_COLOUMNS
 
 
+def file_WARNING(problem_file):
+    """funtion to warn about a broken or missing file
+    and break the program run"""
+    print ("sorry, couldn't open the file: " + ex.strerror + "\n")
+    print ("problem file = %s" % problem_file)
+    print ("current working directory is :", os.getcwd() + "\n")
+    print ("files are :", [f for f in os.listdir('.')])
+    sys.exit('cannot continue without a valid file')
+    
+
 
 def parse_NCBI_nodes_tab_file(folder):
     """this is a function to open nodes.dmp from the NCBI taxonomy
@@ -97,7 +107,8 @@ def taxomony_filter(tax_dictionary, tax_id_of_interst,
     """
     tax_id_of_interst= tax_id_of_interst.strip()
     if tax_id_of_interst == "0":
-        raise ValueError("0 is an unknown ID, going to assing 32644 to it instead")
+        raise ValueError("0 is an unknown ID, going to assing 32644 " +
+                         "to it instead")
         tax_id_of_interst ="32644"  # assign an unknown tax_id
     if tax_id_of_interst == "N/A":
         raise ValueError("N/A as taxonomy ID")
@@ -111,7 +122,8 @@ def taxomony_filter(tax_dictionary, tax_id_of_interst,
             raise ValueError("N/A as taxonomy ID")
         # 32630 is a synthetic organism
         if parent == "32630":  # 32630
-            print ("warning synthetic organism taxid found. Removing this")
+            print ("warning synthetic organism taxid found. " +
+                   "Removing this")
             return "In_filter_out_tax_id"
             break
         if parent == tax_to_filter_out:
@@ -172,12 +184,15 @@ def acc_to_description(acc_to_des):
     blastdbcmd -entry 'all' -db nr > nr.faa
     python prepare_accession_to_description_db.py
     """
+    print ("loading accession to description database. " + "
+           "This takes a while!!")
     acc_to_description_dict = dict()
     with open(acc_to_des, "r") as handle:
         for line in handle:
-            assert len(line.split("\t")) == 2, """Error, acc_to_des.tab file is not
-    formatted as expected. It wants Gi_number\tdescription. See help on how to make
-    this file, or use the shell script."""
+            assert len(line.split("\t")) == 2, "Error, " +
+            "acc_to_des.tab file is not formatted as expected. " +
+            "It wants accession_string\tdescription. See help on how to " +
+            "make this file, or use the shell script."
             gi, description = line.rstrip("\n").split("\t")
             acc_to_description_dict[int(gi)] = description
     return acc_to_description_dict
@@ -219,15 +234,16 @@ def get_gi_number(line):
 def parse_diamond_tab(diamond_tab_output, path_files,
                       acc_taxid_prot, categories,
                       names, acc_to_des, outfile):
-    """funtion to get tax id from dtaabse from diamond blast vs NR tab output.
-    This can also re annoted tab blast data which does not have tax id data.
+    """funtion to get tax id from dtaabse from diamond
+    blast vs NR tab output.
+    This can also re annoted tab blast data
+    which does not have tax id data.
     This function call a number of other functions"""
     print ("loading NCBI data files")
     taxon_to_kingdom = assign_cat_to_dic(categories)
     gi_to_taxon = assign_taxon_to_dic(acc_taxid_prot)
     tax_to_scientific_name_dic, \
         tax_to_common_name_dic = tax_to_scientific_name_dict(names)
-    print ("loading gi to description database. This takes a while!")
     acc_to_description_dict = acc_to_description(acc_to_des)
     print ("loaded gi to description database")
     tax_dictionary = parse_NCBI_nodes_tab_file
@@ -243,10 +259,8 @@ def parse_diamond_tab(diamond_tab_output, path_files,
     try:
         diamond_tab_as_list = read_diamond_tab_file(diamond_tab_output)
     except IOError as ex:
-        print("sorry, couldn't open the file: " + ex.strerror + "\n")
-        print ("current working directory is :", os.getcwd() + "\n")
-        print ("files are :", [f for f in os.listdir('.')])
-        sys.exit('cannot continue without a valid file')
+        file_WARNING(diamond_tab_output)
+        os._exit(0)
     # iterate line by line through blast file
     print ("Annotating tax id info to tab file")
     for line in diamond_tab_as_list:
@@ -264,7 +278,10 @@ def parse_diamond_tab(diamond_tab_output, path_files,
             print ("try updating your tax info tax_id database file")
             print (("tax_id for %s is not found in database") %(gi_number))
         # TAXONOMY FILTERING - default is no!
-        # taxomony_filter(tax_dictionary, tax_id_of_interst,final_tx_id_to_identify_up_to, tax_to_filter_out)
+        # taxomony_filter(tax_dictionary,
+                         # tax_id_of_interst,
+                         #final_tx_id_to_identify_up_to,
+                         #tax_to_filter_out)
         # get kingdom
         try:
             kingdom = taxon_to_kingdom[tax_id]
