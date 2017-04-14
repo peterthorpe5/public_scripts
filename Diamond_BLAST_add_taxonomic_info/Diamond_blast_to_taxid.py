@@ -12,12 +12,12 @@
 # author: Peter Thorpe September 2015. The James Hutton Insitute, Dundee, UK.
 
 # imports
+from __future__ import print_function
 import time
 import os
 import sys
 from optparse import OptionParser  # TODO: update to argparser
 import datetime
-from __future__ import print_function
 
 ###################################################################################
 print("program started at %s" % time.asctime())
