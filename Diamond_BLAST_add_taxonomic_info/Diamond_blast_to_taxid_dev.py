@@ -207,6 +207,10 @@ def assign_taxon_to_dic(acc_taxid_prot):
     gi_to_taxon = dict()
     with open(acc_taxid_prot, "r") as handle:
         for line in handle:
+            if not line.strip():
+                continue  # if the last line is blank
+            if line.startswith("#"):
+                continue  # comment line
             gi, taxon = line.rstrip("\n").split()
             gi_to_taxon[int(gi)] = int(taxon)
     return gi_to_taxon
@@ -219,8 +223,20 @@ def read_diamond_tab_file(diamond_tab_output):
     with open(diamond_tab_output) as file:
         return file.read().split("\n")
 
+def parse_blast_line(line):
+    """function takes in a line check if it is not a
+    comment or blank and returns the line, plus the
+    accession number
+    """
+    if not line.strip():
+        return False  # if the last line is blank
+    if line.startswith("#"):
+        return False  # comment line
+    get_accession_number(line)
+    
 
-def get_gi_number(line):
+
+def get_accession_number(line):
     """gi number are embeded in the second column
     so need to split it up to get to it e.g.
     gi|685832877|emb|CEF67798.1| """
@@ -265,8 +281,7 @@ def parse_diamond_tab(diamond_tab_output, path_files,
     # iterate line by line through blast file
     print ("Annotating tax id info to tab file")
     for line in diamond_tab_as_list:
-        if not line.strip():
-            continue  # if the last line is blank
+        accession, line = parse_blast_line(line)
         # ask function to get gi number
         gi_number = get_gi_number(line)
         # use dictionary to get tax_id from gi number
