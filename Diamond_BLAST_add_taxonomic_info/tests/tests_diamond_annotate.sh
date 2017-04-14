@@ -35,20 +35,20 @@ echo im downloading files from NCBI
 
 
 ##remove older version
-#rm -rf taxdump.tar.gz*
-#rm -rf gi_taxid_prot.dmp.gz*
-#rm -rf *.dmp
-#rm -rf *.zip
+rm -rf taxdump.tar.gz*
+rm -rf gi_taxid_prot.dmp.gz*
+rm -rf *.dmp
+rm -rf *.zip
 #
 #
 #wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/gi_taxid_prot.dmp.gz
 #gunzip gi_taxid_prot.dmp.gz
 #
-#wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxcat.zip
-#unzip taxcat.zip
+wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxcat.zip
+unzip taxcat.zip
 #
-#wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz
-#tar -zxvf taxdump.tar.gz
+wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz
+tar -zxvf taxdump.tar.gz
 
 #wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/prot.accession2taxid.gz.md5
 #wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/prot.accession2taxid.gz
@@ -57,15 +57,15 @@ echo im downloading files from NCBI
 
 
 #
-#echo downloading and unzipping done
+echo downloading and unzipping done
 #
-#python $HOME/misc_python/diamond_blast_to_kingdom/prepare_gi_to_description_databse.py
+python $HOME/public_scripts/Diamond_BLAST_add_taxonomic_info/prepare_accession_to_description_db.py
 #
-#echo single discription to gi number database done
+echo four discriptions to accession number database done
 #
 #rm -rf nr.faa
-#rm -rf *.zip
-#rm -rf taxdump.tar.gz*
+rm -rf *.zip
+rm -rf taxdump.tar.gz*
 #
 # run diamond
 
@@ -101,15 +101,15 @@ wait
 # annot the output
 echo "3) annotating the ouput"
 annot_command="python $HOME/public_scripts/Diamond_BLAST_add_taxonomic_info/Diamond_blast_to_taxid.py 
--i tests.tab -d test_acc_annot.tab -o tests_tax.tab"
+-i tests.tab -d acc_to_des.tab -o tests_tax.tab"
 echo ${annot_command}
 eval ${annot_command}
 wait
 
 # annot the output
-echo "3) annotating the ouput with old and new hits in testfile"
+echo "3b) annotating the ouput with old and new hits in testfile"
 annot_command="python $HOME/public_scripts/Diamond_BLAST_add_taxonomic_info/Diamond_blast_to_taxid.py 
--i tests_old_and_new.tab -d test_acc_annot.tab -o tests_old_and_new_tax.tab"
+-i tests_old_and_new.blast -d acc_to_des.tab -o tests_old_and_new_tax.tab"
 echo ${annot_command}
 eval ${annot_command}
 wait
