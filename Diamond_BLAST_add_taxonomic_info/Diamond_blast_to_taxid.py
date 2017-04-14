@@ -28,6 +28,56 @@ kingdom_dic ={"A": "Archaea",
               "U": "Unclassified",
               "O": "Other"}
 
+DATE_TIME = "#%s\n"  %(datetime.date.today())
+TITLE_OF_COLOUMNS = "\t".join(['#qseqid',
+                               'sseqid',
+                               'pident',
+                               'length',
+                               'mismatch',
+                               'gapopen',
+                               'qstart',
+                               'qend',
+                               'sstart',
+                               'send',
+                               'evalue',
+                               'bitscore',
+                               'salltitles',
+                               'staxids',
+                               'scientific_name',
+                               'scomnames',
+                               'sskingdoms\n'])
+TITLE_OF_COLOUMNS = DATE_TIME + TITLE_OF_COLOUMNS
+
+def format_Warning():
+    """warns of space sep blast output which is weird.
+    I have come across this once from someone else's
+    data. Dont know how it was produced."""
+    print ("Warning: You BLAST data is space separated. This is weird")
+
+
+def format_warning(file_name):
+    """warnings about a format. Break the program"""
+    print (("%s is not space of tab separated") %(file_name))
+    os._exit(0)
+
+
+def file_WARNING(problem_file):
+    """funtion to warn about a broken or missing file
+    and break the program run"""
+    print ("sorry, couldn't open the file: " + ex.strerror + "\n")
+    print ("problem file = %s" % problem_file)
+    print ("current working directory is :", os.getcwd() + "\n")
+    print ("files are :", [f for f in os.listdir('.')])
+    sys.exit('cannot continue without a valid file')
+
+
+def tax_id_warning(accession):
+    """function to report warning on tax_ids it cannot find"""
+    print ("try updating your tax info tax_id database file")
+    print (("tax_id for %s is not found in database") %(accession))
+    print ("changing to an Unknown tax_id 32644")
+    return "32644"
+
 
 def parse_NCBI_nodes_tab_file(folder):
     """this is a function to open nodes.dmp from the NCBI taxonomy
@@ -38,11 +88,13 @@ def parse_NCBI_nodes_tab_file(folder):
     # nodes.dmp - this file is separated by \t|\t
     # empty dictionary to add to parent and child (keys,vals) to
     tax_dictionary = {}
-
     # nodes.dmp files goes: child, parent, etc
     # merged.dmp file goes: old, new
     # In both cases, can take key as column 0 and value as column 1
     for filename in ["nodes.dmp", "merged.dmp"]:
+        if not os.isfile(filename):
+            print ("Could not find %s. Please check this." % filename)
+            os._exit(0)
         with open(os.path.join(folder, filename)) as handle:
             for line in handle:
                 tax_info = line.replace("\n", "\t").split("\t|\t")
@@ -74,7 +126,8 @@ def taxomony_filter(tax_dictionary, tax_id_of_interst,
     """
     tax_id_of_interst= tax_id_of_interst.strip()
     if tax_id_of_interst == "0":
-        raise ValueError("0 is an unknown ID, going to assing 32644 to it instead")
+        raise ValueError("0 is an unknown ID, going to assing 32644 " +
+                         "to it instead")
         tax_id_of_interst ="32644"  # assign an unknown tax_id
     if tax_id_of_interst == "N/A":
         raise ValueError("N/A as taxonomy ID")
@@ -88,7 +141,8 @@ def taxomony_filter(tax_dictionary, tax_id_of_interst,
             raise ValueError("N/A as taxonomy ID")
         # 32630 is a synthetic organism
         if parent == "32630":  # 32630
-            print ("warning synthetic organism taxid found. Removing this")
+            print ("warning synthetic organism taxid found. " +
+                   "Removing this")
             return "In_filter_out_tax_id"
             break
         if parent == tax_to_filter_out:
@@ -106,12 +160,22 @@ def assign_cat_to_dic(categories):
     """function to add keys to a kingdom dic from catergory.dmp
     ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxcat.zip .
     This need to be pre downloaded and decompressed"""
+    print ("loading NCBI data files")
     kingdom_tax_id = dict()
     with open(categories, "r") as handle:
         for line in handle:
             kingdom, tax_species, tax_id = line.rstrip("\n").split()
             kingdom_tax_id[int(tax_id)]= kingdom_dic[kingdom]
     return kingdom_tax_id
+
+
+def test_line(line):
+    """returns true lines. Not comments or blank line"""
+    if not line.strip():
+        return False  # if the last line is blank
+    if line.startswith("#"):
+        return False  # comment line
+    return line
 
 
 def tax_to_scientific_name_dict(names):
@@ -124,6 +188,8 @@ def tax_to_scientific_name_dict(names):
     tax_to_common_name = dict()
     with open(names, "r") as handle:
         for line in handle:
+            if not test_line(line):
+                continue
             fields = [x.strip() for x in line.rstrip("\t|\n").split("\t|\t")]
             assert len(fields) == 4, """error:
             names files is not formatted as expected. It should be:
@@ -137,39 +203,57 @@ def tax_to_scientific_name_dict(names):
                 tax_to_common_name[taxid] = fields[1]
 
     # print("Loaded %i scientific names, and %i common names"
-          # % (len(tax_to_scientific_name_dict), len(tax_to_common_name)))
+           # % (len(tax_to_scientific_name_dict),
+           # len(tax_to_common_name)))
     return tax_to_scientific_name_dict, tax_to_common_name
 
-def gi_to_description(gi_to_des):
-    """function to return a dictionary of gi
+
+def acc_to_description(acc_to_des):
+    """function to return a dictionary of accession
     to description. The data needs to be generated into a tab file.
     This, along with other functions a re RAM hungry.
     export BLASTDB=/PATH_TO/ncbi/extracted
     blastdbcmd -entry 'all' -db nr > nr.faa
-    python diamond_blast_to_kingdom/prepare_gi_to_description_databse.py
+    python prepare_accession_to_description_db.py
     """
-    gi_to_description_dict = dict()
-    with open(gi_to_des, "r") as handle:
-        for line in handle:
-            assert len(line.split("\t")) == 2, """Error, gi_to_des.tab file is not
-    formatted as expected. It wants Gi_number\tdescription. See help on how to make
-    this file, or use the shell script."""
-            gi, description = line.rstrip("\n").split("\t")
-            gi_to_description_dict[int(gi)] = description
-    return gi_to_description_dict
+    print ("loading accession to description database. " +
+           "This takes a while!!")
+    acc_to_description_dict = dict()
+    # Not doing with open as. File is 7GB!!
+    # one line at a time
+    handle = open(acc_to_des, "r")
+    for line in handle:
+        if not test_line(line):
+            continue
+        assert len(line.split("\t")) == 2, ("Error, " +
+        "acc_to_des.tab file is not formatted as expected. " +
+        "It wants accession_string\tdescription. See help on how to " +
+        "make this file, or use the shell script.")
+        acc, description = line.rstrip("\n").split("\t")
+        acc_to_description_dict[acc] = description
+    handle.close()
+    return acc_to_description_dict
 
 
-def assign_taxon_to_dic(gi_taxid_prot):
+def assign_taxon_to_dic(acc_taxid_prot):
     """function to convert taxon info to dictionary.
-    Takes in the gi_taxid_prot file downloaded from NCBI.
+    Takes in the prot.accession2taxid file downloaded from NCBI.
     Returns a dictionary:
-    gi number to tax id. """
-    gi_to_taxon = dict()
-    with open(gi_taxid_prot, "r") as handle:
-        for line in handle:
-            gi, taxon = line.rstrip("\n").split()
-            gi_to_taxon[int(gi)] = int(taxon)
-    return gi_to_taxon
+    accession to tax id.
+    The file is formatted as so:
+    acc    acc_version   tax_id   GI
+    XP_642131       XP_642131.1     352472  66816243"""
+    acc_to_tax_id = dict()
+    # Not doing with open as. File is 14GB!!
+    # one line at a time
+    handle = open(acc_taxid_prot, "r")
+    for line in handle:
+            if not test_line(line):
+                continue
+            acc, acc_version, tax_id, GI = line.rstrip("\n").split()
+            acc_to_tax_id[acc_version] = int(tax_id)
+    handle.close()
+    return acc_to_tax_id
 
 
 def read_diamond_tab_file(diamond_tab_output):
@@ -180,67 +264,91 @@ def read_diamond_tab_file(diamond_tab_output):
         return file.read().split("\n")
 
 
-def get_gi_number(line):
-    """gi number are embeded in the second column
-    so need to split it up to get to it e.g.
-    gi|685832877|emb|CEF67798.1| """
-    gi_column = line.split("\t")[1]
-    if not gi_column.startswith("gi"):
-        raise ValueError("""colomn 2 did not start with "gi",
-    is this tab output formatted correctly""")
-    return int(gi_column.split("|")[1])
+def parse_blast_line(line):
+    """function takes in a line check if it is not a
+    comment or blank and returns the line, plus the
+    accession number
+    """
+    if not test_line(line):
+        return False
+    accession, line = get_accession_number(line)
+    return accession, line
+
+
+def get_accession_number(line):
+    """acc number are embeded in the second column
+    so need to split it up to get to it legacy data e.g.
+    gi|685832877|emb|CEF67798.1| .
+    New data:
+    ref|YP_009160410.1|"""
+    if "\t" in line:
+        acces_column = line.split("\t")[1]
+    else:
+        # Dont break the program
+        try:
+            acces_column = line.split()[1]
+            format_Warning()
+            # reformats it to tab separated
+            line = "\t".join(line.split())
+        except ValueError:
+            format_warning()
+    if acces_column.startswith("gi"):
+        # e.g. gi|66816243|ref|XP_642131.1|
+        acc = acces_column.split("|")[3]
+        return acc.replace("|", ""), line
+    else:
+        # e.g. ref|YP_009160410.1|
+        acc = acces_column.split("|")[1]
+        return acc.replace("|", ""), line
 
 
 # main function
-def parse_diamond_tab(diamond_tab_output, path_files,
-                      gi_taxid_prot, categories,
-                      names, gi_to_des, outfile):
-    """funtion to get tax id from dtaabse from diamond blast vs NR tab output.
-    This can also re annoted tab blast data which does not have tax id data.
+def parse_diamond_tab(diamond_tab_output,
+                      path_files,
+                      acc_taxid_prot,
+                      categories,
+                      names,
+                      acc_to_des,
+                      outfile):
+    """funtion to get tax id from dtaabse from diamond
+    blast vs NR tab output.
+    This can also re annoted tab blast data
+    which does not have tax id data.
     This function call a number of other functions"""
-    print ("loading NCBI data files")
     taxon_to_kingdom = assign_cat_to_dic(categories)
-    gi_to_taxon = assign_taxon_to_dic(gi_taxid_prot)
-    tax_to_scientific_name_dic, tax_to_common_name_dic = tax_to_scientific_name_dict(names)
-    print ("loading gi to description database. This takes a while!")
-    gi_to_description_dict = gi_to_description(gi_to_des)
+    acc_to_tax_id = assign_taxon_to_dic(acc_taxid_prot)
+    tax_to_scientific_name_dic, \
+        tax_to_common_name_dic = tax_to_scientific_name_dict(names)
+    acc_to_description_dict = acc_to_description(acc_to_des)
     print ("loaded gi to description database")
     tax_dictionary = parse_NCBI_nodes_tab_file
-    # to run taxonmy filter: - remember this take strings as arguments
-    # taxomony_filter(tax_dictionary,
-                     # tax_id_of_interst,
-                     # final_tx_id_to_identify_up_to,
-                     # tax_to_filter_out)
-
     file_out = open(outfile, "w")
-    titles_of_coloumns = """#%s\n#qseqid	sseqid	pident	length	mismatch	gapopen	qstart	qend	sstart	send	evalue	bitscore	salltitles	staxids	scientific_name	scomnames	sskingdoms\n""" %(datetime.date.today())
-    file_out.write(titles_of_coloumns)
+    file_out.write(TITLE_OF_COLOUMNS)
     #get function to return a "\n" split list of blast file
     try:
         diamond_tab_as_list = read_diamond_tab_file(diamond_tab_output)
     except IOError as ex:
-        print("sorry, couldn't open the file: " + ex.strerror + "\n")
-        print ("current working directory is :", os.getcwd() + "\n")
-        print ("files are :", [f for f in os.listdir('.')])
-        sys.exit('cannot continue without a valid file')
+        file_WARNING(diamond_tab_output)
+        os._exit(0)
     # iterate line by line through blast file
     print ("Annotating tax id info to tab file")
     for line in diamond_tab_as_list:
-        if not line.strip():
-            continue  # if the last line is blank
-        # ask function to get gi number
-        gi_number = get_gi_number(line)
+        # get the accession number from the blast line
+        if not parse_blast_line(line):
+            continue
+        accession, line = parse_blast_line(line)
         # use dictionary to get tax_id from gi number
         # Most of the GI numbers will match, expect them to be in dict...
         try:
-            tax_id = gi_to_taxon[gi_number]
+            tax_id = acc_to_tax_id[accession]
         except KeyError:
-            tax_id = "32644" # this is an unknown tax_id -
-            # this may or may not be the best one to use. NEED TO CHECK
-            print ("try updating your tax info tax_id database file")
-            print (("tax_id for %s is not found in database") %(gi_number))
+            tax_id = tax_id = tax_id_warning(accession)  # unknown tax_id
+        # TODO ADD TAX FILTER
         # TAXONOMY FILTERING - default is no!
-        # taxomony_filter(tax_dictionary, tax_id_of_interst,final_tx_id_to_identify_up_to, tax_to_filter_out)
+        # taxomony_filter(tax_dictionary,
+                         # tax_id_of_interst,
+                         #final_tx_id_to_identify_up_to,
+                         #tax_to_filter_out)
         # get kingdom
         try:
             kingdom = taxon_to_kingdom[tax_id]
@@ -259,27 +367,26 @@ def parse_diamond_tab(diamond_tab_output, path_files,
         except KeyError:
             # allow this to continue. Dont break it!
             common_name = ""
-        # get description  gi_to_description_dict[gi] = description
         try:
-            description = gi_to_description_dict[gi_number]
+            description = acc_to_description_dict[accession]
         except KeyError:
             # allow this to continue. Dont break it!
             description = ""
         # format the output for writing
-        data_formatted = "%s\t%s\t%s\t%s\t%s\t%s\n" %(line.rstrip("\n"),
-                                                      description,
-                                                      tax_id,
-                                                      scientific_name,
-                                                      common_name,
-                                                      kingdom)
+        data_formatted = "\t".join([line.rstrip("\n"),
+                                    description,
+                                    str(tax_id),
+                                    scientific_name,
+                                    common_name,
+                                    kingdom + "\n"])
         file_out.write(data_formatted)
     file_out.close()
 
 
-###################################################################################
-# function to get the top blast hits, kingdom and genus distribution of these.
-# They are not called by the main function above
-##################################################################################
+######################################################################
+# function to get the top blast hits, kingdom and genus distribution
+# of these. They are not called by the main function above
+#####################################################################
 
 def wanted_genes(blast_file):
     """function to retunr a list of wanted genes from file.
@@ -296,7 +403,8 @@ def wanted_genes(blast_file):
     return blast_data
 
 
-def get_top_blast_hit_based_on_order(in_file, outfile,
+def get_top_blast_hit_based_on_order(in_file,
+                                     outfile,
                                      bit_score_column="12"):
     """parse through file and get top hit.
     Prints to a file reduced info.
@@ -308,8 +416,7 @@ def get_top_blast_hit_based_on_order(in_file, outfile,
     got_list = set([])
     outfile_name = outfile + "_based_on_order_tax_king.tab"
     f = open(outfile_name, "w")
-    titles_of_coloumns = """#%s\n#qseqid	sseqid	pident	length	mismatch	gapopen	qstart	qend	sstart	send	evalue	bitscore	salltitles	staxids	scientific_name	scomnames	sskingdoms\n""" %(datetime.date.today())
-    f.write(titles_of_coloumns)
+    f.write(TITLE_OF_COLOUMNS)
     for line in blast_data:
         name = line.split("\t")[0]
         #print (name)
@@ -321,10 +428,12 @@ def get_top_blast_hit_based_on_order(in_file, outfile,
             got_list.add(name)
     f.close()
 
-##############################################################################################
+#########################################################################
 
 
-def get_genus_count(genus_dict, blast_line, sci_name_column="15"):
+def get_genus_count(genus_dict,
+                    blast_line,
+                    sci_name_column="15"):
     """this function count the distribution of the genus for the top hit.
     Take in the genus dictionary created from another function, the
     blast line and the coloumn which has the sci name. default = 15
@@ -342,16 +451,19 @@ def get_genus_count(genus_dict, blast_line, sci_name_column="15"):
     return genus_dict
 
 
-def get_to_blast_hits(in_file, outfile, bit_score_column="12",):
+def get_to_blast_hits(in_file,
+                      outfile,
+                      bit_score_column="12",):
     """this is a function to open up a tab file blast results, and
     produce the percentage of kingdom blast hit based on the top
     blast match"""
-    get_top_blast_hit_based_on_order(in_file, outfile, bit_score_column)
+    # TODO: this is messy and too complex for one function
+    # we dont need to run this anymore -_blast_hit_based_on_order
+    # get_top_blast_hit_based_on_order(in_file, outfile, bit_score_column)
     # open files, read and write.
     blast_file = open (in_file, "r")
     out_file = open(outfile, "w")
-    titles_of_coloumns = """#%s\n#qseqid	sseqid	pident	length	mismatch	gapopen	qstart	qend	sstart	send	evalue	bitscore	salltitles	staxids	scientific_name	scomnames	sskingdoms\n""" %(datetime.date.today())
-    out_file.write(titles_of_coloumns)
+    out_file.write(TITLE_OF_COLOUMNS)
     bit_score_column = int(bit_score_column) - 1
     # set of blast_file_entry gene names
     blast_file_entry_Genes_names = set([])
@@ -385,7 +497,7 @@ def get_to_blast_hits(in_file, outfile, bit_score_column="12",):
         bit_score = float(blast_line[bit_score_column])
         kings_names = blast_line[-1]
         # print (kings_names)
-        ##############################################################################
+        ####################################################################
         # first block: if the names are the same, is the new bit score more?
         if blast_file_entry_Genes == last_gene_name:
             # print ("im here")
@@ -396,7 +508,7 @@ def get_to_blast_hits(in_file, outfile, bit_score_column="12",):
                 # remove the last entry if so and put the new one in
                 del top_hits[-1]
                 top_hits.append(blast_line)
-        #############################################################################
+        ###################################################################
         # second block: if the name is new, put it in the name set.
         # use this bit score as the new one to "beat"
         # print current_bit_score
@@ -405,8 +517,9 @@ def get_to_blast_hits(in_file, outfile, bit_score_column="12",):
             blast_file_entry_Genes_names.add(blast_file_entry_Genes)
             current_bit_score = bit_score
             top_hits.append(blast_line)
-        ############################################################################
-        # assign value to the variables for testing in the new batch of for loops
+        ##################################################################
+        # assign value to the variables for testing in the new
+        # batch of for loops
         last_gene_name = blast_file_entry_Genes
         last_blast_line = line
     genus_dict = dict()
@@ -424,11 +537,15 @@ def get_to_blast_hits(in_file, outfile, bit_score_column="12",):
 
     # for blast_file_entry_Genes, bit_score, kings_names in top_hits:
         # old python 2.7 syntax
-        # print >> out_file, "%s\t%s\t%s" % (blast_file_entry_Genes, bit_score, kings_names)
+        # print >> out_file, "%s\t%s\t%s" % (blast_file_entry_Genes,
+                                            # bit_score,
+                                            # kings_names)
         # kingdoms_handles_counts[kings_names]+=1
 
-    print ("Kingdom hit distribution of top hits = ", kingdoms_handles_counts)
-    print ("number with blast hits =", total_blast_hit_count)
+    print ("Kingdom hit distribution of top hits = ",
+           kingdoms_handles_counts)
+    print ("number with blast hits =",
+           total_blast_hit_count)
     # print ("genus distirbution =", genus_dict)
 
     top_hits_out_king = open("kingdom_top_hits.out", "w")
@@ -452,7 +569,7 @@ def get_to_blast_hits(in_file, outfile, bit_score_column="12",):
     top_hits_out_genus.close()
     return kingdoms_handles_counts
 
-###########################################################################################
+#############################################################################
 
 
 if "-v" in sys.argv or "--version" in sys.argv:
@@ -462,22 +579,26 @@ if "-v" in sys.argv or "--version" in sys.argv:
 usage = """Use as follows:
 # warning: running to script uses a lot of RAM ~25GB.
 
-$ python Diamond_blast_to_taxid.py -i diamond_tab_output -t /PATH_TO/NCBI_gi_taxid_prot.dmp
+$ python Diamond_blast_to_taxid.py -i diamond_tab_output
+-t /PATH_TO/NCBI_acc_taxid_prot.dmp
     -c /PATH/To/categories.dmp
 -n /PATH/To/names.dmp -d /PATH_TO_/description_database -o outfile.tab
 
         or
 
-$ python Diamond_blast_to_taxid.py -i diamond_tab_output -p /PATH_TO/FILES -o outfile.tab
+$ python Diamond_blast_to_taxid.py -i diamond_tab_output -p /PATH_TO/FILES
+-o outfile.tab
 
 
-This script opens up a diamond tab output (-i) and looks up the relavant tax_id info (-t),
+This script opens up a diamond tab output (-i) and looks up the relavant
+tax_id info (-t),
 look up the kingdom (-c)
 looks for the species names (-n), looks up the descrtiption of the blast hit (-d):
 
-# NOTE: this will also work on standard blast output which does not have kingdom assignmnets.
+# NOTE: this will also work on standard blast output which does not have
+kingdom assignmnets.
 
-    Prot to tax_id: ftp://ftp.ncbi.nih.gov/pub/taxonomy/gi_taxid_prot.dmp.gz).
+    Prot to tax_id: ftp://ftp.ncbi.nih.gov/pub/taxonomy/acc_taxid_prot.dmp.gz).
     catergories file: ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxcat.zip
     speices names: ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz
 
@@ -485,25 +606,26 @@ all files need to be uncompressed
 
 do the following:
 
-    wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/gi_taxid_prot.dmp.gz
-    gunzip gi_taxid_prot.dmp.gz
+wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/prot.accession2taxid.gz.md5
+wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/prot.accession2taxid.gz
+md5sum -c prot.accession2taxid.gz.md5
+gunzip prot.accession2taxid.gz
 
-    wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxcat.zip
-    unzip taxcat.zip
+wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxcat.zip
+unzip taxcat.zip
 
-    wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz
-    tar -zxvf taxdump.tar.gz
+wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz
+tar -zxvf taxdump.tar.gz
 
 
-To generate the gi_to_des.tab databse:
+To generate the acc_to_des.tab databse:
 blastdbcmd -entry 'all' -db nr > nr.faa
 
-
-python ~/misc_python/diamond_blast_to_kingdom/prepare_gi_to_description_databse.py
-
-# Note: this return the top description in the NR discrition for each fasta file entry.
-This can be modified to return "all".
-But the file will be much larger and therefore require more RAM
+python prepare_acc_to_description_databse.py
+descriptions = number of blast descriptions (default is 4) to return
+which are asscosiated with this accession number.
+More will be useful but your
+file will get very big. Quickly!
 
 
     BLAST DATA we be returned as:
@@ -531,11 +653,13 @@ TOP BLAST HITS FINDER:
 By default this script will find the top hits by two methods.
 1) assuming order in BLAST out file
 2) Explicitly looking for the BLAST entry with the greatest bit score per query.
-Script will also return the distribution of the kindgom and genus for these top hits.
+Script will also return the distribution of the kindgom and genus for
+these top hits.
 
 
 Some notes on using Diamond:
-# script to get the latest NR database and NT database and make a diamond blastdatabse.
+# script to get the latest NR database and NT database and make a
+diamond blastdatabse.
 
 # to install diamond from source
 export BLASTDB=/PATH/TO/ncbi/extracted
@@ -564,27 +688,31 @@ parser.add_option("-i", "--in",
 parser.add_option("-p", "--path",
                   dest="path",
                   default=os.getcwd(),
-                  help="Directory containing relevant taxonomy/database files "
-                       "(set by -t, -c, -n, -d). Default is the current working "
-                       "directory. This is not used with the main input and output "
-                       "filenames.")
+                  help="Directory containing taxonomy/database files " +
+                  "(set by -t, -c, -n, -d). Default = current working " +
+                  "directory. This is not used with the main input and output "
+                  "filenames. " +
+                  "Dir = where you put all the " +
+                  "downloaded NCBI files................... IF YOU GIVE " +
+                  "THE PATH YOU DONT NEED TO SET -t, -c, -n, -d))")
 
 parser.add_option("-t", "--taxid_prot",
-                  dest="gi_taxid_prot",
-                  default="gi_taxid_prot.dmp",
-                  help="NCBI provided file gi_taxid_prot.dmp (from FTP site, "
-                       "gi_taxid_prot.dmp.gz after unzipping). " +
-                       "These file required file options can be left blank if -p " +
-                       "is specified with a path to where all these can be found. " +
-                       "If -p /PATH/ is specified python will look in the " +
+                  dest="acc_taxid_prot",
+                  default="prot.accession2taxid",
+                  help="NCBI provided file prot.accession2taxid " +
+                  "after unzipping (from FTP site, "
+                  " after unzipping). " +
+                  "These file required file options can be left blank if -p " +
+                  "is specified with a path to where all these can be found. " +
+                  "If -p /PATH/ is specified python will look in the " +
                   "folder by default.",
                   metavar="FILE")
 
 parser.add_option("-c", "--cat",
                   dest="categories",
                   default="categories.dmp",
-                  help="NCBI provided kingdom catergories file categories.dmp "
-                       "(from FTP site inside taxcat.zip).",
+                  help="NCBI provided kingdom catergories file  "
+                  "categories.dmp (from FTP site inside taxcat.zip).",
                   metavar="FILE")
 
 parser.add_option("-n", "--names",
@@ -595,23 +723,22 @@ parser.add_option("-n", "--names",
                   metavar="FILE")
 
 parser.add_option("-d", "--des",
-                  dest="gi_to_des",
-                  default="gi_to_des.tab",
-                  help="""a databse of gi number-to-descrition.
-    Generate either using the shell script or by the following:
-
-    export BLASTDB=/PATH_TO/blast/ncbi/extracted
-
-    # can only use protein databases with this program.
-    blastdbcmd -entry 'all' -db nr > nr.faa
-    python diamond_blast_to_kingdom/prepare_gi_to_description_databse.py
-    """,
+                  dest="acc_to_des",
+                  default="acc_to_des.tab",
+                  help="default=acc_to_des.tab " +
+                  "a databse of gi number-to-descrition. Generate  " +
+                  "either using shell script or by the following: export " +
+                  "BLASTDB=/PATH_TO/blast/ncbi/extracted # can only use " +
+                  "protein databases with DIAMOND. blastdbcmd -entry " +
+                  "'all' -db nr > nr.faa python "
+                  "prepare_accession_to_description_db.py",
                   metavar="FILE")
 
 parser.add_option("-o", "--out",
                   dest="outfile",
                   default="_tab_blast_with_txid.tab",
-                  help="Output filename - default= infile_tab_blast_with_txid.tab",
+                  help="Output filename - " +
+                  "default= infile_tab_blast_with_txid.tab",
                   metavar="FILE")
 
 (options, args) = parser.parse_args()
@@ -639,40 +766,53 @@ def apply_path(folder, filename):
 # -i
 diamond_tab_output = options.diamond_tab_output
 #-t
-gi_taxid_prot = apply_path(options.path, options.gi_taxid_prot)
+acc_taxid_prot = apply_path(options.path, options.acc_taxid_prot)
 # -c
 categories = apply_path(options.path, options.categories)
 #-n
 names = apply_path(options.path, options.names)
 #-d
-gi_to_des = apply_path(options.path, options.gi_to_des)
+acc_to_des = apply_path(options.path, options.acc_to_des)
 # -p
 path_files = options.path
 #-o
 outfile= options.outfile
 
-# call the main function
-parse_diamond_tab(diamond_tab_output,
-                  path_files,
-                  gi_taxid_prot,
-                  categories,
-                  names,
-                  gi_to_des,
-                  outfile)
 
-# fucntion to get the top hits and the kingdom and genus distribution
-top_hits_out = outfile + "top_blast_hits.out"
-get_to_blast_hits(outfile, top_hits_out)
+# Run as script
+if __name__ == '__main__':
+    # call the main function
+    filename_list = [categories,
+                     diamond_tab_output,
+                     names,
+                     acc_to_des]
+    for needed_file in filename_list:
+        if not os.path.isfile(needed_file):
+            print ("sorry cannot find you %s file" % needed_file)
+            print ("please check this command again, " +
+                   "with the full path if required")
+            os._exit(0)
+    parse_diamond_tab(diamond_tab_output,
+                      path_files,
+                      acc_taxid_prot,
+                      categories,
+                      names,
+                      acc_to_des,
+                      outfile)
+    # fucntion to get the top hits and the kingdom and genus distribution
+    top_hits_out = outfile + "top_blast_hits.out"
+    get_to_blast_hits(outfile, top_hits_out)
+    print ("program finished at %s" % time.asctime())
+    print ("Results are in %s" % outfile)
 
-print ("program finished at %s" % time.asctime())
-print ("Results are in %s" % outfile)
 
 # more notes
-"""############################################################################################
+"""##########################################################################
 Some notes on using Diamond:
 
 
-# script to get the latest NR database and NT database and make a diamond blastdatabse.
+# script to get the latest NR database and NT database and make a
+diamond blastdatabse.
 # diamond only works with protein databases!!
 
 
