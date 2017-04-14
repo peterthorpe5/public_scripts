@@ -231,6 +231,8 @@ mv *_refine.fasta ./alignments
 
 ###########################################################################
 # diamond blast aginst NR?
+cd ${Working_directory}
+
 echo "running diamond-BLAST against NR"
 diam_p="diamond blastp -p 16 --sensitive -e 0.00001 
 	   -v -q aa.fa 
