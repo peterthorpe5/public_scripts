@@ -203,7 +203,7 @@ def acc_to_description(acc_to_des):
     blastdbcmd -entry 'all' -db nr > nr.faa
     python prepare_accession_to_description_db.py
     """
-    print ("loading accession to description database. " + "
+    print ("loading accession to description database. " +
            "This takes a while!!")
     acc_to_description_dict = dict()
     with open(acc_to_des, "r") as handle:
@@ -224,7 +224,7 @@ def assign_taxon_to_dic(acc_taxid_prot):
     Takes in the prot.accession2taxid file downloaded from NCBI.
     Returns a dictionary:
     accession to tax id.
-    The file is formatted as so: 
+    The file is formatted as so:
     acc    acc_version   tax_id   GI
     XP_642131       XP_642131.1     352472  66816243"""
     acc_to_tax_id = dict()
