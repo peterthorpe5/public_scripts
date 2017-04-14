@@ -59,11 +59,13 @@ def parse_NCBI_nodes_tab_file(folder):
     # nodes.dmp - this file is separated by \t|\t
     # empty dictionary to add to parent and child (keys,vals) to
     tax_dictionary = {}
-
     # nodes.dmp files goes: child, parent, etc
     # merged.dmp file goes: old, new
     # In both cases, can take key as column 0 and value as column 1
     for filename in ["nodes.dmp", "merged.dmp"]:
+        if not os.isfile(filename):
+            print ("Could not find %s. Please check this." % filename)
+            os._exit(0)
         with open(os.path.join(folder, filename)) as handle:
             for line in handle:
                 tax_info = line.replace("\n", "\t").split("\t|\t")
@@ -163,12 +165,12 @@ def tax_to_scientific_name_dict(names):
 
 
 def acc_to_description(acc_to_des):
-    """function to return a dictionary of gi
+    """function to return a dictionary of accession
     to description. The data needs to be generated into a tab file.
     This, along with other functions a re RAM hungry.
     export BLASTDB=/PATH_TO/ncbi/extracted
     blastdbcmd -entry 'all' -db nr > nr.faa
-    python diamond_blast_to_kingdom/prepare_acc_to_description_databse.py
+    python prepare_accession_to_description_db.py 
     """
     acc_to_description_dict = dict()
     with open(acc_to_des, "r") as handle:
@@ -223,7 +225,8 @@ def parse_diamond_tab(diamond_tab_output, path_files,
     print ("loading NCBI data files")
     taxon_to_kingdom = assign_cat_to_dic(categories)
     gi_to_taxon = assign_taxon_to_dic(acc_taxid_prot)
-    tax_to_scientific_name_dic, tax_to_common_name_dic = tax_to_scientific_name_dict(names)
+    tax_to_scientific_name_dic, \
+        tax_to_common_name_dic = tax_to_scientific_name_dict(names)
     print ("loading gi to description database. This takes a while!")
     acc_to_description_dict = acc_to_description(acc_to_des)
     print ("loaded gi to description database")
@@ -235,7 +238,6 @@ def parse_diamond_tab(diamond_tab_output, path_files,
                      # tax_to_filter_out)
 
     file_out = open(outfile, "w")
-    TITLE_OF_COLOUMNS = """#%s\n#qseqid	sseqid	pident	length	mismatch	gapopen	qstart	qend	sstart	send	evalue	bitscore	salltitles	staxids	scientific_name	scomnames	sskingdoms\n""" %(datetime.date.today())
     file_out.write(TITLE_OF_COLOUMNS)
     #get function to return a "\n" split list of blast file
     try:
@@ -293,7 +295,7 @@ def parse_diamond_tab(diamond_tab_output, path_files,
                                     tax_id,
                                     scientific_name,
                                     common_name,
-                                    kingdom)
+                                    kingdom])
         file_out.write(data_formatted)
     file_out.close()
 
@@ -330,7 +332,6 @@ def get_top_blast_hit_based_on_order(in_file, outfile,
     got_list = set([])
     outfile_name = outfile + "_based_on_order_tax_king.tab"
     f = open(outfile_name, "w")
-    TITLE_OF_COLOUMNS = """#%s\n#qseqid	sseqid	pident	length	mismatch	gapopen	qstart	qend	sstart	send	evalue	bitscore	salltitles	staxids	scientific_name	scomnames	sskingdoms\n""" %(datetime.date.today())
     f.write(TITLE_OF_COLOUMNS)
     for line in blast_data:
         name = line.split("\t")[0]
@@ -372,7 +373,6 @@ def get_to_blast_hits(in_file, outfile, bit_score_column="12",):
     # open files, read and write.
     blast_file = open (in_file, "r")
     out_file = open(outfile, "w")
-    TITLE_OF_COLOUMNS = """#%s\n#qseqid	sseqid	pident	length	mismatch	gapopen	qstart	qend	sstart	send	evalue	bitscore	salltitles	staxids	scientific_name	scomnames	sskingdoms\n""" %(datetime.date.today())
     out_file.write(TITLE_OF_COLOUMNS)
     bit_score_column = int(bit_score_column) - 1
     # set of blast_file_entry gene names
@@ -407,7 +407,7 @@ def get_to_blast_hits(in_file, outfile, bit_score_column="12",):
         bit_score = float(blast_line[bit_score_column])
         kings_names = blast_line[-1]
         # print (kings_names)
-        ##############################################################################
+        ####################################################################
         # first block: if the names are the same, is the new bit score more?
         if blast_file_entry_Genes == last_gene_name:
             # print ("im here")
@@ -418,7 +418,7 @@ def get_to_blast_hits(in_file, outfile, bit_score_column="12",):
                 # remove the last entry if so and put the new one in
                 del top_hits[-1]
                 top_hits.append(blast_line)
-        #############################################################################
+        ###################################################################
         # second block: if the name is new, put it in the name set.
         # use this bit score as the new one to "beat"
         # print current_bit_score
@@ -427,8 +427,9 @@ def get_to_blast_hits(in_file, outfile, bit_score_column="12",):
             blast_file_entry_Genes_names.add(blast_file_entry_Genes)
             current_bit_score = bit_score
             top_hits.append(blast_line)
-        ############################################################################
-        # assign value to the variables for testing in the new batch of for loops
+        ##################################################################
+        # assign value to the variables for testing in the new
+        # batch of for loops
         last_gene_name = blast_file_entry_Genes
         last_blast_line = line
     genus_dict = dict()
@@ -446,11 +447,15 @@ def get_to_blast_hits(in_file, outfile, bit_score_column="12",):
 
     # for blast_file_entry_Genes, bit_score, kings_names in top_hits:
         # old python 2.7 syntax
-        # print >> out_file, "%s\t%s\t%s" % (blast_file_entry_Genes, bit_score, kings_names)
+        # print >> out_file, "%s\t%s\t%s" % (blast_file_entry_Genes,
+                                            # bit_score,
+                                            # kings_names)
         # kingdoms_handles_counts[kings_names]+=1
 
-    print ("Kingdom hit distribution of top hits = ", kingdoms_handles_counts)
-    print ("number with blast hits =", total_blast_hit_count)
+    print ("Kingdom hit distribution of top hits = ",
+           kingdoms_handles_counts)
+    print ("number with blast hits =",
+           total_blast_hit_count)
     # print ("genus distirbution =", genus_dict)
 
     top_hits_out_king = open("kingdom_top_hits.out", "w")
@@ -474,7 +479,7 @@ def get_to_blast_hits(in_file, outfile, bit_score_column="12",):
     top_hits_out_genus.close()
     return kingdoms_handles_counts
 
-###########################################################################################
+#############################################################################
 
 
 if "-v" in sys.argv or "--version" in sys.argv:
@@ -676,14 +681,27 @@ path_files = options.path
 #-o
 outfile= options.outfile
 
-# call the main function
-parse_diamond_tab(diamond_tab_output,
-                  path_files,
-                  acc_taxid_prot,
-                  categories,
-                  names,
-                  acc_to_des,
-                  outfile)
+
+# Run as script
+if __name__ == '__main__':
+    # call the main function
+    filename_list = [categories,
+                     diamond_tab_output,
+                     names,
+                     acc_to_des]
+    for needed_file in filename_list:
+        if not os.path.isfile(needed_file):
+            print ("sorry cannot find you %s file" % needed_file)
+            print ("please check this command again, " +
+                   "with the full path if required")
+            os._exit(0)
+    parse_diamond_tab(diamond_tab_output,
+                      path_files,
+                      acc_taxid_prot,
+                      categories,
+                      names,
+                      acc_to_des,
+                      outfile)
 
 # fucntion to get the top hits and the kingdom and genus distribution
 top_hits_out = outfile + "top_blast_hits.out"
@@ -693,11 +711,12 @@ print ("program finished at %s" % time.asctime())
 print ("Results are in %s" % outfile)
 
 # more notes
-"""############################################################################################
+"""##########################################################################
 Some notes on using Diamond:
 
 
-# script to get the latest NR database and NT database and make a diamond blastdatabse.
+# script to get the latest NR database and NT database and make a
+diamond blastdatabse.
 # diamond only works with protein databases!!
 
 
