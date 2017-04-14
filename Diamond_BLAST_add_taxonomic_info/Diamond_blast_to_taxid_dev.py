@@ -57,7 +57,14 @@ def file_WARNING(problem_file):
     print ("current working directory is :", os.getcwd() + "\n")
     print ("files are :", [f for f in os.listdir('.')])
     sys.exit('cannot continue without a valid file')
-    
+
+
+def tax_id_warning(accession):
+    """function to report warning on tax_ids it cannot find"""
+    print ("try updating your tax info tax_id database file")
+    print (("tax_id for %s is not found in database") %(accession))
+    print ("changing to an Unknown tax_id 32644")
+    return "32644"
 
 
 def parse_NCBI_nodes_tab_file(folder):
@@ -234,31 +241,43 @@ def read_diamond_tab_file(diamond_tab_output):
     with open(diamond_tab_output) as file:
         return file.read().split("\n")
 
+
 def parse_blast_line(line):
     """function takes in a line check if it is not a
     comment or blank and returns the line, plus the
     accession number
     """
     if not test_line(line):
-        continue
-    get_accession_number(line)
-    
+        return False
+    accession = get_accession_number(line)
+    return accession
 
 
 def get_accession_number(line):
-    """gi number are embeded in the second column
-    so need to split it up to get to it e.g.
-    gi|685832877|emb|CEF67798.1| """
+    """acc number are embeded in the second column
+    so need to split it up to get to it legacy data e.g.
+    gi|685832877|emb|CEF67798.1| .
+    New data:
+    ref|YP_009160410.1|"""
     acces_column = line.split("\t")[1]
-    if gi_column.startswith("gi"):
-        
-    return int(gi_column.split("|")[1])
+    if acces_column.startswith("gi"):
+        # e.g. gi|66816243|ref|XP_642131.1|
+        acc = acces_column.split("|")[3]
+        return acc.replace("|")
+    else:
+        # e.g. ref|YP_009160410.1|
+        acc = acces_column.split("|")[1]
+        return acc.replace("|")
 
 
 # main function
-def parse_diamond_tab(diamond_tab_output, path_files,
-                      acc_taxid_prot, categories,
-                      names, acc_to_des, outfile):
+def parse_diamond_tab(diamond_tab_output,
+                      path_files,
+                      acc_taxid_prot,
+                      categories,
+                      names,
+                      acc_to_des,
+                      outfile):
     """funtion to get tax id from dtaabse from diamond
     blast vs NR tab output.
     This can also re annoted tab blast data
@@ -271,13 +290,6 @@ def parse_diamond_tab(diamond_tab_output, path_files,
     acc_to_description_dict = acc_to_description(acc_to_des)
     print ("loaded gi to description database")
     tax_dictionary = parse_NCBI_nodes_tab_file
-    # TODO ADD TAX FILTER
-    # to run taxonmy filter: - remember this take strings as arguments
-    # taxomony_filter(tax_dictionary,
-                     # tax_id_of_interst,
-                     # final_tx_id_to_identify_up_to,
-                     # tax_to_filter_out)
-
     file_out = open(outfile, "w")
     file_out.write(TITLE_OF_COLOUMNS)
     #get function to return a "\n" split list of blast file
@@ -289,18 +301,15 @@ def parse_diamond_tab(diamond_tab_output, path_files,
     # iterate line by line through blast file
     print ("Annotating tax id info to tab file")
     for line in diamond_tab_as_list:
+        # get the accession number from the blast line
         accession, line = parse_blast_line(line)
-        # ask function to get gi number
-        gi_number = get_gi_number(line)
         # use dictionary to get tax_id from gi number
         # Most of the GI numbers will match, expect them to be in dict...
         try:
             tax_id = gi_to_taxon[gi_number]
         except KeyError:
-            tax_id = "32644" # this is an unknown tax_id -
-            # this may or may not be the best one to use. NEED TO CHECK
-            print ("try updating your tax info tax_id database file")
-            print (("tax_id for %s is not found in database") %(gi_number))
+            tax_id = tax_id = tax_id_warning(accession)  # unknown tax_id
+        # TODO ADD TAX FILTER
         # TAXONOMY FILTERING - default is no!
         # taxomony_filter(tax_dictionary,
                          # tax_id_of_interst,
