@@ -250,6 +250,9 @@ def assign_taxon_to_dic(acc_taxid_prot):
     for line in handle:
             if not test_line(line):
                 continue
+            if line.startswith("acc"):
+                # file has a header
+                continue
             acc, acc_version, tax_id, GI = line.rstrip("\n").split()
             acc_to_tax_id[acc_version] = int(tax_id)
     handle.close()
