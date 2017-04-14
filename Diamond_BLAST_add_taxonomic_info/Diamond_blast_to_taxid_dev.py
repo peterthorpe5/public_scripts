@@ -141,6 +141,7 @@ def assign_cat_to_dic(categories):
     """function to add keys to a kingdom dic from catergory.dmp
     ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxcat.zip .
     This need to be pre downloaded and decompressed"""
+    print ("loading NCBI data files")
     kingdom_tax_id = dict()
     with open(categories, "r") as handle:
         for line in handle:
@@ -239,7 +240,6 @@ def parse_diamond_tab(diamond_tab_output, path_files,
     This can also re annoted tab blast data
     which does not have tax id data.
     This function call a number of other functions"""
-    print ("loading NCBI data files")
     taxon_to_kingdom = assign_cat_to_dic(categories)
     gi_to_taxon = assign_taxon_to_dic(acc_taxid_prot)
     tax_to_scientific_name_dic, \
@@ -247,6 +247,7 @@ def parse_diamond_tab(diamond_tab_output, path_files,
     acc_to_description_dict = acc_to_description(acc_to_des)
     print ("loaded gi to description database")
     tax_dictionary = parse_NCBI_nodes_tab_file
+    # TODO ADD TAX FILTER
     # to run taxonmy filter: - remember this take strings as arguments
     # taxomony_filter(tax_dictionary,
                      # tax_id_of_interst,
