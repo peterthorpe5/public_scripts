@@ -1,4 +1,5 @@
 #!/bin/bash
+#$ -cwd
 #Abort on any error,
 set -e
 
@@ -32,9 +33,11 @@ genome="${Phy_dir}/repeat_masking/Pi_alt.fasta"
 # for nematodes, #tax_filter_out=6231 ,#tax_filter_up_to=33208 
 
 # for Phytophthora
+T_30_4=403677
 species_tx_id=4787
-tax_filter_out=4783 
-tax_filter_up_to=33208 
+tax_filter_out=4783
+#  Stramenopiles - heterokonts
+tax_filter_up_to=33634 
 
 # If you want to run transrate to get the RNAseq read mapping to gene 
 # fill these out. Else, just let it fail, as it is the last step.
@@ -131,7 +134,7 @@ echo "step: rename the gene in the reformatted GFF file"
 remove_stops="python ${python_directory}/rewrite_as_fasta.py 
 		      -i temp.fa
 			  -l ${min_len_gene}
-		      -o aa.fasta"
+		      -o aa.fa"
 echo ${remove_stops}
 eval ${remove_stops}
 wait
