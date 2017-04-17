@@ -22,6 +22,10 @@ import subprocess
 import tempfile
 from collections import deque
 import datetime
+import logging
+import logging.handlers
+import time
+# TODO make re look for Kozak
 import re
 
 
@@ -97,9 +101,8 @@ FIX five prime start in genomic regions based on this methodology
 
 
 # make a temp_folder_for_all_the_out_files
-file_name = 'test.txt'
-working_dir = os.getcwd()
-dest_dir = os.path.join(working_dir, 'temp_fix_five_prime')
+dest_dir = os.path.join(os.getcwd(),
+                        'temp_fix_five_prime')
 try:
     os.makedirs(dest_dir)
 except OSError:
@@ -739,43 +742,51 @@ parser.add_option("-t", "--transcriptome", dest="transcriptome", default=None,
 #default_gff = cds.replace("cds", "gff")
 #default_pro = cds.replace("cds", "pep")
 
-parser.add_option("--cds", dest="cds", default=None,
+parser.add_option("--cds", dest="cds",
+                  default=None,
                   help="the predicted cds from the transcriptome assembly .fasta",
                   metavar="FILE")
 
-parser.add_option("--gff", dest="gff", default=None,
+parser.add_option("--gff", dest="gff",
+                  default=None,
                   help="the predicted coordinate for the cds predictions .gff",
                   metavar="FILE")
 
-parser.add_option("--prot", dest="prot", default=None,
+parser.add_option("--prot", dest="prot",
+                  default=None,
                   help="the predicted amino acid cds  .pep",
                   metavar="FILE")
 
-parser.add_option("-g", "--genome", dest="genome", default=None,
+parser.add_option("-g", "--genome", dest="genome",
+                  default=None,
                   help="the genome sequence. Not currently used. TO DO",
                   metavar="FILE")
 
-parser.add_option("--bam", dest="bam", default=None,
-                  help="the sorted, indexed bam file as a result of the reads being"
-                  "mapped back to the transcriptome  .bam",
+parser.add_option("--bam", dest="bam",
+                  default=None,
+                  help="the sorted, indexed bam file as a result of " +
+                  "the reads being mapped back to the transcriptome  .bam",
                   metavar="FILE")
-parser.add_option("--min_read_count", dest="min_read_count", default="100",
+parser.add_option("--min_read_count",
+                  dest="min_read_count",
+                  default="100",
                   help="the min_read_count that a transcript must have before it is"
                   "considered for statistical analysis. Default = 100")
 
-
-parser.add_option("--min_max_cov_per_base", dest="min_max_cov_per_base", default="30",
+parser.add_option("--min_max_cov_per_base",
+                  dest="min_max_cov_per_base",
+                  default="30",
                   help="the min_max_cov_per_base that a transcript must have before it is"
                   "considered for statistical analysis. Default = 30")
 
-
-parser.add_option("--std", dest="stand_dev_threshold", default="3",
+parser.add_option("--std",
+                  dest="stand_dev_threshold",
+                  default="3",
                   help="If the expression of the start of the cds is stand_dev_threshold"
                   " +/- the mean the flag as to be looked at. Default = 3")
 
 parser.add_option("--help_full", dest="help_full", default=None,
                   help="prints out a full description of this program")
-
 
 parser.add_option("--exp", dest="over_all_expression",
                   default="overall_reads_mapped_per_sequences.txt",
@@ -783,6 +794,12 @@ parser.add_option("--exp", dest="over_all_expression",
                   "that map to the sequence of interest. "
                   "Default: overall_reads_mapped_per_sequences.txt",
                   metavar="FILE")
+
+parser.add_option("--logger", dest="logger", default=False,
+                  help="Output logger filename. Default: " +
+                  "outfile_std.log",
+                  metavar="FILE")
+
 parser.add_option("-o", "--out", dest="outfile", default="results.out",
                   help="Output filename (default: results.out)",
                   metavar="FILE")
@@ -810,9 +827,13 @@ stand_dev_threshold = options.stand_dev_threshold
 over_all_expression = options.over_all_expression
 # --min_max_cov_per_base
 min_max_cov_per_base = options.min_max_cov_per_base
+# logfile
+logger = options.logger
+if not logger:
+    log_out = "%s_%s_std.log" % (outfile, stand_dev_threshold)
 
+# simple test
 assert mean([1,2,3,4,5]) == 3
-
 
 if not os.path.isfile(transcriptome_file):
     sys_exit("Input transcriptome file not found: %s" % transcriptome)
@@ -830,6 +851,29 @@ if __name__ == '__main__':
         sys_exit("Input cds_file file not found: %s" % cds_file)
     if not os.path.isfile(bam_file):
         sys_exit("Input BAM file not found: %s" % bam)
+
+    # Set up logging
+    logger = logging.getLogger('Fix_five_prime_CDS.py: %s' % time.asctime())
+    logger.setLevel(logging.DEBUG)
+    err_handler = logging.StreamHandler(sys.stderr)
+    err_formatter = logging.Formatter('%(levelname)s: %(message)s')
+    err_handler.setFormatter(err_formatter)
+    logger.addHandler(err_handler)
+    try:
+        logging.basicConfig(filename='example.log',level=logging.DEBUG)
+        logstream = open(log_out, 'w')
+        err_handler_file = logging.StreamHandler(logstream)
+        err_handler_file.setFormatter(err_formatter)
+        # logfile is always verbose
+        err_handler_file.setLevel(logging.INFO)
+        logger.addHandler(err_handler_file)
+    except:
+        outstr = "Could not open %s for logging" % logger
+        logger.error(outstr)
+        sys.exit(1)
+    # Report input arguments
+    outstr = "Command-line: %s" % ' '.join(sys.argv)
+    logger.info(outstr)
 
     overall_expression_dic = get_total_coverage(bam_file,
                                                 over_all_expression)
