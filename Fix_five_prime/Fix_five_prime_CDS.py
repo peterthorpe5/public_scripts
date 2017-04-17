@@ -440,18 +440,18 @@ def find_positive_next_ATG_b(transcriptome_record, position, strand):
 def find_positive_next_ATG(transcriptome_record, position, strand):
     """function to find the next ATG; returns integer or None."""
     # print ("start position = %d" % position)
-    transcriptome_record= transcriptome_record[position:]
+    transcriptome_record = transcriptome_record[position:]
     if strand =="+":
         next_codon = ""
         start = 0
         end = 3
-        for i in range(len(transcriptome_record)-60):
+        for i in range(len(transcriptome_record) - 60):
             start += 3
             end += 3
             next_codon = transcriptome_record[start:end]
             # print("start %i, end %i, codon: %s" % (start, end, next_codon))
             # print next_codon
-            # next_codon = transcript.seq[position+3:position+6]
+            # next_codon = transcript.seq[position + 3:position + 6]
             if next_codon == "ATG":
                 next_methionine = start
                 return next_methionine + position  # Note restoring offet!
@@ -527,8 +527,8 @@ def parse_transcriptome_file(genome,
     """
     # call the function to return a biopython seqIO idexed database
     # format the CDS file
-    # note these names should have been altered to return names in the
-    # same manner as the transcriptome
+    # note these names should have been altered to return names
+    # in the same manner as the transcriptome
     cds_index_database = parse_predicted_CDS_file(cds_file)
 
     # open outfile:
@@ -545,15 +545,18 @@ def parse_transcriptome_file(genome,
 
     for transcriptome_record in SeqIO.parse(transcriptome_file,
                                             "fasta"):
-        # get the overall expression from dict for the transcriptome reocrd of interest
+        # get the overall expression from dict for the
+        # transcriptome reocrd of interest
         transcript_expression = overall_expression_dic[transcriptome_record.id]
-        # split up the line, basically this is how samtools idxstats spits it out.
+        # split up the line, basically this is how
+        # samtools idxstats spits it out.
         # ID, Length, read count, last_coloumn
         length, read_count, last_coloumn = transcript_expression
         # santity check that the length match up
         assert length == len(transcriptome_record.seq)
 
-        # basically if it has less than ~30? reads mapped we cant really do stats on it
+        # basically if it has less than ~30? reads mapped
+        # we cant really do stats on it
         if read_count < min_read_count_threshold:
             continue
 
@@ -563,10 +566,14 @@ def parse_transcriptome_file(genome,
             original_cds_record = cds_index_database[transcriptome_record.id]
         except KeyError:
             # transdecoder uses cdhit 90% so some wont have cds...
-            print ("no CDS was found for %s . Moving to the next" %(transcriptome_record.id))
+            outstr = ("no CDS was found for " +
+                      "%s . Moving to the next" %(transcriptome_record.id))
+            logger.info(outstr)
             continue
-        # call samtools to get the depth per posititon for the transcript of interest
-        depth_filename = os.path.join("temp_fix_five_prime", "depth.tmp")
+        # call samtools to get the depth per posititon for
+        # the transcript of interest
+        depth_filename = os.path.join("temp_fix_five_prime",
+                                      "depth.tmp")
         cmd = " ".join(["samtools",
                         "depth",
                         "-r",
@@ -574,15 +581,16 @@ def parse_transcriptome_file(genome,
                         bam_file,
                         ">",
                         depth_filename])
-
-        print("Running %s" % cmd)
+        outstr = ("Running %s" % cmd)
+        logger.info(outstr)
         return_code = os.system(cmd)
         assert return_code == 0, """samtools says NO!!
-        - something went wrong. Is your BAM file correct?"""
+        - something went wrong. Is your BAM file correct?
+        Samtools version?"""
 
         # assign zeros to all positions of the transcript,
         # as samtool does no report zeros
-        all_coverage = [0]*len(transcriptome_record.seq)
+        all_coverage = [0] * len(transcriptome_record.seq)
 
         for line in open(depth_filename):
             ref, possition, coverage = line.rstrip("\n").split("\t")
@@ -606,27 +614,52 @@ def parse_transcriptome_file(genome,
             transcriptome_record.seq = transcriptome_record.seq.reverse_complement()
             start_position = transcriptome_record.seq.find(cds_record.seq)
 
-        end_position = start_position +len(cds_record.seq)
+        end_position = start_position + len(cds_record.seq)
         assert 0 <= start_position < end_position <= len(transcriptome_record)
-        coord_lower, coord_upper = middle_portion_of_transcript(transcriptome_record.seq)
-        print ("coord_lower = %d\tstart_position = %d" %(coord_lower,
-                                                         start_position))
+        coord_lower, coord_upper \
+                = middle_portion_of_transcript(transcriptome_record.seq)
+        outstr = ("coord_lower = " +
+                  "%d\tstart_position = %d" %(coord_lower,
+                                              start_position))
+        logger.info(outstr)
         if coord_lower <= start_position:
             coord_lower = start_position+50
         if coord_lower + 30 >= coord_upper:
             continue
 
-        the_mean, standard_dev = average_standard_dev (all_coverage[coord_lower:coord_upper])
-        print("%s: coverage min %i, max %i. Sliced section: mean %0.2f, std %0.2f -(+) coding strand\n" % (transcriptome_record.id,
-                                                    min(all_coverage), max(all_coverage),
-                                                    the_mean,standard_dev))
-        cut_off = the_mean - (int(stand_dev_threshold)*standard_dev)
+        the_mean, standard_dev = average_standard_dev (all_coverage
+                                                       [coord_lower:coord_upper])
+        out_str = " ".join([transcriptome_record.id + ":",
+                            "coverage min:",
+                            str(min(all_coverage)),
+                            "max: ",
+                            str(max(all_coverage)),
+                            "Sliced section: mean ",
+                            str(the_mean),
+                            "std: ",
+                            str(standard_dev),
+                            "(+) coding strand"])
+
+        # to make it neater, I split the sentance over 2 strings
+        logger.info(out_str)
+
+        cut_off = the_mean - (int(stand_dev_threshold)
+                              * standard_dev)
         #if all_coverage[start_position] < cut_off:
-        start_codon_mean_cov = mean(all_coverage[start_position:start_position+3])
+        start_codon_mean_cov = mean(all_coverage
+                                   [start_position : start_position + 3])
         if start_codon_mean_cov < cut_off:
-            print("houston we have a problem!!: %s different expression. Has coverage min %i, max %i, For sliced section: mean %0.2f, std %0.2f, current starting position %0.2f\n" % (transcriptome_record.id,
-                                                    min(all_coverage), max(all_coverage),
-                                                    the_mean,standard_dev,all_coverage[start_position]))
+            out_str = " ".join(["houston we have a problem!!: ",
+                                transcriptome_record.id,
+                                " diff expression. Cov min: ",
+                                str(min(all_coverage)),
+                                "max: ",
+                                str(max(all_coverage)),
+                                "For sliced section: mean: %0.2f" % the_mean,
+                                "std: %0.2f" % standard_dev,
+                                "current start position: %0.2f" % (all_coverage[start_position])])
+            logger.info(out_str)
+
             #find the next ATG:
             next_ATG_position = find_downstream_start(transcriptome_record.id,
                                                       str(transcriptome_record.seq),
@@ -647,22 +680,35 @@ def parse_transcriptome_file(genome,
                                                                                          end_position,
                                                                                          next_ATG_position)
                 if all_coverage[next_ATG_position] > cut_off:
-                    print ("next_ATG_position  = %d" %(next_ATG_position))
-
-                    print("houston, we may have fixed the problem!!: %s len %i NEW start %i, end %i. Has coverage min %i, max %i, For sliced section: mean %0.2f, std %0.2f, next_ATG_position %0.2f\n"
-                          % (transcriptome_record.id, len(transcriptome_record.seq),
-                             next_ATG_position, end_position,
-                             min(all_coverage), max(all_coverage),
-                             the_mean,standard_dev,all_coverage[next_ATG_position]))
+                    out_str =  ("next_ATG_position  = %d" % (next_ATG_position))
+                    logger.info(out_str)
+                    out_str = " ".join(["houston, we may have fixed the problem!! ",
+                                        transcriptome_record.id,
+                                        "length: %d" % len(transcriptome_record.seq),
+                                        "min %i, max %i, " % (min(all_coverage),
+                                                              max(all_coverage)),
+                                        "For sliced section: mean: %0.2f" % the_mean,
+                                        "std: %0.2f" % standard_dev,
+                                        "current start position: %0.2f" % (all_coverage[start_position]),
+                                        "\n\t",
+                                        "NEW start %i, end %i" %(next_ATG_position, end_position),
+                                        "For sliced section:",
+                                        "mean %0.2f, std %0.2f " % (the_mean, standard_dev),
+                                        "next_ATG_position %0.2f" %(all_coverage[next_ATG_position])])
+                    logger.info(out_str)
                     cds_record.seq = transcriptome_record.seq[next_ATG_position:end_position] # <-- TESTS work.
                     cds_record.description = "Five_prime_altered new coordinates: %d - %d\t" % \
                                              (next_ATG_position, end_position) \
                                              + cds_record.description
                     if len(cds_record.seq) < end_position - 60:
                             #reset to original
-                            print("houston, im not resetting it!!!2:")
-                            print("the length of the cds_record would be %d ,the last accepted coordinate is %d" %(len(cds_record.seq),
-                                                                                                                    end_position-60))
+                            out_str = ("houston, im not resetting it!!!2:")
+                            logger.info(out_str)
+                            out_str = " ".join(["the length of the",
+                                                "cds_record would be %d," % len(cds_record.seq),
+                                                ":ast acceptable coordinate %d" % (end_position - 60)])
+                            logger.info(out_str)
+                            
                             cds_record = original_cds_record
                 else:
                     another_ATG_position = find_downstream_start(transcriptome_record.id,
@@ -672,7 +718,8 @@ def parse_transcriptome_file(genome,
                     if another_ATG_position is None:
                         #reset to original
                         cds_record = original_cds_record
-                        print ("No alt start, cannot do anything with this %s -- we will leave the cds as is" %(transcriptome_record.id))
+                        out_str = ("No alt start, cannot do anything with this %s" % (transcriptome_record.id))
+                        logger.info(out_str)
                     elif another_ATG_position > end_position:
                         # No alternative start within CDS, do nothing
                         #reset to original
