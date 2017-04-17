@@ -575,8 +575,8 @@ def parse_transcriptome_file(genome,
             original_cds_record = cds_index_database[transcriptome_record.id]
         except KeyError:
             # transdecoder uses cdhit 90% so some wont have cds...
-            outstr = ("no CDS was found for " +
-                      "%s . Moving to the next" % (transcriptome_record.id))
+            outstr = ("no CDS found for " +
+                      "%s" % (transcriptome_record.id))
             logger.info(outstr)
             continue
         # call samtools to get the depth per posititon for
@@ -727,7 +727,7 @@ def parse_transcriptome_file(genome,
                     if another_ATG_position is None:
                         #reset to original
                         cds_record = original_cds_record
-                        out_str = ("No alt start, cannot do anything with this %s" % (transcriptome_record.id))
+                        out_str = ("No alt start, cannot do anything with %s" % (transcriptome_record.id))
                         logger.info(out_str)
                     elif another_ATG_position > end_position:
                         # No alternative start within CDS, do nothing
@@ -767,7 +767,8 @@ def parse_transcriptome_file(genome,
                             cds_record = original_cds_record
 
                     else:
-                        out_str = ("cannot do anything %s -- leave cds as is" % (transcriptome_record.id))
+                        out_str = ("cannot do anything %s -- leave cds as is" % \
+                                   (transcriptome_record.id))
                         logger.info(out_str)
                         #reset to original
                         cds_record = original_cds_record
@@ -787,8 +788,10 @@ def parse_transcriptome_file(genome,
 
 usage = """Use as follows:
 
-python Fix_five_prime_CDS.py -t trnascriptome --cds nt_coding_seq --bam index_sorted_bam_file.bam
-    --gff if_you_have_one --exp outfile_name_for_expression_values (default: overall_reads_mapped_per_sequences.txt)
+python Fix_five_prime_CDS.py -t trnascriptome --cds nt_coding_seq
+    --bam index_sorted_bam_file.bam
+    --gff if_you_have_one --exp outfile_name_for_expression_values
+    (default: overall_reads_mapped_per_sequences.txt)
     --prot (protein_cds_not_currently_used) -o outfile
 
 
@@ -798,7 +801,8 @@ Requirements:
     numpy
 
 
-why? Sometime the 5 prime end is not correctly predcited. This is really important to our
+why? Sometime the 5 prime end is not correctly predcited.
+This is really important to our
 research. Can we imporve this?
 
 
@@ -820,14 +824,14 @@ steps:
 5) Index your sorted.bam
     samtools index sorted.bam
 
-
 """
 
 
 
 parser = OptionParser(usage=usage)
 
-parser.add_option("-t", "--transcriptome", dest="transcriptome", default=None,
+parser.add_option("-t", "--transcriptome",
+                  dest="transcriptome", default=None,
                   help="the transcriptome assembly .fasta",
                   metavar="FILE")
 
