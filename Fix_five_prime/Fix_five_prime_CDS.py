@@ -22,6 +22,7 @@ import subprocess
 import tempfile
 from collections import deque
 import datetime
+import re
 
 
 if "-v" in sys.argv or "--version" in sys.argv:
@@ -223,8 +224,12 @@ def get_total_coverage(bam_file, outfile):
     """
     # Run samtools idxstats (this get the coverage for all transcripts:
     # assigne the outfile with the temp folder to keep thing more tidy
-    oufile_dir = "./temp_fix_five_prime/" + outfile
-    cmd = 'samtools idxstats "%s" > "%s"' % (bam_file, oufile_dir)
+    oufile_dir_file = os.path.join("temp_fix_five_prime", outfile)
+    cmd = " ".join(['samtools',
+                    'idxstats',
+                    bam_file,
+                    '>',
+                    oufile_dir_file])
     # data was saved in idxstats_filename
     return_code = os.system(cmd)
     if return_code:
@@ -232,7 +237,7 @@ def get_total_coverage(bam_file, outfile):
         sys_exit("Return code %i from command:\n%s" % (return_code, cmd))
     # creat a dictioanry to hold all the total expression values for the transcripts.
     overall_expression_dic = dict()
-    with open(oufile_dir, "r") as handle:
+    with open(oufile_dir_file, "r") as handle:
         for line in handle:
             data = line.rstrip("\n").split("\t")
             transcript = data[0]
@@ -247,7 +252,15 @@ def strip_to_match_transcript_name(identifier):
     """remove the cds and split at the first pipe.
     This is to make the transcriptome and cds file names/ seq_record.id
     match"""
-    return identifier.replace("cds.", "").split("|m.",1)[0]
+    if "cds." in identifier:
+        # legacy format
+        # e.g. >cds.Mp_O_10001_c0 etc ...
+        return identifier.replace("cds.", "").split("|m.", 1)[0]
+    else:
+        # new transdecoder format.
+        # e.g. >Mp_O_10001_c0::Mp_O_10001_c0_seq1::
+        # we want the 2nd computer's [1] element
+        return identifier.split("::")[1]
 
 
 def find_longest_components(filename1, cds_database, out_filename):
@@ -259,8 +272,8 @@ def find_longest_components(filename1, cds_database, out_filename):
     # this is out list of so called longest matches which we will
     # append and remove as applicable
     top_hits = []
-    # current sequence lenth score value "to beat"
-    current_lenth = int(0)
+    # current sequence length score value "to beat"
+    current_length = int(0)
     # set up variables to assgn lastest values to ...
     transcriptome_Genes_names = set([])
     last_gene_name = ""
@@ -272,32 +285,34 @@ def find_longest_components(filename1, cds_database, out_filename):
         component = strip_to_match_transcript_name(sequence_name)
         # first time we see any record, save the values:
         if loop_count == 0:
-            loop_count = loop_count+1
+            loop_count = loop_count + 1
             last_gene_name = sequence_name
-            current_lenth = sequence_len
+            current_length = sequence_len
             last_component= component
             top_hits.append(seq_record.id)
-        ##########################################################################
-        # first block: if the names are the same, is the new length of sequence longer?
+        #########################################
+        # first block: if the names are the same,
+        # is the new length of sequence longer?
         if component == last_component:
             # print ("yes:", component, "component",  last_component,
             # "last_component", seq_record.id)
-            # print ("current_lenth", current_lenth)
-            if sequence_len > current_lenth:
-                # print "sequence_len > current_lenth", sequence_len, current_lenth
+            # print ("current_length", current_length)
+            if sequence_len > current_length:
+                # print ("sequence_len > current_length", sequence_len,
+                         #current_length)
                 del top_hits[-1]
                 top_hits.append(seq_record.id)
-        ###########################################################################
+        ##########################################################
         # second block: if the name is new, put it in the name set.
         # use this sequence-length as the new one to "beat"
         else:
             top_hits.append(seq_record.id)
             last_gene_name = sequence_name
-            current_lenth = sequence_len
+            current_length = sequence_len
             last_component= component
-    outfile = open(out_filename,"w")
+    outfile = open(out_filename, "w")
     for i in top_hits:
-        seq_record =  cds_database[i]
+        seq_record = cds_database[i]
         SeqIO.write(seq_record, outfile, "fasta")
     outfile.close()
     cds_database_new = SeqIO.index(out_filename, "fasta",
@@ -314,18 +329,19 @@ def parse_predicted_CDS_file(cds_file):
                                    key_function=strip_to_match_transcript_name)
         return cds_database
     except ValueError:
-        print ("looks like multiple cds were predicted per transcript " +
+        print ("looks like multiple cds were predicted per transcript \n" +
         "- cannot change names. I am going to pick the longest representative" +
-        "cds per transcripts. I only do this if there are multiple cds" +
-        "predicted per transcript, otherwise this message is not shown")
+        "cds per transcripts. I only do this if there are multiple cds \n" +
+        "predicted per transcript, otherwise this message is not shown\n")
         cds_database = SeqIO.index(cds_file, "fasta")
         # basically there are duplicates for each transcript. So, find the longest
         # representative and create a new cds_database, based on that
     # call function
+    longest_rep = os.path.join("temp_fix_five_prime",
+                               "longest_representative_seq.fasta")
     cds_database_new = find_longest_components(cds_file,
                                                cds_database,
-                                               "./temp_fix_five_prime/" +
-                                               "longest_representative_seq.fasta")
+                                               longest_rep)
     # return a seq_record object that can be accessed in a dictionary like manner
     return cds_database_new
 
@@ -343,7 +359,11 @@ def index_gff_file(gff_file):
     this function indexes it. later these coordinates could be helpful.
     # return a dictionary. Key[transcript_name], vals are a list containing
     # coordinates:  ['transdecoder', 'CDS', '1', '201', '.', '-', '.',
-    # 'ID=cds.Mp_O_0_c0_seq1|m.2;Parent=Mp_O_0_c0_seq1|m.2']"""
+    # 'ID=cds.Mp_O_0_c0_seq1|m.2;Parent=Mp_O_0_c0_seq1|m.2'].
+    Now looks like this:
+    Mp_O_10020_c1_seq2 transdecoder gene 1 568	. + . I
+                        D=Mp_O_10020_c1::Mp_O_10020_c1_seq2:
+    """
     indexed_gff_file = dict()
     with open(gff_file, "r") as handle:
         # print ("i am here")
@@ -362,11 +382,13 @@ def index_gff_file(gff_file):
     # 'ID=cds.Mp_O_0_c0_seq1|m.2;Parent=Mp_O_0_c0_seq1|m.2']
     return indexed_gff_file
 
+
 def middle_portion_of_transcript(seq):
     """return coordinates for middle portion"""
     coord_lower = int(len(seq)/4.0)
     coord_upper = int(len(seq)-coord_lower)
     return coord_lower, coord_upper
+
 
 def average_standard_dev(positions):
     """function to return the avaerage and stadard deviation
@@ -388,15 +410,15 @@ def find_positive_next_ATG_b(transcriptome_record, position, strand):
     # reading frame for the cds
     # and find the next "ATG (+)" or"""
     # print ("start position = %d" % position)
-    transcriptome_record= transcriptome_record[position:]
+    transcriptome_record = transcriptome_record[position:]
     if strand == "+":
         next_codon = ""
         start = 0
         end = 3
-        for i in range(len(transcriptome_record)-60):
+        for i in range(len(transcriptome_record) - 60):
             start = start + 3
             end = end + 3
-            print "start, end: ", start, end
+            print ("start, end: ", start, end)
             next_codon = transcriptome_record[start:end]
             # print next_codon
             # next_codon = transcript.seq[position+3:position+6]
@@ -469,13 +491,20 @@ def translate_cds(fasta_file):
 
 
 ##### main function
-def parse_transcriptome_file(genome, transcriptome_file, cds_file, bam, gff,
-                             min_read_count, min_max_cov_per_base,
-                             stand_dev_threshold, outfile,
-                             overall_expression_dic, out_file):
+def parse_transcriptome_file(genome,
+                             transcriptome_file,
+                             cds_file,
+                             bam,
+                             gff,
+                             min_read_count,
+                             min_max_cov_per_base,
+                             stand_dev_threshold,
+                             outfile,
+                             overall_expression_dic,
+                             out_file):
     """iterate through transcriptome. Call samtools, get expression
-    Does the expression fall within X standard deviations of the middle
-    50%?
+    Does the expression fall within X standard deviations when compare
+    to the middle 50% of the transcript?
     """
     # call the function to return a biopython seqIO idexed database
     # format the CDS file
@@ -495,7 +524,8 @@ def parse_transcriptome_file(genome, transcriptome_file, cds_file, bam, gff,
     # threshold for min_read_count
     min_read_count_threshold = int(min_read_count) # default is 30
 
-    for transcriptome_record in SeqIO.parse(transcriptome_file, "fasta"):
+    for transcriptome_record in SeqIO.parse(transcriptome_file,
+                                            "fasta"):
         # get the overall expression from dict for the transcriptome reocrd of interest
         transcript_expression = overall_expression_dic[transcriptome_record.id]
         # split up the line, basically this is how samtools idxstats spits it out.
@@ -514,12 +544,18 @@ def parse_transcriptome_file(genome, transcriptome_file, cds_file, bam, gff,
             original_cds_record = cds_index_database[transcriptome_record.id]
         except KeyError:
             # transdecoder uses cdhit 90% so some wont have cds...
-            print ("no CDS was found for %s.. so moving on to the next" %(transcriptome_record.id))
+            print ("no CDS was found for %s . Moving to the next" %(transcriptome_record.id))
             continue
         # call samtools to get the depth per posititon for the transcript of interest
-        depth_filename = "./temp_fix_five_prime/depth.tmp"
-        cmd = 'samtools depth -r "%s" "%s" > "%s"' % (transcriptome_record.id,
-                                                      bam_file, depth_filename)
+        depth_filename = os.path.join("temp_fix_five_prime", "depth.tmp")
+        cmd = " ".join(["samtools",
+                        "depth",
+                        "-r",
+                        transcriptome_record.id,
+                        bam_file,
+                        ">",
+                        depth_filename])
+
         print("Running %s" % cmd)
         return_code = os.system(cmd)
         assert return_code == 0, """samtools says NO!!
@@ -602,7 +638,7 @@ def parse_transcriptome_file(genome, transcriptome_file, cds_file, bam, gff,
                     cds_record.description = "Five_prime_altered new coordinates: %d - %d\t" % \
                                              (next_ATG_position, end_position) \
                                              + cds_record.description
-                    if len(cds_record.seq) < end_position-60:
+                    if len(cds_record.seq) < end_position - 60:
                             #reset to original
                             print("houston, im not resetting it!!!2:")
                             print("the length of the cds_record would be %d ,the last accepted coordinate is %d" %(len(cds_record.seq),
@@ -631,9 +667,9 @@ def parse_transcriptome_file(genome, transcriptome_file, cds_file, bam, gff,
                         cds_record.description = "Five_prime_altered2 new coordinates: %d - %d\t" % \
                                              (another_ATG_position, end_position) \
                                              + cds_record.description
-                        if len(cds_record) > end_position-60:
+                        if len(cds_record) > end_position - 60:
                             #reset to original
-                            print("houston, mno resetting it!!!2:")
+                            print("houston, I'm not resetting it!!!2:")
                             cds_record = original_cds_record
 
                     else:
@@ -811,10 +847,4 @@ if __name__ == '__main__':
                              outfile)
     print ("translating the new cds file")
     translate_cds(outfile)
-
-
-
-
-
-
 
