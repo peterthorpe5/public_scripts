@@ -178,10 +178,12 @@ def get_stats_window(depth_iterator, length, window_size):
         except NoCoverage:
             return 0, 0, 0.0, 0.0, 0.0
         except StopIteration:
-            raise ValueError("Not enough depth values to fill %i window" % window_size)
+            outstr = "Not enough depth values to fill %i window" % window_size
+            logger.info(outstr)
+            raise ValueError("%s" % outstr)
         prev_pos += 1
-        assert pos == prev_pos, "Discontinuity in coverage values for %s position %i" % (ref,
-                                                                                         pos)
+        assert pos == prev_pos, "Discontinuity in cov vals for %s position %i" % (ref,
+                                                                                  pos)
         total_cov += depth
         if min_cov is None:
             min_cov = depth
@@ -194,8 +196,8 @@ def get_stats_window(depth_iterator, length, window_size):
     min_win = max_win = mean(window)
     for ref, pos, depth in depth_iterator:
         prev_pos += 1
-        assert pos == prev_pos, "Discontinuity in coverage values for %s position %i" % (ref,
-                                                                                         pos)
+        assert pos == prev_pos, "Discontinuity in cov val for %s position %i" % (ref,
+                                                                                 pos)
         total_cov += depth
         min_cov = min(min_cov, depth)
         max_cov = max(max_cov, depth)
@@ -237,7 +239,8 @@ def get_total_coverage(bam_file, outfile):
     return_code = os.system(cmd)
     if return_code:
         clean_up()
-        sys_exit("Return code %i from command:\n%s" % (return_code, cmd))
+        sys_exit("Return code %i from command:\n%s" % (return_code,
+                                                       cmd))
     # creat a dictioanry to hold all the total expression values for the transcripts.
     overall_expression_dic = dict()
     with open(oufile_dir_file, "r") as handle:
@@ -318,7 +321,8 @@ def find_longest_components(filename1, cds_database, out_filename):
         seq_record = cds_database[i]
         SeqIO.write(seq_record, outfile, "fasta")
     outfile.close()
-    cds_database_new = SeqIO.index(out_filename, "fasta",
+    cds_database_new = SeqIO.index(out_filename,
+                                   "fasta",
                                    key_function=strip_to_match_transcript_name)
     return cds_database_new
 
@@ -328,14 +332,16 @@ def parse_predicted_CDS_file(cds_file):
     Take in the cds file and uses biopython to index it"""
     # this is for transdecoder names. May need to alter for other tools
     try:
-        cds_database = SeqIO.index(cds_file, "fasta",
+        cds_database = SeqIO.index(cds_file,
+                                   "fasta",
                                    key_function=strip_to_match_transcript_name)
         return cds_database
     except ValueError:
-        print ("looks like multiple cds were predicted per transcript \n" +
-        "- cannot change names. I am going to pick the longest representative" +
-        "cds per transcripts. I only do this if there are multiple cds \n" +
-        "predicted per transcript, otherwise this message is not shown\n")
+        outstr = ("WARNING: multi cds were predicted per transcript \n" +
+        "\t- cannot change names. I am going to pick the longest representative \n" +
+        "\tcds per transcripts. I only do this if there are multiple cds \n" +
+        "\tpredicted per transcript, otherwise this message is not shown\n")
+        logger.info(outstr)
         cds_database = SeqIO.index(cds_file, "fasta")
         # basically there are duplicates for each transcript. So, find the longest
         # representative and create a new cds_database, based on that
@@ -421,7 +427,8 @@ def find_positive_next_ATG_b(transcriptome_record, position, strand):
         for i in range(len(transcriptome_record) - 60):
             start = start + 3
             end = end + 3
-            print ("start, end: ", start, end)
+            outstr = ("start, end: ", start, end)
+            logger.info(outstr)
             next_codon = transcriptome_record[start:end]
             # print next_codon
             # next_codon = transcript.seq[position+3:position+6]
@@ -454,18 +461,27 @@ def find_positive_next_ATG(transcriptome_record, position, strand):
         raise ValueError("Called on strand %r" % strand)
 
 
-def find_downstream_start(transcript, current_start, strand):
+def find_downstream_start(name,
+                          transcript,
+                          current_start,
+                          strand):
     """function to call other functions to find the next ATG
-    start site."""
+    start site.
+    Takes in the transcript and the current
+    start codon and strand coding direction"""
     if strand == "+":
-        print("Looking for ATG after %d in sequence %s" % (current_start,
-                                                           transcript))
+        outstr = ("Looking for ATG after %d in seq: %s" % (current_start,
+                                                           name))
+        logger.info(outstr)
         if transcript[current_start:current_start+3] != "ATG":
-            print("WARNING - existing annotation does not start ATG")
+            outstr = ("WARNING - existing annotation for " +
+                      " %s does not start ATG" % name)
+            logger.info(outstr)
         return find_positive_next_ATG(transcript, current_start, strand)
     elif strand == "-":
-        print("Looking for CAT (i.e. ATG rev-comp) before %d in sequence %s" % (current_start,
-                                                                                transcript))
+        outstr = ("Looking for CAT (i.e. ATG rev-comp) before " +
+                  " %d in sequence %s" % (current_start, name))
+        logger.info(outstr)
         new = find_positive_next_ATG(reverse_complement(transcript),
                                      len(transcript) - current_start, "+")
         if new is None:
@@ -485,7 +501,7 @@ def mean_coverage(coverage_array, slice_start, slice_end):
 def translate_cds(fasta_file):
     """function to translate the new cds file"""
     # outfile is define in optparser
-    file_out_name = outfile+".pep"
+    file_out_name = outfile + ".pep"
     file_out = open(file_out_name, "w")
     for seq_record in SeqIO.parse(fasta_file, "fasta"):
         seq_record.seq = seq_record.seq.translate()
@@ -612,7 +628,8 @@ def parse_transcriptome_file(genome,
                                                     min(all_coverage), max(all_coverage),
                                                     the_mean,standard_dev,all_coverage[start_position]))
             #find the next ATG:
-            next_ATG_position = find_downstream_start(str(transcriptome_record.seq),
+            next_ATG_position = find_downstream_start(transcriptome_record.id,
+                                                      str(transcriptome_record.seq),
                                                       start_position, "+")
             # if it cant find another ATG - dont change the data....
             if next_ATG_position == None:
@@ -648,7 +665,8 @@ def parse_transcriptome_file(genome,
                                                                                                                     end_position-60))
                             cds_record = original_cds_record
                 else:
-                    another_ATG_position = find_downstream_start(str(transcriptome_record.seq),
+                    another_ATG_position = find_downstream_start(transcriptome_record.id,
+                                                                 str(transcriptome_record.seq),
                                                                  next_ATG_position, "+")
                     #if this new ATG comed witht the thresholds for "being" real
                     if another_ATG_position is None:
