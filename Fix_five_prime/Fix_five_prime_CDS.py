@@ -685,21 +685,25 @@ def parse_transcriptome_file(genome,
                 if all_coverage[next_ATG_position] > cut_off:
                     out_str =  ("next_ATG_position  = %d" % (next_ATG_position))
                     logger.info(out_str)
-                    out_str = " ".join(["houston, we may have fixed the problem!! ",
+                    out_str = " ".join(["houston, we may have",
+                                        "fixed the problem!! ",
                                         transcriptome_record.id,
                                         "length: %d" % len(transcriptome_record.seq),
                                         "min %i, max %i, " % (min(all_coverage),
                                                               max(all_coverage)),
-                                        "For sliced section: mean: %0.2f" % the_mean,
+                                        "For sliced section:",
+                                        "mean: %0.2f" % the_mean,
                                         "std: %0.2f" % standard_dev,
-                                        "current start position: %0.2f" % (all_coverage[start_position]),
+                                        "current start position:",
+                                        "%0.2f" % (all_coverage[start_position]),
                                         "\n\t",
                                         "NEW start %i, end %i" % (next_ATG_position, end_position),
                                         "For sliced section:",
                                         "mean %0.2f, std %0.2f " % (the_mean, standard_dev),
-                                        "next_ATG_position %0.2f" % (all_coverage[next_ATG_position])])
+                                        "next_ATG_position",
+                                        "%0.2f" % (all_coverage[next_ATG_position])])
                     logger.info(out_str)
-                    cds_record.seq = transcriptome_record.seq[next_ATG_position:end_position] # <-- TESTS work.
+                    cds_record.seq = transcriptome_record.seq[next_ATG_position : end_position]
                     cds_record.description = "Five_prime_altered new coordinates: %d - %d\t" % \
                                              (next_ATG_position, end_position) \
                                              + cds_record.description
@@ -740,14 +744,17 @@ def parse_transcriptome_file(genome,
                                             "length: %d" % len(transcriptome_record.seq),
                                             "min %i, max %i, " % (min(all_coverage),
                                                                   max(all_coverage)),
-                                            "For sliced section: mean: %0.2f" % the_mean,
+                                            "For sliced section:",
+                                            "mean: %0.2f" % the_mean,
                                             "std: %0.2f" % standard_dev,
-                                            "current start position: %0.2f" % (all_coverage[start_position]),
+                                            "current start position:",
+                                            "%0.2f" % (all_coverage[start_position]),
                                             "\n\t",
                                             "NEW start %i, end %i" % (next_ATG_position, end_position),
                                             "For sliced section:",
                                             "mean %0.2f, std %0.2f " % (the_mean, standard_dev),
-                                            "another_ATG_position %0.2f" % (all_coverage[next_ATG_position])])
+                                            "another_ATG_position",
+                                            "%0.2f" % (all_coverage[next_ATG_position])])
                         logger.info(out_str)
 
                         cds_record.description = "Five_prime_altered2 new coordinates: %d - %d\t" % \
