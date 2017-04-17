@@ -658,7 +658,8 @@ def parse_transcriptome_file(genome,
                                 "max: %i" % max(all_coverage),
                                 "For sliced section: mean: %0.2f" % the_mean,
                                 "std: %0.2f" % standard_dev,
-                                "current start position: %0.2f" % (all_coverage[start_position])])
+                                "current start position: ",
+                                "%0.2f" % (all_coverage[start_position])])
             logger.info(out_str)
 
             #find the next ATG:
@@ -677,9 +678,10 @@ def parse_transcriptome_file(genome,
                 cds_record = original_cds_record
                 pass
             else:
-                assert next_ATG_position < end_position, "Was %i to %i, new start %i" % (start_position,
-                                                                                         end_position,
-                                                                                         next_ATG_position)
+                error = "Was %i to %i, new start %i" % (start_position,
+                                                        end_position,
+                                                        next_ATG_position)
+                assert next_ATG_position < end_position, "%s" % error
                 if all_coverage[next_ATG_position] > cut_off:
                     out_str =  ("next_ATG_position  = %d" % (next_ATG_position))
                     logger.info(out_str)
