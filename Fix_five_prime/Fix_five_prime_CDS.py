@@ -635,10 +635,8 @@ def parse_transcriptome_file(genome,
         the_mean, standard_dev = average_standard_dev (all_coverage
                                                        [coord_lower:coord_upper])
         out_str = " ".join([transcriptome_record.id + ":",
-                            "coverage min:",
-                            str(min(all_coverage)),
-                            "max: ",
-                            str(max(all_coverage)),
+                            "Cov min: %i" % min(all_coverage),
+                            "max: %i" % max(all_coverage),
                             "Sliced section: ",
                             "mean %0.2f" % the_mean,
                             "std: %0.2f" % standard_dev,
