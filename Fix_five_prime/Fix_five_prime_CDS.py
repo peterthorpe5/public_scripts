@@ -709,7 +709,8 @@ def parse_transcriptome_file(genome,
                                              + cds_record.description
                     if len(cds_record.seq) < end_position - 60:
                             #reset to original
-                            out_str = ("houston, im not resetting it!!!:")
+                            out_str = ("houston, im not resetting %s!:" %
+                                       transcriptome_record.id)
                             logger.info(out_str)
                             out_str = " ".join(["the length of the",
                                                 "cds_record would be",
@@ -762,7 +763,8 @@ def parse_transcriptome_file(genome,
                                              + cds_record.description
                         if len(cds_record) > end_position - 60:
                             #reset to original
-                            out_str = ("houston, im not resetting it!!!2:")
+                            out_str = ("houston, im not resetting %s!2:" %
+                                       transcriptome_record.id)
                             logger.info(out_str)
                             cds_record = original_cds_record
 
