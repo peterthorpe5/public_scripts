@@ -229,7 +229,8 @@ def get_total_coverage(bam_file, outfile):
     """
     # Run samtools idxstats (this get the coverage for all transcripts:
     # assigne the outfile with the temp folder to keep thing more tidy
-    oufile_dir_file = os.path.join("temp_fix_five_prime", outfile)
+    oufile_dir_file = os.path.join("temp_fix_five_prime",
+                                   outfile)
     cmd = " ".join(['samtools',
                     'idxstats',
                     bam_file,
@@ -269,7 +270,9 @@ def strip_to_match_transcript_name(identifier):
         return identifier.split("::")[1]
 
 
-def find_longest_components(filename1, cds_database, out_filename):
+def find_longest_components(filename1,
+                            cds_database,
+                            out_filename):
     """this is a function to open up a fasta file, and
     producea a list of the longest representative transcripts per gene.
     This is only called is there are duplicated found with the same
@@ -285,7 +288,8 @@ def find_longest_components(filename1, cds_database, out_filename):
     last_gene_name = ""
     last_component = ""
     loop_count = 0
-    for seq_record in SeqIO.parse(filename1, "fasta"):
+    for seq_record in SeqIO.parse(filename1,
+                                  "fasta"):
         sequence_len = len(seq_record)
         sequence_name = seq_record.id
         component = strip_to_match_transcript_name(sequence_name)
@@ -319,7 +323,8 @@ def find_longest_components(filename1, cds_database, out_filename):
     outfile = open(out_filename, "w")
     for i in top_hits:
         seq_record = cds_database[i]
-        SeqIO.write(seq_record, outfile, "fasta")
+        SeqIO.write(seq_record, outfile,
+                    "fasta")
     outfile.close()
     cds_database_new = SeqIO.index(out_filename,
                                    "fasta",
@@ -338,20 +343,22 @@ def parse_predicted_CDS_file(cds_file):
         return cds_database
     except ValueError:
         outstr = ("WARNING: multi cds were predicted per transcript \n" +
-        "\t- cannot change names. I am going to pick the longest representative \n" +
-        "\tcds per transcripts. I only do this if there are multiple cds \n" +
-        "\tpredicted per transcript, otherwise this message is not shown\n")
+        "\t- cannot change names. Going to pick the longest representative \n" +
+        "\tcds per transcripts. Only do this if there are multiple cds \n" +
+        "\tpredicted per transcript, otherwise message is not shown\n")
         logger.info(outstr)
         cds_database = SeqIO.index(cds_file, "fasta")
-        # basically there are duplicates for each transcript. So, find the longest
-        # representative and create a new cds_database, based on that
+        # basically there are duplicates for each transcript.
+        # So, find the longest representative and
+        #  create a new cds_database, based on that
     # call function
     longest_rep = os.path.join("temp_fix_five_prime",
                                "longest_representative_seq.fasta")
     cds_database_new = find_longest_components(cds_file,
                                                cds_database,
                                                longest_rep)
-    # return a seq_record object that can be accessed in a dictionary like manner
+    # return a seq_record object that can be
+    # accessed in a dictionary like manner
     return cds_database_new
 
 
@@ -366,7 +373,8 @@ def index_genome_file(genome):
 def index_gff_file(gff_file):
     """transcriptomes/cds prediction sometimes output GFF files
     this function indexes it. later these coordinates could be helpful.
-    # return a dictionary. Key[transcript_name], vals are a list containing
+    # return a dictionary. Key[transcript_name], vals are a list
+    # containing
     # coordinates:  ['transdecoder', 'CDS', '1', '201', '.', '-', '.',
     # 'ID=cds.Mp_O_0_c0_seq1|m.2;Parent=Mp_O_0_c0_seq1|m.2'].
     Now looks like this:
@@ -494,7 +502,7 @@ def find_downstream_start(name,
 
 def mean_coverage(coverage_array, slice_start, slice_end):
     """function to get the mean coverage for a sliced region"""
-    selected_coverage = coverage_array[slice_start:slice_end]
+    selected_coverage = coverage_array[slice_start : slice_end]
     return mean(selected_coverage)
 
 
@@ -538,7 +546,8 @@ def parse_transcriptome_file(genome,
     # based on number of reads mapped:
     # calls samtools
     overall_expression_dic = get_total_coverage(bam,
-                                                "overall_transcript_expression.txt")
+                                                "overall_transcript" +
+                                                "_expression.txt")
 
     # threshold for min_read_count
     min_read_count_threshold = int(min_read_count) # default is 30
@@ -567,7 +576,7 @@ def parse_transcriptome_file(genome,
         except KeyError:
             # transdecoder uses cdhit 90% so some wont have cds...
             outstr = ("no CDS was found for " +
-                      "%s . Moving to the next" %(transcriptome_record.id))
+                      "%s . Moving to the next" % (transcriptome_record.id))
             logger.info(outstr)
             continue
         # call samtools to get the depth per posititon for
@@ -586,7 +595,7 @@ def parse_transcriptome_file(genome,
         return_code = os.system(cmd)
         assert return_code == 0, """samtools says NO!!
         - something went wrong. Is your BAM file correct?
-        Samtools version?"""
+        Samtools version? Did you sort you .bam?"""
 
         # assign zeros to all positions of the transcript,
         # as samtool does no report zeros
@@ -601,10 +610,6 @@ def parse_transcriptome_file(genome,
             # Or if there is no info, it remains as a zero.
             all_coverage[possition] = int(coverage)
         # Now have all the coverage information for this transcript in all_coverage
-        # the_mean, standard_dev = average_standard_dev (all_coverage)
-        # print("%s has coverage min %i, max %i, mean %0.2f, std %0.2f\n" % (transcriptome_record.id,
-                                                              #min(all_coverage), max(all_coverage),
-                                                              #mean(all_coverage),standard_dev))
         if max(all_coverage)< int(min_max_cov_per_base):
             continue
         start_position = transcriptome_record.seq.find(cds_record.seq)
@@ -634,10 +639,9 @@ def parse_transcriptome_file(genome,
                             str(min(all_coverage)),
                             "max: ",
                             str(max(all_coverage)),
-                            "Sliced section: mean ",
-                            str(the_mean),
-                            "std: ",
-                            str(standard_dev),
+                            "Sliced section: ",
+                            "mean %0.2f" % the_mean,
+                            "std: %0.2f" % standard_dev,
                             "(+) coding strand"])
 
         # to make it neater, I split the sentance over 2 strings
@@ -651,10 +655,9 @@ def parse_transcriptome_file(genome,
         if start_codon_mean_cov < cut_off:
             out_str = " ".join(["houston we have a problem!!: ",
                                 transcriptome_record.id,
-                                " diff expression. Cov min: ",
-                                str(min(all_coverage)),
-                                "max: ",
-                                str(max(all_coverage)),
+                                " diff expression.",
+                                "Cov min: %i" % min(all_coverage),
+                                "max: %i" % max(all_coverage),
                                 "For sliced section: mean: %0.2f" % the_mean,
                                 "std: %0.2f" % standard_dev,
                                 "current start position: %0.2f" % (all_coverage[start_position])])
