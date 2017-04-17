@@ -25,7 +25,7 @@ import datetime
 import logging
 import logging.handlers
 import time
-# TODO make re look for Kozak
+# TODO make re look for Kozak GCC[A/G] CCatg
 import re
 
 
@@ -538,6 +538,7 @@ def parse_transcriptome_file(genome,
     # note these names should have been altered to return names
     # in the same manner as the transcriptome
     cds_index_database = parse_predicted_CDS_file(cds_file)
+    Fixed_count = 0
 
     # open outfile:
     file_out = open(out_file, "w")
@@ -707,6 +708,7 @@ def parse_transcriptome_file(genome,
                     cds_record.description = "Five_prime_altered new coordinates: %d - %d\t" % \
                                              (next_ATG_position, end_position) \
                                              + cds_record.description
+                    Fixed_count = Fixed_count + 1
                     if len(cds_record.seq) < end_position - 60:
                             #reset to original
                             out_str = ("houston, im not resetting %s!:" %
@@ -718,6 +720,7 @@ def parse_transcriptome_file(genome,
                                                 "last acceptable coordinate ",
                                                 "%d" % (end_position - 60)])
                             logger.info(out_str)
+                            Fixed_count = Fixed_count - 1
                             
                             cds_record = original_cds_record
                 else:
@@ -761,7 +764,9 @@ def parse_transcriptome_file(genome,
                         cds_record.description = "Five_prime_altered2 new coordinates: %d - %d\t" % \
                                              (another_ATG_position, end_position) \
                                              + cds_record.description
+                        Fixed_count = Fixed_count + 1
                         if len(cds_record) > end_position - 60:
+                            Fixed_count = Fixed_count - 1
                             #reset to original
                             out_str = ("houston, im not resetting %s!2:" %
                                        transcriptome_record.id)
@@ -782,6 +787,8 @@ def parse_transcriptome_file(genome,
         # out_str = ("im writing %s" %(transcriptome_record.id))
         # logger.info(out_str)
         SeqIO.write(cds_record, file_out, "fasta")
+        out_str = ("Fixed: %d sequences" % (Fixed_count))
+        logger.info(out_str)
 
 
 ###############################################################################################
