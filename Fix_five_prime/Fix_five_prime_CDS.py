@@ -691,10 +691,10 @@ def parse_transcriptome_file(genome,
                                         "std: %0.2f" % standard_dev,
                                         "current start position: %0.2f" % (all_coverage[start_position]),
                                         "\n\t",
-                                        "NEW start %i, end %i" %(next_ATG_position, end_position),
+                                        "NEW start %i, end %i" % (next_ATG_position, end_position),
                                         "For sliced section:",
                                         "mean %0.2f, std %0.2f " % (the_mean, standard_dev),
-                                        "next_ATG_position %0.2f" %(all_coverage[next_ATG_position])])
+                                        "next_ATG_position %0.2f" % (all_coverage[next_ATG_position])])
                     logger.info(out_str)
                     cds_record.seq = transcriptome_record.seq[next_ATG_position:end_position] # <-- TESTS work.
                     cds_record.description = "Five_prime_altered new coordinates: %d - %d\t" % \
@@ -702,11 +702,13 @@ def parse_transcriptome_file(genome,
                                              + cds_record.description
                     if len(cds_record.seq) < end_position - 60:
                             #reset to original
-                            out_str = ("houston, im not resetting it!!!2:")
+                            out_str = ("houston, im not resetting it!!!:")
                             logger.info(out_str)
                             out_str = " ".join(["the length of the",
-                                                "cds_record would be %d," % len(cds_record.seq),
-                                                ":ast acceptable coordinate %d" % (end_position - 60)])
+                                                "cds_record would be",
+                                                "%d," % len(cds_record.seq),
+                                                "last acceptable coordinate ",
+                                                "%d" % (end_position - 60)])
                             logger.info(out_str)
                             
                             cds_record = original_cds_record
@@ -729,19 +731,34 @@ def parse_transcriptome_file(genome,
                         #set the new cds
                         cds_record.description = original_cds_record.description
                         cds_record.seq = transcriptome_record.seq[another_ATG_position:end_position]
-                        print("houston, may have fixed the problem!!2: %s another_ATG_position_NEW start. Has coverage min %i, max %i, For sliced section: mean %0.2f, std %0.2f, another_ATG_position %0.2f\n" % (transcriptome_record.id,
-                                                        min(all_coverage), max(all_coverage),
-                                                     the_mean,standard_dev,all_coverage[another_ATG_position]))
+                        out_str = " ".join(["houston, we may have fixed the problem!!2 ",
+                                            transcriptome_record.id,
+                                            "another_ATG_position_NEW start",
+                                            "length: %d" % len(transcriptome_record.seq),
+                                            "min %i, max %i, " % (min(all_coverage),
+                                                                  max(all_coverage)),
+                                            "For sliced section: mean: %0.2f" % the_mean,
+                                            "std: %0.2f" % standard_dev,
+                                            "current start position: %0.2f" % (all_coverage[start_position]),
+                                            "\n\t",
+                                            "NEW start %i, end %i" % (next_ATG_position, end_position),
+                                            "For sliced section:",
+                                            "mean %0.2f, std %0.2f " % (the_mean, standard_dev),
+                                            "another_ATG_position %0.2f" % (all_coverage[next_ATG_position])])
+                        logger.info(out_str)
+
                         cds_record.description = "Five_prime_altered2 new coordinates: %d - %d\t" % \
                                              (another_ATG_position, end_position) \
                                              + cds_record.description
                         if len(cds_record) > end_position - 60:
                             #reset to original
-                            print("houston, I'm not resetting it!!!2:")
+                            out_str = ("houston, im not resetting it!!!2:")
+                            logger.info(out_str)
                             cds_record = original_cds_record
 
                     else:
-                        print ("we cannot do anything with this %s -- we will leave the cds as is" %(transcriptome_record.id))
+                        out_str = ("cannot do anything %s -- leave cds as is" % (transcriptome_record.id))
+                        logger.info(out_str)
                         #reset to original
                         cds_record = original_cds_record
         if not len(cds_record):
@@ -749,7 +766,8 @@ def parse_transcriptome_file(genome,
             cds_record = original_cds_record
 
         assert len(cds_record), "Trimmed to nothing? %s " %(transcriptome_record.id)
-        print ("im writing %s" %(transcriptome_record.id))
+        # out_str = ("im writing %s" %(transcriptome_record.id))
+        # logger.info(out_str)
         SeqIO.write(cds_record, file_out, "fasta")
 
 
