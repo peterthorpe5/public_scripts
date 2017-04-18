@@ -173,6 +173,14 @@ echo ${no_comment}
 eval ${no_comment}
 wait
 
+# graph the blast results
+graph="python ${python_directory}/gene_model_testing/blast_stats.py 
+	  -i test_fa_vs_known_fa.tab 
+	  -o test_fa_vs_known_fa.graphs"
+echo ${graph}
+eval ${graph}
+wait
+
 # convert the xml
 echo "step3: convert the xml file"
 parse_xml="python ${python_directory}/BLAST_parser_return_hits_NAME_only.py 
