@@ -62,8 +62,12 @@ def get_accession_number(line):
     Example:
     >gi|446057344|ref|WP_000135199.1| MULTISPECIES:
     30S ribosomal protein S18"""
-    acc_number = line.split("| ")[0]
-    return acc_number.split("|")[3]
+    if line.startswith(">gi") or line.startswith("gi"):
+        acc_number = line.split("| ")[0]
+        return acc_number.split("|")[3]
+    else:
+        acc_number = line.split()[0]
+        return acc_number
 
 
 def acc_to_description_generator(filename1, descriptions,
