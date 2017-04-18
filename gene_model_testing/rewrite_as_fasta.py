@@ -7,6 +7,20 @@ from optparse import OptionParser
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio import SeqIO
+import matplotlib
+# this code added to prevent this error:
+# self.tk = _tkinter.create(screenName, baseName, className, interactive, wantobjects, useTk, sync, use)
+#_tkinter.TclError: no display name and no $DISPLAY environment variable
+# Force matplotlib to not use any Xwindows backend.
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy
+import pylab
+import numpy as np
+
+# Turn off warning messages
+import warnings
+warnings.filterwarnings('ignore')
 
 
 try:
@@ -31,7 +45,7 @@ def get_fasta_stats(fasta):
     max_contig = max(sizes)
     avg_contig = mean(sizes)
     num_contig = len(sizes)
-    return min_contig, max_contig, avg_contig, num_contig
+    return sizes, min_contig, max_contig, avg_contig, num_contig
 
 
 def reformat_as_fasta(outfile):
@@ -43,7 +57,53 @@ def reformat_as_fasta(outfile):
     return True
 
 
-def reformat_as_fasta(filename, length):
+def plot_multi_histogram_graph(vals, file_in):
+    """function to draw a histo of a given list of values.
+    FOR these data this IS the correct type of graph.
+    http://matplotlib.org/examples/api/barchart_demo.html
+    https://github.com/widdowquinn/
+    Teaching-Data-Visualisation/blob/master/
+    exercises/one_variable_continuous/
+    one_variable_continuous.ipynb
+    bar(left, height, width=0.8, bottom=None,
+    hold=None, **kwargs)
+    """
+
+    fig = plt.figure(figsize=(10, 8), dpi=1200)
+    #    # Create subplot axes
+    ax1 = fig.add_subplot(1, 2, 1)  # 1x3 grid, position 1
+    ax2 = fig.add_subplot(1, 2, 2)  # 1x3 grid, position 2
+
+    # print (index)
+    bar_width = 0.9
+    opacity = 0.6
+
+    # graph1 pylab.hist
+    rects1 = ax1.hist(vals,
+                      facecolor='green',
+                      alpha=0.6) # label='whatever'
+    ax1.set_ylabel('Gene Sizes')
+    #ax1.set_yscale()
+    #ax1.set_xscale()
+    ax1.grid(True)
+    ax1.set_title("Histogram of Gene Sizes")
+
+    # graph 2
+    rects2 = ax2.boxplot(vals, 0, 'gD')
+    ax2.set_xlabel('Bit Score')
+    ax2.set_ylabel('Number in Bin')
+    #ax2.set_yscale()
+    #ax2.set_xscale()
+    ax2.grid(True)
+    ax2.set_title("Boxplot of Gene Sizes")
+
+    fig.tight_layout()
+    fig
+    pylab.savefig(file_in.split(".fa")[0] + '.png')
+    pylab.close()
+
+
+def reformat_as_force(filename, length):
     """this function re-write a file as a fasta file.
     This used to use Biopython, but something kept breaking
     it. So, using a nasty parser instead."""
@@ -64,8 +124,6 @@ def reformat_as_fasta(filename, length):
             else:
                 seq = seq + line
     f.close()
-    return True
-
 
 
 if "-v" in sys.argv or "--version" in sys.argv:
@@ -113,9 +171,11 @@ length = options.length
 
 # Run as script
 if __name__ == '__main__':
-    reformat_as_fasta(in_file, length)
-    reformat_as_fasta("temp_fa.fa", out)
-    min_contig, max_contig, avg_contig, num_contig = get_fasta_stats(out)
+    reformat_as_force(in_file, length)
+    reformat_as_fasta(out)
+    sizes, min_contig, max_contig, \
+           avg_contig, num_contig = get_fasta_stats(in_file)
+    plot_multi_histogram_graph(sizes, out)
     f_out = open("gene.stats.txt", "w")
     data_out = "\t".join(["#min_contig",
                           "max_contig",
@@ -123,7 +183,7 @@ if __name__ == '__main__':
     f_out.write(data_out + "\n")
     data_out = "\t".join([str(min_contig),
                           str(max_contig),
-                          str(avg_contig)])
+                          "%0.2f" %(avg_contig)])
     f_out.write(data_out + "\n")
     f_out.close()
     os.remove("temp_fa.fa")
