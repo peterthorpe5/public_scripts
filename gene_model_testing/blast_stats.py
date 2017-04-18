@@ -151,10 +151,10 @@ def plot_multi_histogram_graph(title1, vals_for_hist1,
     ax3.set_xlabel('Alignmnet Length')
     ax3.set_ylabel('Number in Bin')
     pylab.grid(True)
-    ax3.set_title(title3 + "_barchart")
+    ax3.set_title(title3 + "_histogram")
     fig.tight_layout()
     fig
-    pylab.savefig(file_in + '_barchart.png')
+    pylab.savefig(file_in + '_histogram.png')
     pylab.close()
 
 
@@ -173,8 +173,8 @@ def parse_tab_file(tab_output, out_file):
             perc = get_perc(data, perc)
             bit = get_bit_list(data, bit)
             align = get_alignmemt_list(data, align)
-    plot_hitstogram_graph(perc, "percentage_identity",
-                          "gene_models_test")
+    # plot_hitstogram_graph(perc, "percentage_identity",
+                          # "gene_models_test")
 
     plot_multi_histogram_graph("percentage_Identity",
                                perc,
