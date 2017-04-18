@@ -67,7 +67,7 @@ def get_accession_number(line):
         return acc_number.split("|")[3]
     else:
         acc_number = line.split()[0]
-        return acc_number
+        return acc_number.replace(">", "")
 
 
 def acc_to_description_generator(filename1, descriptions,
