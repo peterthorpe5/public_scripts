@@ -174,7 +174,7 @@ eval ${no_comment}
 wait
 
 # graph the blast results
-graph="python ${python_directory}/gene_model_testing/blast_stats.py 
+graph="python ${python_directory}/blast_stats.py 
 	  -i test_fa_vs_known_fa.tab 
 	  -o test_fa_vs_known_fa.graphs"
 echo ${graph}
