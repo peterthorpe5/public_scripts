@@ -68,13 +68,16 @@ def plot_multi_histogram_graph(vals, file_in):
     bar(left, height, width=0.8, bottom=None,
     hold=None, **kwargs)
     """
-
     fig = plt.figure(figsize=(10, 8), dpi=1200)
-    #    # Create subplot axes
-    ax1 = fig.add_subplot(1, 2, 1)  # 1x3 grid, position 1
-    ax2 = fig.add_subplot(1, 2, 2)  # 1x3 grid, position 2
 
-    # print (index)
+    matplotlib.rcParams.update({'font.size': 6})
+
+    # Create subplot axes
+    ax1 = fig.add_subplot(1, 4, 1)  # 1x4 grid, position 1
+    ax2 = fig.add_subplot(1, 4, 2)  # 1x4 grid, position 2
+    ax3 = fig.add_subplot(1, 4, 3)
+    ax4 = fig.add_subplot(1, 4, 4)
+
     bar_width = 0.9
     opacity = 0.6
 
@@ -83,20 +86,39 @@ def plot_multi_histogram_graph(vals, file_in):
                       facecolor='green',
                       alpha=0.6) # label='whatever'
     ax1.set_ylabel('Gene Sizes')
-    #ax1.set_yscale()
-    #ax1.set_xscale()
+    # ax1.set_yscale()
+    # ax1.set_xscale()
     ax1.grid(True)
     ax1.set_title("Histogram of Gene Sizes")
 
-    # graph 2
-    rects2 = ax2.boxplot(vals, 0, 'gD')
-    ax2.set_xlabel('Bit Score')
-    ax2.set_ylabel('Number in Bin')
-    #ax2.set_yscale()
-    #ax2.set_xscale()
+    # graph2  pylab.hist
+    rects1 = ax2.hist(vals,
+                      facecolor='green',
+                      alpha=0.6) # label='whatever'
+    ax2.set_ylabel('Gene Sizes')
+    ax2.set_yscale("log")
+    # ax1.set_xscale()
     ax2.grid(True)
-    ax2.set_title("Boxplot of Gene Sizes")
+    ax2.set_title("Histogram of Log Gene Sizes")
 
+
+    # graph 3
+    rects2 = ax3.boxplot(vals, 0, 'gD')
+    # ax3.set_xlabel()
+    ax3.set_ylabel('Gene Sizes')
+    # ax2.set_yscale()
+    # ax2.set_xscale()
+    ax3.grid(True)
+    ax3.set_title("Boxplot of Gene Sizes")
+
+    # graph 4
+    rects2 = ax4.boxplot(vals, 0, 'gD')
+    # ax4.set_xlabel()
+    ax4.set_ylabel('Log Gene Sizes')
+    ax4.set_yscale("log")
+    # ax2.set_xscale()
+    ax4.grid(True)
+    ax4.set_title("Boxplot of Log Gene Sizes")
     fig.tight_layout()
     fig
     pylab.savefig(file_in.split(".fa")[0] + '.png')

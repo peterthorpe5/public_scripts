@@ -117,6 +117,7 @@ def plot_multi_histogram_graph(title1, vals_for_hist1,
     ax1 = fig.add_subplot(1, 3, 1)  # 1x3 grid, position 1
     ax2 = fig.add_subplot(1, 3, 2)  # 1x3 grid, position 2
     ax3 = fig.add_subplot(1, 3, 3)  # 1x3 grid, position 3
+    matplotlib.rcParams.update({'font.size': 8})
 
     # print (index)
     bar_width = 0.9
