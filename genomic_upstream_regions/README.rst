@@ -48,6 +48,7 @@ The coordinate file using grep or (better) an python script
 ===========================================================
 can be generated using a GFF3 file and a linux command line using:
 WARNING: the grep method can return lots of unwanted lines. Use with caution
+
 ``grep "gene" name.gff3 | grep -v "#" | cut -f1,4,5,7,9 > format_for_py_script.out``
 
 yeilding this resulting file:
