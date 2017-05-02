@@ -254,7 +254,7 @@ if "-v" in sys.argv or "--version" in sys.argv:
 
 usage = """Use as follows:
 
-$ python get_upstream_regions_using_gene_coordinates_GFF_format.py --coordinates
+$ python get_upstream_regions.py --coordinates
         coordinate_file.fasta -g genome_sequence.fasta
         -upstream <int> number of nucleotides upstream of strat of gene to return
         e.g.  -u 1000
@@ -328,8 +328,8 @@ parser.add_option("-u", "--upstream",
                   dest="upstream",
                   default="1000",
                   help="the amount of nucleotide upstream of the gene start, " +
-                  "taking into account gene directions, to return in the outfile"
-                  "by default this will not return sequences of 50bp or less. " +"
+                  "taking into account gene directions, to return in the outfile" +
+                  "by default this will not return sequences of 50bp or less. " +
                   "If you require these alter"
                   "lines 204 and 214")
 
