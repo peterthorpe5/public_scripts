@@ -14,7 +14,7 @@ script to get the upstream regions of genes of interest. script will return up t
 
 Usage: Use as follows:
 
-$ python get_upstream_regions.py --coordinates coordinate_file.fasta -g genome_sequence.fasta --upstream <int> number of nucleotides upstream of strat of gene to return (e.g. -u 1000) -z user_defined_genic (how much of the gene to return) -o outfile_name
+``python get_upstream_regions.py --coordinates coordinate_file.fasta -g genome_sequence.fasta --upstream <int> number of nucleotides upstream of strat of gene to return (e.g. -u 1000) -z user_defined_genic (how much of the gene to return) -o outfile_name``
 
 This will return (--upstream number) of nucleotides to the start of your genes(s) of interest (-g) gene_file using data from (-c). Gene file can either be space, tab or  separated.
 
