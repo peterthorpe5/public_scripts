@@ -582,7 +582,7 @@ parser.add_option("-u", "--upstream",
 parser.add_option("-d", "--downstream",
                   dest="downstream",
                   default=False,
-                  help="the amount of nucleotide upstream of the gene " +
+                  help="the amount of nucleotide downstream of the gene " +
                   "start, taking into account gene directions, to " +
                   "return in the outfile by default this will not return " +
                   "sequences of min_lenbp or less.")
