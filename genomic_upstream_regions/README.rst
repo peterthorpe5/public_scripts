@@ -8,7 +8,7 @@ basic usage:
 
 ``Requirements:``
 python 2.7 and biopyton.  
- (print >> is 2.X only).
+
 
 script to get the upstream regions of genes of interest. script will return up to the gene if the full length falls within that gene. Also, script will return reverse complemnet of negative strand coded genes.
 
@@ -18,6 +18,7 @@ Usage: Use as follows:
 
 This will return (--upstream number) of nucleotides to the start of your genes(s) of interest (-g) gene_file using data from (-c). Gene file can either be space, tab or  separated.
 
+or -d (int) for downstream. Will not work with -z option
 Options:
   -h, --help            show this help message and exit
   -c COORDINATE_FILE, --coordinates=COORDINATE_FILE
@@ -26,7 +27,7 @@ Options:
                         |  cut -f1,4,5,7,9 > format_for_py_script.out .Default
                         = format_for_py_script.out
   -g GENOME_SEQUENCE, --genome=GENOME_SEQUENCE
-                        genome_sequence.fasta  -  this has to be the file used
+                        genome_sequence.fasta - this has to be the file used
                         to generate the gene models/GFF file
   -f GENES_FILE, --gene_names=GENES_FILE
                         a file with a list of gene names to get the upstream
@@ -34,14 +35,22 @@ Options:
   -u UPSTREAM, --upstream=UPSTREAM
                         the amount of nucleotide upstream of the gene start,
                         taking into account gene directions, to return in the
-                        outfileby default this will not return sequences of
-                        50bp or less. If you require these alterlines 204 and
-                        214
+                        outfile by default this will not return sequences of
+                        min_lenbp or less.
+  -d DOWNSTREAM, --downstream=DOWNSTREAM
+                        the amount of nucleotide upstream of the gene start,
+                        taking into account gene directions, to return in the
+                        outfile by default this will not return sequences of
+                        min_lenbp or less.
   -z USER_DEFINED_GENIC, --user_defined_genic=USER_DEFINED_GENIC
                         the number of nucleotides from within the gene to
                         return, default is 0
+  -m MIN_LEN, --min_len=MIN_LEN
+                        the min length of seq to return. Any fragments less
+                        than this are not returned Default = 30
   -o FILE, --output=FILE
                         Output filename (fasta file)
+
 						
 
 The coordinate file using grep or (better) an python script
