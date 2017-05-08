@@ -150,14 +150,14 @@ def parse_through_gene_coordinates(coordinate_file):
     return genes_coordinate
 
 
-def seq_getter(coordinate_file,
-               genome_sequence,
-               upstream,
-               genes_file,
-               outfile,
-               logger,
-               min_len,
-               user_defined_genic=0):
+def up_stream_seq_getter(coordinate_file,
+                         genome_sequence,
+                         upstream,
+                         genes_file,
+                         outfile,
+                         logger,
+                         min_len,
+                         user_defined_genic=0):
     """this is a function returns the upstream regions of the list
     of genes of interest - a user defined threshold for the
     number of nucleotides upstream is also used"""
@@ -400,7 +400,7 @@ parser.add_option("-f", "--gene_names",
 
 parser.add_option("-u", "--upstream",
                   dest="upstream",
-                  default="1000",
+                  default=False,
                   help="the amount of nucleotide upstream of the gene " +
                   "start, taking into account gene directions, to " +
                   "return in the outfile by default this will not return " +
@@ -464,14 +464,15 @@ if __name__ == '__main__':
     for user_file in file_list:
         if not os.path.isfile(user_file):
            sys_exit("file not found: %s" % user_file)
-    seq_getter(coordinate_file,
-               genome_sequence,
-               upstream,
-               genes_file,
-               outfile,
-               logger,
-               min_len,
-               user_defined_genic)
+    if upstream:
+       up_stream_seq_getter(coordinate_file,
+                            genome_sequence,
+                            upstream,
+                            genes_file,
+                            outfile,
+                            logger,
+                            min_len,
+                            user_defined_genic)
     end_time=time.time()
     logger.info('that took, %.1f' % (end_time - start_time))
 
