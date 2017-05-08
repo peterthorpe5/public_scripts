@@ -7,7 +7,7 @@ basic usage:
 ``./get_upstream_regions.py`` -h 
 
 ``Requirements:``
-python 2.7 and biopyton.  
+python 2.7 or 3.X and biopyton.  
 
 
 script to get the upstream regions of genes of interest. script will return up to the gene if the full length falls within that gene. Also, script will return reverse complemnet of negative strand coded genes.
