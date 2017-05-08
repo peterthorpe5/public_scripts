@@ -1,0 +1,4 @@
+INFO: indexing genome
+INFO: import genome file took, 0.028
+INFO: WARNING: GPLIN_000000400 upstream coordinate falls in the genic regions of GPLIN_000000300 on scaffold pathogens_Gpal_scaffold_1
+INFO: that took, 0.0
