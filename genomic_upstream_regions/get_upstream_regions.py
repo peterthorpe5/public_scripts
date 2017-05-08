@@ -63,7 +63,7 @@ def index_gene_scaffold_coordinates(coordinate_file):
     data.close()
     for gff_info in genes_coordinate:
         error = "coord file fields wrong length, should be 5"
-        assert len(line.split("\t")) == 5 , "%s" % error
+        assert len(gff_info.split("\t")) == 5 , "%s" % error
         gene = gff_info.split("\t")[4]
         if ";" in gene:
             gene = gene.split(";")[0]
