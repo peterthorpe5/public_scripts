@@ -38,7 +38,7 @@ Options:
                         outfile by default this will not return sequences of
                         min_lenbp or less.
   -d DOWNSTREAM, --downstream=DOWNSTREAM
-                        the amount of nucleotide upstream of the gene start,
+                        the amount of nucleotide downstream of the gene start,
                         taking into account gene directions, to return in the
                         outfile by default this will not return sequences of
                         min_lenbp or less.
