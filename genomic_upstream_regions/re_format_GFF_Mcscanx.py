@@ -46,10 +46,10 @@ def reformat_gff_column_9(gff, species, out, mcscan):
             # we want to add the direction information
             data = "%s%s\t%s\t%s\t%s\t%s\n" %(species,
                                               scaf,
-                                              gene_info,
                                               str(start),
                                               str(stop),
-                                              direction)
+                                              direction,
+                                              gene_info)
         f_out.write(data)
     f_out.close()
     f_in.close()
