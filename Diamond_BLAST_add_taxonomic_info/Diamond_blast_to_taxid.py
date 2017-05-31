@@ -482,6 +482,7 @@ def parse_diamond_tab(diamond_tab_output,
             kingdom = taxon_to_kingdom[tax_id]
         except KeyError:
             # allow this to continue. Dont break it!
+            print ("cannot find kingdom for tax id ", tax_id)
             kingdom = kingdom_dic["U"]
         # get scientific names
         try:
