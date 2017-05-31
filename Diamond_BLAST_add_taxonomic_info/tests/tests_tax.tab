@@ -1,0 +1,4 @@
+#2017-04-14
+#qseqid	sseqid	pident	length	mismatch	gapopen	qstart	qend	sstart	send	evalue	bitscore	salltitles	staxids	scientific_name	scomnames	sskingdoms
+one	gi|66816243|ref|XP_642131.1|	100.0	169	0	0	1	169	1	169	3.2e-96	337.0	hypothetical protein DDB_G0277827 [Dictyostelium discoideum AX4]  Full=Calfumirin-1; Short=CAF-1 calfumirin-1 [Dictyostelium discoideum AX2] hypothetical protein DDB_G0277827 [Dictyostelium discoideum AX4]	352472	Dictyostelium discoideum AX4		Unclassified
+two	gi|66818355|ref|XP_642837.1|	100.0	160	0	0	1	160	1	160	1.2e-87	308.5	hypothetical protein DDB_G0276911 [Dictyostelium discoideum AX4]  hypothetical protein DDB_G0276911 [Dictyostelium discoideum AX4]	352472	Dictyostelium discoideum AX4		Unclassified

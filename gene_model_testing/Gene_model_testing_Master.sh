@@ -1,7 +1,7 @@
 #!/bin/bash
 #$ -cwd
 #Abort on any error,
-set -e
+#set -e
 
 #echo Running on $HOSTNAME
 #echo Current PATH is $PATH
@@ -205,19 +205,16 @@ mv *_refine.fasta ./alignments
 cd ${Working_directory}
 
 echo "running diamond-BLAST against NR"
-diam_p="diamond blastp -p ${threads} --sensitive -e 0.00001 
-	   -v -q aa.fa 
+diam_p="/home/pt40963/scratch/Downloads/diamond-master/diamond blastp -p ${threads} --more-sensitive -e 0.00001 
+	   -v -q aa.fa
 	   -d $HOME/scratch/blast_databases/nr.dmnd 
-	   -a aa.fasta_vs_nr.da"
+	   --taxonmap $HOME/scratch/blast_databases/prot.accession2taxid.gz
+	   --outfmt 6 
+	   --out aa.fasta_vs_nr.tab"
 echo ${diam_p}
 eval ${diam_p}
 wait
 
-echo "converting diamond-BLAST output"
-diam_v="diamond view -a aa.fasta*.daa -f tab -o aa.fasta_vs_nr.tab"
-echo ${diam_v}
-eval ${diam_v}
-wait
 
 echo "adding tx_id and descriptions to diamond-BLAST output"
 tax="python $HOME/public_scripts/Diamond_BLAST_add_taxonomic_info/Diamond_blast_to_taxid.py

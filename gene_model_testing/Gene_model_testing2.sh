@@ -12,7 +12,7 @@ set -e
 
 Phy_dir=$HOME/scratch/tree_health/ITS_ratio/WORKED_Phytophthora_infestans.ASM14294v1.31
 
-known_fa="${Phy_dir}/tests.AA.fasta"
+known_fa="${Phy_dir}/P_infestans_genes_for_Pete_Thorpe.fasta"
 known_fa_nucl="${Phy_dir}/Pi_T30_4nt.fa"
 prefix="Pinf"
 # default name
@@ -20,8 +20,8 @@ test_fa="aa.fa"
 min_len_gene="20"
 threads=8
 python_directory=$HOME/public_scripts/gene_model_testing
-Working_directory=$HOME/scratch/Pi/
-test_gff="${Phy_dir}/repeat_masking/Pi.models_RNAseq.v1.VERY.short_NOT_BOTH_STRANDS.gff"
+Working_directory=${Phy_dir}/repeat_masking/Pi_models_RNAseq_Pi_models_BOTH_STRANDS_gff_SW_gene
+test_gff="${Phy_dir}/repeat_masking/Pi.models_RNAseq.Pi_models.BOTH_STRANDS.gff"
 # for the repeat masking and GFF I used a altered gene name version
 genome="${Phy_dir}/repeat_masking/Pi_alt.fasta"
 #genome="${Phy_dir}/Phytophthora_infestans.ASM14294v1.31.fa"
@@ -47,7 +47,8 @@ right_reads="${Phy_dir}//RNAseq_reads/R2.fq.gz"
 
 # END OF VARIABLES !!!!!!!!!!!!!!!!!!!!!!
 ########################################################
-
+rm -rf ${Working_directory}
+mkdir ${Working_directory}
 cd ${Working_directory}
 
 # for now in testing
@@ -260,7 +261,7 @@ eval ${diam_v}
 wait
 
 echo "adding tx_id and descriptions to diamond-BLAST output"
-tax="python $HOME/public_scripts/Diamond_BLAST_add_taxonomic_info/Diamond_blast_to_taxid.py
+tax="python $HOME/misc_python/diamond_blast_to_kingdom/Diamond_blast_to_taxid_add_kingdom_add_species_description.py 
 	-i aa.fasta_vs_nr.tab 
 	-p $HOME/scratch/blast_databases 
 	-o aa.fasta_vs_nr_tax.tab"
@@ -269,7 +270,7 @@ eval ${tax}
 wait
 
 echo "predicting HGT"
-HGT="python $HOME/public_scripts/Lateral_gene_transfer_prediction_tool/Lateral_gene_transfer_predictor.py 
+HGT="python $HOME/misc_python/Lateral_gene_transfer_prediction_tool/Lateral_gene_transfer_predictor.py 
 		-i *_vs_nr_tax.tab 
 		--tax_filter_out ${tax_filter_out} 
 		--tax_filter_up_to ${tax_filter_up_to}

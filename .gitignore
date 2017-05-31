@@ -3,6 +3,9 @@
 *.swp
 *.bak
 
+#Ignore NCBI dump files
+*.dmp
+
 #Ignore any tar-balls and zippped files
 *.tar.gz
 *.zip

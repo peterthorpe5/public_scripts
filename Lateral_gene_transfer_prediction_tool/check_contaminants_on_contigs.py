@@ -57,7 +57,7 @@ def split_gff_gene_names(gene_info):
     # some data set require this to be uncommented
     # gene = gene.split(".t")[0]
     gene = gene.rstrip("\n")
-    gene = gene.replace(".t1", "")
+    #gene = gene.replace(".t1", "")
     return gene
 
 def parse_gff(gff):
@@ -484,21 +484,26 @@ genome = options.genome
 
 
 #run the program
+# Run as script
+if __name__ == '__main__':
+    # call the main function
+    if not os.path.isfile(gff):
+        print("sorry, couldn't open the file: " % gff)
+        print ("current working directory is :", os.getcwd() + "\n")
+        print ("files are :", [f for f in os.listdir('.')])
+        sys_exit("\n\nInput gff file not found: %s" % gff)
 
-if not os.path.isfile(gff):
-    print("sorry, couldn't open the file: " + ex.strerror + "\n")
-    print ("current working directory is :", os.getcwd() + "\n")
-    print ("files are :", [f for f in os.listdir('.')])
-    sys_exit("\n\nInput gff file not found: %s" % gff)
 
-
-if not os.path.isfile(LTG):
-    sys_exit("Input LTG file not found: %s" % LTG)
-if not os.path.isfile(dna):
-    sys_exit("Input dna file not found: %s" % dna)
-    
-    
-check_scaffolds_for_only_HGT_genes(genome, gff, LTG, dna, sd_numbers,
-                                   rnaseq, bam_file, out_file)
+    if not os.path.isfile(LTG):
+        sys_exit("Input LTG file not found: %s" % LTG)
+    if not os.path.isfile(dna):
+        sys_exit("Input dna file not found: %s" % dna)
+        
+        
+    check_scaffolds_for_only_HGT_genes(genome, gff,
+                                       LTG, dna,
+                                       sd_numbers,
+                                       rnaseq, bam_file,
+                                       out_file)
 
 

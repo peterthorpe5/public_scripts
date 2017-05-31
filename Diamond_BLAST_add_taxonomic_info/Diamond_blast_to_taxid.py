@@ -4,8 +4,10 @@
 # can also work for 12 coloumn Blast output.
 # - ALSO returns TOP-BLAST hits. Kingdom and Genus Distribution of these hits
 
-# purpose: script to pare the tabular output from $ diamond view -f tab -o name.tab
-# and get the description, tax id, species, kingdom information from NCBI taxonomy databse
+# purpose: script to pare the tabular output from
+# $ diamond view -f tab -o name.tab
+# and get the description, tax id, species, kingdom information from NCBI
+# taxonomy databse
 
 # why: diamond is SOOO fast. But does not include tax id info in the database.
 
@@ -18,9 +20,20 @@ import os
 import sys
 from optparse import OptionParser  # TODO: update to argparser
 import datetime
+import logging
+import logging.handlers
+import matplotlib
+# this code added to prevent this error:
+# self.tk = _tkinter.create(screenName, baseName,
+# className, interactive, wantobjects, useTk, sync, use)
+# _tkinter.TclError: no display name and
+# no $DISPLAY environment variable
+# Force matplotlib to not use any Xwindows backend.
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import pylab
 
 ###################################################################################
-print("program started at %s" % time.asctime())
 # this is how they are "described" in the catergories.dmp file
 kingdom_dic = {"A": "Archaea",
                "B": "Bacteria",
@@ -49,34 +62,33 @@ TITLE_OF_COLOUMNS = "\t".join(['#qseqid',
                                'sskingdoms\n'])
 TITLE_OF_COLOUMNS = DATE_TIME + TITLE_OF_COLOUMNS
 
-def format_Warning():
+def blast_format_Warning(logger):
     """warns of space sep blast output which is weird.
     I have come across this once from someone else's
     data. Dont know how it was produced."""
-    print("Warning: You BLAST data is space separated. This is weird")
+    logger.warning("Your BLAST data is space separated. This is weird")
 
 
-def format_warning(file_name):
+def format_warning(file_name, logger):
     """warnings about a format. Break the program"""
-    print(("%s is not space of tab separated") % (file_name))
+    logger.warning("%s is not space of tab separated", file_name)
     os._exit(0)
 
 
-def file_WARNING(problem_file):
+def file_WARNING(problem_file, logger):
     """funtion to warn about a broken or missing file
     and break the program run"""
-    print("sorry, couldn't open the file: " + ex.strerror + "\n")
-    print("problem file = %s" % problem_file)
-    print("current working directory is :", os.getcwd() + "\n")
-    print("files are : ", [f for f in os.listdir('.')])
+    logger.warning("sorry, couldn't open the file: %s", problem_file)
+    logger.warning("current working directory is :", os.getcwd())
+    logger.warning("files are : ", [f for f in os.listdir('.')])
     sys.exit('cannot continue without a valid file')
 
 
-def tax_id_warning(accession):
+def tax_id_warning(accession, logger):
     """function to report warning on tax_ids it cannot find"""
-    print("try updating your tax info tax_id database file")
-    print(("tax_id for %s is not found in database") % (accession))
-    print("changing to an Unknown tax_id 32644")
+    logger.warning("try updating your tax info tax_id database file")
+    logger.warning("tax_id for %s is not found in database", accession)
+    logger.warning("changing to an Unknown tax_id 32644")
     return "32644"
 
 
@@ -109,7 +121,8 @@ def parse_NCBI_nodes_tab_file(folder):
     return tax_dictionary
 
 
-def taxomony_filter(tax_dictionary, tax_id_of_interst,
+def taxomony_filter(tax_dictionary,
+                    tax_id_of_interst,
                     final_tx_id_to_identify_up_to=None,
                     tax_to_filter_out=None):
     """function to get a list of tax id of interest from the tax_dictionary
@@ -268,18 +281,18 @@ def read_diamond_tab_file(diamond_tab_output):
         return file.read().split("\n")
 
 
-def parse_blast_line(line):
+def parse_blast_line(line, logger):
     """function takes in a line check if it is not a
     comment or blank and returns the line, plus the
     accession number
     """
     if not test_line(line):
         return False
-    accession, line = get_accession_number(line)
+    accession, line = get_accession_number(line, logger)
     return accession, line
 
 
-def get_accession_number(line):
+def get_accession_number(line, logger):
     """acc number are embeded in the second column
     so need to split it up to get to it legacy data e.g.
     gi|685832877|emb|CEF67798.1| .
@@ -291,11 +304,11 @@ def get_accession_number(line):
         # Dont break the program
         try:
             acces_column = line.split()[1]
-            format_Warning()
+            blast_format_Warning(logger)
             # reformats it to tab separated
             line = "\t".join(line.split())
         except ValueError:
-            format_warning()
+            format_warning(logger)
     if acces_column.startswith("gi"):
         # e.g. gi|66816243|ref|XP_642131.1|
         acc = acces_column.split("|")[3]
@@ -305,6 +318,115 @@ def get_accession_number(line):
         acc = acces_column.split("|")[1]
         return acc.replace("|", ""), line
 
+def get_perc(data, perc):
+    """func to return a list of perct identity from
+    coloumn 3 in the tab blast file.
+    Take in a tab sep blast line and the list which is
+    appends to"""
+    perc.append(int(round(float(data[2]))))
+    return  perc
+
+
+def get_bit_list(data, bit):
+    """func to return a list of bit scores from
+    coloumn 3 in the tab blast file.
+    Take in a tab sep blast line and the list which is
+    appends to"""
+    bit.append(int(round(float(data[11]))))
+    return bit
+
+
+def get_alignmemt_list(data, align):
+    """func to return a list of align length from
+    coloumn 3 in the tab blast file.
+    Take in a tab sep blast line and the list which is
+    appends to"""
+    align.append(int(round(float(data[3]))))
+    return align
+
+
+def plot_hitstogram_graph(data_values, title, file_in):
+    """function to draw a histogram of a given list of values.
+    http://matplotlib.org/1.3.0/examples/pylab_examples/
+    histogram_demo_extended.html
+    https://github.com/widdowquinn/Teaching-Data-Visualisation/
+    blob/master/exercises/one_variable_continuous/
+    one_variable_continuous.ipynb
+    """
+
+    #bins = max(data_values)
+    #pylab.hist(data_values, facecolor='blue')
+    pylab.hist(data_values, facecolor='green', alpha=0.6)
+    pylab.grid(True)
+    pylab.title(title + "_histogram")
+    pylab.xlabel('Percentage Identity')
+    pylab.ylabel('Number in Bin')
+    pylab.savefig(file_in + "_" + title + '_histogram.png')
+    plt.close()
+    pylab.close()
+    os.chdir('.')
+
+
+def plot_multi_histogram_graph(title1, vals_for_hist1,
+                               title2, vals_for_hist2,
+                               title3, vals_for_hist3,
+                               file_in):
+    """function to draw a histo of a given list of values.
+    FOR these data this IS the correct type of graph.
+    http://matplotlib.org/examples/api/barchart_demo.html
+    https://github.com/widdowquinn/
+    Teaching-Data-Visualisation/blob/master/
+    exercises/one_variable_continuous/
+    one_variable_continuous.ipynb
+    bar(left, height, width=0.8, bottom=None,
+    hold=None, **kwargs)
+    """
+
+    fig = plt.figure(figsize=(10, 8), dpi=1200)
+    #    # Create subplot axes
+    ax1 = fig.add_subplot(1, 3, 1)  # 1x3 grid, position 1
+    ax2 = fig.add_subplot(1, 3, 2)  # 1x3 grid, position 2
+    ax3 = fig.add_subplot(1, 3, 3)  # 1x3 grid, position 3
+
+    # print (index)
+    bar_width = 0.9
+    opacity = 0.6
+
+    # graph1 pylab.hist
+    rects1 = ax1.hist(vals_for_hist1,
+                      facecolor='green',
+                      alpha=0.6) # label='whatever'
+    ax1.set_xlabel('Percentage Identity')
+    ax1.set_ylabel('Number in Bin')
+    #ax1.set_yscale()
+    #ax1.set_xscale()
+    ax1.grid(True)
+    ax1.set_title(title1)
+
+    # graph 2
+    rects2 = ax2.hist(vals_for_hist2,
+                      facecolor='blue',
+                      alpha=0.6)  # label='whatever'
+    ax2.set_xlabel('Bit Score')
+    ax2.set_ylabel('Number in Bin')
+    #ax2.set_yscale()
+    #ax2.set_xscale()
+    ax2.grid(True)
+    ax2.set_title(title2)
+
+    # graph 3
+    rects3 = ax3.hist(vals_for_hist3,
+                      facecolor='red',
+                      alpha=0.6)  # label='whatever'
+    ax3.set_xlabel('Alignmnet Length')
+    ax3.set_ylabel('Number in Bin')
+    pylab.grid(True)
+    ax3.set_title(title3 + "_histogram")
+    fig.tight_layout()
+    fig
+    pylab.savefig(file_in + '_histogram.png')
+    pylab.close()
+
 
 # main function
 def parse_diamond_tab(diamond_tab_output,
@@ -313,7 +435,8 @@ def parse_diamond_tab(diamond_tab_output,
                       categories,
                       names,
                       acc_to_des,
-                      outfile):
+                      outfile,
+                      logger):
     """funtion to get tax id from dtaabse from diamond
     blast vs NR tab output.
     This can also re annoted tab blast data
@@ -324,7 +447,7 @@ def parse_diamond_tab(diamond_tab_output,
     tax_to_scientific_name_dic, \
         tax_to_common_name_dic = tax_to_scientific_name_dict(names)
     acc_to_description_dict = acc_to_description(acc_to_des)
-    print("loaded gi to description database")
+    logger.info("loaded gi to description database")
     tax_dictionary = parse_NCBI_nodes_tab_file
     file_out = open(outfile, "w")
     file_out.write(TITLE_OF_COLOUMNS)
@@ -332,21 +455,22 @@ def parse_diamond_tab(diamond_tab_output,
     try:
         diamond_tab_as_list = read_diamond_tab_file(diamond_tab_output)
     except IOError as ex:
-        file_WARNING(diamond_tab_output)
+        file_WARNING(diamond_tab_output, logger)
         os._exit(0)
     # iterate line by line through blast file
-    print("Annotating tax id info to tab file")
+    logger.info("Annotating tax id info to tab file")
     for line in diamond_tab_as_list:
         # get the accession number from the blast line
-        if not parse_blast_line(line):
+        if not parse_blast_line(line, logger):
             continue
-        accession, line = parse_blast_line(line)
+        accession, line = parse_blast_line(line, logger)
         # use dictionary to get tax_id from gi number
         # Most of the GI numbers will match, expect them to be in dict...
         try:
             tax_id = acc_to_tax_id[accession]
         except KeyError:
-            tax_id = tax_id = tax_id_warning(accession)  # unknown tax_id
+            # unknown tax_id
+            tax_id = tax_id = tax_id_warning(accession, logger)
         # TODO ADD TAX FILTER
         # TAXONOMY FILTERING - default is no!
         # taxomony_filter(tax_dictionary,
@@ -455,6 +579,19 @@ def get_genus_count(genus_dict,
     return genus_dict
 
 
+def parse_line(line):
+    """function to parse a given line and return
+    tab separated elements"""
+    if not line.strip():
+        return False #if the last line is blank
+    if line.startswith("#"):
+        return False
+    line_split = line.rstrip("\n").split("\t")
+    #print ("I assume the element are tab separated")
+        #cluster_line_split = line.rstrip("\n").split()
+    return line_split
+
+
 def get_to_blast_hits(in_file,
                       outfile,
                       bit_score_column="12",):
@@ -463,7 +600,7 @@ def get_to_blast_hits(in_file,
     blast match"""
     # TODO: this is messy and too complex for one function
     # we dont need to run this anymore -_blast_hit_based_on_order
-    # get_top_blast_hit_based_on_order(in_file, outfile, bit_score_column)
+    get_top_blast_hit_based_on_order(in_file, outfile, bit_score_column)
     # open files, read and write.
     blast_file = open (in_file, "r")
     out_file = open(outfile, "w")
@@ -490,6 +627,9 @@ def get_to_blast_hits(in_file,
     current_bit_score = float(0.0)
     last_gene_name = ""
     last_blast_line = ""
+    perc = []
+    bit = []
+    align = []
     for line in blast_file:
         if line.startswith("#"):
             continue
@@ -529,6 +669,32 @@ def get_to_blast_hits(in_file,
     genus_dict = dict()
     total_blast_hit_count = 0
     for hit in top_hits:
+        data = hit
+        perc = get_perc(data, perc)
+        if perc == "pident":
+            continue
+        bit = get_bit_list(data, bit)
+        align = get_alignmemt_list(data, align)
+        try:
+            import matplotlib
+            # this code added to prevent this error:
+            # self.tk = _tkinter.create(screenName, baseName,
+            # className, interactive, wantobjects, useTk, sync, use)
+            #_tkinter.TclError: no display name and no $DISPLAY
+            # environment variable
+            # Force matplotlib to not use any Xwindows backend.
+            matplotlib.use('Agg')
+            import matplotlib.pyplot as plt
+            plot_multi_histogram_graph("Top_hits_Percentage_Identity",
+                                       perc,
+                                       "Top_hits_Bits_Scores",
+                                       bit,
+                                       "Top_hits_Alignment_Lengths",
+                                       align,
+                                       out_file)
+        except ImportError:
+            print("Matplotlib not installed. No graphs")
+            # dont braek the program.
         genus_dict = get_genus_count(genus_dict, hit)
         total_blast_hit_count = total_blast_hit_count + 1
         king_name = hit[-1]
@@ -780,11 +946,33 @@ acc_to_des = apply_path(options.path, options.acc_to_des)
 # -p
 path_files = options.path
 #-o
-outfile= options.outfile
+outfile = options.outfile
 
 
 # Run as script
 if __name__ == '__main__':
+    # Set up logging
+    log_out = outfile + ".log"
+    logger = logging.getLogger('metapy.py: %s' % time.asctime())
+    logger.setLevel(logging.DEBUG)
+    err_handler = logging.StreamHandler(sys.stderr)
+    err_formatter = logging.Formatter('%(levelname)s: %(message)s')
+    err_handler.setFormatter(err_formatter)
+    logger.addHandler(err_handler)
+    try:
+        logstream = open(log_out, 'w')
+        err_handler_file = logging.StreamHandler(logstream)
+        err_handler_file.setFormatter(err_formatter)
+        # logfile is always verbose
+        err_handler_file.setLevel(logging.INFO)
+        logger.addHandler(err_handler_file)
+    except:
+        print("Could not open %s for logging" % log_out)
+        sys.exit(1)
+    # Report input arguments
+    logger.info(sys.version_info)
+    logger.info("Command-line: %s", ' '.join(sys.argv))
+    logger.info("Starting testing: %s", time.asctime())
     # call the main function
     filename_list = [categories,
                      diamond_tab_output,
@@ -792,9 +980,9 @@ if __name__ == '__main__':
                      acc_to_des]
     for needed_file in filename_list:
         if not os.path.isfile(needed_file):
-            print("sorry cannot find you %s file" % needed_file)
-            print("please check this command again, " +
-                   "with the full path if required")
+            logger.info("sorry cannot find you %s file", needed_file)
+            logger.info("please check this command again, " +
+                        "with the full path if required")
             os._exit(0)
     parse_diamond_tab(diamond_tab_output,
                       path_files,
@@ -802,12 +990,13 @@ if __name__ == '__main__':
                       categories,
                       names,
                       acc_to_des,
-                      outfile)
+                      outfile,
+                      logger)
     # fucntion to get the top hits and the kingdom and genus distribution
     top_hits_out = outfile + "top_blast_hits.out"
     get_to_blast_hits(outfile, top_hits_out)
-    print("program finished at %s" % time.asctime())
-    print("Results are in %s" % outfile)
+    logger.info("program finished at %s", time.asctime())
+    logger.info("Results are in %s" % outfile)
 
 
 # more notes
