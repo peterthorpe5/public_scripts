@@ -5,8 +5,9 @@ import sys
 from optparse import OptionParser
 
 def blast_file_opener(filename, evalue, outfile):
-    "this is a function to open up a .xml file blast results, the out put of\
-is all the unique hit"
+    """this is a function to open up a .xml file blast
+    results, the out put of\
+    is all the unique hit"""
     evalue = float(evalue)
     result_handle = open(filename)
     output_filename = (outfile)
