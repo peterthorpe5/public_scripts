@@ -1,9 +1,10 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 #
-# metapy.py
+# metapy_sanger_read.py
 #
 # Code for script to identify OTUs from metabarcoding reads.
 # runs multiple clustering programs
+# THIS IS FOR SANGER READS
 #
 # (c) The James Hutton Institute 2016-2017
 # Author: Leighton Pritchard, Peter Thorpe
@@ -18,38 +19,35 @@ import os
 import time
 import traceback
 import subprocess
-import sklearn
 import argparse
-import pysam
 from Bio import SeqIO
 from Bio.SeqRecord import SeqRecord
 
-from pycits.tools import convert_fq_to_fa, NotExecutableError, trim_seq,\
-     dereplicate_name, check_OTU_db_abundance_val,\
-     parse_tab_file_get_clusters, filter_sam_file, reformat_cdhit_clustrs,\
-     reformat_sam_clusters, reformat_swarm_cls, reformat_blast6_clusters
+from pycits.tools import convert_fq_to_fa, NotExecutableError, trim_seq
 
 from pycits.metapy_tools import decompress, compress,\
      last_exception, metapy_trim_seq, covert_chop_read, make_folder,\
      test_reads_exist_and_suffix, database_checker,\
      get_sizes, db_len_assembled_len_ok, stats_on_list_of_sizes,\
-     plot_seq_len_histograms, convert_ab1_to_fq
+     plot_seq_len_histograms
 
-from pycits.Rand_index import pairwise_comparison_Rand
+from pycits.metapy_tools_sanger import convert_ab1_to_fq, \
+     sanger_extra_qc_trim, plot_trace
 
-from pycits import tools, fastqc, trimmomatic, \
-     clean_up, swarm, bowtie_build, bowtie_map,\
-     cd_hit, blast, vsearch, samtools_index, muscle
+from pycits import tools, \
+     clean_up, muscle
 
 if sys.version_info[:2] != (3, 5):
     # e.g. sys.version_info(major=3, minor=5, micro=2,
     # releaselevel='final', serial=0)
     # break the program
-    print ("currently using:", sys.version_info,
-           "  version of python")
-    raise ImportError("Python 3.5 is required for metapy.py")
-    print ("did you activate the virtual environment?")
-    sys.exit(1)
+    if sys.version_info[:2] != (2, 7):
+        print ("currently using:", sys.version_info,
+               "  version of python")
+        raise ImportError("Python 3.5 or 2.7 is required for " +
+                          "metapy_sanger_read.py")
+        print ("did you activate the virtual environment?")
+        sys.exit(1)
 
 VERSION = "Pycits classify OTU using Sanger ab1 files: v0.0.2"
 if "--version" in sys.argv:
@@ -79,7 +77,7 @@ def get_args():
                           action="store",
                           default=os.path.join(file_directory,
                                                "sanger_read",
-                                               "SQ17-024_Ent1F_A01_008.ab1"),
+                                               "SQ16_Example.ab1"),
                           type=str,
                           help="sanger ab1 file")
 
@@ -87,11 +85,36 @@ def get_args():
                           action="store",
                           default=os.path.join(file_directory,
                                                "data",
-                                               "ITS_database_NOT_" +
-                                               "confirmed_correct_last" +
-                                               "14bases_removed.fasta"),
+                                               "Phytophthora_" +
+                                               "GeneBank_18s_entries.fasta"),
                           type=str,
-                          help="right illumina reads")
+                          help="database of seq of to compare against")
+
+    optional.add_argument("-e", "--evalue", dest='evalue',
+                          action="store",
+                          default=1e-50,
+                          type=float,
+                          help="evalue to filter results with")
+
+    optional.add_argument("-m", "--mismatches", dest='mismatches',
+                          action="store",
+                          default="3",
+                          type=str,
+                          help="number of mismatches to filter results with")
+
+    optional.add_argument("--left_trim", dest='left_trim',
+                          action="store",
+                          default=33,
+                          type=int,
+                          help="left_trim for primers or conserved " +
+                          "regions. Default 25 ")
+
+    optional.add_argument("--right_trim", dest='right_trim',
+                          action="store",
+                          default=150,
+                          type=int,
+                          help="right_trim for primers or conserved " +
+                          "regions.  Default 0")
 
     optional.add_argument("--adaptors", dest='adaptors',
                           action="store",
@@ -102,56 +125,12 @@ def get_args():
                           help="adaptors for trimming. Can supply custom " +
                           " file if desired")
 
-    optional.add_argument("--left_trim", dest='left_trim',
-                          action="store",
-                          default=0,
-                          type=int,
-                          help="left_trim for primers or conserved " +
-                          "regions. Default 0 ")
-
-    optional.add_argument("--right_trim", dest='right_trim',
-                          action="store",
-                          default=0,
-                          type=int,
-                          help="right_trim for primers or conserved " +
-                          "regions.  Default 0")
-
     optional.add_argument("--phred", dest='phred',
                           action="store",
                           default="phred33",
                           type=str,
                           help="phred33 is default. " +
                           "Dont change unless sure")
-
-    optional.add_argument("--cdhit_threshold", dest='cdhit_threshold',
-                          action="store",
-                          default="0.99",
-                          type=str,
-                          help="percentage identify for cd-hit " +
-                          "Default -0.99")
-
-    optional.add_argument("--swarm_d_value", dest='swarm_d_value',
-                          action="store",
-                          default=1,
-                          type=int,
-                          help="the difference d value for clustering " +
-                          "in swarm. Default 1")
-
-    optional.add_argument("--blastclust_threshold",
-                          dest='blastclust_threshold',
-                          action="store",
-                          default=0.90,
-                          type=float,
-                          help="the threshold for blastclust clustering " +
-                          " Default -S 0.90")
-
-    optional.add_argument("--vesearch_threshold",
-                          dest='vesearch_threshold',
-                          action="store",
-                          default=0.99,
-                          type=float,
-                          help="the threshold for vsearch clustering " +
-                          " Default 0.99")
 
     optional.add_argument("--verbose", dest="verbose",
                           action="store_true",
@@ -164,63 +143,16 @@ def get_args():
                           help="to align clusters in the output " +
                           "you must have muscle in your PATH as muscle")
 
-    optional.add_argument("--percent_identity",
-                          dest="percent_identity",
-                          action="store_true",
-                          default=False,
-                          help="blast the cluster to return " +
-                          "pairwise percentage identity")
-
-    optional.add_argument("--min_novel_cluster_threshold",
-                          dest="min_novel_cluster_threshold",
-                          type=str,
-                          default="2",
-                          help="min size of a cluster to consider as real " +
-                          "anything smaller than this is ignored")
-
-    optional.add_argument("--blastclust", dest="blastclust",
-                          action="store", default="blastclust",
-                          help="Path to blastclust ... If version already" +
-                          "in PATH then leave blank")
 
     optional.add_argument("--muscle", dest="muscle",
                           action="store", default="muscle",
                           help="Path to MUSCLE... If version already" +
                           "in PATH then leave blank")
 
-    optional.add_argument("--cd-hit-est", dest="cd_hit",
-                          action="store", default="cd-hit-est",
-                          help="Path to cd-hit-est... If version already" +
-                          "in PATH then leave blank")
-
-    optional.add_argument("--bowtie2", dest="bowtie2",
-                          action="store", default="bowtie2",
-                          help="Path to bowtie2... If version already" +
-                          "in PATH then leave blank")
-
-    optional.add_argument("--fastqc", dest="fastqc",
-                          action="store", default="fastqc",
-                          help="Path to fastqc... If version already" +
-                          "in PATH then leave blank")
-
-    optional.add_argument("--vsearch", dest="vsearch",
-                          action="store", default="vsearch",
-                          help="Path to vsearch... If version already" +
-                          "in PATH then leave blank")
 
     optional.add_argument("--trimmomatic", dest="trimmomatic",
                           action="store", default="trimmomatic",
                           help="Path to trimmomatic... If version already" +
-                          "in PATH then leave blank")
-
-    optional.add_argument("--swarm", dest="swarm",
-                          action="store", default="swarm",
-                          help="Path to swarm... If version already" +
-                          "in PATH then leave blank")
-
-    optional.add_argument("--samtools", dest="samtools",
-                          action="store", default="samtools",
-                          help="Path to samtools... If version already" +
                           "in PATH then leave blank")
 
     optional.add_argument("--logfile",
@@ -230,36 +162,11 @@ def get_args():
                           type=str,
                           help="Logfile name")
 
-    optional.add_argument("--pvalue",
-                          dest="pvalue",
-                          action="store",
-                          default=0.0000001,
-                          type=float,
-                          help="pvalue for comparing the database " +
-                          "lengths versus the assembled lengths. At " +
-                          "which point are the different?")
-
-    optional.add_argument("--standard_deviation",
-                          dest="std",
-                          action="store",
-                          default=2,
-                          type=int,
-                          help="standard_deviation threshold for " +
-                          "comparing the assembled size versus the " +
-                          "database sequence sizes. This is to check " +
-                          "database is sensible for the data input")
-
     optional.add_argument("--cleanup",
                           dest="cleanup",
                           action="store_true",
                           default=True,
                           help="deletes most files the program creates ")
-    optional.add_argument("--qc",
-                          dest="qc",
-                          action="store_true",
-                          default=True,
-                          help="performs QC at various stages. " +
-                          "Turn off by: --qc False")
 
     optional.add_argument("-h", "--help",
                           action="help",
@@ -278,7 +185,7 @@ WARNINGS = ""
 args, FILE_DIRECTORY = get_args()
 # setting up some test variables
 THREADS = args.threads
-READ_PREFIX = os.path.split(args.ab1)[-1].split("ab1")[0]
+READ_PREFIX = os.path.split(args.ab1)[-1].split(".ab1")[0]
 PHREDSCORE = args.phred
 PREFIX = READ_PREFIX
 ADAPTERS = args.adaptors
@@ -289,22 +196,12 @@ OUTFILES = [os.path.join(OUTDIR_TRIM, PREFIX + suffix) for suffix in
 
 OTU_DATABASE = args.OTU_DB
 WORKING_DIR = os.getcwd()
-# set this to false for now to not run it
-SEQ_CRUMBS = False
-CDHIT_THRESHOLD = str(args.cdhit_threshold)
-if float(CDHIT_THRESHOLD) < 0.8:
-    sys.exit("\nCDHIT_THRESHOLD must be less than 0.8\n")
-SWARM_D_VALUE = args.swarm_d_value
-if SWARM_D_VALUE > 2:
-    WARNINGS = "swarm threshold is very 'loose' = %d\n" % SWARM_D_VALUE
-VSEARCH_THRESHOLD = args.vesearch_threshold
 
 # left_trim 53 - this should be default??
 LEFT_TRIM = args.left_trim
 RIGHT_TRIM = args.right_trim
 RESULT_FOLDER = PREFIX + "_RESULTS"
 make_folder(RESULT_FOLDER, WORKING_DIR)
-CLUSTER_FILES_FOR_RAND_INDEX = []
 RESULTS = []
 #####################################################################
 
@@ -319,55 +216,20 @@ def check_tools_exist(WARNINGS):
     The warnings are tools that were not executable"""
     tools_list = []
     Warning_out = WARNINGS + "Tool executable warning: "
-    try:
-        vsearch.Vsearch(args.vsearch)
-        tools_list.append("vsearch")
-    except ValueError:
-        Warning_out = Warning_out + "vsearch not in path\n"
+
     try:
         trimmomatic.Trimmomatic(args.trimmomatic)
         tools_list.append("trimmomatic")
     except ValueError:
         Warning_out = Warning_out + "trimmomatic not in path\n"
-    try:
-        swarm.Swarm(args.swarm)
-        tools_list.append("swarm")
-    except ValueError:
-        Warning_out = Warning_out + "swarm not in path\n"
-    try:
-        samtools_index.Samtools_Index(args.samtools)
-        tools_list.append("samtools")
-    except ValueError:
-        Warning_out = Warning_out + "samtools not in path\n"
+
     try:
         muscle.Muscle(args.muscle)
         tools_list.append("muscle")
     except ValueError:
         Warning_out = Warning_out + "muscle not in path\n"
-    try:
-        cd_hit.Cd_hit(args.cd_hit)
-        tools_list.append("cd-hit-est")
-    except ValueError:
-        Warning_out = Warning_out + "cd-hit-est not in path\n"
-    try:
-        bowtie_map.Bowtie2_Map(args.bowtie2)
-        tools_list.append("bowtie2")
-    except ValueError:
-        Warning_out = Warning_out + "bowtie2 not in path\n"
-    try:
-        blast.Blastclust(args.blastclust)
-        tools_list.append("blastclust")
-    except ValueError:
-        Warning_out = Warning_out + "blastclust not in path\n"
     return tools_list, Warning_out
 
-
-# DESIGN: Why are you ignoring all the wrappers? This is hugely
-#         counterproductive!
-# DESIGN: If you write a Python script, and need to call code from another
-#         script, that should be telling you that you need to write
-#         a function in a module, and call it from both scripts. Using
-#         a shell call to Python in your Python script is *very bad*!
 
 #######################################################################
 # Run as script
@@ -397,798 +259,122 @@ if __name__ == '__main__':
     logger.info("Command-line: %s", ' '.join(sys.argv))
     logger.info("Starting testing: %s", time.asctime())
     logger.info("using database: %s", OTU_DATABASE)
-    db_error = False
-    # set up the DB and check if this is formatted correctly
-    # function returns "ok", "ok" if passed.
-    # else it returns:"Duplicate names found", seq_record
-    # or "Duplicate sequence found", seq_record
-    # or "Ill formatted fasta file", seq_record
-    # depending on the problem
-    value1, value2 = database_checker(OTU_DATABASE)
-    if args.qc:
-        if value1 != "ok":
-            logger.warning("DATABASE CHECK FAILED.")
-            logger.warning("Problem was: %s with %s" % (value1,
-                                                        value2))
-            logger.warning("check you database file")
-            db_error = True
-            # os._exit(0)  # should be kill here?
     # Get a list of tools in path!
     logger.info("checking which programs are in PATH")
     tools_list, Warning_out = check_tools_exist(WARNINGS)
     logger.info(Warning_out)
 
-    # convert the ab1 file to fastq
-    convert_ab1_to_fq(args.ab1, READ_PREFIX + ".fastq")
+    # convert the ab1 file to fastq then fasta
+    fq_out = os.path.join(RESULT_FOLDER,  READ_PREFIX + ".fastq")
+    fa_out_all = os.path.join(RESULT_FOLDER,
+                              READ_PREFIX + "all.fasta")
+    fa_out = os.path.join(RESULT_FOLDER,  READ_PREFIX + "fasta")
+    fa_out_QC = os.path.join(RESULT_FOLDER,  READ_PREFIX + "qc.fasta")
+    convert_ab1_to_fq(args.ab1, fq_out)
+    abi_file = os.path.split(args.ab1)[-1]
+    image_file_out = os.path.join(RESULT_FOLDER, abi_file + ".png")
+    plot_trace(args.ab1, image_file_out)
+
+    # tests quality score are !!!! which is Q0
+    fq_quality_values = "Yes"
+    with open(fq_out) as f_handle:
+        line_count = 0
+        for line in f_handle:
+           line_count = line_count + 1
+           if line_count == 4:
+               if line.startswith("!!!!!!!!!!!!!!!"):
+                   logger.warning("Sanger files from JHI have no " +
+                                  "quality values. A chopping " +
+                                  "approach will be used instead. " +
+                                  "This is NOT ideal!!!")
+                   fq_quality_values = "No"
+                   logger.info("converting fq to fa")
+                   convert_fq_to_fa(fq_out, fa_out_all)
+                   # metapy_trim_seq(infname, outfname,
+                   #                 lclip=53, rclip=0, minlen=100)
+                   metapy_trim_seq(fa_out_all, fa_out, args.left_trim,
+                                   args.right_trim)
+                   logger.info("QC trimming")
+                   sanger_extra_qc_trim(fa_out, fa_out_QC)
 
     ####################################################################
     # trimmomatic trm reads
-    if "trimmomatic" in tools_list:
-        TRIM_FOLDER = make_folder(os.path.join(RESULT_FOLDER,
-                                               PREFIX + "_timmomatic"),
-                                  WORKING_DIR)
-        logger.info("starting trimmomatic testing")
-        logger.info("made folder %s", TRIM_FOLDER)
-        trim = trimmomatic.Trimmomatic(args.trimmomatic)
+    if fq_quality_values == "Yes":
+        if "trimmomatic" in tools_list:
+            trim_out = os.path.join(RESULT_FOLDER, "trimmed.fq")
+            trim = " ".join(["trimmomatic",
+                             "SE -phred33",
+                             fq_out,
+                             trim_out,
+                             "ILLUMINACLIP:TruSeq3-SE:2:30:10",
+                             "LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15",
+                             "MINLEN:36"])
+            logger.info("trimmomatic command  = %s " % trim)
+            pipe = subprocess.run(trim, shell=True,
+                                  stdout=subprocess.PIPE,
+                                  stderr=subprocess.PIPE,
+                                  check=True)
 
-        logger.info("Trim reads by quality")
-        parameters = trimmomatic.Parameters(threads=4)
-        steps = trimmomatic.Steps(ILLUMINACLIP="{0}:2:20:10".format(ADAPTERS))
-        results = trim.run(READ_PREFIX + ".fastq",
-                           TRIM_FOLDER, PREFIX,
-                           PHREDSCORE, parameters,
-                           steps)
-        logger.info("Trimming returned:", results)
-        logger.info("Trimming command: %s", results.command)
-        # get these exact file names from the named tuple
-        logger.info("Trimming output: %s", results.stderr)
-        READ_TRIMMED = results.outfileR1unpaired
-
-    #######################################################################
-    # first cat the db and EC, trimmed reads.
-    cat_cmd = ["cat", OTU_DATABASE,
-               READ_TRIMMED,
-               ">",
-               "assembled_fa_and_OTU_db.fasta"]
-    cat_cmd = ' '.join(cat_cmd)
-    logger.info("combine these files %s", cat_cmd)
-    pipe = subprocess.run(cat_cmd, shell=True,
+            convert_fq_to_fa(trim_out, fa_out_QC)
+    ####################################################################
+    # blast, make blast db
+    db_name = os.path.split(OTU_DATABASE)[-1]
+    if not os.path.isfile(OTU_DATABASE + ".nhr"):
+        cmd_blast_db = " ".join(["makeblastdb",
+                                 "-in",
+                                 OTU_DATABASE,
+                                 "-dbtype",
+                                 "nucl"])
+        logger.info("%s make blastdb command", cmd_blast_db)
+        pipe = subprocess.run(cmd_blast_db, shell=True,
+                              stdout=subprocess.PIPE,
+                              stderr=subprocess.PIPE,
+                              check=True)
+    # run the blast
+    xml_out = "%s_vs_%s.xml" % (fa_out_QC.split("qc")[0],
+                                db_name.split(".fa")[0])
+    cmd_blastrun = " ".join(["blastn",
+                             "-db",
+                             OTU_DATABASE,
+                             "-query",
+                             fa_out_QC,
+                             "-evalue",
+                             "1e-30",
+                             "-outfmt 5",
+                             "-out",
+                             xml_out])
+    logger.info("%s make cmd_blastrun command", cmd_blastrun)
+    pipe = subprocess.run(cmd_blastrun, shell=True,
+                          stdout=subprocess.PIPE,
+                          stderr=subprocess.PIPE,
+                          check=True)
+    ####################################################################
+    # parse xml
+    cmd_parse = " ".join(["python",
+                         os.path.join(FILE_DIRECTORY,
+                                      "bin",
+                                      "BLAST_xml_parser.py"),
+                          "-i",
+                          xml_out,
+                          "-o",
+                          "%s_vs_%s.txt" %(fa_out_QC.split(".fa")[0],
+                                           db_name.split(".fa")[0]),
+                          "-e",
+                          str(args.evalue),
+                          "-m",
+                          str(args.mismatches)])
+    logger.info("%s make cmd_parse command", cmd_parse)
+    pipe = subprocess.run(cmd_parse, shell=True,
                           stdout=subprocess.PIPE,
                           stderr=subprocess.PIPE,
                           check=True)
 
-    ####################################################################
-    # deduplicate reads:
-    # use the function in tools dereplicate_name()
-    if "swarm" in tools_list:
-        logger.info("deduplicating reads")
-        # dereplicate_name (infasta, db_out, out_fasta)
-        dereplicate_name(READ_TRIMMED,
-                         "db_old_to_new_names.txt",
-                         ASSEMBLED + "for_swarm.fasta")
-
-    ####################################################################
-    # SWARM testing - assemble
-    if "swarm" in tools_list:
-        if db_error:
-            logger.warning("error was found in your database. " +
-                           "Swarm will most likely fail here. \n" +
-                           "Look at the log file to find error")
-        swarm_folder_name = PREFIX + "_Swarm_d%d" % SWARM_D_VALUE
-        swarm_parameters = swarm.Parameters(t=1, d=SWARM_D_VALUE)
-        SWARM_FOLDER = make_folder(os.path.join(RESULT_FOLDER,
-                                                swarm_folder_name),
-                                   WORKING_DIR)
-        cluster = swarm.Swarm(args.swarm)
-        assembled_fa_reads = ASSEMBLED + "for_swarm.fasta"
-        logger.info("clustering with Swarm")
-        # need to check the OTU database has abundance value
-        # call the function from tools
-        logger.info("OTU was %s", OTU_DATABASE)
-        OTU_DATABASE_SWARM = check_OTU_db_abundance_val(OTU_DATABASE)
-        logger.info("OTU is %s", OTU_DATABASE_SWARM)
-        # need to cat the assembled_fasta with the database
-        cat_cmd = ["cat",
-                   OTU_DATABASE_SWARM,
-                   assembled_fa_reads,
-                   ">",
-                   "assembled_reads_and_OTU_db.fasta"]
-        cat_cmd = ' '.join(cat_cmd)
-        logger.info("combine these files %s" % cat_cmd)
-        pipe = subprocess.run(cat_cmd, shell=True,
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.PIPE,
-                              check=True)
-        cluster_outdata = cluster.run("assembled_reads_and_OTU_db.fasta",
-                                      SWARM_FOLDER,
-                                      swarm_parameters)
-        # use named tuple to get the outpfile name
-        SWARM_OUT = cluster_outdata.outfilename
-
-        logger.info("swarm returned: ",
-                    cluster_outdata)
-        logger.info("swarm command: %s", cluster_outdata.command)
-        logger.info("swarm output: %s", cluster_outdata.stderr)
-
-        ################################################################
-        # recode cluster output
-        logger.info("renaming swarm output")
-        # parse_tab_file_get_clusters(filename1, database, out_file)
-        parse_tab_file_get_clusters(SWARM_OUT,
-                                    OTU_DATABASE_SWARM,
-                                    "db_old_to_new_names.txt",
-                                    SWARM_OUT + "RENAMED_abundance",
-                                    True)
-        parse_tab_file_get_clusters(SWARM_OUT,
-                                    OTU_DATABASE,
-                                    "db_old_to_new_names.txt",
-                                    SWARM_OUT + "RENAMED")
-        # reformat_swarm_cls(swarm, db, db_and_reads, outfile)
-        logger.info("reformatting swarm output for post analysis")
-
-        reformat_swarm_cls(SWARM_OUT + "RENAMED",
-                           OTU_DATABASE,
-                           "assembled_fa_and_OTU_db.fasta",
-                           SWARM_OUT + "for_R",
-                           False)
-        # add this file for Rand index comparison later
-        CLUSTER_FILES_FOR_RAND_INDEX.append(SWARM_OUT + "for_R")
-        cmd_s = ["python",
-                 os.path.join(FILE_DIRECTORY,
-                              "post_analysis",
-                              "get_results_from_cluster_and_novel_" +
-                              "clusterings.py"),
-                 "-f", READ_TRIMMED,
-                 "--all_fasta", "assembled_reads_and_OTU_db.fasta",
-                 "--seq_db", OTU_DATABASE_SWARM,
-                 "--min_novel_cluster_threshold",
-                 args.min_novel_cluster_threshold,
-                 "--left", LEFT_READS,
-                 "--right", RIGHT_READS,
-                 "--Name_of_project",
-                 os.path.join(SWARM_FOLDER, "clusters"),
-                 "--in",
-                 SWARM_OUT + "RENAMED_abundance",
-                 "--difference", str(SWARM_D_VALUE),
-                 "-o",
-                 os.path.join(SWARM_FOLDER,
-                              "%s_swarm_results_%d.RESULTS" %
-                              (PREFIX, SWARM_D_VALUE)),
-                 "--old_to_new", "db_old_to_new_names.txt"]
-        swarm_result = os.path.join(SWARM_FOLDER,
-                                    "%s_swarm_results_%d.RESULTS" %
-                                    (PREFIX, SWARM_D_VALUE))
-        RESULTS.append("swarm\t%s" % swarm_result)
-        cmd_s = ' '.join(cmd_s)
-        if args.align:
-            logger.info("going to align the cluster. Will take ages!")
-            cmd_s = cmd_s + " --align True"
-        if args.percent_identity:
-            cmd_s = cmd_s + " --blast True"
-        logger.info("%s = post analysis command", cmd_s)
-        pipe = subprocess.run(cmd_s, shell=True,
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.PIPE,
-                              check=True)
-        logger.info("graphically represent swarm clusters")
-        plot_cmd = ["python",
-                    os.path.join(FILE_DIRECTORY,
-                                 "bin",
-                                 "draw_bar_chart_of_clusters.py"),
-                    "-i",
-                    SWARM_OUT + "RENAMED_abundance"
-                    " --db",
-                    OTU_DATABASE_SWARM]
-        plot_cmd = ' '.join(plot_cmd)
-        logger.info("plotting command = %s", plot_cmd)
-        pipe = subprocess.run(plot_cmd, shell=True,
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.PIPE,
-                              check=True)
-
-    #####################################################################
-    # run cd hit
-    # first cat the db and EC (if done with ec), trimmed reads.
-    cat_cmd = ["cat", OTU_DATABASE,
-               READ_TRIMMED,
-               ">",
-               "assembled_fa_and_OTU_db.fasta"]
-    cat_cmd = ' '.join(cat_cmd)
-    logger.info("combine these files: %s", cat_cmd)
-    pipe = subprocess.run(cat_cmd, shell=True,
-                          stdout=subprocess.PIPE,
-                          stderr=subprocess.PIPE,
-                          check=True)
-    if "cd-hit-est" in tools_list:
-        cd_folder_name = PREFIX + "_cd_hit_%s" % CDHIT_THRESHOLD
-        CDHIT_FOLDER = make_folder(os.path.join(RESULT_FOLDER,
-                                                cd_folder_name),
-                                   WORKING_DIR)
-        cluster = cd_hit.Cd_hit(args.cd_hit)
-        results = cluster.run("assembled_fa_and_OTU_db.fasta",
-                              THREADS,
-                              CDHIT_THRESHOLD,
-                              CDHIT_FOLDER,
-                              PREFIX)
-        logger.info("cdhit: %s", results.command)
-        logger.info("reformatting cd hit output")
-        reformat_cdhit_clustrs(results.clusters,
-                               results.clusters + "_1_line_per",
-                               results.clusters + "for_R")
-        # add this file for Rand index comparison later
-        CLUSTER_FILES_FOR_RAND_INDEX.append(results.clusters + "for_R")
-        # analyse the clusters
-        cmd_c = ["python",
-                 os.path.join(FILE_DIRECTORY,
-                              "post_analysis",
-                              "get_results_from_cluster_and_novel_" +
-                              "clusterings_cd_hit.py"),
-                 "-f", READ_TRIMMED,
-                 "--all_fasta", "assembled_fa_and_OTU_db.fasta",
-                 "--seq_db", OTU_DATABASE,
-                 "--min_novel_cluster_threshold",
-                 args.min_novel_cluster_threshold,
-                 "--left", LEFT_READS,
-                 "--right", RIGHT_READS,
-                 "--Name_of_project",
-                 os.path.join(CDHIT_FOLDER, "clusters"),
-                 "--in",
-                 results.clusters + "_1_line_per",
-                 "--difference", CDHIT_THRESHOLD,
-                 "-o",
-                 os.path.join(CDHIT_FOLDER,
-                              "%s_cdhit_results_%s.RESULTS" %
-                              (PREFIX, str(CDHIT_THRESHOLD))),
-                 "--old_to_new", "db_old_to_new_names.txt"]
-
-        cd_hit_result = os.path.join(CDHIT_FOLDER,
-                                     "%s_cdhit_results_%s.RESULTS" %
-                                     (PREFIX, str(CDHIT_THRESHOLD)))
-        RESULTS.append("cdhit\t%s" % cd_hit_result)
-
-        cmd_c = ' '.join(cmd_c)
-        if args.align:
-            logger.info("going to align the cluster. Will take ages!")
-            cmd_c = cmd_c + " --align True"
-        if args.percent_identity:
-            cmd_c = cmd_c + " --blast True"
-        logger.info("%s = post analysis command", cmd_c)
-        pipe = subprocess.run(cmd_c, shell=True,
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.PIPE,
-                              check=True)
-        logger.info("graphically represent cdhit clusters")
-        plot_cmd = ["python",
-                    os.path.join(FILE_DIRECTORY,
-                                 "bin",
-                                 "draw_bar_chart_of_clusters.py"),
-                    "-i",
-                    results.clusters + "_1_line_per",
-                    " --db",
-                    OTU_DATABASE]
-        plot_cmd = ' '.join(plot_cmd)
-        logger.info("plotting command = %s", plot_cmd)
-        pipe = subprocess.run(plot_cmd, shell=True,
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.PIPE,
-                              check=True)
-
-    ####################################################################
-    # run vsearch
-    if "vsearch" in tools_list:
-        v_n = PREFIX + "_Vsearch_us_global_%.2f" % VSEARCH_THRESHOLD
-        VSEARCH_FOLDER = make_folder(os.path.join(RESULT_FOLDER,
-                                                  v_n),
-                                     WORKING_DIR)
-        OUTFILE_DEREP = os.path.join(VSEARCH_FOLDER,
-                                     "vsearch_derep.fasta")
-        OUTFILE_CLUSTER_UC = os.path.join(VSEARCH_FOLDER,
-                                          PREFIX + "vsearch_cluster.uc")
-        OUTFILE_CLUSTER_B6 = os.path.join(VSEARCH_FOLDER,
-                                          PREFIX +
-                                          "vsearch_cluster.blast6")
-
-        # PARAMETERS
-        CLUSTER_PARAMS = {'--blast6out': OUTFILE_CLUSTER_B6,
-                          '--id': VSEARCH_THRESHOLD,
-                          '--db': OTU_DATABASE,
-                          '--threads': THREADS}
-
-        vsearch_exe = vsearch.Vsearch(args.vsearch)
-        Result_derep = vsearch_exe.run('--derep_fulllength',
-                                       READ_TRIMMED,
-                                       ASSEMBLED + "drep.vsearch.fasta")
-        logger.info("vsearch derep: %s", Result_derep.command)
-        logger.info("vsearch clustering")
-        v_cluster = vsearch_exe.run('--usearch_global',
-                                    READ_TRIMMED,
-                                    OUTFILE_CLUSTER_UC,
-                                    CLUSTER_PARAMS)
-        logger.info("vsearch cluster: %s", v_cluster.command)
-        reformat_blast6_clusters(v_cluster.outfile_b6,
-                                 "assembled_fa_and_OTU_db.fasta",
-                                 v_cluster.outfile_b6 + "for_R")
-        # add this file for Rand index comparison later
-        CLUSTER_FILES_FOR_RAND_INDEX.append(v_cluster.outfile_b6 + "for_R")
-
-        cmd_v = ["python",
-                 os.path.join(FILE_DIRECTORY,
-                              "post_analysis",
-                              "get_results_from_cluster_and_novel_" +
-                              "clusterings_cd_hit.py"),
-                 "-f", READ_TRIMMED,
-                 "--all_fasta", "assembled_fa_and_OTU_db.fasta",
-                 "--seq_db", OTU_DATABASE,
-                 "--min_novel_cluster_threshold",
-                 args.min_novel_cluster_threshold,
-                 "--left", LEFT_READS,
-                 "--right", RIGHT_READS,
-                 "--Name_of_project",
-                 os.path.join(VSEARCH_FOLDER, "clusters"),
-                 "--in",
-                 v_cluster.outfile_b6 + "for_R_1_line",
-                 "--difference", str(VSEARCH_THRESHOLD),
-                 "-o",
-                 os.path.join(VSEARCH_FOLDER,
-                              "%s_vsearch_results_%s.RESULTS" %
-                              (PREFIX, str(VSEARCH_THRESHOLD))),
-                 "--old_to_new", "db_old_to_new_names.txt"]
-
-        v_result = os.path.join(VSEARCH_FOLDER,
-                                "%s_vsearch_results_%s.RESULTS" %
-                                (PREFIX, str(VSEARCH_THRESHOLD)))
-        RESULTS.append("vsearch\t%s" % v_result)
-
-        cmd_v = ' '.join(cmd_v)
-        if args.align:
-            logger.info("going to align the cluster. Will take ages!")
-            cmd_v = cmd_v + " --align True"
-        if args.percent_identity:
-            cmd_v = cmd_v + " --blast True"
-        logger.info("%s = post analysis command", cmd_v)
-        pipe = subprocess.run(cmd_v, shell=True,
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.PIPE,
-                              check=True)
-        logger.info("graphically represent vsearch default clusters")
-        plot_cmd = ["python",
-                    os.path.join(FILE_DIRECTORY,
-                                 "bin",
-                                 "draw_bar_chart_of_clusters.py"),
-                    "-i",
-                    v_cluster.outfile_b6 + "for_R_1_line",
-                    " --db",
-                    OTU_DATABASE]
-        plot_cmd = ' '.join(plot_cmd)
-        logger.info("plotting command = %s", plot_cmd)
-        pipe = subprocess.run(plot_cmd, shell=True,
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.PIPE,
-                              check=True)
-
-    ###################################################################
-    # deduplicate reads:
-    # use the function in tools dereplicate_name()
-    # run vsearch
-    if "vsearch" in tools_list:
-        # PARAMETERS
-        vn2 = PREFIX + "_Vsearch_clustfast_%.2f" % VSEARCH_THRESHOLD
-        VSEARCH_FOLDER = make_folder(os.path.join(RESULT_FOLDER,
-                                                  vn2),
-                                     WORKING_DIR)
-        OUTFILE_CLUSTER_FAST_UC = os.path.join(VSEARCH_FOLDER,
-                                               PREFIX +
-                                               "vsearch_cluster_fast.uc")
-        OUTFILE_CLUSTER_FAST_B6 = os.path.join(VSEARCH_FOLDER,
-                                               PREFIX +
-                                               "vsearch_cluster_fast." +
-                                               "blast6")
-        OUTFILE_CLUSTER_FAST_MSA = os.path.join(VSEARCH_FOLDER,
-                                                PREFIX +
-                                                "vsearch_cluster_fast" +
-                                                "_msa.fasta")
-        OUTFILE_CLUSTER_FAST_CENTROIDS = os.path.join(VSEARCH_FOLDER,
-                                                      PREFIX +
-                                                      "vsearch_cluster" +
-                                                      "_fast_centroids." +
-                                                      "fasta")
-        OUTFILE_CLUSTER_FAST_CONSENSUS = os.path.join(VSEARCH_FOLDER,
-                                                      PREFIX +
-                                                      "vsearch_cluster" +
-                                                      "_fast_consensus." +
-                                                      "fasta")
-        CLUSTER_FAST_PARAMS = {"--id": VSEARCH_THRESHOLD,
-                               "--centroids": OUTFILE_CLUSTER_FAST_CENTROIDS,
-                               "--msaout": OUTFILE_CLUSTER_FAST_MSA,
-                               "--consout": OUTFILE_CLUSTER_FAST_CONSENSUS,
-                               "--db": OTU_DATABASE,
-                               "--threads": THREADS,
-                               "--blast6out": OUTFILE_CLUSTER_FAST_B6}
-        logger.info("deduplicating reads")
-        # derep the database for vsearch
-        db_derep = os.path.join(VSEARCH_FOLDER, PREFIX + "for_vsearch.fasta")
-        derep_db = vsearch_exe.run('--derep_fulllength',
-                                   OTU_DATABASE,
-                                   db_derep)
-        # derep the name, True means it is for vsearch
-        dereplicate_name(READ_TRIMMED,
-                         "db_old_to_new_names_vsearch.txt",
-                         ASSEMBLED + "for_vsearch.fasta",
-                         True)
-        # cat the derep reads and derep db together
-        cat_cmd = ["cat", derep_db.outfilename,
-                   ASSEMBLED + "for_vsearch.fasta",
-                   ">",
-                   "assembled_fa_and_OTU_db_vesearch.fasta"]
-        cat_cmd = ' '.join(cat_cmd)
-        logger.info("merge these files %s", cat_cmd)
-        pipe = subprocess.run(cat_cmd, shell=True,
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.PIPE,
-                              check=True)
-        # use vsearch to get concensus and aligned clusters
-        fast_clust = vsearch_exe.run("--cluster_fast",
-                                     "assembled_fa_and_OTU_db_vesearch.fasta",
-                                     OUTFILE_CLUSTER_FAST_UC,
-                                     CLUSTER_FAST_PARAMS)
-
-        reformat_blast6_clusters(fast_clust.outfile_b6,
-                                 "assembled_fa_and_OTU_db.fasta",
-                                 fast_clust.outfile_b6 + "for_R")
-        logger.info("vsearch cluster: %s", fast_clust.command)
-        CLUSTER_FILES_FOR_RAND_INDEX.append(fast_clust.outfile_b6 + "for_R")
-
-        cmd_F = ["python",
-                 os.path.join(FILE_DIRECTORY,
-                              "post_analysis",
-                              "get_results_from_cluster_and_novel_" +
-                              "clusterings_cd_hit.py"),
-                 "-f", READ_TRIMMED,
-                 "--all_fasta", "assembled_fa_and_OTU_db.fasta",
-                 "--seq_db", OTU_DATABASE,
-                 "--min_novel_cluster_threshold",
-                 args.min_novel_cluster_threshold,
-                 "--left", LEFT_READS,
-                 "--right", RIGHT_READS,
-                 "--Name_of_project",
-                 os.path.join(VSEARCH_FOLDER, "clusters_clusterfast"),
-                 "--in",
-                 fast_clust.outfile_b6 + "for_R_1_line",
-                 "--difference", str(VSEARCH_THRESHOLD),
-                 "-o",
-                 os.path.join(VSEARCH_FOLDER,
-                              "%s_vserach_clu_fasta_results_%s.RESULTS" %
-                              (PREFIX, str(VSEARCH_THRESHOLD))),
-                 "--old_to_new",
-                 "db_old_to_new_names.txt"]
-
-        v_f_result = os.path.join(VSEARCH_FOLDER,
-                                  "%s_vserach_clu_fasta_results_%s.RESULTS" %
-                                  (PREFIX, str(VSEARCH_THRESHOLD)))
-
-        RESULTS.append("vse_faclus\t%s" % v_f_result)
-
-        cmd_F = ' '.join(cmd_F)
-        if args.align:
-            logger.info("going to align the cluster. Will take ages!")
-            cmd_F = cmd_F + " --align True"
-        if args.percent_identity:
-            cmd_F = cmd_F + " --blast True"
-        logger.info("%s = post analysis command", cmd_v)
-        pipe = subprocess.run(cmd_F, shell=True,
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.PIPE,
-                              check=True)
-        logger.info("graphically represent vsearch clu_fasta clusters")
-        plot_cmd = ["python",
-                    os.path.join(FILE_DIRECTORY,
-                                 "bin",
-                                 "draw_bar_chart_of_clusters.py"),
-                    "-i",
-                    fast_clust.outfile_b6 + "for_R_1_line",
-                    " --db",
-                    OTU_DATABASE]
-        plot_cmd = ' '.join(plot_cmd)
-        logger.info("plotting command = %s", plot_cmd)
-        pipe = subprocess.run(plot_cmd, shell=True,
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.PIPE,
-                              check=True)
-
-    #####################################################################
-    # MAP THE READS WITH BOWTIE
-    if "bowtie2" in tools_list:
-        BOWTIE_FOLDER = make_folder(os.path.join(RESULT_FOLDER,
-                                                 PREFIX + "_bowtie"),
-                                    WORKING_DIR)
-        index = bowtie_build.Bowtie2_Build("bowtie2-build")
-        results = index.run(OTU_DATABASE, "OTU")
-        logger.info("bowtie build %s", results.command)
-        mapper = bowtie_map.Bowtie2_Map("bowtie2")
-        otu = os.path.split(OTU_DATABASE)[-1]
-        bowtie_out = os.path.join(BOWTIE_FOLDER,
-                                  "_vs_".join([PREFIX,
-                                               otu.split(".f")[0]]) + ".sam")
-        # e.g.  result = bt2_map.run(READS, FA_INDEX,
-        #  outfilename, THREADS, fasta=True)
-        results = mapper.run(READ_TRIMMED,
-                             "OTU",
-                             bowtie_out,
-                             THREADS,
-                             fasta=True)
-        logger.info("bowtie map %s", results.command)
-        logger.info("pysam to filter the mapping")
-        samfile = pysam.AlignmentFile(results.sam, "r")
-        # call the function from tools
-        # this return matches with zero mismatches, but not to be interpreted
-        # as a perfect match?!?!
-        cig_list, matches = filter_sam_file(results.sam,
-                                            (os.path.join(BOWTIE_FOLDER,
-                                                          "pysam_perfect_" +
-                                                          "cigar.txt")))
-        logger.info("pysam found %d perfect(?) cigar MATCHES" % len(cig_list))
-        # using grep to get perfect matches:
-        grep_cmd = ' '.join(['cat',
-                             results.sam,
-                             '|',
-                             'grep',
-                             '"AS:i:0"',
-                             '>',
-                             results.sam + "perfect_map"])
-        logger.info("grep for perfect reads %s" % grep_cmd)
-        pipe = subprocess.run(grep_cmd, shell=True,
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.PIPE,
-                              check=True)
-        # sort these and make them unique.
-        # for info only, this next command is not needed
-        grep_cmd = ' '.join(['cat',
-                             results.sam,
-                             '|',
-                             'grep',
-                             '"AS:i:0"',
-                             '|',
-                             'cut -f3',
-                             '|',
-                             'sort'
-                             '|',
-                             'uniq'
-                             '>',
-                             results.sam + "perfect_map_name"])
-        logger.info("grep for perfect reads %s" % grep_cmd)
-        pipe = subprocess.run(grep_cmd, shell=True,
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.PIPE,
-                              check=True)
-        perfect_count = 0
-        with open(results.sam + "perfect_map_name") as perfect_names:
-            data = perfect_names.read().split("\n")
-            for name in data:
-                perfect_count = perfect_count + 1
-                logger.info("%s = perfect match", name)
-        logger.info("%d = number perfect match", perfect_count)
-        reformat_sam_clusters(results.sam + "perfect_map",
-                              "assembled_fa_and_OTU_db.fasta",
-                              results.sam +
-                              "for_R")
-        # add this file for Rand index comparison later
-        CLUSTER_FILES_FOR_RAND_INDEX.append(results.sam + "for_R")
-
-        cmd_b = ["python",
-                 os.path.join(FILE_DIRECTORY,
-                              "post_analysis",
-                              "get_results_from_cluster_and_novel_" +
-                              "clusterings_cd_hit.py"),
-                 "-f", READ_TRIMMED,
-                 "--all_fasta", "assembled_fa_and_OTU_db.fasta",
-                 "--seq_db", OTU_DATABASE,
-                 "--min_novel_cluster_threshold",
-                 args.min_novel_cluster_threshold,
-                 "--left", LEFT_READS,
-                 "--right", RIGHT_READS,
-                 "--Name_of_project",
-                 os.path.join(BOWTIE_FOLDER, "clusters_perfect_map"),
-                 "--in",
-                 results.sam + "for_R_1_line",
-                 "--difference", "perfect_map",
-                 "-o",
-                 os.path.join(BOWTIE_FOLDER,
-                              "bowtie_perfect.RESULTS"),
-                 "--old_to_new", "db_old_to_new_names.txt"]
-        bow_result = os.path.join(BOWTIE_FOLDER,
-                                  "bowtie_perfect.RESULTS")
-
-        RESULTS.append("bowtie\t%s" % bow_result)
-
-        cmd_b = ' '.join(cmd_b)
-        logger.info("%s = post analysis command" % cmd_b)
-        pipe = subprocess.run(cmd_b, shell=True,
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.PIPE,
-                              check=True)
-        logger.info("graphically represent bowtie clusters")
-        plot_cmd = ["python",
-                    os.path.join(FILE_DIRECTORY,
-                                 "bin",
-                                 "draw_bar_chart_of_clusters.py"),
-                    "-i",
-                    results.sam + "for_R_1_line",
-                    " --db",
-                    OTU_DATABASE]
-        plot_cmd = ' '.join(plot_cmd)
-        logger.info("plotting command = %s", plot_cmd)
-        pipe = subprocess.run(plot_cmd, shell=True,
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.PIPE,
-                              check=True)
-
-    #####################################################################
-    # run BLASTCLUST
-    if "blastclust" in tools_list:
-        blastclust_threshold = args.blastclust_threshold  # for now
-        bc = PREFIX + "_blastclust_%s" % str(blastclust_threshold)
-        BLASTCL_FOLDER = make_folder(os.path.join(RESULT_FOLDER,
-                                                  bc),
-                                     WORKING_DIR)
-        logger.info("running blastclust. This is slow")
-        bc = blast.Blastclust("blastclust")
-        result = bc.run("assembled_fa_and_OTU_db.fasta", BLASTCL_FOLDER,
-                        THREADS)
-
-        # reformat_swarm_cls(swarm, db, db_and_reads, outfile)
-        # use this to reformat the blastclust clusters
-        result_file_r = (os.path.join(BLASTCL_FOLDER,
-                                      "assembled_fa_and_OTU_db.fasta" +
-                                      ".blastclust99.forR"))
-        reformat_swarm_cls(os.path.join(BLASTCL_FOLDER,
-                                        "assembled_fa_and_OTU_db.fasta" +
-                                        ".blastclust99.lst"),
-                           OTU_DATABASE,
-                           "assembled_fa_and_OTU_db.fasta",
-                           result_file_r,
-                           False)
-        # add this file for Rand index comparison later
-        CLUSTER_FILES_FOR_RAND_INDEX.append(result_file_r)
-        logger.info("graphically represent swarm clusters")
-        plot_cmd = ["python",
-                    os.path.join(FILE_DIRECTORY,
-                                 "bin",
-                                 "draw_bar_chart_of_clusters.py"),
-                    "-i",
-                    result.outfilename,
-                    " --db",
-                    OTU_DATABASE]
-        plot_cmd = ' '.join(plot_cmd)
-        logger.info("plotting command = %s", plot_cmd)
-        pipe = subprocess.run(plot_cmd, shell=True,
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.PIPE,
-                              check=True)
-        cmd_b = ["python",
-                 os.path.join(FILE_DIRECTORY,
-                              "post_analysis",
-                              "get_results_from_cluster_and_novel_" +
-                              "clusterings_cd_hit.py"),
-                 "-f", READ_TRIMMED,
-                 "--all_fasta", "assembled_fa_and_OTU_db.fasta",
-                 "--seq_db", OTU_DATABASE,
-                 "--min_novel_cluster_threshold",
-                 args.min_novel_cluster_threshold,
-                 "--left", LEFT_READS,
-                 "--right", RIGHT_READS,
-                 "--Name_of_project",
-                 os.path.join(BLASTCL_FOLDER, "clusters_%s" %
-                              str(blastclust_threshold)),
-                 "--in",
-                 result.outfilename,
-                 "--difference", str(blastclust_threshold),
-                 "-o",
-                 os.path.join(BLASTCL_FOLDER,
-                              "%s_blastclust_results_%s.RESULTS" %
-                              (PREFIX, str(blastclust_threshold))),
-                 "--old_to_new", "db_old_to_new_names.txt"]
-
-        bc_result = os.path.join(BLASTCL_FOLDER,
-                                 "%s_blastclust_results_%s.RESULTS" %
-                                 (PREFIX, str(blastclust_threshold)))
-        RESULTS.append("blastclust\t%s" % bc_result)
-
-        cmd_b = ' '.join(cmd_b)
-        if args.align:
-            logger.info("going to align the cluster. Will take ages!")
-            cmd_b = cmd_b + " --align True"
-        if args.percent_identity:
-            cmd_b = cmd_b + " --blast True"
-        logger.info("%s = post analysis command", cmd_b)
-        pipe = subprocess.run(cmd_b, shell=True,
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.PIPE,
-                              check=True)
-    try:
-        Rand_results = pairwise_comparison_Rand(CLUSTER_FILES_FOR_RAND_INDEX,
-                                                os.path.join(RESULT_FOLDER,
-                                                             PREFIX +
-                                                             "_Rand_compar" +
-                                                             "ison.txt"))
-        for comp in result:
-            logger.info("Rand comparison: %s", comp)
-    except ValueError:
-        logger.warning("Rand comparison failed.")
-    # compress the reads to save space
-    compress(LEFT_READS)
-    compress(RIGHT_READS)
-    logger.info("compressed the reads")
-
-    #####################################################################
-    # compare the results files
-    compare_prog = os.path.join(FILE_DIRECTORY,
-                                "bin",
-                                "compare_results.py")
-    blastclust_threshold = str(blastclust_threshold)
-    comp = "%s_RESULTS_cd_%s_sw_%s_BC_%s_V_%s.txt" % (PREFIX,
-                                                      CDHIT_THRESHOLD,
-                                                      str(SWARM_D_VALUE),
-                                                      blastclust_threshold,
-                                                      str(VSEARCH_THRESHOLD))
-    # write the result file name to file. Easier to get these for the
-    # next part - compare_prog
-    f_out = open("temp.txt", "w")
-    for result in RESULTS:
-        f_out.write(result + "\n")
-    f_out.close()
-    cmd_r = " ".join(["python",
-                      compare_prog,
-                      " -o",
-                      os.path.join(RESULT_FOLDER, comp),
-                      " --in_list",
-                      "temp.txt"])
-    logger.info("%s = comparison comment", cmd_r)
-    try:
-        pipe = subprocess.run(cmd_r, shell=True,
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.PIPE,
-                              check=True)
-    except ValueError:
-        logger.warning("overall comparison failed.")
     if args.cleanup:
-        # remove loads of files for the user
-        # as previously having other files confused people
-        remove_list = [ASSEMBLED + "for_swarm.fasta",
-                       READ_TRIMMED,
-                       OTU_DATABASE_SWARM,
-                       SWARM_OUT,
-                       "temp.fasta",
-                       "temp.txt",
-                       "assembled_fa_and_OTU_db.fasta",
-                       "assembled_reads_and_OTU_db.fasta",
-                       "db_old_to_new_names.txt",
-                       "db_old_to_new_names_vsearch.txt",
-                       "assembled_fa_and_OTU_db_vesearch.fasta",
-                       db_derep,
-                       (os.path.join(TRIM_FOLDER,
-                                     PREFIX + "_unpaired_R1.fq.gz")),
-                       (os.path.join(TRIM_FOLDER,
-                                     PREFIX + "_unpaired_R2.fq.gz")),
-                       ASSEMBLED + "drep.vsearch.fasta",
-                       "OTU.1.bt2",
-                       "OTU.2.bt2",
-                       "OTU.3.bt2",
-                       "OTU.4.bt2",
-                       "OTU.rev.1.bt2",
-                       "OTU.rev.2.bt2",
-                       "error.log",
-                       results_pear.outfilediscarded,
-                       results_pear.outfileunassmbledfwd,
-                       results_pear.outfileunassembledrev]
-
+        remove_list = [fq_out, fa_out_all, fa_out, xml_out]
         for unwanted in remove_list:
             try:
                 os.remove(unwanted)
                 logger.info("deleting: %s", unwanted)
             except:
                 logger.info("could not find %s", unwanted)
-    shutil.rmtree(PREFIX)
-    if ERROR_CORRECTION and args.cleanup:
-        # this folders will only be there is EC was run
-        shutil.rmtree(os.path.join(EC_FOLDER))
     logger.info("Pipeline complete: %s", time.asctime())

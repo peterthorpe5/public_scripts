@@ -70,14 +70,6 @@ def test_reads_exist_and_suffix(reads):
         sys.exit(error + ". Check your input file path and name\n")
 
 
-def convert_ab1_to_fq(in_file, out_file):
-    """ Function to convert ab1 sanger seq file
-    and convert to  fq
-    requires biopython
-    """
-    SeqIO.convert(in_file, "abi", out_file, "fastq")
-
-
 def average_standard_dev(lengths):
     """function to return the avaerage and stadard deviation
     for a list of number.
