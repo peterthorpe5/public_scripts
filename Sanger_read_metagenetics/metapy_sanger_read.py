@@ -35,7 +35,7 @@ from pycits.metapy_tools_sanger import convert_ab1_to_fq, \
      sanger_extra_qc_trim, plot_trace
 
 from pycits import tools, \
-     clean_up, muscle
+     clean_up, muscle, trimmomatic
 
 if sys.version_info[:2] != (3, 5):
     # e.g. sys.version_info(major=3, minor=5, micro=2,
@@ -307,7 +307,7 @@ if __name__ == '__main__':
                              fq_out,
                              trim_out,
                              "ILLUMINACLIP:TruSeq3-SE:2:30:10",
-                             "LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15",
+                             "LEADING:3 TRAILING:3 SLIDINGWINDOW:4:5",
                              "MINLEN:36"])
             logger.info("trimmomatic command  = %s " % trim)
             pipe = subprocess.run(trim, shell=True,
@@ -370,7 +370,8 @@ if __name__ == '__main__':
                           check=True)
 
     if args.cleanup:
-        remove_list = [fq_out, fa_out_all, fa_out, xml_out]
+        remove_list = [fq_out, fa_out_all, fa_out, xml_out,
+                       trim_out]
         for unwanted in remove_list:
             try:
                 os.remove(unwanted)

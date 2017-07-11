@@ -24,7 +24,7 @@ for filename in os.listdir(".") :
                                         "metapy_sanger_read.py"),
                            "-a",
                            filename])
-    print("running command %s", python_cmd)
+    print("running command: %s" % python_cmd)
     pipe = subprocess.run(python_cmd, shell=True,
                           stdout=subprocess.PIPE,
                           stderr=subprocess.PIPE,
