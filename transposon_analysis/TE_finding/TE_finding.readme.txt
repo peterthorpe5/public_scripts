@@ -1,6 +1,10 @@
 
 #README
 
+PLEASE NOTE: this is a modified pipeline from https://github.com/HullUni-bioinformatics/TE-search-tools
+This pipeline was not written by me. The function and pipiline script was modified for my needs.
+
+
 # TE discovery in a genome assembly
 
 ## Overview
