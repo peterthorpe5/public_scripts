@@ -165,7 +165,7 @@ def get_args():
     optional.add_argument("--cleanup",
                           dest="cleanup",
                           action="store_true",
-                          default=True,
+                          default="yes",
                           help="deletes most files the program creates ")
 
     optional.add_argument("-h", "--help",
@@ -369,13 +369,13 @@ if __name__ == '__main__':
                           stderr=subprocess.PIPE,
                           check=True)
 
-    if args.cleanup:
+    if args.cleanup == "yes":
         remove_list = [fq_out, fa_out_all, fa_out, xml_out,
                        trim_out]
         for unwanted in remove_list:
             try:
                 os.remove(unwanted)
-                logger.info("deleting: %s", unwanted)
+                logger.warning("deleting: %s", unwanted)
             except:
                 logger.info("could not find %s", unwanted)
     logger.info("Pipeline complete: %s", time.asctime())

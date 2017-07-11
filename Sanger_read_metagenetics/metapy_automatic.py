@@ -27,8 +27,7 @@ for filename in os.listdir(".") :
     print("running command: %s" % python_cmd)
     pipe = subprocess.run(python_cmd, shell=True,
                           stdout=subprocess.PIPE,
-                          stderr=subprocess.PIPE,
-                          check=True)
-    print("finished %s", filename)
+                          stderr=subprocess.PIPE)
+    print("finished %s" % filename)
 
 print("finsihed")
