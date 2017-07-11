@@ -49,7 +49,7 @@ if sys.version_info[:2] != (3, 5):
         print ("did you activate the virtual environment?")
         sys.exit(1)
 
-VERSION = "Pycits classify OTU using Sanger ab1 files: v0.0.2"
+VERSION = "Pycits classify OTU using Sanger ab1 files: v1.0.0"
 if "--version" in sys.argv:
     print(VERSION)
     sys.exit(1)
