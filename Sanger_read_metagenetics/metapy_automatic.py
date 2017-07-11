@@ -26,11 +26,11 @@ if sys.version_info[:2] != (3, 5):
         print ("did you activate the virtual environment?")
         sys.exit(1)
 
-VERSION = "Pycits/ metapy classify OTU using Sanger ab1 files: v1.0.0. " +
-"This script will run the method of all .abi or .ab1 files in a folder. " +
-"This come with a Phytophora database, which are all the enteries in " +
-"NCBI as of Jan 2017. If you want your own database you will have to run " +
-"metapy_sanger_read.py -d your_datase.fasta"
+VERSION = """Pycits/ metapy classify OTU using Sanger ab1 files: v1.0.0.
+This script will run the method of all .abi or .ab1 files in a folder. 
+This come with a Phytophora database, which are all the enteries in 
+NCBI as of Jan 2017. If you want your own database you will have to run 
+\nmetapy_sanger_read.py -d your_datase.fasta\n"""
 if "--version" in sys.argv:
     print(VERSION)
     sys.exit(1)
