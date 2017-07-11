@@ -30,4 +30,19 @@ for filename in os.listdir(".") :
                           stderr=subprocess.PIPE)
     print("finished %s" % filename)
 
+for filename in os.listdir(".") :
+    if not filename.endswith(".abi"):
+        continue
+    python_cmd = " ".join([os.path.join("$HOME",
+                                        "public_scripts",
+                                        "Sanger_read_metagenetics",
+                                        "metapy_sanger_read.py"),
+                           "-a",
+                           filename])
+    print("running command: %s" % python_cmd)
+    pipe = subprocess.run(python_cmd, shell=True,
+                          stdout=subprocess.PIPE,
+                          stderr=subprocess.PIPE)
+    print("finished %s" % filename)
+
 print("finsihed")
