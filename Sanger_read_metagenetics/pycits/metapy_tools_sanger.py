@@ -53,7 +53,7 @@ def convert_ab1_to_fq(in_file, out_file):
     SeqIO.convert(in_file, "abi", out_file, "fastq")
 
 
-def sanger_extra_qc_trim(infname, outfname, NNN=4):
+def sanger_extra_qc_trim(infname, outfname, NNN=3):
     """splits to sequence up at 3 NNNs in a row,
     to remove extra low quality regions
     """
@@ -61,19 +61,24 @@ def sanger_extra_qc_trim(infname, outfname, NNN=4):
     bad = "N" * NNN
     for seq_record in SeqIO.parse(infname, "fasta"):
         seq = str(seq_record.seq)
-        print(seq_record)
         try:
             upper_limit = seq.index(bad)
-            # print("OLD = ", seq_record.seq)
-            seq_record.seq = seq[:upper_limit]
-            # print("NEW = ", seq_record.seq)
+            print("OLD = ", seq_record.seq)
+            seq = seq[:upper_limit]
+            lower_limit = seq.index("N")
+            # remove any early NN regions
+            if lower_limit < 15:
+                seq = seq[lower_limit + 1:]  # +1 computer counting
+                lower_limit = seq.index("N")
+                if lower_limit < 15:
+                    seq = seq[lower_limit + 1:]
+            print("NEW = ", seq)
         except ValueError:
             # no NNN found
             print("NO NNNNs found")
-            seq = seq_record.seq
         seq_record = SeqRecord(Seq(seq),
-                   id=seq_record.id, name="",
-                   description="")
+                     id=seq_record.id, name="",
+                     description="")
         SeqIO.write(seq_record, outfname, "fasta")
 
 def plot_trace(infname, outfile):
