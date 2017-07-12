@@ -67,11 +67,15 @@ def sanger_extra_qc_trim(infname, outfname, NNN=3):
             seq = seq[:upper_limit]
             lower_limit = seq.index("N")
             # remove any early NN regions
+            # messy, should update with a while loop!!
             if lower_limit < 15:
                 seq = seq[lower_limit + 1:]  # +1 computer counting
                 lower_limit = seq.index("N")
                 if lower_limit < 15:
                     seq = seq[lower_limit + 1:]
+                    lower_limit = seq.index("N")
+                    if lower_limit < 15:
+                        seq = seq[lower_limit + 1:]
             print("NEW = ", seq)
         except ValueError:
             # no NNN found
