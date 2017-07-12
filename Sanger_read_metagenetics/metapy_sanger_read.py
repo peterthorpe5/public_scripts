@@ -85,8 +85,9 @@ def get_args():
                           action="store",
                           default=os.path.join(file_directory,
                                                "data",
-                                               "Phytophthora_" +
-                                               "GeneBank_18s_entries.fasta"),
+                                               "Phytophthora_Pythium" +
+                                               "_18S_GenBank_nt_" +
+                                               "20170711.fasta"),
                           type=str,
                           help="database of seq of to compare against")
 
@@ -268,7 +269,7 @@ if __name__ == '__main__':
     fq_out = os.path.join(RESULT_FOLDER,  READ_PREFIX + ".fastq")
     fa_out_all = os.path.join(RESULT_FOLDER,
                               READ_PREFIX + "all.fasta")
-    fa_out = os.path.join(RESULT_FOLDER,  READ_PREFIX + "fasta")
+    fa_out = os.path.join(RESULT_FOLDER,  READ_PREFIX + ".fasta")
     fa_out_QC = os.path.join(RESULT_FOLDER,  READ_PREFIX + "qc.fasta")
     convert_ab1_to_fq(args.ab1, fq_out)
     abi_file = os.path.split(args.ab1)[-1]
@@ -295,7 +296,7 @@ if __name__ == '__main__':
                    metapy_trim_seq(fa_out_all, fa_out, args.left_trim,
                                    args.right_trim)
                    logger.info("QC trimming")
-                   sanger_extra_qc_trim(fa_out, fa_out_QC)
+                   sanger_extra_qc_trim(fa_out_all, fa_out_QC)
 
     ####################################################################
     # trimmomatic trm reads
@@ -316,6 +317,8 @@ if __name__ == '__main__':
                                   check=True)
 
             convert_fq_to_fa(trim_out, fa_out_QC)
+            os.remove(trim_out)
+            logger.warning("deleting: %s", trim_out)
     ####################################################################
     # blast, make blast db
     db_name = os.path.split(OTU_DATABASE)[-1]
@@ -330,6 +333,8 @@ if __name__ == '__main__':
                               stdout=subprocess.PIPE,
                               stderr=subprocess.PIPE,
                               check=True)
+        logger.info("BLAST makde database stdout: %s", pipe.stdout)
+        logger.info("BLAST makde database: %s", pipe.stderr)
     # run the blast
     xml_out = "%s_vs_%s.xml" % (fa_out_QC.split("qc")[0],
                                 db_name.split(".fa")[0])
@@ -348,12 +353,14 @@ if __name__ == '__main__':
                           stdout=subprocess.PIPE,
                           stderr=subprocess.PIPE,
                           check=True)
+    logger.info("BLAST stdout: %s", pipe.stdout)
+    logger.info("BLAST stderr: %s", pipe.stderr)
     ####################################################################
     # parse xml
     cmd_parse = " ".join(["python",
-                         os.path.join(FILE_DIRECTORY,
-                                      "bin",
-                                      "BLAST_xml_parser.py"),
+                          os.path.join(FILE_DIRECTORY,
+                                       "bin",
+                                       "BLAST_xml_parser.py"),
                           "-i",
                           xml_out,
                           "-o",
@@ -364,18 +371,18 @@ if __name__ == '__main__':
                           "-m",
                           str(args.mismatches)])
     logger.info("%s make cmd_parse command", cmd_parse)
+    #  removed check-True
     pipe = subprocess.run(cmd_parse, shell=True,
                           stdout=subprocess.PIPE,
-                          stderr=subprocess.PIPE,
-                          check=True)
+                          stderr=subprocess.PIPE)
+    logger.info("XML parser stdout: %s", pipe.stdout)
+    logger.info("XML parser stderr: %s", pipe.stderr)
 
-    if args.cleanup == "yes":
-        remove_list = [fq_out, fa_out_all, fa_out, xml_out,
-                       trim_out]
-        for unwanted in remove_list:
-            try:
-                os.remove(unwanted)
-                logger.warning("deleting: %s", unwanted)
-            except:
-                logger.info("could not find %s", unwanted)
+    remove_list = [fq_out, fa_out_all, fa_out, xml_out]
+    for unwanted in remove_list:
+        try:
+            os.remove(unwanted)
+            logger.warning("deleting: %s", unwanted)
+        except:
+            logger.info("could not find %s", unwanted)
     logger.info("Pipeline complete: %s", time.asctime())

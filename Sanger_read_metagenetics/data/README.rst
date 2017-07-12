@@ -25,3 +25,4 @@ cut -f5 Pythium.result.txt > to_get.txt
 get the sequences from the nt database generated above
 ======================================================
 python ~/misc_python/get_sequences_i_want_from_fasta_command_line.py ~/scratch/blast_databases/nt.faa to_get.txt Pythium_genebank_18s_ITS1.fasta
+

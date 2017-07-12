@@ -61,17 +61,25 @@ def sanger_extra_qc_trim(infname, outfname, NNN=4):
     bad = "N" * NNN
     for seq_record in SeqIO.parse(infname, "fasta"):
         seq = str(seq_record.seq)
+        print(seq_record)
         try:
             upper_limit = seq.index(bad)
-            seq_record.seq = seq_record.seq[:upper_limit]
+            # print("OLD = ", seq_record.seq)
+            seq_record.seq = seq[:upper_limit]
+            # print("NEW = ", seq_record.seq)
         except ValueError:
             # no NNN found
-            seq_record.seq = seq_record.seq
+            print("NO NNNNs found")
+            seq = seq_record.seq
+        seq_record = SeqRecord(Seq(seq),
+                   id=seq_record.id, name="",
+                   description="")
         SeqIO.write(seq_record, outfname, "fasta")
 
 def plot_trace(infname, outfile):
     """function to plot the sanger read trace
-    https://github.com/peterthorpe5/biopython.github.io/blob/d6fc9bbb5fc9785c9dddaa0e6a938e7ba6471701/wiki/ABI_traces.md
+    https://github.com/peterthorpe5/biopython.github.io/blob/
+    d6fc9bbb5fc9785c9dddaa0e6a938e7ba6471701/wiki/ABI_traces.md
     """
     record = SeqIO.read(infname, 'abi')
     record.annotations.keys()
