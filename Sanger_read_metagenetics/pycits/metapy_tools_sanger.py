@@ -54,29 +54,23 @@ def convert_ab1_to_fq(in_file, out_file):
 
 
 def sanger_extra_qc_trim(infname, outfname, NNN=3):
-    """splits to sequence up at 3 NNNs in a row,
-    to remove extra low quality regions
+    """splits the seq up based on N sequences. Then looks for the
+    longest fragment. It takes this as the seq to use.
+    Takes in a fasta and write the longest fragment back out
+    to a new fasta.
     """
     NNN = int(NNN)
-    bad = "N" * NNN
+    bad = "N" * NNN  # this method now not used
     for seq_record in SeqIO.parse(infname, "fasta"):
         seq = str(seq_record.seq)
         try:
-            upper_limit = seq.index(bad)
-            print("OLD = ", seq_record.seq)
-            seq = seq[:upper_limit]
-            lower_limit = seq.index("N")
-            # remove any early NN regions
-            # messy, should update with a while loop!!
-            if lower_limit < 15:
-                seq = seq[lower_limit + 1:]  # +1 computer counting
-                lower_limit = seq.index("N")
-                if lower_limit < 15:
-                    seq = seq[lower_limit + 1:]
-                    lower_limit = seq.index("N")
-                    if lower_limit < 15:
-                        seq = seq[lower_limit + 1:]
-            print("NEW = ", seq)
+            # pick the longest chnuk without Ns"
+            parts = seq.split("N")
+            current_longest = 0
+            for frags in parts:
+                if len(frags) > current_longest:
+                    current_longest = len(frags)
+                    seq = frags
         except ValueError:
             # no NNN found
             print("NO NNNNs found")
