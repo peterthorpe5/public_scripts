@@ -10,71 +10,62 @@ why? Just so it is easier to see the alignmnets.
 #############################################################################
 # imports
 import os
-from sys import stdin,argv
+from sys import stdin, argv
 import sys
 from optparse import OptionParser
+from Bio.Blast import NCBIXML
 
 def blast_file_opener(filename, evalue, mismatches, outfile):
-    """Func takes in a BLAST xml output file.
-    Prints out the various details of interests to the outfile"""
-    evalue = float(evalue)
+    """Func takes in a BLAST xml output file (filename).
+    writes out the various details of interests to the outfile.
+
+    It filters the results based on evalue and number of
+    mismatches, as defined by the user. """
+    E_VALUE_THRESH = float(evalue)
     mismatches = int(mismatches)
     result_handle = open(filename)
-    output_filename = (outfile)
-    f= open(output_filename, 'w')
-    from Bio.Blast import NCBIXML
+    f = open(outfile, 'w')
+    temp = outfile.split(".txt")[0]
+    f_result = open(outfile + ".result.txt", 'w')
+    f_result.write('#Query\tmismatches\tevalue\tpercent_identity\tdatabase\n')
     blast_records = NCBIXML.parse(result_handle)
-    #this function loads the blast lines into a list
     for blast_record in blast_records:
-        # blast_records = list(blast_records)
-        # print >>f,  blast_records
-        E_VALUE_THRESH = evalue
         alignment_hits = set([])
-    # for i in blast_records:
         for alignment in blast_record.alignments:
-            # print >>f,  blast_record
             for hsp in alignment.hsps:
                 if hsp.expect < E_VALUE_THRESH:
-                    # print >>f,  '****Alignment****'
-                    perfect = False
-                    db_entry = alignment.title
-                    print >> f,  'Sequence:', alignment.title #.split(" ")[1]#[19:36]
-                    print >> f,  'Sequence:', alignment.title.split("| ")[0]#[19:36]
-                    #print >>f,  'Sequence:', alignment.title.split(" ")[1]#[19:36]
-                    # print 'Sequence:', alignment.title.split(" ")[1]#[19:36]
-                    print >> f, 'Query_name = ', blast_record.query
-                    # print 'Query_name = ', blast_record.query
-                    print >> f,'query_length:', blast_record.query_length
-                    print >> f,'subject_length:', alignment.length
-                    print >> f,'e value:', hsp.expect
-                    percentage_hit = (hsp.identities)/ float(alignment.length) * 100
-                    print >> f,"percent_identiy: %1d" % (percentage_hit )
-                    print >> f, hsp.query[0:]
-                    alignment = hsp.match[0:]
-                    alignment_missing = hsp.match[0:].replace(" ", "X")
-                    if "X" in alignment_missing:
-                        print >> f, (alignment_missing.replace("|", " "))
-                        if alignment_missing.count("X") <= mismatches:
-                            print blast_record.query, "\t", db_entry
-                    else:
-                        perfect = True
-                    print >> f, hsp.match[0:]
-                    print >> f, hsp.sbjct[0:],'\n'
-    return alignment_hits
+                    # For mismatches use (hsp.align_length - hsp.identities)
+                    mmatches = hsp.align_length - hsp.identities
+                    if mmatches <= mismatches:
+                        f.write('Sequence: %s\n' % alignment.title)
+                        f.write('Query_name = %s\n' %  blast_record.query)
+                        f.write('query_length: %d\n' %  blast_record.query_length)
+                        f.write('subject_length: %d\n' %  alignment.length)
+                        f.write('e value: %s\n' %  hsp.expect)
+                        # Calculate % of the matched region only:
+                        percentage_hit = (hsp.identities)/ float(blast_record.query_length) * 100
+                        f.write("percent_identiy: %1d\n" % percentage_hit)
+                        f.write("%s\n" % hsp.query)
+                        alignment_missing = hsp.match.replace(" ", "X")
+                        db_entry = alignment.title
+                        f.write("%s\n" % (alignment_missing.replace("|", " ")))
+                        f.write("%s\n" % hsp.match[0:])
+                        f.write("%s\n\n" % hsp.sbjct[0:])
+                        result = "%s\t%d\t%s\t%.1f\t%s\n" % (blast_record.query,
+                                                             mmatches,
+                                                             hsp.expect,
+                                                             percentage_hit,
+                                                             alignment.title)
+                        f_result.write(result)
 
-
-def write_out(filename, alignment_hits):
-    output_filename = (filename)
-    print >>f,  output_filename
-    f= open(output_filename, 'w')
-    #f.write("blast_output_condensed")
-    #print >> f, alignment_hits
+    f_result.close()
     f.close()
+    result_handle.close()
     return alignment_hits
 
 
 if "-v" in sys.argv or "--version" in sys.argv:
-    print "v0.0.1"
+    print("v0.0.2")
     sys.exit(0)
 
 
@@ -82,7 +73,7 @@ usage = """Use as follows:
 
 converts
 
-$ python BLAST... -i in.xml -m mismatches -o out.txt
+$ python BLAST... -i in.xml -m mismatches -e evalue -o out.txt
 
 also prints out the seq and query of the matches with less than (mismatches) mismatches
 """
