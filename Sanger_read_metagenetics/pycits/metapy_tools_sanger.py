@@ -53,7 +53,7 @@ def convert_ab1_to_fq(in_file, out_file):
     SeqIO.convert(in_file, "abi", out_file, "fastq")
 
 
-def sanger_extra_qc_trim(infname, outfname, NNN=3):
+def sanger_extra_qc_trim(infname, outfname, NNN, logger):
     """splits the seq up based on N sequences. Then looks for the
     longest fragment. It takes this as the seq to use.
     Takes in a fasta and write the longest fragment back out
@@ -73,15 +73,18 @@ def sanger_extra_qc_trim(infname, outfname, NNN=3):
                     seq = frags
         except ValueError:
             # no NNN found
-            print("NO NNNNs found")
+            logger.warning("NO NNNNs found")
         seq_record = SeqRecord(Seq(seq),
                      id=seq_record.id, name="",
                      description="")
+        logger.info("length of longest sequence used = %d", len(seq))
+        logger.info("sequence = %s\n%s", seq_record.id, seq)
         SeqIO.write(seq_record, outfname, "fasta")
+
 
 def plot_trace(infname, outfile):
     """function to plot the sanger read trace
-    https://github.com/peterthorpe5/biopython.github.io/blob/
+    https://github.com////biopython.github.io/blob/
     d6fc9bbb5fc9785c9dddaa0e6a938e7ba6471701/wiki/ABI_traces.md
     """
     record = SeqIO.read(infname, 'abi')
@@ -101,9 +104,3 @@ def plot_trace(infname, outfile):
                  fontsize=16)
     plt.show()
     plt.savefig(outfile)
-
-
-
-
-
-

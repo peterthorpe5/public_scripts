@@ -26,7 +26,7 @@ def blast_file_opener(filename, evalue, mismatches, outfile):
     result_handle = open(filename)
     f = open(outfile, 'w')
     temp = outfile.split(".txt")[0]
-    f_result = open(outfile + ".result.txt", 'w')
+    f_result = open(outfile.split(".txt")[0] + ".result.txt", 'w')
     f_result.write('#Query\tmismatches\tevalue\tpercent_identity\tdatabase\n')
     blast_records = NCBIXML.parse(result_handle)
     for blast_record in blast_records:

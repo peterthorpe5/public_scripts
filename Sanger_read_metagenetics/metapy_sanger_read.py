@@ -93,7 +93,7 @@ def get_args():
 
     optional.add_argument("-e", "--evalue", dest='evalue',
                           action="store",
-                          default=1e-50,
+                          default=1e-40,
                           type=float,
                           help="evalue to filter results with")
 
@@ -232,6 +232,35 @@ def check_tools_exist(WARNINGS):
     return tools_list, Warning_out
 
 
+def make_parse_cmd(outfile, mismatches):
+    """function to return the parsing command"""
+    cmd_parse = " ".join(["python",
+                          os.path.join(FILE_DIRECTORY,
+                                       "bin",
+                                       "BLAST_xml_parser.py"),
+                          "-i",
+                          xml_out,
+                          "-o",
+                          outfile
+                          ,
+                          "-e",
+                          str(args.evalue),
+                          "-m",
+                          str(mismatches)])
+    return cmd_parse
+
+
+def run_parse_cmd(cmd, logger):
+    """func to run the parser command as this may be called a few times"""
+    logger.info("%s make cmd_parse command", cmd)
+    #  removed check-True
+    pipe = subprocess.run(cmd_parse, shell=True,
+                          stdout=subprocess.PIPE,
+                          stderr=subprocess.PIPE)
+    # logger.info("XML parser stdout: %s", pipe.stdout)
+    # logger.info("XML parser stderr: %s", pipe.stderr)
+
+
 #######################################################################
 # Run as script
 if __name__ == '__main__':
@@ -260,6 +289,7 @@ if __name__ == '__main__':
     logger.info("Command-line: %s", ' '.join(sys.argv))
     logger.info("Starting testing: %s", time.asctime())
     logger.info("using database: %s", OTU_DATABASE)
+    logger.info("default mismatch threshold = %s", str(args.threshold))
     # Get a list of tools in path!
     logger.info("checking which programs are in PATH")
     tools_list, Warning_out = check_tools_exist(WARNINGS)
@@ -296,7 +326,7 @@ if __name__ == '__main__':
                    metapy_trim_seq(fa_out_all, fa_out, args.left_trim,
                                    args.right_trim)
                    logger.info("QC trimming")
-                   sanger_extra_qc_trim(fa_out_all, fa_out_QC)
+                   sanger_extra_qc_trim(fa_out_all, fa_out_QC, 3, logger)
 
     ####################################################################
     # trimmomatic trm reads
@@ -344,7 +374,7 @@ if __name__ == '__main__':
                              "-query",
                              fa_out_QC,
                              "-evalue",
-                             "1e-30",
+                             "1e-25",
                              "-outfmt 5",
                              "-out",
                              xml_out])
@@ -357,27 +387,18 @@ if __name__ == '__main__':
     logger.info("BLAST stderr: %s", pipe.stderr)
     ####################################################################
     # parse xml
-    cmd_parse = " ".join(["python",
-                          os.path.join(FILE_DIRECTORY,
-                                       "bin",
-                                       "BLAST_xml_parser.py"),
-                          "-i",
-                          xml_out,
-                          "-o",
-                          "%s_vs_%s.txt" %(fa_out_QC.split("qc")[0],
-                                           db_name.split("GenB")[0]),
-                          "-e",
-                          str(args.evalue),
-                          "-m",
-                          str(args.mismatches)])
-    logger.info("%s make cmd_parse command", cmd_parse)
-    #  removed check-True
-    pipe = subprocess.run(cmd_parse, shell=True,
-                          stdout=subprocess.PIPE,
-                          stderr=subprocess.PIPE)
-    logger.info("XML parser stdout: %s", pipe.stdout)
-    logger.info("XML parser stderr: %s", pipe.stderr)
-
+    out_file_name = "%s_V_%s.txt" %(fa_out_QC.split("qc")[0],
+                                    db_name.split(".fa")[0])
+    cmd_parse = make_parse_cmd(out_file_name, args.mismatches)
+    run_parse_cmd(cmd_parse, logger)
+    mismatches = int(args.mismatches)
+    while os.path.getsize(out_file_name) < 1:
+        logger.warning("no hits at %d mismatches", mismatches)
+        os.remove(out_file_name)
+        mismatches = mismatches + 1
+        logger.warning("going to increasing by 1. Mismatches = %d" % mismatches)
+        cmd_parse = make_parse_cmd(out_file_name, mismatches)
+        run_parse_cmd(cmd_parse, logger)
     remove_list = [fq_out, fa_out_all, fa_out, xml_out]
     for unwanted in remove_list:
         try:
