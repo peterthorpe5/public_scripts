@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+# Author Peter Thorpe. The James Hutton Institute, Uk
 ############################################################################
 # Title: possibly fix 5 prime ends of cds based of RNAseq coverage
 ############################################################################
