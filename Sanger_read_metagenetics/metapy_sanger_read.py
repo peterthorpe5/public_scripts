@@ -165,7 +165,7 @@ def get_args():
 
     optional.add_argument("--cleanup",
                           dest="cleanup",
-                          action="store_true",
+                          action="store",
                           default="yes",
                           help="deletes most files the program creates ")
 
@@ -289,7 +289,6 @@ if __name__ == '__main__':
     logger.info("Command-line: %s", ' '.join(sys.argv))
     logger.info("Starting testing: %s", time.asctime())
     logger.info("using database: %s", OTU_DATABASE)
-    logger.info("default mismatch threshold = %s", str(args.threshold))
     # Get a list of tools in path!
     logger.info("checking which programs are in PATH")
     tools_list, Warning_out = check_tools_exist(WARNINGS)
@@ -399,11 +398,14 @@ if __name__ == '__main__':
         logger.warning("going to increasing by 1. Mismatches = %d" % mismatches)
         cmd_parse = make_parse_cmd(out_file_name, mismatches)
         run_parse_cmd(cmd_parse, logger)
+        if mismatches == 30:
+            break
     remove_list = [fq_out, fa_out_all, fa_out, xml_out]
-    for unwanted in remove_list:
-        try:
-            os.remove(unwanted)
-            logger.warning("deleting: %s", unwanted)
-        except:
-            logger.info("could not find %s", unwanted)
+    if args.cleanup == "yes":
+        for unwanted in remove_list:
+            try:
+                os.remove(unwanted)
+                logger.warning("deleting: %s", unwanted)
+            except:
+                logger.info("could not find %s", unwanted)
     logger.info("Pipeline complete: %s", time.asctime())
