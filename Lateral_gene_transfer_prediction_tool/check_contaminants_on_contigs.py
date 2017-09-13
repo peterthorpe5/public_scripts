@@ -54,6 +54,7 @@ def split_gff_gene_names(gene_info):
     gene = gene.split(";")[0]
     gene = gene.split(";")[0]
     gene = gene.split(".CDS")[0]
+    gene = gene.split(".t")[0]
     # some data set require this to be uncommented
     # gene = gene.split(".t")[0]
     gene = gene.rstrip("\n")
@@ -70,17 +71,18 @@ def parse_gff(gff):
     gene_to_exon_count = dict()
     gene_start_stop_dict = dict()
     count = 1
-    #iterate through gff
+    # iterate through gff
     for line in f_in:
         if line.startswith("#"):
             continue
         if not line.strip():
-                continue #if the last line is blank
-        scaffold,aug,cds_type,start,stop,e,f,g,gene_info = line.split("\t")
+                continue  #  if the last line is blank
+        scaffold, aug, cds_type, start, stop, e, f, \
+                  g,gene_info = line.split("\t")
         gene = split_gff_gene_names(gene_info)
-        #print gene
+        # print gene
 
-        #scaffold_to_gene_dict
+        # scaffold_to_gene_dict
         if line.split("\t")[2] == "gene":
             if not scaffold in scaffold_to_gene_dict:
                 scaffold_to_gene_dict[scaffold]=[gene]
@@ -90,14 +92,16 @@ def parse_gff(gff):
                                                   int(stop))
             gene_start_stop_dict[gene] = start_stop_formatted
 
-        #gene_to_exon_count
-        if line.split("\t")[2] == "exon" or "CDS":
+        # gene_to_exon_count
+        if line.split("\t")[2] == "exon":
             if not gene in gene_to_exon_count:
-                gene_to_exon_count[gene] = count
+                gene_to_exon_count[gene] = 1
             else:
-                gene_to_exon_count[gene]= count +1
-    #print scaffold_to_gene_dict
+                gene_to_exon_count[gene] += 1
+    # print scaffold_to_gene_dict
     f_in.close()
+    print("if this crashes check exons are in your gff")
+    print("if not change lines 96 'exon' to 'intron'")
     return scaffold_to_gene_dict, gene_to_exon_count,\
            gene_start_stop_dict
 
@@ -118,9 +122,9 @@ def LTG_file(LTG):
         if line.startswith("#"):
             continue
         if not line.strip():
-            continue #if the last line is blank
+            continue  #  if the last line is blank
         gene = line.split("\t")[0]
-        #call function to format gene name
+        # call function to format gene name
         gene = split_gff_gene_names(gene)
         HGT_percent_identity = line.split("\t")[1]
         comment = line.split("\t")[-1]
@@ -139,11 +143,12 @@ def LTG_file(LTG):
         gene_to_comment_dict[gene] = data_out_formatted
         gene_to_AI[gene] = AI
         gene_to_HGT_percent_identity[gene] = HGT_percent_identity
-    #print (HGT_predicted_gene_set)
+    # print (HGT_predicted_gene_set)
     f_in.close()
     return HGT_predicted_gene_set, gene_to_comment_dict,\
            gene_to_HGTspeces_discription_dict, gene_to_AI, \
            gene_to_HGT_percent_identity
+
 
 def get_stats_on_AT_content(dna_file):
     """function to get the mean at standard dev for AT content across
@@ -168,6 +173,7 @@ def get_stats_on_AT_content(dna_file):
     standard_dev = numpy.std(AT_content_list)
     return gene_AT_cont_dic, the_mean, standard_dev
 
+
 def parse_rnaseq(rnaseq):
     """parse the rnaseq-file
     Take data in like this:
@@ -189,6 +195,7 @@ def parse_rnaseq(rnaseq):
             data_formatted = "%s\tNumReads = %s" %(TPM, NumReads)
             gene_to_expression[Name]= data_formatted
     return gene_to_expression
+
 
 def how_many_sd_from_mean(mean, sd, AT_content):
     "function to retunr the number of sd a value is from the mean"
@@ -222,13 +229,13 @@ def check_HGT_AT_vs_global_AT(gene_AT_cont_dic, AI, the_mean, standard_dev,
 
     num_sd_from_mean = how_many_sd_from_mean(the_mean, standard_dev,
                                              current_gene_AT)
-    assert  how_many_sd_from_mean(10,2,2) ==4
+    assert  how_many_sd_from_mean(10, 2, 2) ==4
     HGTspecies_description = gene_to_HGTspeces_discription_dict[gene_of_interest]
     HGTspecies = HGTspecies_description.split("\t")[0]
     description = HGTspecies_description.split("\t")[1]
     # description = description.split("[")[0]
-    lower_threshold = float(the_mean) - (sd_numbers*float(standard_dev))
-    upper_threshold = float(the_mean) + (sd_numbers*float(standard_dev))
+    lower_threshold = float(the_mean) - (sd_numbers * float(standard_dev))
+    upper_threshold = float(the_mean) + (sd_numbers * float(standard_dev))
     # print lower_threshold, upper_threshold
     if current_gene_AT < lower_threshold or current_gene_AT > upper_threshold:
         # if calling with RNAseq assembly
@@ -243,7 +250,10 @@ def check_HGT_AT_vs_global_AT(gene_AT_cont_dic, AI, the_mean, standard_dev,
             exons = gene_to_exon_count[gene_of_interest]
         except:
             ValueError
-            exons = gene_to_exon_count[transcript]
+            # note if this crashes you may need to specifcy introns,
+            # not exons to count.
+            # exons = gene_to_exon_count[transcript]
+            exons = 1
         try:
             per_ident = gene_to_HGT_percent_identity[gene_of_interest]
         except:
