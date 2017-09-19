@@ -104,6 +104,8 @@ def test_if_id_is_metazoan(tax_id_of_interst,
     if tax_id_of_interst == "0":
         tax_id_of_interst == "32644"  # assign an unknown id
         return "In_filter_out_tax_id"
+    if tax_id_of_interst == "7070":
+        return "In_filter_out_tax_id"
     # call the function to parse nodes file and assign to variable
     # tax_dictionary = parse_NCBI_nodes_tab_file(nodes_dmp)
     # empty list to add tax id to
@@ -125,6 +127,8 @@ def test_if_id_is_metazoan(tax_id_of_interst,
         if parent == "32630":  # 32630
             return "In_filter_out_tax_id"
             break
+        if parent == "7070":
+            return "In_filter_out_tax_id"
         if parent == tax_to_filter_out:
             # print "filtering out"
             return "In_filter_out_tax_id"
@@ -320,6 +324,12 @@ def parse_blast_tab_file(filename1,
         if "Loa loa" in line:
             tax_id = "7209"
             kingdom = "nematoda_Eukaryota"
+            blast_line = [qseqid, sseqid, pident, length, mismatch, gapopen, qstart,
+                          qend, sstart, send, float(evalue), float(bitscore),
+                          salltitles, tax_id, scientific_name,
+                          scomnames, kingdom]
+        if tax_id == "7070"
+            kingdom = "Eukaryota"
             blast_line = [qseqid, sseqid, pident, length, mismatch, gapopen, qstart,
                           qend, sstart, send, float(evalue), float(bitscore),
                           salltitles, tax_id, scientific_name,

@@ -323,9 +323,9 @@ def check_scaffolds_for_only_HGT_genes(genome, gff, LTG, dna_file, sd_numbers, r
     
     for gene, comment in gene_to_comment_dict.items():
         if bam_file:
-            genomic_cov_from_mean = how_many_sd_from_mean(mean_genomic_cov, \
-                                                      standard_dev_genomic_cov, \
-                                                 HGT_gene_to_genic_cov_dic[gene])
+            genomic_cov_from_mean = how_many_sd_from_mean(mean_genomic_cov,
+                                                          standard_dev_genomic_cov,
+                                                          HGT_gene_to_genic_cov_dic[gene])
         else:
             mean_genomic_cov = 0
             standard_dev_genomic_cov=0
@@ -338,13 +338,13 @@ def check_scaffolds_for_only_HGT_genes(genome, gff, LTG, dna_file, sd_numbers, r
             
         HGT_info_dataformatted = check_HGT_AT_vs_global_AT(gene_AT_cont_dic, AI, the_mean,
                                                            standard_dev, gene, comment,
-                                                           sd_numbers, gene_to_expression, \
+                                                           sd_numbers, gene_to_expression,
                                                            gene_to_exon_count,
-                                                           gene_to_HGTspeces_discription_dict, \
+                                                           gene_to_HGTspeces_discription_dict,
                                                            genomic_cov_from_mean,
                                                            gene_to_HGT_percent_identity)
-        f_out.write(HGT_info_dataformatted)
-
+        if "Unclassified" not in HGT_info_dataformatted:
+            f_out.write(HGT_info_dataformatted)
     for scaffold, genes in scaffold_to_gene_dict.items():
         descrption_to_add = ""
         genes_string = ""
@@ -377,7 +377,7 @@ def check_scaffolds_for_only_HGT_genes(genome, gff, LTG, dna_file, sd_numbers, r
             if bad_contig == True:
                 print ("Bad scaffold = %s" %(scaffold))
                 descrpt = gene_to_HGTspeces_discription_dict[gene]
-                descrption_to_add = descrption_to_add+" "+descrpt
+                descrption_to_add = descrption_to_add + " " + descrpt
                 data_formatted = "%s\tBad_scaffold\t%s\t%s\t%s\n" %(scaffold,
                                                                     genes_string,
                                                                     AI_values,
