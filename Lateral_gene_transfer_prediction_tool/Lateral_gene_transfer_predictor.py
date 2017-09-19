@@ -328,12 +328,6 @@ def parse_blast_tab_file(filename1,
                           qend, sstart, send, float(evalue), float(bitscore),
                           salltitles, tax_id, scientific_name,
                           scomnames, kingdom]
-        if tax_id == "7070"
-            kingdom = "Eukaryota"
-            blast_line = [qseqid, sseqid, pident, length, mismatch, gapopen, qstart,
-                          qend, sstart, send, float(evalue), float(bitscore),
-                          salltitles, tax_id, scientific_name,
-                          scomnames, kingdom]
         # test here to see if we can break throw this line out
         key = meta_or_non_metazoan(tax_id,
                                    Metazoa_tax_id,
