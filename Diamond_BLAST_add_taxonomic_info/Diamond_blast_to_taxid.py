@@ -215,7 +215,6 @@ def tax_to_scientific_name_dict(names):
                 tax_to_scientific_name_dict[taxid] = fields[1]
             elif fields[3] == "common name":
                 tax_to_common_name[taxid] = fields[1]
-
     # print("Loaded %i scientific names, and %i common names"
            # % (len(tax_to_scientific_name_dict),
            # len(tax_to_common_name)))
@@ -231,7 +230,7 @@ def acc_to_description(acc_to_des):
     python prepare_accession_to_description_db.py
     """
     print("loading accession to description database. " +
-           "This takes a while!!")
+           "This takes a while")
     acc_to_description_dict = dict()
     # Not doing with open as. File is 7GB!!
     # one line at a time
@@ -268,6 +267,11 @@ def assign_taxon_to_dic(acc_taxid_prot):
                 # file has a header
                 continue
             acc, acc_version, tax_id, GI = line.rstrip("\n").split()
+            # seems wrong, but a trailing whitespace has caused issues in older
+            # versions of this tool. So, strip them off now to prevent issues
+            # occuring later!!
+            tax_id = tax_id.rstrip()
+            acc_version = acc_version.rstrip()
             acc_to_tax_id[acc_version] = int(tax_id)
     handle.close()
     return acc_to_tax_id
@@ -318,6 +322,7 @@ def get_accession_number(line, logger):
         acc = acces_column.split("|")[1]
         return acc.replace("|", ""), line
 
+
 def get_perc(data, perc):
     """func to return a list of perct identity from
     coloumn 3 in the tab blast file.
@@ -353,9 +358,8 @@ def plot_hitstogram_graph(data_values, title, file_in):
     blob/master/exercises/one_variable_continuous/
     one_variable_continuous.ipynb
     """
-
-    #bins = max(data_values)
-    #pylab.hist(data_values, facecolor='blue')
+    # bins = max(data_values)
+    # pylab.hist(data_values, facecolor='blue')
     pylab.hist(data_values, facecolor='green', alpha=0.6)
     pylab.grid(True)
     pylab.title(title + "_histogram")
@@ -381,14 +385,12 @@ def plot_multi_histogram_graph(title1, vals_for_hist1,
     bar(left, height, width=0.8, bottom=None,
     hold=None, **kwargs)
     """
-
+    print("graphically representing results")
     fig = plt.figure(figsize=(10, 8), dpi=1200)
-    #    # Create subplot axes
+    #  Create subplot axes
     ax1 = fig.add_subplot(1, 3, 1)  # 1x3 grid, position 1
     ax2 = fig.add_subplot(1, 3, 2)  # 1x3 grid, position 2
     ax3 = fig.add_subplot(1, 3, 3)  # 1x3 grid, position 3
-
-    # print (index)
     bar_width = 0.9
     opacity = 0.6
 
@@ -470,13 +472,18 @@ def parse_diamond_tab(diamond_tab_output,
             tax_id = acc_to_tax_id[accession]
         except KeyError:
             # unknown tax_id
-            tax_id = tax_id = tax_id_warning(accession, logger)
+            if accession.split(".")[0] in acc_to_tax_id[accession.split(".")[0]]:
+                # This is incase the accession number: XP_008185608.2
+                # and its dic entery is XP_008185608 - split at the "."
+                tax_id = acc_to_tax_id[accession.split(".")[0]]
+            else:
+                tax_id = tax_id_warning(accession, logger)
         # TODO ADD TAX FILTER
         # TAXONOMY FILTERING - default is no!
         # taxomony_filter(tax_dictionary,
                          # tax_id_of_interst,
-                         #final_tx_id_to_identify_up_to,
-                         #tax_to_filter_out)
+                         # final_tx_id_to_identify_up_to,
+                         # tax_to_filter_out)
         # get kingdom
         try:
             kingdom = taxon_to_kingdom[tax_id]
@@ -595,7 +602,8 @@ def parse_line(line):
 
 def get_to_blast_hits(in_file,
                       outfile,
-                      bit_score_column="12",):
+                      logger,
+                      bit_score_column="12"):
     """this is a function to open up a tab file blast results, and
     produce the percentage of kingdom blast hit based on the top
     blast match"""
@@ -676,26 +684,6 @@ def get_to_blast_hits(in_file,
             continue
         bit = get_bit_list(data, bit)
         align = get_alignmemt_list(data, align)
-        try:
-            import matplotlib
-            # this code added to prevent this error:
-            # self.tk = _tkinter.create(screenName, baseName,
-            # className, interactive, wantobjects, useTk, sync, use)
-            #_tkinter.TclError: no display name and no $DISPLAY
-            # environment variable
-            # Force matplotlib to not use any Xwindows backend.
-            matplotlib.use('Agg')
-            import matplotlib.pyplot as plt
-            plot_multi_histogram_graph("Top_hits_Percentage_Identity",
-                                       perc,
-                                       "Top_hits_Bits_Scores",
-                                       bit,
-                                       "Top_hits_Alignment_Lengths",
-                                       align,
-                                       out_file)
-        except ImportError:
-            print("Matplotlib not installed. No graphs")
-            # dont braek the program.
         genus_dict = get_genus_count(genus_dict, hit)
         total_blast_hit_count = total_blast_hit_count + 1
         king_name = hit[-1]
@@ -705,6 +693,26 @@ def get_to_blast_hits(in_file,
             new_line = new_line + element + "\t"
         data_formatted = new_line.rstrip("\t") + "\n"
         out_file.write(data_formatted)
+    try:
+        import matplotlib
+        # this code added to prevent this error:
+        # self.tk = _tkinter.create(screenName, baseName,
+        # className, interactive, wantobjects, useTk, sync, use)
+        #_tkinter.TclError: no display name and no $DISPLAY
+        # environment variable
+        # Force matplotlib to not use any Xwindows backend.
+        matplotlib.use('Agg')
+        import matplotlib.pyplot as plt
+        plot_multi_histogram_graph("Top_hits_Percentage_Identity",
+                                       perc,
+                                       "Top_hits_Bits_Scores",
+                                       bit,
+                                       "Top_hits_Alignment_Lengths",
+                                       align,
+                                       out_file)
+    except ImportError:
+        logger.info("Matplotlib not installed. No graphs")
+        # dont brake the program.
 
     # for blast_file_entry_Genes, bit_score, kings_names in top_hits:
         # old python 2.7 syntax
@@ -712,9 +720,12 @@ def get_to_blast_hits(in_file,
                                             # bit_score,
                                             # kings_names)
         # kingdoms_handles_counts[kings_names]+=1
-
+    logger.info("Kingdom hit distribution of top hits = ")
+    logger.info(kingdoms_handles_counts)
     print("Kingdom hit distribution of top hits = ",
            kingdoms_handles_counts)
+    logger.info("number with blast hits = ")
+    logger.info(total_blast_hit_count)
     print("number with blast hits =",
            total_blast_hit_count)
     # print("genus distirbution =", genus_dict)
@@ -744,7 +755,7 @@ def get_to_blast_hits(in_file,
 
 
 if "-v" in sys.argv or "--version" in sys.argv:
-    print("v0.0.4")
+    print("v0.0.5")
     sys.exit(0)
 
 usage = """Use as follows:
@@ -954,7 +965,7 @@ outfile = options.outfile
 if __name__ == '__main__':
     # Set up logging
     log_out = outfile + ".log"
-    logger = logging.getLogger('metapy.py: %s' % time.asctime())
+    logger = logging.getLogger('Diamond_blast_to_taxid.py: %s' % time.asctime())
     logger.setLevel(logging.DEBUG)
     err_handler = logging.StreamHandler(sys.stderr)
     err_formatter = logging.Formatter('%(levelname)s: %(message)s')
@@ -994,8 +1005,10 @@ if __name__ == '__main__':
                       outfile,
                       logger)
     # fucntion to get the top hits and the kingdom and genus distribution
-    top_hits_out = outfile + "top_blast_hits.out"
-    get_to_blast_hits(outfile, top_hits_out)
+    top_hits_out = outfile + "_top_blast_hits.out"
+    logger.info("getting the top blast hits")
+    logger.info("If matplotlib intalled, will draw graphs")
+    get_to_blast_hits(outfile, top_hits_out, logger)
     logger.info("program finished at %s", time.asctime())
     logger.info("Results are in %s" % outfile)
 
