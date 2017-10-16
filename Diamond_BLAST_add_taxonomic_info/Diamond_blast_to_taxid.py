@@ -257,7 +257,6 @@ def assign_taxon_to_dic(acc_taxid_prot):
     acc    acc_version   tax_id   GI
     XP_642131       XP_642131.1     352472  66816243"""
     acc_to_tax_id = dict()
-    partial_acc_to_tax_id = dict()
     # Not doing with open as. File is 14GB!!
     # one line at a time
     handle = open(acc_taxid_prot, "r")
@@ -274,10 +273,9 @@ def assign_taxon_to_dic(acc_taxid_prot):
             tax_id = tax_id.rstrip()
             acc_version = acc_version.rstrip()
             acc = acc.rstrip()
-            acc_to_tax_id[acc_version] = int(tax_id)
-            partial_acc_to_tax_id[acc] = int(tax_id)
+            acc_to_tax_id[acc] = int(tax_id)
     handle.close()
-    return acc_to_tax_id, partial_acc_to_tax_id
+    return acc_to_tax_id
 
 
 def read_diamond_tab_file(diamond_tab_output):
@@ -296,7 +294,7 @@ def parse_blast_line(line, logger):
     if not test_line(line):
         return False
     accession, line = get_accession_number(line, logger)
-    return accession, line
+    return accession.rstrip(), line
 
 
 def get_accession_number(line, logger):
@@ -448,7 +446,7 @@ def parse_diamond_tab(diamond_tab_output,
     which does not have tax id data.
     This function call a number of other functions"""
     taxon_to_kingdom = assign_cat_to_dic(categories)
-    acc_to_tax_id, partial_acc_to_tax_id = assign_taxon_to_dic(acc_taxid_prot)
+    acc_to_tax_id = assign_taxon_to_dic(acc_taxid_prot)
     tax_to_scientific_name_dic, \
         tax_to_common_name_dic = tax_to_scientific_name_dict(names)
     acc_to_description_dict = acc_to_description(acc_to_des)
@@ -469,16 +467,19 @@ def parse_diamond_tab(diamond_tab_output,
         if not parse_blast_line(line, logger):
             continue
         accession, line = parse_blast_line(line, logger)
+        # e.g old =  APZ74649.1
+        # new =  APZ74649
+        accession = accession.split(".")[0]
         # use dictionary to get tax_id from gi number
         # Most of the GI numbers will match, expect them to be in dict...
         try:
             tax_id = acc_to_tax_id[accession]
         except KeyError:
             # unknown tax_id
-            if partial_acc_to_tax_idhas_key(accession.split(".")[0]):
+            if acc_to_tax_id.has_key(accession.rstrip()):
                 # This is incase the accession number: XP_008185608.2
                 # and its dic entery is XP_008185608 - split at the "."
-                tax_id = partial_acc_to_tax_id[accession.split(".")[0]]
+                tax_id = acc_to_tax_id[accession.rstrip()]
             else:
                 tax_id = tax_id_warning(accession, logger)
         # TODO ADD TAX FILTER
@@ -762,7 +763,7 @@ if "-v" in sys.argv or "--version" in sys.argv:
     sys.exit(0)
 
 usage = """Use as follows:
-# warning: running to script uses a lot of RAM ~25GB.
+# warning: running to script uses a lot of RAM ~75GB.
 
 $ python Diamond_blast_to_taxid.py -i diamond_tab_output
 -t /PATH_TO/NCBI_acc_taxid_prot.dmp
@@ -857,7 +858,7 @@ diamond makedb --in uniref90.faa -d uniref90
 covert output to tab:
 $ diamond view -a diamond.daa -f tab -o name.tab
 
-# warning: running to script uses a lot of RAM ~25GB.
+# warning: running to script uses a lot of RAM ~75GB.
 
 """
 
