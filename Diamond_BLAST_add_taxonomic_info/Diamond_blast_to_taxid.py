@@ -713,7 +713,7 @@ def get_to_blast_hits(in_file,
                                        bit,
                                        "Top_hits_Alignment_Lengths",
                                        align,
-                                       out_file)
+                                       outfile)
     except ImportError:
         logger.info("Matplotlib not installed. No graphs")
         # dont brake the program.
