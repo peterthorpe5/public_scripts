@@ -475,7 +475,7 @@ def parse_diamond_tab(diamond_tab_output,
             tax_id = acc_to_tax_id[accession]
         except KeyError:
             # unknown tax_id
-            if accession.split(".")[0] in partial_acc_to_tax_id[accession.split(".")[0]]:
+            if partial_acc_to_tax_idhas_key(accession.split(".")[0]):
                 # This is incase the accession number: XP_008185608.2
                 # and its dic entery is XP_008185608 - split at the "."
                 tax_id = partial_acc_to_tax_id[accession.split(".")[0]]
