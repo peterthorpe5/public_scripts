@@ -62,6 +62,22 @@ TITLE_OF_COLOUMNS = "\t".join(['#qseqid',
                                'sskingdoms\n'])
 TITLE_OF_COLOUMNS = DATE_TIME + TITLE_OF_COLOUMNS
 
+# this is a list of some troublesome tax_ids that dont match with
+# the current NCBI tax id map release - or old DB do not match to
+# these!?!
+BACTERIA_TX_ID_LIST = set([2, 22, 62, 75, 81, 482, 534, 543, 544,
+                           547, 551, 561, 568, 570, 579, 581, 583,
+                           586, 590, 613, 620, 626, 629, 635, 637,
+                           657, 662, 693, 702, 712, 724, 953, 963,
+                           1224, 1236, 28228, 29487, 33057, 34037,
+                           43988, 47420, 51366, 53335, 82976, 82986,
+                           84565, 91061, 91347, 114277, 122277, 141450,
+                           155493, 160674, 165697, 204037, 354276,
+                           413496, 451512, 478070, 511678, 1082702,
+                           1193503, 1217416, 1330547, 1344959, 1649295,
+                           1649845, 1903409, 1903411, 1903412, 1903414,
+                           1960084])
+
 def blast_format_Warning(logger):
     """warns of space sep blast output which is weird.
     I have come across this once from someone else's
@@ -513,6 +529,8 @@ def parse_diamond_tab(diamond_tab_output,
             # allow this to continue. Dont break it!
             description = ""
         # format the output for writing
+        if tax_id in BACTERIA_TX_ID_LIST:
+            kingdom = kingdom_dic["B"]
         data_formatted = "\t".join([line.rstrip("\n"),
                                     description,
                                     str(tax_id),
