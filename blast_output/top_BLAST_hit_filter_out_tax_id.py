@@ -5,7 +5,7 @@
 """
 script to return  the top blast hit from tab file (via two methods: One the assuming order in the blast output
 and 2) explicitly looking for the hit with the greatest bit score). The distribution of the kingdom
-for the top hits is also returned in a file. 
+for the top hits is also returned in a file.
 
 taxonomy filter. Can filter out, for exmapl all pea aphid hits, or all arthopoda hits. (pea aphid 7029, arthopoda 6656)
 """
@@ -40,7 +40,7 @@ def is_number(s):
     except ValueError:
         print "coloumn may not be the correct bit score coloumn. Please check"
         return False
-    
+
 
 ###########################################################################################################################################################################################
 
@@ -68,7 +68,7 @@ disctionary for later use"""
                 child = tax_info[0]
                 #add these to the dictionary {parent:child}
                 tax_dictionary[child]= parent
-    #print tax_dictionary    
+    #print tax_dictionary
     return tax_dictionary
 
 
@@ -86,11 +86,11 @@ def filter_out(tax_id_of_interst, tax_to_filter_out):
         raise ValueError("N/A as taxonomy ID")
     if tax_id_of_interst == "0":
         tax_id_of_interst =="32644"#assign an unknown id
-        return "In_filter_out_tax_id" 
+        return "In_filter_out_tax_id"
 
     parent = tax_dictionary[tax_id_of_interst]
     if tax_id_of_interst == tax_to_filter_out:
-        return "In_filter_out_tax_id"        
+        return "In_filter_out_tax_id"
     while True:
     #for keys in tax_dictionary:
         #print "parent = ", parent, "\n"
@@ -103,7 +103,7 @@ def filter_out(tax_id_of_interst, tax_to_filter_out):
         #32630 is a synthetic organism
         if parent == "32630":#32630
             return "In_filter_out_tax_id"
-            break            
+            break
         if parent == tax_to_filter_out:
             #print "filtering out ", tax_id_of_interst
             return "In_filter_out_tax_id"
@@ -135,30 +135,37 @@ def parse_blast_tab_file(in_file, tax_to_filter_out, bit_score_column, outfile):
     blast match"""
 
     blast_data = wanted_genes(in_file)
-    #get_top_blast_hit(blast_data, bit_score_column, outfile)
-    #open files, read and write.
+    # get_top_blast_hit(blast_data, bit_score_column, outfile)
+    # open files, read and write.
     blast_file = open (in_file, "r")
     out_file = open(outfile,"w")
     bit_score_column = int(bit_score_column)-1
 
-    
-    #set of blast_file_entry gene names
+    # set of blast_file_entry gene names
     blast_file_entry_Genes_names = set([])
     kingdoms = set("")
 
     # dictionary of all the kingdoms in our blast file
-    kingdoms_handles_counts = {'Eukaryota':0, 'N/A':0, 'Bacteria;Eukaryota':0, \
-                               'Archaea;Eukaryota':0, 'Virus':0, 'Bacteria;Viruses':0,\
-                               'Eukaryota;Viruses':0, 'Archaea':0, 'Bacteria':0,\
-                               'Unclassified':0}
-    
-    #this is out list of so called top matches which we will append and remove as applicable
+    kingdoms_handles_counts = {'Eukaryota': 0,
+                               'N/A': 0,
+                               'Bacteria;Eukaryota': 0,
+                               'Archaea;Eukaryota': 0,
+                               'Virus': 0,
+                               'Bacteria;Viruses':0,
+                               'Eukaryota;Viruses': 0,
+                               'Archaea': 0,
+                               'Bacteria': 0,
+                               'Unclassified': 0,
+                               "Other": 0}
+
+    # this is out list of so called top matches which we will
+    # append and remove as applicable
     top_hits = []
     #current bit score value "to beat"
     current_bit_score = float(0.0)
     last_gene_name = ""
     last_blast_line = ""
-    
+
     for line in blast_file:
         if line.startswith("#"):
             continue
@@ -176,7 +183,7 @@ def parse_blast_tab_file(in_file, tax_to_filter_out, bit_score_column, outfile):
         #print blast_file_entry_Genes
         bit_score = float(blast_line[bit_score_column])
         kings_names = blast_line[-1]
-        
+
         ##############################################################################
         #first block: if the names are the same, is the new bit score more?
         if blast_file_entry_Genes == last_gene_name:
@@ -189,7 +196,7 @@ def parse_blast_tab_file(in_file, tax_to_filter_out, bit_score_column, outfile):
                 del top_hits[-1]
                 top_hits.append(blast_line)
 
-                
+
         #############################################################################
         # second block: if the name is new, put it in the name set.
         # use this bit score as the new one to "beat"
@@ -203,13 +210,13 @@ def parse_blast_tab_file(in_file, tax_to_filter_out, bit_score_column, outfile):
 
         ############################################################################
         # assign value to the variables for testing in the new batch of for loops
-        
+
         last_gene_name = blast_file_entry_Genes
         last_blast_line = line
-        
+
     genus_dict = dict()
 
-    total_blast_hit_count = 0 
+    total_blast_hit_count = 0
     for i in top_hits:
         genus_dict = get_genus_count(genus_dict, i)
         total_blast_hit_count = total_blast_hit_count+1
@@ -218,7 +225,7 @@ def parse_blast_tab_file(in_file, tax_to_filter_out, bit_score_column, outfile):
         new_line = ""
         for element in i:
             new_line = new_line+element+"\t"
-            
+
         data_formatted = new_line.rstrip("\t")+"\n"
         out_file.write(data_formatted)
 
@@ -251,7 +258,7 @@ def parse_blast_tab_file(in_file, tax_to_filter_out, bit_score_column, outfile):
     top_hits_out_king.close()
     out_file.close()
     top_hits_out_genus.close()
-    
+
     return kingdoms_handles_counts
 
 
@@ -269,23 +276,23 @@ if "-v" in sys.argv or "--version" in sys.argv:
 
 usage = """Use as follows:
 
-$ python top_BLAST_hit.py -i in.tab -b bit_score coloumn -o out_file 
+$ python top_BLAST_hit.py -i in.tab -b bit_score coloumn -o out_file
 
 This iterates through a tabular blast output
 and returns the top blast hit based on the greatest bitscore (-b colomn in file - default is 12 12-1 computer counting)
 
 and filters out based on a user defined tax id e.g. pea aphid 7029, arthopoda 6656
 
-Usually the order of blast hit is preservedm, this script explicitly looks for the best, checking the order has not been altered. 
+Usually the order of blast hit is preservedm, this script explicitly looks for the best, checking the order has not been altered.
 
 
 
 
 script to return  the top blast hit from tab file (via two methods: One the assuming order in the blast output
 and 2) explicitly looking for the hit with the greatest bit score). The distribution of the kingdom
-for the top hits is also returned in a file. 
+for the top hits is also returned in a file.
 
-#to do taxonomy filter. The code is there, just need to implement this as an option in the main function 
+#to do taxonomy filter. The code is there, just need to implement this as an option in the main function
 
 """
 
