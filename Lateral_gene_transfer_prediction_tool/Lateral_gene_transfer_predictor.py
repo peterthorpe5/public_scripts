@@ -4,9 +4,9 @@
 # this finds the kingdom that blast mtach has been assigned.
 # script: Parse the NCBI taxonomic database node.dmp to get the
 # taxonomic relationship
-
 # author: Peter Thorpe September 2015. The James Hutton Insitute, Dundee, UK.
 # need this for exponontial
+from __future__ import print_function
 import math
 from math import exp, expm1
 import os
@@ -19,7 +19,8 @@ import time
 
 """
 What:
-To determine Lateral gene transfer event (LGT). An alien index score needs to be generated. Score > 45
+To determine Lateral gene transfer event (LGT).
+An alien index score needs to be generated. Score > 30
 is a candidate LGT
 
 Using a Blastp_Vs_NR tab output with taxonomic information included.
@@ -58,8 +59,7 @@ scomnames = common_name
 sskingdoms = kingdom
 """
 
-###########################################################################################################################################################################################
-
+##################################################################
 def parse_NCBI_nodes_tab_file(folder):
     """this is a function to open nodes.dmp from the NCBI taxonomy
     database and find the parent child relationship....returns a
@@ -92,8 +92,9 @@ def parse_NCBI_nodes_tab_file(folder):
 def test_if_id_is_metazoan(tax_id_of_interst,
                            final_tx_id_to_identify_up_to,
                            tax_to_filter_out):
-    """function to get a list of tax id of interest from the tax_dictionary
-    which is produced in the parse_function (parse_NCBI_nodes_tab_file)
+    """function to get a list of tax id of interest from the
+    tax_dictionary which is produced in the parse_function
+    (parse_NCBI_nodes_tab_file)
     nodes.dmp file. . The tax id
     are added to a list for later use
     """
@@ -140,7 +141,7 @@ def test_if_id_is_metazoan(tax_id_of_interst,
             # print "Reached the root of the tree"
             return False
 
-###########################################################################################################################################################################################
+########################################################################
 
 def test_id_of_interst(tax_id_of_interst,
                        final_tx_id_to_identify_up_to,out_file,
@@ -161,11 +162,11 @@ def test_id_of_interst(tax_id_of_interst,
                               logger) is False:
         return False
 
-#############################################################################################################################
+###########################################################################
 #7029 = pea aphid
 #6656 = filter_out_tax_id
 #33208 = Metazoa   -  for me this is the tax id I want to go up to
-###########################################################################################################################################################################################
+###########################################################################
 
 
 def parse_blast_line(blast_line_as_list, tax_coloumn):
@@ -178,7 +179,8 @@ def parse_blast_line(blast_line_as_list, tax_coloumn):
         Evalue = float(blast_line[10])
         bit_score = float(blast_line[11])
     except ValueError:
-        print ("\n\ncannot convert to float", blast_line[10], blast_line[11], "\n")
+        print("\n\ncannot convert to float", blast_line[10],
+               blast_line[11], "\n")
     # tax id can have a whole load of value e.g.
     # 5141;367110;510951;510952;771870.
     # Thefore we split it and take the first one
@@ -193,14 +195,16 @@ def parse_blast_line(blast_line_as_list, tax_coloumn):
     species_common = blast_line[-2]
     kingdom = blast_line[-1]
     return query_name, percentage_identity, Evalue, bit_score, \
-           description, tax_id, species_sci, species_common, kingdom
+           description, tax_id, species_sci, species_common,\
+           kingdom
 
 
-
-def meta_or_non_metazoan(tax_id,
-                         Metazoa_tax_id,
-                         filter_out_tax_id):
-    "function to return metazoan or non-metazoan"
+def meta_or_non_metazoan(tax_id, Metazoa_tax_id, filter_out_tax_id):
+    """function to return metazoan or non-metazoan.
+    Takes in a tax_id, the metazoan tax_id and Phylum of interest
+    to filter out of its calculation. If the tax_id in not in the
+    phylum of interest it checks if it is metazoan or not and
+    returns  a string of metazoan or not."""
     # call the function to test if the id of interst falls in metazoa or not
     if tax_id == "N/A":
         return "N/A"
@@ -216,15 +220,17 @@ def meta_or_non_metazoan(tax_id,
         return "nonmetazoan"
         # assert test_if_id_is_metazoan(tax_id, Metazoa_tax_id, filter_out_tax_id) is False
 
-def reset_list_add_info(list_in, info)  :
-    "function to rest the list to empty, then add info to it"
+
+def reset_list_add_info(list_in, info):
+    """function to rest the list to empty, then add info to it"""
     list_in = []
     if not info == None:
         list_in.append(info)
     return list_in
 
 
-def write_out_data(best_metazoan_hits, best_nonmetazoan_hits, tax_coloumn, out_file):
+def write_out_data(best_metazoan_hits, best_nonmetazoan_hits,
+                   tax_coloumn, out_file):
     """function to format and write out results of interest
     If there is no best non or metazoan hit the evalue is set to 1"""
     data_formatted_top_meta_no_hit = ""
@@ -240,14 +246,12 @@ def write_out_data(best_metazoan_hits, best_nonmetazoan_hits, tax_coloumn, out_f
             query_name = query_name.split("gene=")[0]
             data_formatted_top_meta_no_hit= "%s\t\t1.0\t\t\t\tmetazoan\t\tno_hit\n" %(query_name)
 
-
     if best_nonmetazoan_hits == []:
         if best_metazoan_hits != []:
             results_list = parse_blast_line(best_metazoan_hits, tax_coloumn)
             query_name = results_list[0]
             query_name = query_name.split("gene=")[0]
             data_formatted_top_nonmeta_no_hit= "%s\t\t1.0\t\t\t\tnonmetazoan\t\tno_hit\n" %(query_name)
-
 
     if best_metazoan_hits != []:
         catorgory = "metazoan"
@@ -256,27 +260,27 @@ def write_out_data(best_metazoan_hits, best_nonmetazoan_hits, tax_coloumn, out_f
                 kingdom = parse_blast_line(best_metazoan_hits, tax_coloumn)
         query_name = query_name.split("gene=")[0]
         data_formatted_top_meta= "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" %(query_name, \
-                                                            percentage_identity,Evalue,
-                                                            bit_score, tax_id,
-                                                            kingdom, catorgory, species_sci,\
-                                                            description)
-
-
+                                                                          percentage_identity,Evalue,
+                                                                          bit_score, tax_id,
+                                                                          kingdom, catorgory, species_sci,\
+                                                                          description)
     if best_nonmetazoan_hits != []:
         catorgory = "nonmetazoan"
-        query_name, percentage_identity, Evalue, bit_score, description, tax_id, \
-                species_sci, species_common, kingdom = parse_blast_line(best_nonmetazoan_hits, tax_coloumn)
+        query_name, percentage_identity, Evalue, bit_score, \
+                    description, tax_id, species_sci,\
+                    species_common, \
+                    kingdom = parse_blast_line(best_nonmetazoan_hits, tax_coloumn)
         query_name = query_name.split("gene=")[0]
         data_formatted_top_nonmeta= "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" %(query_name,\
-                                                                    percentage_identity, Evalue,
-                                                                    bit_score, tax_id,
-                                                                    kingdom, catorgory, \
-                                                                    species_sci,description)
+                                                                             percentage_identity, Evalue,
+                                                                             bit_score, tax_id,
+                                                                             kingdom, catorgory, \
+                                                                             species_sci,description)
     out_list = [data_formatted_top_meta_no_hit, data_formatted_top_meta,\
                 data_formatted_top_nonmeta_no_hit, data_formatted_top_nonmeta]
-    for i in out_list:
-        # print "i = ", i
-        out_file.write(i)
+    for member in out_list:
+        # print("member = ", member)
+        out_file.write(member)
 
 
 def parse_blast_tab_file(filename1,
@@ -298,13 +302,11 @@ def parse_blast_tab_file(filename1,
     last_blast_line = ""
     name_already_seen_set = set([])
     name_print_set = set([])
-
     for line in blast_file:
         if line.startswith("#"):
             continue
         if not line.strip():
             continue  # if the last line is blank
-
         blast_line = line.rstrip("\n").split("\t")
         qseqid, sseqid, pident, length, mismatch,\
                 gapopen, qstart, qend, sstart, send, \
@@ -354,25 +356,24 @@ def parse_blast_tab_file(filename1,
                                                              None)
                     best_nonmetazoan_hits = reset_list_add_info(best_nonmetazoan_hits,
                                                                 None)
-
-                    # print "reset best to :", best_nonmetazoan_hits
-                    # print "do I want to write out old results here?"
+                    # print("reset best to :", best_nonmetazoan_hits)
+                    # print("do I want to write out old results here?")
             name_already_seen_set.add(query_name)
             # this can be meta or non, or NA if it is to be filtered out
             key = meta_or_non_metazoan(tax_id,
                                        Metazoa_tax_id,
                                        filter_out_tax_id)
             # if "g3392" in query_name:
-                # print "best_nonmetazoan_hits line 322 = ", best_nonmetazoan_hits
-                # print "best_metazoan_hits line 323 = ", best_metazoan_hits
+                # print("best_nonmetazoan_hits line 322 = ", best_nonmetazoan_hits)
+                # print("best_metazoan_hits line 323 = ", best_metazoan_hits)
 
             if key == "metazoan":
                 best_metazoan_hits = reset_list_add_info(best_metazoan_hits, blast_line)
             if key == "nonmetazoan":
                 best_nonmetazoan_hits = reset_list_add_info(best_nonmetazoan_hits, blast_line)
             last_gene_name = query_name
-            # print "best_metazoan_hits == ", best_metazoan_hits, "\n"
-            # print "best_nonmetazoan_hits == ", best_nonmetazoan_hits, "\n"
+            # print("best_metazoan_hits == ", best_metazoan_hits, "\n")
+            # print("best_nonmetazoan_hits == ", best_nonmetazoan_hits, "\n")
             # break the loop
             continue
 
@@ -400,10 +401,10 @@ def parse_blast_tab_file(filename1,
                     best_nonmetazoan_hits = reset_list_add_info(best_nonmetazoan_hits,
                                                                 blast_line)
                 old_bit_score = float(best_nonmetazoan_hits[0][11])
-                # print "best_nonmetazoan_hits", best_nonmetazoan_hits
-                # print "old bit score = ", old_bit_score, " new = ", float(bit_score)
+                # print("best_nonmetazoan_hits", best_nonmetazoan_hits)
+                # print("old bit score = ", old_bit_score, " new = ", float(bit_score))
                 if float(bit_score) > float(best_nonmetazoan_hits[0][11]):
-                    # print " you should see this"
+                    # print(" you should see this")
                     best_nonmetazoan_hits = reset_list_add_info(best_nonmetazoan_hits,
                                                                 blast_line)
             last_gene_name = query_name
@@ -426,18 +427,17 @@ def parse_blast_tab_file(filename1,
 
         last_gene_name = query_name
         last_blast_line = blast_line
-    # print "name_print_set = ", name_print_set
+    # print("name_print_set = ", name_print_set)
     if not last_gene_name in name_print_set:
         write_out_data(best_metazoan_hits,
                        best_nonmetazoan_hits,
                        tax_coloumn,
                        out_file)
         name_print_set.add(query_name)
-
     out_file.close()
 
 
-def parse_blast_tab_file_to_get_Alien_precursor_value(filtered_blast_results_file,\
+def parse_blast_tab_file_to_get_Alien_precursor_value(filtered_blast_results_file,
                                                       outfile):
     """this is a function to open up a tab file blast results produced by
     parse_blast_tab_file, which works out if the blast hit is metazoan,
@@ -455,23 +455,25 @@ def parse_blast_tab_file_to_get_Alien_precursor_value(filtered_blast_results_fil
         if not line.strip():
             continue  # if the last line is blank
         # print line.rstrip("\n").split("\t")
-        query_name, percentage_identity,Evalue,bit_score,tax_id,kingdom,catorgory,\
+        query_name, percentage_identity, Evalue, bit_score,\
+                    tax_id, kingdom,catorgory,\
                     species_sci,description = line.rstrip("\n").split("\t")
         query_name = query_name.split("gene=")[0]
         Evalue = float(Evalue)
         precursor_value = precursor_score_calculator(Evalue)
         # print blast_line
         data_formatted1="%s\t%s\t%s\t%s\t%s\t%s\t%s\t%f\t%s\t%s\n" %(query_name, percentage_identity,\
-                                                                 Evalue, bit_score,\
-                                                                 tax_id, kingdom, catorgory,\
-                                                                 precursor_value,\
-                                                                 species_sci, description)
+                                                                     Evalue, bit_score,\
+                                                                     tax_id, kingdom, catorgory,\
+                                                                     precursor_value,\
+                                                                     species_sci, description)
         out_file.write(data_formatted1)
     out_file.close()
 
 
 def precursor_score_calculator (Evalue):
-    """Alien index:  (http://www.sciencemag.org/content/suppl/2008/05/29/320.5880.1210.DC1/Gladyshev.SOM.pdf)
+    """Alien index:
+    (http://www.sciencemag.org/content/suppl/2008/05/29/320.5880.1210.DC1/Gladyshev.SOM.pdf)
     taxonomic origin: Bacteria, Fungi, Plantae, Metazoa, and Other (including protists), and
     the best expect value from each group was used to calculate an Alien Index (AI) as given
     by the formula AI = log((Best E-value for Metazoa) + e-200) - log((Best E-value for Non-
@@ -481,7 +483,10 @@ def precursor_score_calculator (Evalue):
     such as X-ray structures, or hits belonging to the same phylum as the query sequence (
     i.e Rotifera, filter_out_tax_id or Nematoda), were excluded from the analysis
 
-    Based on AI, genes were classified as foreign (AI>45), indeterminate (0<AI<45), or metazoan (AI<0)
+    Based on AI, genes were classified as
+    foreign (AI>45),
+    indeterminate (0<AI<45),
+    or metazoan (AI<0)
     """
     # needed imports - do outside of function .
     # need this for exponontial
@@ -497,31 +502,35 @@ def precursor_score_calculator (Evalue):
     return precursor_score_calculator_value
 
 
-################################################################################################################################################
+###########################################################################################
 
 def find_true_alien_score(tax_filter_out,
                           filename_with_precursor_values,
                           outfile, 
                           percentage_identify_threshold,
-                          alien_index_threshold):
+                          alien_index_threshold,
+                          logger):
     """ This function opens up the output of the function above
     (parse_blast_tab_file_to_get_Alien_precursor_value) and works
     out the Alien index score based on sequence name identify.
-    It check that the name above is metazoan,by testing if this is nonmetazoan
-    based on AI, genes were classified as foreign (AI≥45), indeterminate (0<AI<45),
+    It check that the name above is metazoan,
+    by testing if this is nonmetazoan
+    based on AI, genes were classified as
+    foreign (AI≥45),
+    indeterminate (0<AI<45),
     or metazoan (AI≤0)
     """
 
-    # AI = log((Best E-value for Metazoa)+e-200) - log((Best E-value for Non-Metazoa)+e-200)
+    # AI = log((Best E-value for Metazoa)+e-200) - log((Best E-value for Non-Metazoa) + e-200)
     # this is user defined threshold for determining what could be contamination, eg.
-    #70 pi to its hit or greater = contamintation.
+    # 70 percentage identity to its hit or greater = contamintation.
     percentage_identify_threshold = float(percentage_identify_threshold)
 
-    #alien_index_threshold - threshold for what is a HGT candidate
+    # alien_index_threshold - threshold for what is a HGT candidate
     alien_index_threshold = int(alien_index_threshold)
     blast_file = open (filename_with_precursor_values, "r")
-    LTG_out_new_name = filename_with_precursor_values.split("_")[0] + "_LGT_candifates.out"
-    LGT_out = open(LTG_out_new_name, "w")
+    LGT_out_new_name = filename_with_precursor_values.split("_")[0] + "_LGT_candifates.out"
+    LGT_out = open(LGT_out_new_name, "w")
     out_file = open(outfile,"w")
     tile_file_fields_all = "#query_name\tpercentage_identity\tevalue\tbit_score\ttax_id\tkingdom\tcatorgory\talien_index\t"+\
                        "species\tdescription\tcomments\t\tMeta_query_name\tMeta_percentage_identity\tMeta_evalue\tMeta_bit_score\tMeta_tax_id\t"+\
@@ -551,7 +560,6 @@ def find_true_alien_score(tax_filter_out,
         # precursor value has already been worked out :
         # log((Best E-value for Metazoa) + e-200) - function precursor_score_calculator
         precursor_value = float(precursor_value)
-
         if query_name == last_query_name:
             if catorgory == "nonmetazoan":
                 Extra_info = ""
@@ -575,13 +583,11 @@ def find_true_alien_score(tax_filter_out,
                         Extra_info = "Bacteria_"
                 if tax_id == "5141":
                     kingdom == "Fungi"
-
                 meta_query_name, meta_percentage_identity, meta_Evalue, \
                                 meta_bit_score, meta_tax_id, meta_kingdom,\
                                 meta_catorgory, meta_precursor_value,\
                                 meta_species_sci, \
                                 meta_description = last_blast_line.rstrip("\n").split("\t")
-
                 kingdom = Extra_info + kingdom
                 data_formatted = "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%f\t%s\t%s\n" %(query_name, \
                                                                         percentage_identity, \
@@ -590,7 +596,7 @@ def find_true_alien_score(tax_filter_out,
                                                                         catorgory,\
                                                                         alien_index, \
                                                                         species_sci, description)
-                data_formatted = data_formatted.replace("\n", "") + "\t\t\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%f\t%s\t%s\n" %(meta_query_name,\
+                data_formatted = data_formatted.replace("\n", "") + "\t\t\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%f\t%s\t%s\n" % (meta_query_name,\
                                                             meta_percentage_identity, \
                                                             meta_Evalue, meta_bit_score, \
                                                             meta_tax_id,\
@@ -608,6 +614,10 @@ def find_true_alien_score(tax_filter_out,
                                                                         Evalue, bit_score, tax_id, kingdom,
                                                                         catorgory, alien_index, species_sci, 
                                                                         description, comment)
+                    if kingdom == "Unclassified":
+                        # problems assigning taxid to these hits.
+                        logger.warning("removing line due to unknown kingdom:\t%s", data_formatted.rstrip())
+                        continue
                     LGT_out.write(data_formatted)
         else:
             last_query_name = query_name
@@ -615,21 +625,21 @@ def find_true_alien_score(tax_filter_out,
             last_precursor_value = precursor_value
     LGT_out.close()
     out_file.close()
-    return True
 
 
-# below is the command that call the function, that within itself calls all the other functions
+# below is the command that call the function,
+# that within itself calls all the other functions
 # to run the script
 
 if "-v" in sys.argv or "--version" in sys.argv:
-    print "v0.0.3"
+    print("v0.0.3")
     sys.exit(0)
 
 usage = """Use as follows:
 
 $ python Lateral_gene_transfer_predictor.py -i blast_w_tax_id.tab
     --tax_filter_out 6656 (e.g.arthropoda) --tax_filter_up_to 33208
-    (e.g. metazoan) -o LTG_results.out
+    (e.g. metazoan) -o LGT_results.out
 
 
 taxid - 6231 (nematoda)
@@ -646,7 +656,8 @@ scripts will find them from here.
 --tax_filter_up_to
 
 What:
-To determine Lateral gene transfer event (LGT). An alien index score needs to be generated. Score > 45
+To determine Lateral gene transfer event (LGT).
+An alien index score needs to be generated. Score > 45
 is a candidate LGT - however, it could be contamination. The user will have to decide.
 
 
@@ -687,7 +698,8 @@ sskingdoms = kingdom
 
 MORE INFO:
 
-Alien index:  (http://www.sciencemag.org/content/suppl/2008/05/29/320.5880.1210.DC1/Gladyshev.SOM.pdf)
+Alien index:
+    (http://www.sciencemag.org/content/suppl/2008/05/29/320.5880.1210.DC1/Gladyshev.SOM.pdf)
     Massive Horizontal Gene Transfer in Bdelloid Rotifers :
     taxonomic origin: Bacteria, Fungi, Plantae, Metazoa, and Other (including protists), and
     the best expect value from each group was used to calculate an Alien Index (AI) as given
@@ -698,7 +710,8 @@ Alien index:  (http://www.sciencemag.org/content/suppl/2008/05/29/320.5880.1210.
     such as X-ray structures, or hits belonging to the same phylum as the query sequence (
     i.e Rotifera, filter_out_tax_id or Nematoda), were excluded from the analysis
 
-    Based on AI, genes were classified as foreign (AI>45), indeterminate (0<AI<45), or metazoan (AI<0)
+    Based on AI, genes were classified as foreign (AI>45),
+    indeterminate (0<AI<45), or metazoan (AI<0)
 
 There will be Four outfiles, using the -o prefix.
 
@@ -713,11 +726,13 @@ This file contains all the AI scores for each BLAST query. In one long line the 
 and non-metazoan hits can be seen. A final comment is added if the programs believes there to be a HGT/LGT event,
 or if this is contamination.
 
-Contamination is based on a high AI score and greater than 70% identity to a non-metazoan. This can ofcourse be changed to suit the user.
+Contamination is based on a high AI score and greater than 70% identity to a non-metazoan.
+This can ofcourse be changed to suit the user.
 
 4) Perfix_LGT_candifates.out :
-This file contains all scores greater than 0. The final comments box is a note to say if it think it is potential
-contamination or if it may be a HGT/LTG event.
+This file contains all scores greater than 0.
+The final comments box is a note to say if it think it is potential
+contamination or if it may be a HGT/LGT event.
 
 """
 
@@ -748,11 +763,11 @@ parser.add_option("--pi", dest="pi",
                   " or a very recent HGT. Default = 70.")
 parser.add_option("-a", "--alien",
                   dest="alien_index_threshold",
-                  default=15,
+                  default=30,
                   help="this is a threshold for determining the "
                   "alien_index_threshold "
                   " any value greater than this will be put into "
-                  "the outfile. Default = 15.")
+                  "the outfile. Default = 30.")
 
 parser.add_option("--tax_filter_out", dest="tax_filter_out",
                   default="6656",
@@ -867,27 +882,28 @@ if __name__ == '__main__':
     logger.info(sys.version_info)
     logger.info("Command-line: %s", ' '.join(sys.argv))
     logger.info("Starting testing: %s", time.asctime())
-    #call_function load the tax database info
+    # call_function load the tax database info
     logger.info("loading NCBI files from : %s", path) 
     tax_dictionary = parse_NCBI_nodes_tab_file(path)
-    #call_function - parse the tab file to get the best non and metazoan hit,
-    #if defined as such in the tax to use - by default yes
+    # call_function - parse the tab file to get the best non and metazoan hit,
+    # if defined as such in the tax to use - by default yes
     logger.info("parsing Blast file %s", blast_tab_output)
     parse_blast_tab_file(blast_tab_output,
                          outfile,
                          tax_filter_out, 
                          tax_filter_up_to,
                          tax_coloumn)
-    #call_function - get precursor vaules to alien score
+    # call_function - get precursor vaules to alien score
     parse_blast_tab_file_to_get_Alien_precursor_value(outfile,
                                             outfile + "_precursor_value.temp")
-    #call_function - finally get the alien scores
+    # call_function - finally get the alien scores
     final_gene_of_interest = outfile.split("_")[0] + "_Alien_index.out"
     find_true_alien_score(tax_filter_out,
                           outfile + "_precursor_value.temp", 
-                          outfile+"_Alien_index.out",
+                          outfile + "_Alien_index.out",
                           percentage_identify_threshold,
-                          alien_index_threshold)
+                          alien_index_threshold,
+                          logger)
 
     logger.info("\n\tdone...")
 
