@@ -1,0 +1,15 @@
+INFO: sys.version_info(major=3, minor=5, micro=2, releaselevel='final', serial=0)
+INFO: Command-line: /home/pt40963/public_scripts/Sanger_read_metagenetics/metapy_sanger_read.py -a SQ16_Example_recalled_in_chromas_and_q_trimmed.ab1
+INFO: Starting testing: Tue Jul 11 15:28:48 2017
+INFO: using database: /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/data/Phytophthora_Pythium_18S_GenBank_nt_20170711.fasta
+INFO: checking which programs are in PATH
+INFO: Tool executable warning: 
+INFO: trimmomatic command  = trimmomatic SE -phred33 SQ16_Example_recalled_in_chromas_and_q_trimmed_RESULTS/SQ16_Example_recalled_in_chromas_and_q_trimmed.fastq SQ16_Example_recalled_in_chromas_and_q_trimmed_RESULTS/trimmed.fq ILLUMINACLIP:TruSeq3-SE:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:5 MINLEN:36 
+INFO: blastn -db /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/data/Phytophthora_Pythium_18S_GenBank_nt_20170711.fasta -query SQ16_Example_recalled_in_chromas_and_q_trimmed_RESULTS/SQ16_Example_recalled_in_chromas_and_q_trimmedqc.fasta -evalue 1e-30 -outfmt 5 -out SQ16_Example_recalled_in_chromas_and_q_trimmed_RESULTS/SQ16_Example_recalled_in_chromas_and_q_trimmed_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml make cmd_blastrun command
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ16_Example_recalled_in_chromas_and_q_trimmed_RESULTS/SQ16_Example_recalled_in_chromas_and_q_trimmed_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ16_Example_recalled_in_chromas_and_q_trimmed_RESULTS/SQ16_Example_recalled_in_chromas_and_q_trimmedqc_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-50 -m 3 make cmd_parse command
+WARNING: deleting: SQ16_Example_recalled_in_chromas_and_q_trimmed_RESULTS/SQ16_Example_recalled_in_chromas_and_q_trimmed.fastq
+INFO: could not find SQ16_Example_recalled_in_chromas_and_q_trimmed_RESULTS/SQ16_Example_recalled_in_chromas_and_q_trimmedall.fasta
+INFO: could not find SQ16_Example_recalled_in_chromas_and_q_trimmed_RESULTS/SQ16_Example_recalled_in_chromas_and_q_trimmedfasta
+WARNING: deleting: SQ16_Example_recalled_in_chromas_and_q_trimmed_RESULTS/SQ16_Example_recalled_in_chromas_and_q_trimmed_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml
+WARNING: deleting: SQ16_Example_recalled_in_chromas_and_q_trimmed_RESULTS/trimmed.fq
+INFO: Pipeline complete: Tue Jul 11 15:28:53 2017

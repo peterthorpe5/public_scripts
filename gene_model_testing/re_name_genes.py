@@ -167,8 +167,8 @@ def reformat_fasta_gene_name(filename, prefix, out_prefix):
     prefix = str(prefix)
     count = 0
     for seq_record in SeqIO.parse(filename, "fasta"):
-        print count
-        count = count+1
+        print(count)
+        count = count + 1
         gene_name_id = str(seq_record.id).split("|")[0]
         gene_name_id = gene_name_id.split("gene=")[0]
         # magic to rename the gene
@@ -209,7 +209,7 @@ def reformat_hints_scaffold_name(hints, prefix, out_prefix):
 
 #################################################################################################
 if "-v" in sys.argv or "--version" in sys.argv:
-    print "v0.0.1"
+    print("v0.0.1")
     sys.exit(0)
 
 

@@ -1,5 +1,0 @@
-INFO: sys.version_info(major=3, minor=5, micro=2, releaselevel='final', serial=0)
-INFO: Command-line: /home/pt40963/public_scripts/Sanger_read_metagenetics/metapy_sanger_read.py -a SQ16_Example_recalled_in_chromas.ab1
-INFO: Starting testing: Fri Jul  7 17:10:25 2017
-INFO: using database: /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/data/Phytophthora_GeneBank_18s_entries.fasta
-INFO: checking which programs are in PATH

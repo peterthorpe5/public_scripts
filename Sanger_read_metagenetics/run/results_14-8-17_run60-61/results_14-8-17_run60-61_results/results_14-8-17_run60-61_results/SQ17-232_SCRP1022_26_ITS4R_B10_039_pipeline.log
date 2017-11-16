@@ -1,0 +1,102 @@
+INFO: sys.version_info(major=3, minor=5, micro=2, releaselevel='final', serial=0)
+INFO: Command-line: /home/pt40963/public_scripts/Sanger_read_metagenetics/metapy_sanger_read.py -a SQ17-232_SCRP1022_26_ITS4R_B10_039.ab1
+INFO: Starting testing: Fri Sep  1 14:29:31 2017
+INFO: using database: /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/data/Phytophthora_Pythium_18S_GenBank_nt_20170711.fasta
+INFO: checking which programs are in PATH
+INFO: Tool executable warning: 
+WARNING: Sanger files from JHI have no quality values. A chopping approach will be used instead. This is NOT ideal!!!
+INFO: converting fq to fa
+INFO: QC trimming
+INFO: length of longest sequence used = 26
+INFO: sequence = SCRP1022_26_ITS4R
+AGTTGCTATCTAGTTAAAAGCAGAGA
+INFO: blastn -db /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/data/Phytophthora_Pythium_18S_GenBank_nt_20170711.fasta -query SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039qc.fasta -evalue 1e-25 -outfmt 5 -out SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml make cmd_blastrun command
+INFO: BLAST stdout: b''
+INFO: BLAST stderr: b''
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 3 make cmd_parse command
+WARNING: no hits at 3 mismatches
+WARNING: going to increasing by 1. Mismatches = 4
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 4 make cmd_parse command
+WARNING: no hits at 4 mismatches
+WARNING: going to increasing by 1. Mismatches = 5
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 5 make cmd_parse command
+WARNING: no hits at 5 mismatches
+WARNING: going to increasing by 1. Mismatches = 6
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 6 make cmd_parse command
+WARNING: no hits at 6 mismatches
+WARNING: going to increasing by 1. Mismatches = 7
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 7 make cmd_parse command
+WARNING: no hits at 7 mismatches
+WARNING: going to increasing by 1. Mismatches = 8
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 8 make cmd_parse command
+WARNING: no hits at 8 mismatches
+WARNING: going to increasing by 1. Mismatches = 9
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 9 make cmd_parse command
+WARNING: no hits at 9 mismatches
+WARNING: going to increasing by 1. Mismatches = 10
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 10 make cmd_parse command
+WARNING: no hits at 10 mismatches
+WARNING: going to increasing by 1. Mismatches = 11
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 11 make cmd_parse command
+WARNING: no hits at 11 mismatches
+WARNING: going to increasing by 1. Mismatches = 12
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 12 make cmd_parse command
+WARNING: no hits at 12 mismatches
+WARNING: going to increasing by 1. Mismatches = 13
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 13 make cmd_parse command
+WARNING: no hits at 13 mismatches
+WARNING: going to increasing by 1. Mismatches = 14
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 14 make cmd_parse command
+WARNING: no hits at 14 mismatches
+WARNING: going to increasing by 1. Mismatches = 15
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 15 make cmd_parse command
+WARNING: no hits at 15 mismatches
+WARNING: going to increasing by 1. Mismatches = 16
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 16 make cmd_parse command
+WARNING: no hits at 16 mismatches
+WARNING: going to increasing by 1. Mismatches = 17
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 17 make cmd_parse command
+WARNING: no hits at 17 mismatches
+WARNING: going to increasing by 1. Mismatches = 18
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 18 make cmd_parse command
+WARNING: no hits at 18 mismatches
+WARNING: going to increasing by 1. Mismatches = 19
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 19 make cmd_parse command
+WARNING: no hits at 19 mismatches
+WARNING: going to increasing by 1. Mismatches = 20
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 20 make cmd_parse command
+WARNING: no hits at 20 mismatches
+WARNING: going to increasing by 1. Mismatches = 21
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 21 make cmd_parse command
+WARNING: no hits at 21 mismatches
+WARNING: going to increasing by 1. Mismatches = 22
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 22 make cmd_parse command
+WARNING: no hits at 22 mismatches
+WARNING: going to increasing by 1. Mismatches = 23
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 23 make cmd_parse command
+WARNING: no hits at 23 mismatches
+WARNING: going to increasing by 1. Mismatches = 24
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 24 make cmd_parse command
+WARNING: no hits at 24 mismatches
+WARNING: going to increasing by 1. Mismatches = 25
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 25 make cmd_parse command
+WARNING: no hits at 25 mismatches
+WARNING: going to increasing by 1. Mismatches = 26
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 26 make cmd_parse command
+WARNING: no hits at 26 mismatches
+WARNING: going to increasing by 1. Mismatches = 27
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 27 make cmd_parse command
+WARNING: no hits at 27 mismatches
+WARNING: going to increasing by 1. Mismatches = 28
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 28 make cmd_parse command
+WARNING: no hits at 28 mismatches
+WARNING: going to increasing by 1. Mismatches = 29
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 29 make cmd_parse command
+WARNING: no hits at 29 mismatches
+WARNING: going to increasing by 1. Mismatches = 30
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 30 make cmd_parse command
+WARNING: deleting: SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039.fastq
+WARNING: deleting: SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039all.fasta
+WARNING: deleting: SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039.fasta
+WARNING: deleting: SQ17-232_SCRP1022_26_ITS4R_B10_039_RESULTS/SQ17-232_SCRP1022_26_ITS4R_B10_039_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml
+INFO: Pipeline complete: Fri Sep  1 14:29:57 2017

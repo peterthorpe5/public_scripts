@@ -20,9 +20,13 @@ def count_letters(in_fasta, out, threshold=10):
     Take in a fasta, writes out a fasta"""
     threshold = int(threshold)
     aminos = set("ABRNDCQEGHIJLKMOFPSTWYVXZU")
+    names = set([])
     with open(in_fasta) as f_in:
         with open(out, 'w') as f_out:
             for title, seq in SimpleFastaParser(f_in):
+                if title in names:
+                    print "duplicate name found %s" % title
+                    names.add(title)
                 seq = seq.upper().replace("*", "")  # remove stop codons
                 # TODO: Map - to X as in DIAMOND? Or remove it
                 if set(seq).difference(aminos):

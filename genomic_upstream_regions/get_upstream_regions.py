@@ -638,7 +638,8 @@ if __name__ == '__main__':
     file_list = [coordinate_file, genome_sequence, genes_file]
     for user_file in file_list:
         if not os.path.isfile(user_file):
-           sys_exit("file not found: %s" % user_file)
+           print("file not found: %s" % user_file)
+           os._exit(0)
     if upstream:
        up_stream_seq_getter(coordinate_file,
                             genome_sequence,

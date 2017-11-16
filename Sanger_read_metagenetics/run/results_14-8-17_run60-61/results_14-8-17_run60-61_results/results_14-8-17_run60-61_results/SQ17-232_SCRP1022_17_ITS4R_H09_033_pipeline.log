@@ -1,0 +1,21 @@
+INFO: sys.version_info(major=3, minor=5, micro=2, releaselevel='final', serial=0)
+INFO: Command-line: /home/pt40963/public_scripts/Sanger_read_metagenetics/metapy_sanger_read.py -a SQ17-232_SCRP1022_17_ITS4R_H09_033.ab1
+INFO: Starting testing: Fri Sep  1 15:02:40 2017
+INFO: using database: /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/data/Phytophthora_Pythium_18S_GenBank_nt_20170711.fasta
+INFO: checking which programs are in PATH
+INFO: Tool executable warning: 
+WARNING: Sanger files from JHI have no quality values. A chopping approach will be used instead. This is NOT ideal!!!
+INFO: converting fq to fa
+INFO: QC trimming
+INFO: length of longest sequence used = 102
+INFO: sequence = SCRP1022_17_ITS4R
+AGCCTACACATCCACTGCTGAAAGTTGCTATCTAGTTAAAAGCAGAGACTTTCGTCCCCACAGTATAATCAGAATTGTGAAATGGGTTTAAAACAAAAAGTT
+INFO: blastn -db /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/data/Phytophthora_Pythium_18S_GenBank_nt_20170711.fasta -query SQ17-232_SCRP1022_17_ITS4R_H09_033_RESULTS/SQ17-232_SCRP1022_17_ITS4R_H09_033qc.fasta -evalue 1e-25 -outfmt 5 -out SQ17-232_SCRP1022_17_ITS4R_H09_033_RESULTS/SQ17-232_SCRP1022_17_ITS4R_H09_033_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml make cmd_blastrun command
+INFO: BLAST stdout: b''
+INFO: BLAST stderr: b''
+INFO: python /mnt/shared/users/pt40963/public_scripts/Sanger_read_metagenetics/bin/BLAST_xml_parser.py -i SQ17-232_SCRP1022_17_ITS4R_H09_033_RESULTS/SQ17-232_SCRP1022_17_ITS4R_H09_033_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml -o SQ17-232_SCRP1022_17_ITS4R_H09_033_RESULTS/SQ17-232_SCRP1022_17_ITS4R_H09_033_V_Phytophthora_Pythium_18S_GenBank_nt_20170711.txt -e 1e-40 -m 3 make cmd_parse command
+WARNING: deleting: SQ17-232_SCRP1022_17_ITS4R_H09_033_RESULTS/SQ17-232_SCRP1022_17_ITS4R_H09_033.fastq
+WARNING: deleting: SQ17-232_SCRP1022_17_ITS4R_H09_033_RESULTS/SQ17-232_SCRP1022_17_ITS4R_H09_033all.fasta
+WARNING: deleting: SQ17-232_SCRP1022_17_ITS4R_H09_033_RESULTS/SQ17-232_SCRP1022_17_ITS4R_H09_033.fasta
+WARNING: deleting: SQ17-232_SCRP1022_17_ITS4R_H09_033_RESULTS/SQ17-232_SCRP1022_17_ITS4R_H09_033_vs_Phytophthora_Pythium_18S_GenBank_nt_20170711.xml
+INFO: Pipeline complete: Fri Sep  1 15:03:01 2017
