@@ -485,6 +485,7 @@ def parse_diamond_tab(diamond_tab_output,
         accession, line = parse_blast_line(line, logger)
         # e.g old =  APZ74649.1
         # new =  APZ74649
+        old_accession = accession
         accession = accession.split(".")[0]
         # use dictionary to get tax_id from gi number
         # Most of the GI numbers will match, expect them to be in dict...
@@ -524,10 +525,15 @@ def parse_diamond_tab(diamond_tab_output,
             # allow this to continue. Dont break it!
             common_name = ""
         try:
-            description = acc_to_description_dict[accession]
+            description = acc_to_description_dict[old_accession]
         except KeyError:
             # allow this to continue. Dont break it!
             description = ""
+        if description == "":
+            try:
+                description = acc_to_description_dict[accession]
+            except KeyError:
+                description = ""
         # format the output for writing
         if tax_id in BACTERIA_TX_ID_LIST:
             kingdom = kingdom_dic["B"]
