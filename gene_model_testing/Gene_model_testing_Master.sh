@@ -20,45 +20,52 @@ mkdir gff_stats
 
 # genome tools to check and reformat the gff - essential step!
 echo "prepare the amino acid seq from the GFF. First check gff"
-gt_cmd="gt gff3 -sort -retainids -tidy -addids -sortnum -fixregionboundaries 
-	   -addintrons -force -o ${test_gff}_reformatted.gff3 ${test_gff}"
+gt_cmd="gt gff3 -sort yes -tidy yes -addids -sortnum yes -retainids yes 
+	-fixregionboundaries yes -addintrons yes 
+	-force -o ${test_gff}_reformatted.gff3 ${test_gff}"
 echo ${gt_cmd}
 eval ${gt_cmd}
 wait
 
 # GT to get stats on the predicted models. 
 
-gt="gt gff3 -sort -tidy -addintrons ${test_gff}_reformatted.gff3 | 
+gt="gt gff3 -sort yes -tidy yes -addids -sortnum yes -retainids yes 
+	-fixregionboundaries yes -addintrons yes ${test_gff}_reformatted.gff3 | 
    gt stat -force -genelengthdistri -o augustus_genelengthdistri.STAT 
    > temp"
 echo ${gt}
 eval ${gt}
 wait
-gt="gt gff3 -sort -tidy -addintrons ${test_gff}_reformatted.gff3 | 
+gt="gt gff3 -sort yes -tidy yes -addids -sortnum yes -retainids yes 
+	-fixregionboundaries yes -addintrons yes ${test_gff}_reformatted.gff3 | 
 gt stat -force -genescoredistri -o augustus_genescoredistri.STAT 
 > temp"
 echo ${gt}
 eval ${gt}
 wait
-gt="gt gff3 -sort -tidy -addintrons ${test_gff}_reformatted.gff3 
+gt="gt gff3 -sort yes -tidy yes -addids -sortnum yes -retainids yes 
+	-fixregionboundaries yes -addintrons yes ${test_gff}_reformatted.gff3 
 | gt stat -force -exonlengthdistri -o augustus_exonlengthdistri.STAT 
 > temp"
 echo ${gt}
 eval ${gt}
 wait
-gt="gt gff3 -sort -tidy -addintrons ${test_gff}_reformatted.gff3 
+gt="gt gff3 --sort yes -tidy yes -addids -sortnum yes -retainids yes 
+	-fixregionboundaries yes -addintrons yes ${test_gff}_reformatted.gff3 
 | gt stat -force -exonnumberdistri -o augustus_exonnumberdistri.STAT 
 > temp"
 echo ${gt}
 eval ${gt}
 wait
-gt="gt gff3 -sort -tidy -addintrons ${test_gff}_reformatted.gff3 
+gt="gt gff3 -sort yes -tidy yes -addids -sortnum yes -retainids yes 
+	-fixregionboundaries yes -addintrons yes ${test_gff}_reformatted.gff3 
 | gt stat -force -intronlengthdistri -o augustus_intronlengthdistri.STAT 
 > temp"
 echo ${gt}
 eval ${gt}
 wait
-gt="gt gff3 -sort -tidy -addintrons ${test_gff}_reformatted.gff3 
+gt="gt gff3 -sort yes -tidy yes -addids -sortnum yes -retainids yes 
+	-fixregionboundaries yes -addintrons yes ${test_gff}_reformatted.gff3 
 | gt stat -force -cdslengthdistri -o augustus_cdslengthdistri.STAT 
 > temp"
 echo ${gt}
