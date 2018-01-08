@@ -13,6 +13,15 @@ from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio.SeqIO.FastaIO import SimpleFastaParser
 
+def check_illegal_character(sequence):
+    """function to check if seq contains anything
+    other than ATGC"""
+    if set(seq).difference(nucletides):
+        print("Check %s for %s" % (title,
+                                  set(seq).difference(nucletides)))
+        print("not adding this to database")
+        illegal_character_count += 1
+    
 
 def count_letters(in_fasta, out, threshold=10):
     """this is a function check for illegal
@@ -48,7 +57,13 @@ def count_letters(in_fasta, out, threshold=10):
     for keys, vals in name_seq_dict.items():
         sequence = str(keys)
         entry = ">%s\n%s\n" % (vals, sequence)
-        f_out.write(entry)
+        if set(sequence).difference(nucletides):
+            print("Check %s for %s" % (vals,
+                                       set(sequence).difference(nucletides)))
+            print("not adding this to database")
+            continue
+        else:
+            f_out.write(entry)
     f_out.close()
     print("%d\tsequences with illegal characters" % illegal_character_count)
     print("%d\tduplciated sequences" % duplciated_seq_count)

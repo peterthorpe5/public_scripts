@@ -2,8 +2,6 @@ Downloaded 193 GenBank records from NCBI
 Phytophthora_alni_subsp._alni	Phytophthora_alni_subsp.	AF139366	Does not match Genbank entry
 Phytophthora_alni_subsp._uniformis	Phytophthora_alni_subsp.	AF139367	Does not match Genbank entry
 Phytophthora_alni_subsp._multiformis	Phytophthora_alni_subsp.	AF139368	Does not match Genbank entry
-Phytophthora_gonapodyides_H_14	Phytophthora_gonapodyides_isolate	JF912516	Does not match Genbank entry
-Phytophthora_ilicis_voucher_P3939	Phytophthora_ilicis_voucher	HQ261583	Does not match Genbank entry
 Phytophthora_austrocedrae	Phytophthora_sp._austrocedrae	DQ995184	Does not match Genbank entry
 Phytophthora_asparagi	Phytophthora_sp._LT	EF185089	Does not match Genbank entry
 Phytophthora_taxon_kunnunara	Phytophthora_sp._Kunnunara	EF437222	Does not match Genbank entry
@@ -17,7 +15,9 @@ Phytophthora_aquimorbida	Phytophthora_sp._CCH-2009b	FJ666127	Does not match Genb
 Phytophthora_taxon_cuyabensis	Phytophthora_cuyabensis_clone	FJ801995	Does not match Genbank entry
 Phytophthora_amaranthi	Phytophthora_sp._TARI	GU111585	Does not match Genbank entry
 Phytophthora_sp_Pecan	Phytophthora_sp._P16825	GU997621	Does not match Genbank entry
+Phytophthora_ilicis_voucher_P3939	Phytophthora_ilicis_voucher	HQ261583	Does not match Genbank entry
 Phytophthora_castaneae	Phytophthora_katsurae_voucher	HQ643255	Does not match Genbank entry
+Phytophthora_gonapodyides_H_14	Phytophthora_gonapodyides_isolate	JF912516	Does not match Genbank entry
 Phytophthora_taxon_umtamvuna	Phytophthora_sp._Umtamvuna	KC855181	Does not match Genbank entry
 Phytophthora_pachypleura	Phytophthora_sp._1	KC855330	Does not match Genbank entry
 Phytophthora_sp._mekongensis_type1	Phytophthora_aff._meadii	KC875838	Does not match Genbank entry
@@ -31,12 +31,12 @@ Phytophthora_x_cambivora	Phytophthora_cambivora_isolate	KU899179	Does not match 
 #DOWNLOAD INFO
 Wanted number = 198
 we found 193
-did not get {'', 'NOT_TAKEN_DQ648146', 'NA', 'na', 'ITS_GenBank_Accession'}
+did not get {'', 'na', 'ITS_GenBank_Accession', 'NOT_TAKEN_DQ648146', 'NA'}
 
 
 WANTED but not found!!:
 _Phytophthora_gonapodyides_
-2_Phytophthora_citricola_typeI_III_NOT_TAKEN_DQ648146
-2_Phytophthora_inflata_NA
 7a_Phytophthora_vulcanica_na
 ITS_Cladesub-clade_Species_ITS_GenBank_Accession
+2_Phytophthora_citricola_typeI_III_NOT_TAKEN_DQ648146
+2_Phytophthora_inflata_NA

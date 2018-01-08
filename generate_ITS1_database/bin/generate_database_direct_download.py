@@ -31,8 +31,8 @@ def get_table_data(infile):
                 continue # if the last line is blank
             # all the title fields in the database
             Species, date_described, marker, version, \
-                     ITS_GenBank_Accession, reference, \
-                     date_genbank_entry, Tax_ID, Marker_complete,\
+            ITS_GenBank_Accession, Genbank_species_names,\
+            reference, date_genbank_entry, Tax_ID, Marker_complete,\
                      genbank_entry_len, start, stop, \
                      Comments_on_ITS_region, ITS_Clade,\
                      sub_clade, UK, Geographical_distribution,\
@@ -44,6 +44,7 @@ def get_table_data(infile):
                      Notes, Change_note = line.split("\t")
             line = line.rstrip()
             # rmove any spaces in name to get: Phytophthora_asiatica
+            Species = Species.lstrip()
             Species_name = Species.rstrip().replace(" ", "_")
             # creat dict: Phytophthora asiatica = 826
             accession_to_species[ITS_GenBank_Accession.rstrip()] = Species_name.rstrip()
@@ -112,6 +113,7 @@ def seq_getter(tab_file, out_file):
         # species name. But some time 3.
         genbank_species = ("_".join(seq_record.description.split()[:3]))
         fasta_accession = seq_record.id.split(".")[0]
+        # print("genbank_species = \t%s\t%s" % (genbank_species, fasta_accession))
         if fasta_accession.split(".")[0] in wanted_set:
             name_set.add(fasta_accession.split(".")[0])
             species, clade, seq_record.id, \

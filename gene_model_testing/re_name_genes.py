@@ -4,6 +4,7 @@
 # GT sometime returns . as a name for all genes.
 import sys
 from optparse import OptionParser
+import re
 
 
 def open_file(in_file):
@@ -14,7 +15,6 @@ def open_file(in_file):
     """
     with open(in_file) as file:
         return file.read().split("\n")
-
 
 
 
@@ -68,7 +68,7 @@ def reformat_genome_tools_gtf_column(gtf, out_prefix):
     f_in.close()
 
 
-def reformat_gtf_column(gtf,out_prefix):
+def reformat_gtf_column(gtf, out_prefix):
     """finction to rename the gene in a GTF file. The automatically
     gnerated Augustus names/Braker name need to be altered.
     These are altered to perfix00001 - then 5 interger number gene name"""
@@ -137,11 +137,15 @@ def reformat_gff_column(gff, prefix, out_prefix):
         # split the coloumn up in the gff based on \t
         scaf, aug, info, start, stop, stats, direction,\
                     more_info, gene_info = line.split("\t")
+        gene_info = gene_info.rstrip()
         #count the genes
         if info == "gene":
             gene_count = gene_count + 1
-            gene_number = "ID=%s%05d" %(prefix, gene_count)
-        gene_number = "%s%05d" %(prefix, gene_count)
+            gene_number = "%s%05d" %(prefix, gene_count)
+            old_gene_num = gene_info.rstrip()
+        #gene_number = "%s%05d" %(prefix, gene_count)
+        # old_names = re.compile("g[0-9]+\")        
+        gene_info_line = gene_info.replace(old_gene_num, gene_number)
         data = "\t".join([scaf,
                           aug,
                           info,
@@ -149,7 +153,7 @@ def reformat_gff_column(gff, prefix, out_prefix):
                           stop,stats,\
                           direction,
                           more_info,\
-                          gene_number + "\n"])
+                          gene_info_line + "\n"])
         f_out.write(data)
     f_out.close()
     f_in.close()
@@ -166,15 +170,18 @@ def reformat_fasta_gene_name(filename, prefix, out_prefix):
     f_in = open(fasta, "r")
     prefix = str(prefix)
     count = 0
+    #print("renaming fasta file")
     for seq_record in SeqIO.parse(filename, "fasta"):
-        print(count)
+        #print(count)
         count = count + 1
         gene_name_id = str(seq_record.id).split("|")[0]
         gene_name_id = gene_name_id.split("gene=")[0]
+        transcript_id = gene_name_id.split(".")[1]
         # magic to rename the gene
         gene_number = "%s%05d" %(prefix, count)
+        #print(gene_number)
         gene_name = gene_name_id.replace("g", gene_number)
-        seq_record.id = gene_name
+        seq_record.id = gene_number
         seq_record.name = ""
         seq_record.description = ""
         SeqIO.write(seq_record, f, "fasta")

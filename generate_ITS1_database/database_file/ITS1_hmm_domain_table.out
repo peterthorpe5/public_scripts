@@ -49,7 +49,7 @@
 6_Phytophthora_gibbosa_HQ012933                  -            820 Phytophora_ITS_database_v0.001.fasta -            201   1.9e-47  155.3   0.0   1   1   1.9e-47   1.9e-47  155.3   0.0     1   201     1   214     1   214 0.88 -
 1_Phytophthora_nicotianae_KJ494916               -            891 Phytophora_ITS_database_v0.001.fasta -            201   2.9e-47  154.8   2.6   1   1   7.1e-47   7.1e-47  153.5   0.0     1   201    31   243    31   243 0.91 -
 7a_Phytophthora_fragariae_AF266762               -            831 Phytophora_ITS_database_v0.001.fasta -            201   3.1e-47  154.6   6.8   1   1   9.1e-47   9.1e-47  153.1   0.0     1   201     1   219     1   219 0.86 -
-_Phytophthora_gonapodyides_voucher_HQ643236      -            819 Phytophora_ITS_database_v0.001.fasta -            201   3.2e-47  154.6   7.1   1   1   5.2e-47   5.2e-47  153.9   0.0     1   201     1   214     1   214 0.88 -
+6_Phytophthora_gonapodyides_voucher_HQ643236     -            819 Phytophora_ITS_database_v0.001.fasta -            201   3.2e-47  154.6   7.1   1   1   5.2e-47   5.2e-47  153.9   0.0     1   201     1   214     1   214 0.88 -
 6_Phytophthora_fluvialis_JF701436                -            819 Phytophora_ITS_database_v0.001.fasta -            201   4.8e-47  154.0   5.2   1   1   2.6e-46   2.6e-46  151.6   0.0     1   201     1   215     1   215 0.88 -
 7_Phytophthora_formosa_KU517153                  -            831 Phytophora_ITS_database_v0.001.fasta -            201   5.2e-47  153.9   0.0   1   1   5.2e-47   5.2e-47  153.9   0.0     1   201     1   219     1   219 0.86 -
 3_Phytophthora_pluvialis_KC529657                -           1168 Phytophora_ITS_database_v0.001.fasta -            201   5.6e-47  153.8   5.1   1   1   1.2e-46   1.2e-46  152.7   0.0     1   201   378   571   378   571 0.93 -
@@ -202,5 +202,5 @@ _Phytophthora_fallax_Voucher_HQ261559            -            798 Phytophora_ITS
 # Target file:     ./database_file/Phytophthora_FULL_LEN_DB_v0.002_20171213.fasta
 # Option settings: hmmsearch --domtblout ./database_file/ITS1_hmm_domain_table.out --domE 1e-22 ./bin/Phytophora_ITS1_20171092.hmm ./database_file/Phytophthora_FULL_LEN_DB_v0.002_20171213.fasta 
 # Current dir:     /mnt/shared/users/pt40963/public_scripts/generate_ITS1_database
-# Date:            Wed Dec 13 15:57:45 2017
+# Date:            Wed Dec 20 13:08:21 2017
 # [ok]
