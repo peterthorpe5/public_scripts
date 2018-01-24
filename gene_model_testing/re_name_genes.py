@@ -138,14 +138,19 @@ def reformat_gff_column(gff, prefix, out_prefix):
         scaf, aug, info, start, stop, stats, direction,\
                     more_info, gene_info = line.split("\t")
         gene_info = gene_info.rstrip()
+        try:
+            old_gene_num = gene_info.split(".t")[0]
+        except:
+            old_gene_num = gene_info.rstrip()
+        old_gene_num = old_gene_num.split("g")[1]
         #count the genes
         if info == "gene":
             gene_count = gene_count + 1
             gene_number = "%s%05d" %(prefix, gene_count)
-            old_gene_num = gene_info.rstrip()
         #gene_number = "%s%05d" %(prefix, gene_count)
         # old_names = re.compile("g[0-9]+\")        
-        gene_info_line = gene_info.replace(old_gene_num, gene_number)
+        gene_info_line = gene_info.replace("g" + old_gene_num, gene_number)
+         
         data = "\t".join([scaf,
                           aug,
                           info,
