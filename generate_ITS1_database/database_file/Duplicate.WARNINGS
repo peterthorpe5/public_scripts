@@ -2,6 +2,7 @@ duplicate seq found 7a_Phytophthora_fragariae_AF266762	 matches 7a_Phytophthora_
 duplicate seq found 2b_Phytophthora_glovera_AF279124	 matches 2_Phytophthora_capsici_AF266787
 duplicate seq found 8a_Phytophthora_cryptogea_AY659438	 matches 8a_Phytophthora_cryptogea_AF266796
 duplicate seq found 1_Phytophthora_infestans_EU216567	 matches 1c_Phytophthora_andina_AY770741
+duplicate seq found 4_Phytophthora_arenaria_HQ013219	 matches 4_Phytophthora_alticola_HQ013214
 duplicate seq found 8b_Phytophthora_brassicae_HQ643158	 matches 8b_Phytophthora_brassicae_voucher_HQ643156
 duplicate seq found 6_Phytophthora_humicola_HQ643245	 matches 6_Phytophthora_humicola_HQ643244
 duplicate seq found 1_Phytophthora_X_serendipita_JX276054	 matches 1_Phytophthora_hedraiandra_AY707987
@@ -15,25 +16,23 @@ duplicate seq found 7a_Phytophthora_cambivora_KU899159	 matches 7a_Phytophthora_
 Check 7a_Phytophthora_cambivora_KU899159 for {'K'}
 not adding this to database
 duplicate seq found 7_Phytophthora_x_cambivora_KU899179	 matches 7a_Phytophthora_cambivora_KU899163
-Check 7a_Phytophthora_cambivora_KU681015 for {'K'}
+Check 6_Phytophthora_gemini_FJ217680 for {'Y'}
+not adding this to database
+Check 7_Phytophthora_x_incrassata_KU517156 for {'Y', 'W'}
 not adding this to database
 Check 7_Phytophthora_x_heterohybrida_KU517151 for {'R'}
 not adding this to database
 Check 8b_Phytophthora_brassicae_voucher_HQ643157 for {'W'}
 not adding this to database
+Check 8d_Phytophthora_austrocedri_KU953997 for {'R'}
+not adding this to database
 Check 6_Phytophthora_borealis_HM004232 for {'Y'}
 not adding this to database
-Check 8d_Phytophthora_austrocedrae_KU953997 for {'R'}
-not adding this to database
-Check 7_Phytophthora_x_incrassata_KU517156 for {'W', 'Y'}
+Check 7a_Phytophthora_alni_subsp._alni_AF139366 for {'Y', 'W'}
 not adding this to database
 Check 4_Phytophthora_boodjera_KJ372244 for {'K'}
 not adding this to database
-Check 7a_Phytophthora_alni_subsp._alni_AF139366 for {'W', 'Y'}
-not adding this to database
-Check 7a_Phytophthora_alni_subsp._uniformis_AF139367 for {'Y'}
-not adding this to database
-Check 6_Phytophthora_gemini_FJ217680 for {'Y'}
+Check 7a_Phytophthora_cambivora_KU681015 for {'K'}
 not adding this to database
 1	sequences with illegal characters
-15	duplciated sequences
+16	duplciated sequences

@@ -2,7 +2,7 @@ Downloaded 193 GenBank records from NCBI
 Phytophthora_alni_subsp._alni	Phytophthora_alni_subsp.	AF139366	Does not match Genbank entry
 Phytophthora_alni_subsp._uniformis	Phytophthora_alni_subsp.	AF139367	Does not match Genbank entry
 Phytophthora_alni_subsp._multiformis	Phytophthora_alni_subsp.	AF139368	Does not match Genbank entry
-Phytophthora_austrocedrae	Phytophthora_sp._austrocedrae	DQ995184	Does not match Genbank entry
+Phytophthora_austrocedri	Phytophthora_sp._austrocedrae	DQ995184	Does not match Genbank entry
 Phytophthora_asparagi	Phytophthora_sp._LT	EF185089	Does not match Genbank entry
 Phytophthora_taxon_kunnunara	Phytophthora_sp._Kunnunara	EF437222	Does not match Genbank entry
 Phytophthora_irrigata	Phytophthora_sp._23J7	EU334634	Does not match Genbank entry
@@ -28,15 +28,17 @@ Phytophthora_sp._mekongensis_type3	Phytophthora_aff._meadii	KM501564	Does not ma
 Phytophthora_taxon_gondwanense	Phytophthora_sp._gondwanense	KP070696	Does not match Genbank entry
 Phytophthora_taxon_pocumtuck	Phytophthora_sp._NJB-2015	KP749380	Does not match Genbank entry
 Phytophthora_x_cambivora	Phytophthora_cambivora_isolate	KU899179	Does not match Genbank entry
+Phytophthora_austrocedri	Phytophthora_austrocedrae_strain	KU953997	Does not match Genbank entry
+Phytophthora_austrocedri	Phytophthora_austrocedrae_strain	KU954009	Does not match Genbank entry
 #DOWNLOAD INFO
 Wanted number = 198
 we found 193
-did not get {'', 'na', 'ITS_GenBank_Accession', 'NOT_TAKEN_DQ648146', 'NA'}
+did not get {'', 'NA', 'na', 'NOT_TAKEN_DQ648146', 'ITS_GenBank_Accession'}
 
 
 WANTED but not found!!:
 _Phytophthora_gonapodyides_
-7a_Phytophthora_vulcanica_na
-ITS_Cladesub-clade_Species_ITS_GenBank_Accession
-2_Phytophthora_citricola_typeI_III_NOT_TAKEN_DQ648146
 2_Phytophthora_inflata_NA
+7a_Phytophthora_vulcanica_na
+2_Phytophthora_citricola_typeI_III_NOT_TAKEN_DQ648146
+ITS_Cladesub-clade_Species_ITS_GenBank_Accession

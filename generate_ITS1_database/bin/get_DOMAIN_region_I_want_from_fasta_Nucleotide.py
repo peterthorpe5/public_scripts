@@ -50,7 +50,7 @@ def domain_getter(filename, HMM_search_file, outfile):
             # ali coord from and to from the HMM out file is what we want
             HMM_search_position_start = ((i[1]))
             HMM_search_position_stop = (i[2])
-            HMM_search_position_start_real = HMM_search_position_start
+            HMM_search_position_start_real = HMM_search_position_start - 1
             seq_length = i[3]
             #print HMM_search_name
             if HMM_search_name == seq_record.id:
