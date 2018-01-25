@@ -13,6 +13,8 @@ import sys
 from optparse import OptionParser
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
+from Bio import SeqIO
+
 
 #################################################################
 
@@ -37,9 +39,6 @@ def domain_getter(filename, HMM_search_file, outfile):
     domain regions of a pfam domain to a file
     - required hmmsearch --domtblout -
     NUCLEOTIDE VERSION"""
-    from Bio.Seq import Seq
-    from Bio.SeqRecord import SeqRecord
-    from Bio import SeqIO
     domain_tbl_out = open("seqid_domain_coordinates.txt", "w")
     # open to write to stat stop coordinate to
     HMM_search_data = parse_file(HMM_search_file)
