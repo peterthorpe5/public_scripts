@@ -36,7 +36,6 @@ if "--version" in sys.argv:
     print(VERSION)
     sys.exit(1)
 
-cwd = os.getcwd()
 
 def get_args():
     parser = argparse.ArgumentParser(description="Pipeline: cluster " +
@@ -64,19 +63,19 @@ def get_args():
 
     optional.add_argument("-e", "--evalue", dest='evalue',
                           action="store",
-                          default=1e-50,
+                          default=1e-40,
                           type=float,
                           help="evalue to filter results with")
 
     optional.add_argument("--num_seqs", dest='num_seqs',
                           action="store",
-                          default="3",
+                          default="5",
                           type=str,
                           help="number of blast hits to get")
 
     optional.add_argument("-m", "--mismatches", dest='mismatches',
                           action="store",
-                          default="20",
+                          default="25",
                           type=str,
                           help="number of mismatches to filter results with")
 
@@ -156,7 +155,11 @@ def make_parse_cmd(outfile, mismatches):
 if __name__ == '__main__':
     # Set up logging
     args, FILE_DIRECTORY = get_args()
-    PREFIX = "Novel_blast"
+    cwd = os.getcwd()
+    SAMPLE = os.path.split(cwd)[0]
+    SAMPLE =  os.path.split(SAMPLE)[0]
+    SAMPLE =  os.path.split(SAMPLE)[1]
+    PREFIX = SAMPLE
     logger = logging.getLogger('Novel_top_hit.py: %s' % time.asctime())
     logger.setLevel(logging.DEBUG)
     err_handler = logging.StreamHandler(sys.stderr)
@@ -235,7 +238,7 @@ if __name__ == '__main__':
                 logger.info("BLAST stdout: %s", pipe.stdout)
             if pipe.stderr != "":
                 logger.info("BLAST stderr: %s", pipe.stderr)
-            out_file_name = "%s_V_%s.txt" %(filename.split(".fa")[0],
+            out_file_name = "%s_%s_vs_%s.txt" %(SAMPLE, filename.split(".fa")[0],
                                             OTU_DATABASE)
 
             cmd_parse = make_parse_cmd(out_file_name, str(args.mismatches))
