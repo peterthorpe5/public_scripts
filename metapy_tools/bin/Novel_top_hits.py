@@ -133,7 +133,7 @@ def run_parse_cmd(cmd, logger):
                           stderr=subprocess.PIPE)
 
 
-def make_parse_cmd(outfile, mismatches, logger):
+def make_parse_cmd(outfile, mismatches):
     """function to return the parsing command"""
     cmd_parse = " ".join(["python",
                           os.path.join("$HOME",
@@ -150,7 +150,6 @@ def make_parse_cmd(outfile, mismatches, logger):
                           str(args.evalue),
                           "-m",
                           str(mismatches)])
-    logger.info("XML-parser: ", cmd_parse)
     return cmd_parse
 
 
@@ -232,12 +231,14 @@ if __name__ == '__main__':
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE,
                                   check=True)
-            logger.info("BLAST stdout: %s", pipe.stdout)
-            logger.info("BLAST stderr: %s", pipe.stderr)
+            if pipe.stdout != "":
+                logger.info("BLAST stdout: %s", pipe.stdout)
+            if pipe.stderr != "":
+                logger.info("BLAST stderr: %s", pipe.stderr)
             out_file_name = "%s_V_%s.txt" %(filename.split(".fa")[0],
                                             OTU_DATABASE)
 
-            cmd_parse = make_parse_cmd(out_file_name, str(args.mismatches), logger)
+            cmd_parse = make_parse_cmd(out_file_name, str(args.mismatches))
             run_parse_cmd(cmd_parse, logger)
             remove_list = [xml_out, "temp.fasta"]
             cleanup_option = args.cleanup.upper()
