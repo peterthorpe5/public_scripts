@@ -1,0 +1,29 @@
+# Python compiled files
+*.pyc
+pycits/__pycache__
+
+# Emacs intermediates
+*~
+*#
+*/.#*
+
+# Exclude distutils output
+.eggs/
+build/
+dist/
+pycits.egg-info/
+
+# Exclude virtualenv directory
+venv-THAPBI-pycits/
+
+# Exclude test output
+test_out/
+test_out.log
+tests/test_out*
+error.log
+
+# Exclude OSX files
+.DS_Store
+
+# Excludes metapy testing output
+DNAMIX_S95_L001_RESULTS/

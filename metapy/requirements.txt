@@ -1,0 +1,13 @@
+numpy
+biom-format
+biopython
+click
+codecov
+coverage
+future
+nose
+requests
+scipy
+pysam
+sklearn
+matplotlib

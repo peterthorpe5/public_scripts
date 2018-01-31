@@ -1,0 +1,126 @@
+language: python
+
+python:
+  - '3.5'
+  - '3.5-dev'
+#  - '3.6'
+#  - '3.6-dev'
+
+# Install Python module dependencies
+install:
+  - pip install -r requirements.txt
+  - pip install codecov
+
+# Run tests. Use --nocapture to get extra verbose output for debugging, and
+#            skip tests we can't make run on Travis with the REGEX notravis
+script:
+  - nosetests -v --with-coverage --cover-package=pycits --nocapture --exclude="notravis"
+
+# application dependencies:
+#   - build legacy BLAST (blastclust) from source
+#   - download PEAR 64-bit binary
+#   - download Trimmomatic .jar file and create wrapper script
+#              (until whitelisted at Travis-CI)
+#   - clone swarm from GitHub repo and make in situ
+#   - download and build FLASH
+#   - download spades.3.9.1
+#   - download fastqc 0.11.5
+#	- download muscle 3.8.31
+#	- download cdhit version 4.6
+#	- download binary for samtools 1.2
+#	- download bowtie_2.2.5 - binary
+#	- download bwa-0.7.10 - binary
+#	- STAR RNAseq aligner
+#	- Vsearch2.4.0
+before_install:
+  - cd $HOME
+  - mkdir vsearch
+  - cd vsearch
+  - wget https://github.com/torognes/vsearch/releases/download/v2.4.0/vsearch-2.4.0-linux-x86_64.tar.gz
+  - tar xzf vsearch-2.4.0-linux-x86_64.tar.gz
+  - export PATH=$HOME/vsearch/vsearch-2.4.0-linux-x86_64/bin/:$PATH
+  - cd $HOME
+  - mkdir bowtie_2.2.5
+  - cd bowtie_2.2.5
+  - wget https://depot.galaxyproject.org/package/linux/x86_64/bowtie2/bowtie2-2.2.5-Linux-x86_64.tar.gz
+  - tar -zxvf bowtie2-2.2.5-Linux-x86_64.tar.gz
+  - export PATH=$HOME/bowtie_2.2.5/bin/:$PATH
+  - cd $HOME
+  - mkdir bwa
+  - cd bwa
+  - wget https://depot.galaxyproject.org/package/linux/x86_64/bwa/bwa-0.7.10.039ea20639.tar.gz
+  - tar -zxvf bwa-0.7.10.039ea20639.tar.gz
+  - export PATH=$HOME/bwa/bwa-0.7.10.039ea20639/:$PATH
+  - cd $HOME
+  - mkdir STAR
+  - cd STAR
+  - git clone https://github.com/alexdobin/STAR.git
+  - export PATH=$HOME/STAR/bin/Linux_x86_64_static/:$PATH
+  - cd $HOME
+  - mkdir samtools_1.2
+  - cd samtools_1.2
+  - wget https://depot.galaxyproject.org/package/linux/x86_64/samtools/samtools-1.2-Linux-x86_64.tgz
+  - tar -zxvf samtools-1.2-Linux-x86_64.tgz
+  - export PATH=$HOME/samtools_1.2/bin/:$PATH
+  - cd $HOME
+  - git clone https://github.com/weizhongli/cdhit.git
+  - cd cdhit
+  - make
+  - export PATH=$HOME/cdhit:$PATH
+  - cd $HOME
+  - wget http://www.drive5.com/muscle/downloads3.8.31/muscle3.8.31_i86linux32.tar.gz
+  - tar -zxvf muscle3.8.31_i86linux32.tar.gz
+  - cp muscle3.8.31_i86linux32 muscle
+  - export PATH=$HOME/:$PATH
+  - cd $HOME
+  - wget http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.5.zip
+  - unzip fastqc_v0.11.5.zip
+  - cd FastQC
+  - chmod 755 fastqc
+  - export PATH=$HOME/FastQC/:$PATH
+  - cd $HOME
+  - wget http://cab.spbu.ru/files/release3.10.0/SPAdes-3.10.0-Linux.tar.gz
+  - tar -zxvf SPAdes-3.10.0-Linux.tar.gz
+  - export PATH=$HOME/SPAdes-3.10.0-Linux/bin/:$PATH
+  - cd $HOME
+  - wget https://sourceforge.net/projects/flashpage/files/FLASH-1.2.11.tar.gz
+  - tar -zxvf FLASH-1.2.11.tar.gz
+  - cd FLASH-1.2.11
+  - make
+  - export PATH=$HOME/FLASH-1.2.11/:$PATH
+  - cd $HOME
+  - wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/legacy/2.2.26/blast-2.2.26-x64-linux.tar.gz
+  - tar -zxvf blast-2.2.26-x64-linux.tar.gz
+  - export PATH=$HOME/blast-2.2.26/bin:$PATH
+  - wget https://sco.h-its.org/exelixis/web/software/pear/files/pear-0.9.10-bin-64.tar.gz
+  - tar -zxvf pear-0.9.10-bin-64.tar.gz
+  - mv pear-0.9.10-bin-64/pear-0.9.10-bin-64 pear-0.9.10-bin-64/pear
+  - export PATH=$HOME/pear-0.9.10-bin-64:$PATH
+  - cd $HOME
+  - wget http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomatic-0.36.zip
+  - unzip Trimmomatic-0.36.zip
+  - printf "#\!/bin/bash\nexec java -jar $HOME/Trimmomatic-0.36/trimmomatic-0.36.jar \"\$@\"" > Trimmomatic-0.36/trimmomatic
+  - chmod 755 Trimmomatic-0.36/trimmomatic
+  - export PATH=$HOME/Trimmomatic-0.36:$PATH
+  - cd $HOME
+  - mkdir swarm
+  - cd swarm
+  - wget https://github.com/torognes/swarm/releases/download/v2.1.10/swarm-2.1.10-linux-x86_64
+  - cp swarm-2.1.10-linux-x86_64 swarm
+  - chmod a+x swarm
+  - export PATH=$HOME/swarm/:$PATH
+  - cd $TRAVIS_BUILD_DIR
+
+
+sudo: false
+#addons:
+#  apt:
+#    packages:
+
+after_success:
+  - codecov
+
+# Notify on builds via Slack
+notifications:
+  slack:
+    secure: D4KQswv45aiMZ6d8ilvvwQsalXQTx2U/3LJa0JnSMZifF4z99aNruQu97DZ3fsFD0u/P2glLEoSm8bicCf5hFEoQ4O6QeWF6sMO5n3TtpKXA1OalpXt9aQn9ckecAd81KZ4qamPGxX1w5SRlQEEhbf5ODHthnqpttlRdd4BhZ7jnM+InoBiOa22Ub+k5Rap4wtGT5rxfXDHleXgk0waTs+RINaQUgdswod+PHclW0zfppaldhzSy703WNiA8ceTHUJIvYehiv1UINNtjwg8JHKNseTdaLcN4+G1TJX+EuNqTdhtsV/7a+8mCEprsKyM7Uhjia26Tyd3yUuU1jnRmBA/L62x91MfH11AgJdbVekcjYuKTo5e+RBFWYAz6DlaX5s7CXUOU8n6zA2ei6wj3Erx8e2keTPBG6uafjawXQgEuGk3y2OtrkUYO2SwrEuFOirXcdS2EXkQ3Fw/8QQMT4xZzaIofbtma0UwWYeRy26TSMt0AnEPCwMc9vOgl4bZoHgJK9boStvcHEKjWI1biFx3Eu9MepAB+hhzTzVaMs/o9DbJZzLp3EOR8857UO0iMiZjhOLHyUkr8j5L2OCrkKiSDka1pJwqN4dU3UEXNL0nZ4pkL1x+1wcM/jLQytOeZohIGes9EvnS9rIVcQUDOO3uZYEf8NDGftEDm2Zrqxzk=
