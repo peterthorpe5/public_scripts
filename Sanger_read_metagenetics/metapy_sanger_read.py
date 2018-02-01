@@ -7,7 +7,7 @@
 # THIS IS FOR SANGER READS
 #
 # (c) The James Hutton Institute 2016-2017
-# Author: Leighton Pritchard, Peter Thorpe
+# Author: Peter Thorpe
 
 import sys
 import shutil
@@ -67,11 +67,6 @@ def get_args():
                           action="store", default="2",
                           type=str,
                           help="number of threads")
-
-    # TODO: Why are these files being specified? They are not general.
-    # for now they are here for testing. Will removed later
-    # DESIGN: Attempting to collate everything here into a single cmd-line
-    #         interface is a bad idea. We need to restructure this.
 
     optional.add_argument("-a", "--ab1", dest='ab1',
                           action="store",

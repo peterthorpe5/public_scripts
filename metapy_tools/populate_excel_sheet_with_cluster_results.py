@@ -21,7 +21,7 @@ Save the lists of sample with the hosts into a text file:
 This is an example. This will go through all the results in a folder
 for a tool of your choice and populate a new text file with
 the old info and add the species found. But only those with more reads
-that the given threshold. Dafault 100.
+that the given threshold. Dafault 50.
 
  python populate_excel_sheet_swarm.py -t 100 -i infile.tx -o outfile.text
  

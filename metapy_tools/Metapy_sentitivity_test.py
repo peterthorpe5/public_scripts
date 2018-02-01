@@ -1,4 +1,7 @@
 # script to quantify sensitivity and other metrics for metapy output
+# paste the results from the output of interest into the variable called:
+# FOUND_STR
+# Also, make sure you test the FOUND_STR against the correct TEST_LIST!!
 
 DNAMIXUNDIL = """capsici
 obscura
@@ -53,14 +56,22 @@ boehmeriae""".split()
 #######################################################
 # CHANGE YOUR COMPARISON TEST LIST HERE
 # DNAMIXUNDIL, DNAMIX2, DNAMIX1, PCRMIX
-TEST_LIST = DNAMIX2
+TEST_LIST = DNAMIX1
 
 # Paste you results in here
-FOUND_STR = """2	2_Phytophthora_mexicana_HQ261620_1 2_Phytophthora_capsici_AF266787_2b_P._glovera_AF279124_1	471
-3	8d_Phytophthora_obscura_HQ917910_1	429
-5	2_Phytophthora_siskiyouensis_EF523386_1	173
-6	8c_Phytophthora_foliorum_EF120469_1	150
-7	2_Phytophthora_citricola_E_AF266788_2_P._acerina_JX951285_1 2_Phytophthora_citricola_sensu_stricto_FJ237526_1 2_Phytophthora_plurivora_FJ665225_1 2_Phytophthora_pini_FJ392322_1 2_Phytophthora_pachypleura_KC855330_1 2c_Phytophthora_capensis_GU191231_1	134
+FOUND_STR = """1	1_Phytophthora_idaei_AF266773	299
+2	1_Phytophthora_nicotianae_KJ494916	1
+3	2_Phytophthora_capsici_AF266787_2b_P._glovera_AF279124	368
+4	2_Phytophthora_citricola_E_AF266788_2_P._acerina_JX951285	1
+5	2_Phytophthora_plurivora_FJ665225	298
+6	4_Phytophthora_palmivora_GU111659	276
+7	5_Phytophthora_agathidicida_KP295308	264
+8	6_Phytophthora_crassamura_KP863493	289
+9	7a_Phytophthora_rubi_AF266761_7a_P._fragariae_AF266762	251
+10	8a_Phytophthora_cryptogea_AY659421	186
+11	8a_Phytophthora_pseudocryptogea_KY212008	155
+12	_Phytophthora_boehmeriae_Voucher_HQ643149	275
+13	_Phytophthora_fallax_Voucher_HQ261559	139
 
 """
 
