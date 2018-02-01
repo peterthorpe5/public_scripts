@@ -64,7 +64,7 @@ def get_args():
     file_directory = os.path.realpath(__file__).split("metapy")[0]
     optional = parser.add_argument_group('optional arguments')
     optional.add_argument("--thread", dest='threads',
-                          action="store", default="2",
+                          action="store", default="8",
                           type=str,
                           help="number of threads")
 
@@ -78,11 +78,7 @@ def get_args():
 
     optional.add_argument("-d", "--OTU_DB", dest='OTU_DB',
                           action="store",
-                          default=os.path.join(file_directory,
-                                               "data",
-                                               "Phytophthora_Pythium" +
-                                               "_18S_GenBank_nt_" +
-                                               "20170711.fasta"),
+                          default="/mnt/scratch/local/blast/ncbi/nt",
                           type=str,
                           help="database of seq of to compare against")
 
@@ -347,18 +343,19 @@ if __name__ == '__main__':
     # blast, make blast db
     db_name = os.path.split(OTU_DATABASE)[-1]
     if not os.path.isfile(OTU_DATABASE + ".nhr"):
-        cmd_blast_db = " ".join(["makeblastdb",
-                                 "-in",
-                                 OTU_DATABASE,
-                                 "-dbtype",
-                                 "nucl"])
-        logger.info("%s make blastdb command", cmd_blast_db)
-        pipe = subprocess.run(cmd_blast_db, shell=True,
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.PIPE,
-                              check=True)
-        logger.info("BLAST makde database stdout: %s", pipe.stdout)
-        logger.info("BLAST makde database: %s", pipe.stderr)
+        if not OTU_DATABASE == "/mnt/scratch/local/blast/ncbi/nt":
+            cmd_blast_db = " ".join(["makeblastdb",
+                                     "-in",
+                                     OTU_DATABASE,
+                                     "-dbtype",
+                                     "nucl"])
+            logger.info("%s make blastdb command", cmd_blast_db)
+            pipe = subprocess.run(cmd_blast_db, shell=True,
+                                  stdout=subprocess.PIPE,
+                                  stderr=subprocess.PIPE,
+                                  check=True)
+            logger.info("BLAST makde database stdout: %s", pipe.stdout)
+            logger.info("BLAST makde database: %s", pipe.stderr)
     # run the blast
     xml_out = "%s_vs_%s.xml" % (fa_out_QC.split("qc")[0],
                                 db_name.split(".fa")[0])
@@ -367,6 +364,8 @@ if __name__ == '__main__':
                              OTU_DATABASE,
                              "-query",
                              fa_out_QC,
+                             "-num_threads",
+                             args.threads,
                              "-evalue",
                              "1e-25",
                              "-outfmt 5",
