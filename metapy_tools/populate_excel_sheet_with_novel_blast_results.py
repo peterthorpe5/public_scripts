@@ -5,6 +5,7 @@
 import sys
 import os
 import argparse
+from collections import defaultdict
 
 
 VERSION = "summerise results: v0.01"
@@ -26,8 +27,8 @@ that the given threshold. Default 5 mismatches (-m)
  python populate_excel_sheet_with_novel_blast_results.py -m 5 -i infile.tx -o outfile.text
 
 """
-if "--help" or "-h" in sys.argv:
-    print(usage)
+#if "--help" or "-h" in sys.argv:
+    #print(usage)
 
 
 def get_args():
@@ -93,7 +94,9 @@ def split_line_return_sample(line, sample_set):
     return sample_set
 
 
-def get_blast_data_element(line, mismatches_threshold):
+def get_blast_data_element(line, novel_hit, sample_name,
+                           sample_name_to_blast_hit,
+                           mismatches_threshold):
     """function to eturn the individual element of the blast output.
     #Query	mismatches	evalue	percent_identity	database
     Those which are under mismatches"""
@@ -102,12 +105,15 @@ def get_blast_data_element(line, mismatches_threshold):
         accession_number = database.split("|")[3]
         database  = database.split("|")[4]
         species_name = " ".join(database.split()[:4])
-        return accession_number + " " + species_name
-    else:
-        return ""
+        data = "%s %s|%s\t" % (novel_hit, str(accession_number), str(species_name))
+        sample_name_to_blast_hit[sample_name] += data
+    return sample_name_to_blast_hit
 
 
-def split_line_blast_file(filename, mismatches, PROGRAM="Swarm"):
+def split_line_blast_file(filename, mismatches,
+                          sample_name_to_blast_hit,
+                          sample_name_to_cluster_size,
+                          PROGRAM="Swarm"):
     """func to split up a line and return a list of samples
     - because result havd come with a mixture of underscores and
     hyphens in all possible plces, I will just replace these."""
@@ -115,14 +121,17 @@ def split_line_blast_file(filename, mismatches, PROGRAM="Swarm"):
     cluster_size = sample_name.split("len")[1]
     cluster_size = cluster_size.split("_vs")[0]
     sample_name = sample_name.split("_" + PROGRAM)[0]
-    cluster_size = ""
     novel_hit = ""
+    sample_name_to_cluster_size[sample_name] = cluster_size
     with open(filename) as handle:
         for line in handle:
             if test_line(line):
                 line = line.rstrip()
-                novel_hit = get_blast_data_element(line, mismatches)
-    return sample_name, cluster_size, novel_hit
+                sample_name_to_blast_hit = get_blast_data_element(line, novel_hit,
+                                                                  sample_name,
+                                                                  sample_name_to_blast_hit,
+                                                                  mismatches)
+    return sample_name_to_blast_hit, sample_name_to_cluster_size
 
 
 
@@ -142,8 +151,8 @@ def write_out_result(indata, outfile):
     """takes in string, writres out to file"""
     f_out = open(outfile, "w")
     title = "#plate_well\tSample_Number\tSample_type_(root/plant/water/blank/other)" +\
-            "\tHost_Common_Name\tHost_latin_name/Sampling_Name\tPhytophthora_species\t" +\
-            "num_reads\tPhytophthora_species\tnum_reads\n"
+            "\tHost_Common_Name\tHost_latin_name/Sampling_Name\tcluster_size" +\
+            "\tspecies\tspecies\tspecies\tetc ...\n"
     f_out.write(title)
     indata = indata.replace("_abundance=1", "")
     for result in indata:
@@ -151,42 +160,59 @@ def write_out_result(indata, outfile):
     f_out.close()
 
 
-def populate_result_list(full_data, entry, result,
+def populate_result_list(full_data,
+                         sample_name_to_blast_hit,
+                         sample_name_to_cluster_size,
                          full_data_with_phytophora):
     """takes in the original file already converted to a list.
     Take in the phy result string.
     resturns list to write to file in other function
     """
-    for data in full_data:
-        data = data.rstrip("\n")
+    for line in full_data:
+        data = line.rstrip("\n")
         data_list = data.split("\t")
+        while len(data_list) < 6:
+            data_list.append("\t")
         sample = data_list[1]
-        if sample.strip() == entry.strip():
-            full_data_with_phytophora = full_data_with_phytophora + \
-                                        data.strip() + "\t" + result.strip() + "\n"
+        try:
+            blast_result = sample_name_to_blast_hit[sample.rstrip()]
+        except:
+            blast_result = ""
+        cluster_size = sample_name_to_cluster_size[sample.rstrip()]
+        full_data_with_phytophora = full_data_with_phytophora + \
+                                    line.rstrip() + "\t" +\
+                                    cluster_size + "\t" + \
+                                    blast_result + "\n"
     return full_data_with_phytophora
 
 
 args, FILE_DIRECTORY = get_args()
 # Run as script
 if __name__ == '__main__':
+    sample_name_to_blast_hit = defaultdict(str)
+    sample_name_to_cluster_size = defaultdict(str)
     PROG_OF_INTEREST = args.program
     # call the function to get a list of results wanted
     full_data, sample_set = parse_text_file(args.infile)
     directory = "."
     full_data_with_phytophora = ""
+    last_name = ""
+    last_hit = ""
+    result = ""
     for filename in os.listdir(".") :
         if not filename.endswith(".result.txt"):
             continue
-        sample_name, cluster_size, novel_hit = split_line_blast_file(filename,
-                                                                     args.mismatches,
-                                                                     PROG_OF_INTEREST)
-        result = "%s\t%s" % (novel_hit, cluster_size)
-        print sample_name, cluster_size, novel_hit
-        full_data_with_phytophora = populate_result_list(full_data,
-                                                         sample_name,
-                                                         result,
-                                                         full_data_with_phytophora)
+        sample_name_to_blast_hit, \
+            sample_name_to_cluster_size = split_line_blast_file(filename,
+                                                                args.mismatches,
+                                                                sample_name_to_blast_hit,
+                                                                sample_name_to_cluster_size,
+                                                                PROG_OF_INTEREST)
+
+    full_data_with_phytophora = populate_result_list(full_data,
+                                                     sample_name_to_blast_hit,
+                                                     sample_name_to_cluster_size,
+                                                     full_data_with_phytophora)
 
         
         
