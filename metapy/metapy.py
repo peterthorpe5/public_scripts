@@ -1394,7 +1394,7 @@ if __name__ == '__main__':
     # run BLASTCLUST
     if "blastclust" in tools_list:
         Run_blastclust = args.Run_blastclust.upper()
-        if args.Run_blastclust == "YES":
+        if Run_blastclust.rstrip() == "YES":
             blastclust_threshold = args.blastclust_threshold  # for now
             bc = PREFIX + "_blastclust_%s" % str(blastclust_threshold)
             BLASTCL_FOLDER = make_folder(os.path.join(RESULT_FOLDER,
