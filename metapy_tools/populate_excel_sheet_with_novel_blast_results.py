@@ -122,7 +122,8 @@ def split_line_blast_file(filename, mismatches,
     cluster_size = cluster_size.split("_vs")[0]
     sample_name = sample_name.split("_" + PROGRAM)[0]
     novel_hit = ""
-    sample_name_to_cluster_size[sample_name] = cluster_size
+    cluster_string = cluster_size + ", "
+    sample_name_to_cluster_size[sample_name] += cluster_string
     with open(filename) as handle:
         for line in handle:
             if test_line(line):
@@ -181,7 +182,7 @@ def populate_result_list(full_data,
         cluster_size = sample_name_to_cluster_size[sample.rstrip()]
         full_data_with_phytophora = full_data_with_phytophora + \
                                     line.rstrip() + "\t" +\
-                                    cluster_size + "\t" + \
+                                    cluster_size.rstrip(", ") + "\t" + \
                                     blast_result + "\n"
     return full_data_with_phytophora
 

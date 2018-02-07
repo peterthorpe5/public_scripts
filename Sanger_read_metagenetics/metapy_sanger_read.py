@@ -84,7 +84,7 @@ def get_args():
 
     optional.add_argument("-e", "--evalue", dest='evalue',
                           action="store",
-                          default=1e-40,
+                          default=1e-05,
                           type=float,
                           help="evalue to filter results with")
 
@@ -367,7 +367,7 @@ if __name__ == '__main__':
                              "-num_threads",
                              args.threads,
                              "-evalue",
-                             "1e-25",
+                             str(args.evalue),
                              "-outfmt 5",
                              "-out",
                              xml_out])
