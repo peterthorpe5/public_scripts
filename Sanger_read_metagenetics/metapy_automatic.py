@@ -8,7 +8,7 @@
 # THIS IS FOR SANGER READS
 #
 # (c) The James Hutton Institute 2016-2017
-# Author: Leighton Pritchard, Peter Thorpe
+# Author: Peter Thorpe, Leighton Pritchard
 
 import os
 import subprocess
@@ -45,7 +45,13 @@ for filename in os.listdir(".") :
                                         "Sanger_read_metagenetics",
                                         "metapy_sanger_read.py"),
                            "-a",
-                           filename])
+                           filename,
+                           "--thread",
+                           "16"])#,
+                           #"-d", "~/misc_python/THAPBI/THAPBI-pycits/data/Phytophora_ITS_database_v0.004.fasta"])
+
+    #"-d", "~/misc_python/THAPBI/THAPBI-pycits/data/Phytophora_ITS_database_v0.004.fasta"
+    #default is nt database.
     print("running command: %s" % python_cmd)
     pipe = subprocess.run(python_cmd, shell=True,
                           stdout=subprocess.PIPE,

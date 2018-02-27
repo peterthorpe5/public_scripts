@@ -157,7 +157,7 @@ def get_args():
     optional.add_argument("--cleanup",
                           dest="cleanup",
                           action="store",
-                          default="yes",
+                          default="YES",
                           help="deletes most files the program creates ")
 
     optional.add_argument("-h", "--help",
@@ -394,7 +394,7 @@ if __name__ == '__main__':
         run_parse_cmd(cmd_parse, logger)
         if mismatches == 30:
             break
-    remove_list = [fq_out, fa_out_all, fa_out, xml_out]
+    remove_list = [fa_out_all, fa_out, xml_out] #fq_out
     if args.cleanup == "yes":
         for unwanted in remove_list:
             try:

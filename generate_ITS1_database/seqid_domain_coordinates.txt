@@ -18,6 +18,7 @@ Phytophthora austrocedri	1	173
 Phytophthora bilorbang	1	192
 Phytophthora bisheria	1	189
 Phytophthora boehmeriae	1	173
+Phytophthora boehmeriae	1	171
 Phytophthora boehmeriae Voucher	1	172
 Phytophthora boehmeriae Voucher	1	172
 Phytophthora boehmeriae Voucher	1	172
@@ -34,9 +35,11 @@ Phytophthora cambivora	1	199
 Phytophthora cambivora	1	199
 Phytophthora cambivora	1	199
 Phytophthora capensis	11	160
+Phytophthora capsici	13	152
 Phytophthora capsici	1	140
 Phytophthora captiosa	1	168
 Phytophthora caryae	1	136
+Phytophthora castaneae TW76	28	209
 Phytophthora castaneae	1	183
 Phytophthora chlamydospora	6	200
 Phytophthora chlamydospora	1	176
@@ -45,6 +48,7 @@ Phytophthora cichorii	1	169
 Phytophthora cinnamomi	1	198
 Phytophthora citricola E	1	150
 Phytophthora citricola sensu stricto	1	151
+Phytophthora citrophthora voucher	4	163
 Phytophthora citrophthora	1	162
 Phytophthora clandestina	1	179
 Phytophthora cocois	6	187
@@ -86,9 +90,12 @@ Phytophthora himalsilva	1	160
 Phytophthora humicola	3	193
 Phytophthora humicola	1	184
 Phytophthora humicola	1	184
+Phytophthora idaei voucher	1	184
 Phytophthora idaei	1	184
+Phytophthora ilicis P	1	173
 Phytophthora ilicis	1	171
 Phytophthora ilicis voucher P3939	1	172
+Phytophthora infestans	5	184
 Phytophthora infestans	31	217
 Phytophthora intercalaris	1	201
 Phytophthora intricata	1	198
@@ -107,6 +114,7 @@ Phytophthora macrochlamydospora	1	149
 Phytophthora meadii	1	159
 Phytophthora medicaginis	1	171
 Phytophthora megakarya	1	179
+Phytophthora megasperma	1	192
 Phytophthora megasperma	1	193
 Phytophthora megasperma	1	193
 Phytophthora melonis	1	199
@@ -120,6 +128,7 @@ Phytophthora multivesiculata	1	190
 Phytophthora multivora	1	151
 Phytophthora nagaii	1	203
 Phytophthora nemorosa	31	204
+Phytophthora nicotianae	8	200
 Phytophthora nicotianae	1	195
 Phytophthora nicotianae	31	223
 Phytophthora niederhauserii	1	199
@@ -157,6 +166,7 @@ Phytophthora rosacearum	378	572
 Phytophthora rubi	1	199
 Phytophthora sansomeana	378	551
 Phytophthora siskiyouensis	378	517
+Phytophthora sojae	39	237
 Phytophthora sojae	41	239
 Phytophthora sp. aff. meadii	1	145
 Phytophthora sp. mekongensis type1	1	145

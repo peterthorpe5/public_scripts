@@ -14,8 +14,8 @@ import gzip
 from subprocess import check_output, CalledProcessError
 import hashlib
 import sys
-import pysam
-import sklearn
+#import pysam
+#import sklearn
 
 from collections import defaultdict
 from optparse import OptionParser

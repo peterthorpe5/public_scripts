@@ -56,20 +56,19 @@ boehmeriae""".split()
 #######################################################
 # CHANGE YOUR COMPARISON TEST LIST HERE
 # DNAMIXUNDIL, DNAMIX2, DNAMIX1, PCRMIX
-TEST_LIST = DNAMIXUNDIL
+TEST_LIST = DNAMIX1
 
 # Paste you results in here
-FOUND_STR = """1	1_Phytophthora_idaei_AF266773	30
-2	2_Phytophthora_capsici_AF266787_2b_P._glovera_AF279124	800
-3	2_Phytophthora_citricola_E_AF266788_2_P._acerina_JX951285	1
-4	2_Phytophthora_citricola_sensu_stricto_FJ237526	24
-5	2_Phytophthora_mexicana_HQ261620	1
-6	2_Phytophthora_plurivora_FJ665225	301
-7	2_Phytophthora_siskiyouensis_EF523386	280
-8	5_Phytophthora_agathidicida_KP295308	525
-9	7a_Phytophthora_rubi_AF266761_7a_P._fragariae_AF266762	14
-10	8c_Phytophthora_foliorum_EF120469	2
-11	8d_Phytophthora_obscura_HQ917910	931
+FOUND_STR = """1	7Phytophthora_uliginosa_P10413 7Phytophthora_cinnamomi_var_robiniae_P16351_P.asiatica_P16351_P.europaea_BR1072 7Phytophthora_melonis_CBS58269_7Phytophthora_sinensis_CBS55788 7Phytophthora_niederhauserii_P10279 7Phytophthora_sojae_CBS38261 Phytophthora_cinnamomi_TW102 7Phytophthora_cinnamomi_CBS14422 6Phytophthora_chlamydospora_VHS6595_EU301159 6Phytophthora_sp_nov_CBS114338_Phytophthora_taxon_PgChlamydo_VHS3753_EU301160 6Phytophthora_gonapodyides_voucher_HQ643236_1 6Phytophthora_mississippiae_ATCC_MYA_4946 Phytophthora_gibbosa_CBS127951_HQ012933_Phytophthora_gregata_CBS127952_HQ012942 6Phytophthora_megasperma_IMI133317_AF266794_P.crassamura_DDS3432 6Phytophthora_sp_nov_BR333 6Phytophthora_taxon_hungarica_JA566 Phytophthora_taxon_raspberry_P1050_AF541905 P._borealis_AKWA58.10708_HM004232 Phytophthora_x_stagnum_clone_type1 Phytophthora_x_stagnum_clone_type2 1Phytophthora_phaseoli_CBS55688 1Phytophthora_versiformis_MJ5 5Phytophthora_katsurae_CBS58785 5Phytophthora_cocois_ICMP16948__KP295304 5Phytophthora_sp_novaeguinea_P1256_5P.agathidicida_KP295308_5P.castaneae_TW270 4Phytophthora_alticola_CMW34279_HQ013214_4P.arenaria__CBS125800_HQ13215 4Phytophthora_palmivora_CBS17926_4Phytophthora_arecae_CBS30562 8Phytophthora_himalayensis_CBS35759_8Phytophthora_erythroseptica_CBS111343 8Phytophthora_primulae_CBS110162_8Phytophthora_aff_primulae_P6817 2Phytophthora_capsici_CBS12823_2Phytophthora_sp_glovera_P10618 2Phytophthora_mexicana_P0646	1224
+2	8Phytophthora_sp_kelmania_CBS30762	364
+3	2Phytophthora_citricola_CBS22188 2Phytophthora_pini_CBS18125 2Phytophthora_plurivora_CBS37961 2Phytophthora_acerina_B035 2Phytophthora_pachypleura_RHS2474 2Phytophthora_sp._FFM22.2	301
+4	1Phytophthora_pseudotsugae01_voucherCBS44484 1Phytophthora_cactorum_CBS113344 1Phytophthora_idaei_P6767 1Phytophthora_pseudotsugae02_voucherP10339	301
+5	7Phytophthora_fragariae_CBS20946 7Phytophthora_x_multiformis_BBA_PAM54KJ755097 7Phytophthora_rubi_CBS109892	293
+6	10Phytophthora_boehmeriae_CBS29129	276
+7	9Phytophthora_fallax_P10722	151
+8	1Phytophthora_tabaci_CBS30529	2
+10	3Phytophthora_nemorosa_CBS114870 3Phytophthora_pseudosyringae_391716	1
+17	7Phytophthora_intricata_CBS141211_KU517155	1
 
 """
 
@@ -151,7 +150,9 @@ print "False negative rate = ", FNR
 
 print "THIS data set found: ", FOUND_STR.count("Phy"), "Phytophthora species"
 
-print "%d\t%d\t%.3f\t%.3f\t%.3f\t%.3f" %(len(TP), FP, sens, prec, FDR, FNR)
+print "%d\t%d\t%.3f\t%.3f\t%.3f\t%.3f\t%s Phytophthora species" %(len(TP), FP, sens,
+                                             prec, FDR,
+                                             FNR, FOUND_STR.count("Phy"))
 
 
 

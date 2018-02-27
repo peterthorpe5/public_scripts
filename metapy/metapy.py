@@ -100,7 +100,7 @@ def get_args():
                           default=os.path.join(file_directory,
                                                "data",
                                                "Phytophora_ITS_" +
-                                               "database_v0.003.fasta"),
+                                               "database_v0.004.fasta"),
                           type=str,
                           help="right illumina reads")
 
