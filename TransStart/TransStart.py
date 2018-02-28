@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # title: Find the start of transcription based on per base read count
 # (c) The James Hutton Institute 2018
 # Author: Peter Thorpe. The James Hutton Institute, Uk
@@ -28,7 +28,7 @@ if "-v" in sys.argv or "--version" in sys.argv:
     cmd = "samtools 2>&1 | grep -i ^Version"
     sys.exit(os.system(cmd))
 
-if "--help_full" or "-h" in sys.argv:
+if "--help_full" in sys.argv:
     print("""Transcription start finder based on read depth coverage v0.1.0
  why? Start of transcription is interesting! THIS IS NOT finding the start
 # of coding squence. but where transcription binds and starts
@@ -71,25 +71,19 @@ analysis on this to determine if the start of transcription
 
 # make a temp_folder_for_all_the_out_files
 dest_dir = os.path.join(os.getcwd(),
-                        'temp_fix_five_prime')
+                        'temp_reads_per_base')
 try:
     os.makedirs(dest_dir)
 except OSError:
-    print ("folder already exists, I will write over what is in there!!")
+    print ("folder already exists, I will write over what is in there")
 
 ##############################################################################
 # functions
 
-def sys.exit(msg, error_level=1):
-   """Print error message to stdout and quit with given error level."""
-   sys.stderr.write("%s\n" % msg)
-   sys.exit(error_level)
-
-
 def get_total_coverage(bam_file, outfile):
     """ function to get the total coverage a found in the bam file
     Takes in a bam file. Call samtools idxstats to obtain values
-    Results are put in ./temp_fix_five_prime/ and written over
+    Results are put in ./temp_reads_per_base/ and written over
     each time
     funtion returns a dictions off overall expression
     returns a dictionary: key[transcript], vals = ['577', '274', '0'] len,
@@ -97,7 +91,7 @@ def get_total_coverage(bam_file, outfile):
     """
     # Run samtools idxstats (this get the coverage for all transcripts:
     # assigne the outfile with the temp folder to keep thing more tidy
-    oufile_dir_file = os.path.join("temp_fix_five_prime",
+    oufile_dir_file = os.path.join("temp_reads_per_base",
                                    outfile)
     cmd = " ".join(['samtools',
                     'idxstats',
@@ -121,12 +115,26 @@ def get_total_coverage(bam_file, outfile):
     return overall_expression_dic
 
 
-def index_genome_file(genome):
+def index_genome_file(genome, logger):
     """index the genome file
     return a seq_record object that can be accessed
     in a dictionary like manner"""
+    logger.info("indexing genome: %s", genome)
     genome_database = SeqIO.index(genome, "fasta")
+    logger.info("indexing genome finished")
     return genome_database
+
+
+def split_gene_name(gene):
+    """dirty funk to clean up the gene name.
+    Just want to say. I hate all the different ways gene names
+    can be messed around with in gff files"""
+    gene_info = gene.replace("ID=", "").split()[0]
+    gene_info = gene_info.split(".t")[0]
+    gene_info = gene_info.replace(";", "")
+    gene_info = gene_info.replace("Parent=", "")
+    gene_info = gene_info.split("Note=")[0]
+    return gene_info
 
 
 def index_gff(gff):
@@ -143,25 +151,21 @@ def index_gff(gff):
             continue
         if not line.strip():
             continue
-        assert len(line.split("\t")) == 9 ,"GFF fields wrong length should be 9"
+        assert len(line.split("\t")) == 9 , "GFF fields wrong length should be 9"
         scaff, source, feature, start, stop, score, \
               direction, frame, gene_info = line.split("\t")
-        gene_info = gene_info.replace("ID=", "").split()[0]
-        gene_info = gene_info.split(".t")[0]
-        gene_info = gene_info.replace(";", "")
-        gene_info = gene_info.split("Note=")[0]
-        if not gene_first_exon_dict[gene]:
-            if feature == "exon":
+        gene = split_gene_name(gene_info)
+        if feature == "gene":
+            gene_gff_line[gene] = line
+            gene_set.add(gene)
+            start_stop = "%s\t%s" % (start, stop)
+            gene_start_stop_dict[gene] = start_stop
+            gene_scaff_dict[gene] = scaff
+            gene_direction[gene] = direction
+        if not gene in gene_first_exon_dict.keys():
+            if feature == "exon" or feature == "CDS":
                 start_stop = "%s\t%s" % (start, stop)
                 gene_first_exon_dict[gene] = start_stop
-        if not feature == "gene":
-            continue
-        gene_gff_line[gene] = line
-        gene_set.add(gene_info)
-        start_stop = "%s\t%s" % (start, stop)
-        gene_start_stop_dict[gene_info] = start_stop
-        gene_scaff_dict[gene] = scaff
-        gene_direction[gene] = direction
     f_in.close()
     return gene_start_stop_dict, gene_first_exon_dict, \
            gene_scaff_dict, gene_direction, gene_set, gene_gff_line
@@ -171,8 +175,17 @@ def average_standard_dev(positions):
     """function to return the avaerage and stadard deviation
     for a list of number.
     Uses Numpy to do the calculations"""
-    the_mean = numpy.mean(positions)
-    standard_dev = numpy.std(positions)
+    print("len pos = ", len(positions))
+    if sum(positions) == 0:
+        the_mean = 0
+        standard_dev = 0
+        return the_mean, standard_dev  
+    try:
+        the_mean = sum(positions) / float(len(positions))
+        standard_dev = numpy.std(positions)
+    except ValueError:
+        the_mean = 0
+        standard_dev = 0
     return the_mean, standard_dev
 
 
@@ -191,10 +204,10 @@ def middle_portion_of_transcript(seq):
 
 def subproces_func(cmd):
     """func to run subporcess"""
-    pipe = (cmd, shell=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            check=True)
+    pipe = subprocess.run(cmd, shell=True,
+                          stdout=subprocess.PIPE,
+                          stderr=subprocess.PIPE,
+                          check=True)
     return pipe
 
 
@@ -202,6 +215,7 @@ def fill_in_zero_cov(all_coverage, depth_filename):
     """ function to fil in the zero values returned by samtools depth,
     or not returned by"""
     for line in open(depth_filename):
+        print(line)
         ref, possition, coverage = line.rstrip("\n").split("\t")
         possition = int(possition) - 1
         # assign the correct coverage to the relavent postiton,
@@ -211,7 +225,7 @@ def fill_in_zero_cov(all_coverage, depth_filename):
     return depth_filename, all_coverage
 
 
-def run_samtools_depth(scaffold_start_stop, bam_file, outfile):
+def run_samtools_depth(scaffold_start_stop, bam_file, outfile, logger):
     """funct to run samtools depth"""
     cmd = " ".join(["samtools",
                     "depth",
@@ -220,6 +234,7 @@ def run_samtools_depth(scaffold_start_stop, bam_file, outfile):
                     bam_file,
                     ">",
                     outfile])
+    logger.info("samtools command: %s", cmd)
     # call the func to run subprocess
     pipe = subproces_func(cmd)
     return pipe
@@ -263,11 +278,13 @@ def TranscriptionFind(genome,
                       walk,
                       min_value,
                       interation_value,
-                      out_file):
+                      out_file,
+                      logger):
     """iterate through gene in gff. Call samtools, get expression
     Does the expression fall within X standard deviations when compare
     to the first exon?
     """
+    genome_index = index_genome_file(genome, logger)
     # open outfile:
     interation_value = int(interation_value)
     file_out = open(out_file, "w")
@@ -288,42 +305,55 @@ def TranscriptionFind(genome,
                          "coding direction\n"])
     file_out.write(out_str)
 
-    # threshold for min_read_count
-    min_read_count_threshold = int(min_read_count) # default is 30
-
     for gene in gene_set:
         gene = gene.rstrip()
-        start, stop = gene_start_stop_dict[gene]
+        start_stop = gene_start_stop_dict[gene]
+        start, stop = start_stop.split("\t")
+        start =int(start)
+        stop = int(stop)
         scaffold = gene_scaff_dict[gene]
         direction = gene_direction[gene]
-        exon_start, exon_stop = gene_first_exon_dict[gene]
+        exon_start_exon_stop = gene_first_exon_dict[gene]
+        exon_start, exon_stop = exon_start_exon_stop.split("\t")
+        exon_start =int(exon_start)
+        exon_stop = int(exon_stop)
 
         # call samtools to get the depth per posititon for
         # the transcript of interest
-        depth_filename = os.path.join("temp_fix_five_prime",
+        depth_filename = os.path.join("temp_reads_per_base",
                                       "depth.tmp")
-        exon_depth_file = os.path.join("temp_fix_five_prime",
+        exon_depth_file = os.path.join("temp_reads_per_base",
                                       "exon_depth.tmp")
         scaffold_start_stop = "%s:%s-%s" %(scaffold, start, stop)
         # call the func to run
         pipe = run_samtools_depth(scaffold_start_stop, bam_file,
-                                  depth_filename)
+                                  depth_filename, logger)
         scaffold_exon_start_stop = "%s:%s-%s" %(scaffold, exon_start,
                                                 exon_stop)
         pipe = run_samtools_depth(scaffold_exon_start_stop, bam_file,
-                                  exon_depth_file)
+                                  exon_depth_file, logger)
         # assign zeros to all positions of the transcript,
         # as samtool does no report zeros
-        all_coverage = [0] * len(scaffold)
-        all_coverage, depth_filename = fill_in_zero_cov(all_coverage, depth_filename)
-        exon_all_coverage, exon_depth_file = fill_in_zero_cov(all_coverage,
+        seq_record = genome_index[scaffold]
+        all_coverage = [0] * len(seq_record.seq)
+        all_coverage, depth_filename = fill_in_zero_cov(all_coverage,
+                                                        depth_filename)
+        exon_all_coverage = [0] * len(seq_record.seq)
+        print("seq = ", len(seq_record.seq))
+
+        exon_all_coverage, exon_depth_file = fill_in_zero_cov(exon_all_coverage,
                                                               exon_depth_file)
+        print(exon_all_coverage)
         # get the mean and std reads per base for exon 1
         exon_mean, exon_stdDev = average_standard_dev(exon_all_coverage
                                                      [exon_start:exon_stop])
         # get the mean and std reads per base for exon 1
         gene_mean, gene_stdDev = average_standard_dev(all_coverage
                                                      [start:stop])
+        if exon_mean == 0:
+            logger.info("No RNAseq expression for gene %s", gene)
+            logger.warning("%s gene failed", gene)
+            continue
         out_str = "\t".join([gene + ":",
                             "Cov min: %i" % min(all_coverage),
                             "max: %i" % max(all_coverage),
@@ -433,19 +463,22 @@ parser.add_option("-g", "--genome", dest="genome",
                   help="the genome sequence. Not currently used. TO DO",
                   metavar="FILE")
 
-parser.add_option("--bam", dest="bam",
+parser.add_option("-b",
+                  "--bam", dest="bam",
                   default=None,
                   help="the sorted, indexed bam file as a result of " +
                   "the reads being mapped back to the transcriptome  .bam",
                   metavar="FILE")
 
-parser.add_option("--std",
+parser.add_option("-s",
+                  "--std",
                   dest="stand_dev_threshold",
                   default=5,
                   help="If the expression of the current region is less then "
                   " this number of std away from the first exon mean. Default = 5")
 
-parser.add_option("--walk",
+parser.add_option("-w",
+                  "--walk",
                   dest="walk",
                   default=3,
                   help="the number of bases to walk away to find expression " +
@@ -457,7 +490,8 @@ parser.add_option("--min_value",
                   help="the min expression to return the coordinates for " +
                   "Default = 2")
 
-parser.add_option("--interation_value",
+parser.add_option("-i",
+                  "--interation_value",
                   dest="interation_value",
                   default=1,
                   help="size of window to walk " +
@@ -493,31 +527,13 @@ logger = options.logger
 if not logger:
     log_out = "%s_%s_std.log" % (outfile, stand_dev_threshold)
 
-if not os.path.isfile(transcriptome_file):
-    sys.exit("Input transcriptome file not found: %s" % transcriptome)
-
 if not os.path.isfile(bam_file):
-    sys.exit("Input BAM file not found: %s" % bam)
-
-if not os.path.isfile(bam_file + ".bai"):
-    print("you have not indexed you bam file. I will do it.")
-    cmd = " ".join(["samtools",
-                    "index",
-                    bam_file])
-    # call the func
-    pipe = subproces_func(cmd)
+    sys.exit("Input BAM file not found: %s" % bam_file)
 
 
 #######################################################################
 # Run as script
 if __name__ == '__main__':
-    if not os.path.isfile(genome):
-        sys.exit("Input genome file not found: %s" % genome)
-    if not os.path.isfile(genes_fasta):
-        sys.exit("Input genes_fasta file not found: %s" % genes_fasta)
-    if not os.path.isfile(bam_file):
-        sys.exit("Input BAM file not found: %s" % bam)
-
     # Set up logging
     logger = logging.getLogger('Transcription_start_predictor.py: %s' % time.asctime())
     logger.setLevel(logging.DEBUG)
@@ -540,14 +556,24 @@ if __name__ == '__main__':
     logger.info(sys.version_info)
     logger.info("Command-line: %s", ' '.join(sys.argv))
     logger.info("Starting testing: %s", time.asctime())
-    logger.info("get total expression")
-    overall_expression_dic = get_total_coverage(bam_file,
-                                                over_all_expression)
-    logger.info("Indexidng gff: ", gff)
+    if not os.path.isfile(genome):
+        logger.warning("Input genome file not found: %s" % genome)
+        sys.exit("Input genome file not found: %s" % genome)
+    if not os.path.isfile(bam_file):
+        logger.warning("Input BAM file not found: %s" % bam_file)
+        sys.exit("Input BAM file not found: %s" % bam_file)
+    if not os.path.isfile(bam_file + ".bai"):
+        logger.warning("you have not indexed you bam file. I will do it.")
+        cmd = " ".join(["samtools",
+                        "index",
+                        bam_file])
+        # call the func
+        pipe = subproces_func(cmd)
+    logger.info("Indexidng gff: %s", gff)
     gene_start_stop_dict, gene_first_exon_dict,\
                           gene_scaff_dict, gene_direction, gene_set,\
                           gene_gff_line = index_gff(gff)
-    logger.info("runnin analysis")
+    logger.info("running analysis, running with the devil")
     TranscriptionFind(genome,
                       gene_start_stop_dict,
                       gene_first_exon_dict,
@@ -555,11 +581,12 @@ if __name__ == '__main__':
                       gene_direction,
                       gene_set,
                       gene_gff_line,
-                      bam,
+                      bam_file,
                       stand_dev_threshold,
-                      option.walk,
-                      option.min_value,
-                      option.interation_value,
-                      out_file)
+                      options.walk,
+                      options.min_value,
+                      options.interation_value,
+                      outfile,
+                      logger)
     logger.info("Pipeline complete: %s", time.asctime())
 
