@@ -171,7 +171,7 @@ def index_gff(gff):
            gene_scaff_dict, gene_direction, gene_set, gene_gff_line
 
 
-def average_standard_dev(positions):
+def avg_std_dev(positions):
     """function to return the avaerage and stadard deviation
     for a list of number.
     Uses Numpy to do the calculations"""
@@ -269,7 +269,7 @@ def walk_away_from_start(start, stop,
     return current_start, current_end
 
 
-def add_one_on_direction_aware(current_start, current_end, interation_value,
+def add_one_direct_aware(current_start, current_end, interation_value,
                                direction):
     """function to alter the current start and end values based on the direction"""
     if direction == "+":
@@ -286,7 +286,8 @@ def TranscriptionFind(genome, gene_start_stop_dict,
                       gene_first_exon_dict, gene_scaff_dict,
                       gene_direction, gene_set, gene_gff_line,
                       bam, stand_dev_threshold, walk, min_value,
-                      interation_value, out_file, logger, TITLE):
+                      interation_value, out_file, logger, TITLE,
+                      keep_gene_depth):
     """iterate through gene in gff. Call samtools, get expression
     Does the expression fall within X standard deviations when compare
     to the first exon?
@@ -294,141 +295,160 @@ def TranscriptionFind(genome, gene_start_stop_dict,
     logger.info("RESULTS in outfile: %s", out_file)
     genome_index = index_genome_file(genome, logger)
     # open outfile:
-    file_out = open(out_file, "w")
-    file_out.write(TITLE)
+    with open(out_file, 'w') as file_out:
+        file_out.write(TITLE)
+        for gene in gene_set:
+            gene = gene.rstrip()
+            start_stop = gene_start_stop_dict[gene]
+            start, stop = start_stop.split("\t")
+            start =int(start)
+            stop = int(stop)
+            scaffold = gene_scaff_dict[gene]
+            direction = gene_direction[gene]
+            exon_start_exon_stop = gene_first_exon_dict[gene]
+            exon_start, exon_stop = exon_start_exon_stop.split("\t")
+            exon_start =int(exon_start)
+            exon_stop = int(exon_stop)
 
-    for gene in gene_set:
-        gene = gene.rstrip()
-        start_stop = gene_start_stop_dict[gene]
-        start, stop = start_stop.split("\t")
-        start =int(start)
-        stop = int(stop)
-        scaffold = gene_scaff_dict[gene]
-        direction = gene_direction[gene]
-        exon_start_exon_stop = gene_first_exon_dict[gene]
-        exon_start, exon_stop = exon_start_exon_stop.split("\t")
-        exon_start =int(exon_start)
-        exon_stop = int(exon_stop)
+            # call samtools to get the depth per posititon for
+            # the transcript of interest
+            depth_filename = os.path.join("temp_reads_per_base",
+                                          gene + "_depth.tmp")
+            #exon_depth_file = os.path.join("temp_reads_per_base",
+                                          #gene + "_exon_depth.tmp")
+            scaffold_depth_file = os.path.join("temp_reads_per_base",
+                                               "depth.tmp")
+            scaffold_start_stop = "%s:%s-%s" %(scaffold, start, stop)
+            # call the func to run
+            if "Y" in keep_gene_depth.upper():
+                pipe = run_samtools_depth(scaffold_start_stop, bam_file,
+                                          depth_filename, logger)
+            pipe = run_samtools_depth(scaffold, bam_file,
+                                      scaffold_depth_file, logger)
+    ##        scaffold_exon_start_stop = "%s:%s-%s" %(scaffold, exon_start,
+    ##                                                exon_stop)
+    ##        pipe = run_samtools_depth(scaffold_exon_start_stop, bam_file,
+    ##                                  exon_depth_file, logger)
+            # assign zeros to all positions of the transcript,
+            # as samtool does no report zeros
+            seq_record = genome_index[scaffold]
+            all_coverage = [0] * len(seq_record.seq)
+            all_coverage = fill_in_zero_cov(all_coverage,
+                                            scaffold_depth_file)
+            # print("seq = ", len(seq_record.seq))
+            # print(exon_all_coverage)
+            # get the mean and std reads per base for exon 1
+            exon_mean, exon_stdDev = avg_std_dev(all_coverage
+                                                [exon_start:exon_stop])
+            # get the mean and std reads per base for exon 1
+            gene_mean, gene_stdDev = avg_std_dev(all_coverage
+                                                [start:stop])
+            if exon_mean == 0:
+                warn = "No RNAseq expression for gene exon 1 %s" % gene
+                # logger.warning("%s: gene failed", warn)
+                continue
+            out_str = "\t".join([gene + ":",
+                                "Cov min: %i" % min(all_coverage),
+                                "max: %i" % max(all_coverage),
+                                "gene mean %0.2f:" % gene_mean,
+                                "gene std %0.2f:" % gene_stdDev,
+                                "Sliced section:",
+                                "exon mean %0.2f" % exon_mean,
+                                "exon std: %0.2f" % exon_stdDev,
+                                direction])
+            logger.info(out_str)
+            cut_off = exon_mean - (int(stand_dev_threshold) * exon_stdDev)
+            position_mean_cov = mean(all_coverage[exon_start:exon_stop])
+            # walk in 3 bases to find the position where coverage sig drops
+            current_end = stop
+            current_start = start
+            position_mean_cov = 10000000000000
+            if cut_off < 0.3:
+                logger.warning("%s gene cut off set to 0.3", gene)
+                cut_off = 0.3
+            write = "yes"
+            while position_mean_cov >= cut_off:
+                current_start, current_end = walk_away_from_start(current_start,
+                                                                  current_end,
+                                                                  direction, walk)
+                current_start, current_end = add_one_direct_aware(current_start,
+                                                                  current_end,
+                                                                  interation_value,
+                                                                  direction)
+                if current_start < 1:
+                    logger.warning("%s has fallen off start scaffold %s",
+                                   gene,
+                                   scaffold)
+                    position_mean_cov = 0
+                    write = "no"
+                    break
+                if current_end >= len(seq_record.seq):
+                    logger.warning("%s has fallen off end scaffold %s",
+                                   gene,
+                                   scaffold)
+                    position_mean_cov = 0
+                    write = "no"
 
-        # call samtools to get the depth per posititon for
-        # the transcript of interest
-        depth_filename = os.path.join("temp_reads_per_base",
-                                      gene + "_depth.tmp")
-        #exon_depth_file = os.path.join("temp_reads_per_base",
-                                      #gene + "_exon_depth.tmp")
-        scaffold_depth_file = os.path.join("temp_reads_per_base",
-                                      scaffold + "_exon_depth.tmp")
-        scaffold_start_stop = "%s:%s-%s" %(scaffold, start, stop)
-        # call the func to run
-        pipe = run_samtools_depth(scaffold_start_stop, bam_file,
-                                  depth_filename, logger)
-        pipe = run_samtools_depth(scaffold, bam_file,
-                                  scaffold_depth_file, logger)
-##        scaffold_exon_start_stop = "%s:%s-%s" %(scaffold, exon_start,
-##                                                exon_stop)
-##        pipe = run_samtools_depth(scaffold_exon_start_stop, bam_file,
-##                                  exon_depth_file, logger)
-        # assign zeros to all positions of the transcript,
-        # as samtool does no report zeros
-        seq_record = genome_index[scaffold]
-        all_coverage = [0] * len(seq_record.seq)
-        all_coverage = fill_in_zero_cov(all_coverage, scaffold_depth_file)
-        # print("seq = ", len(seq_record.seq))
-        # print(exon_all_coverage)
-        # get the mean and std reads per base for exon 1
-        exon_mean, exon_stdDev = average_standard_dev(all_coverage
-                                                     [exon_start:exon_stop])
-        # get the mean and std reads per base for exon 1
-        gene_mean, gene_stdDev = average_standard_dev(all_coverage
-                                                     [start:stop])
-        if exon_mean == 0:
-            warn = "No RNAseq expression for gene exon 1 %s" % gene
-            # logger.warning("%s: gene failed", warn)
-            continue
-        out_str = "\t".join([gene + ":",
-                            "Cov min: %i" % min(all_coverage),
-                            "max: %i" % max(all_coverage),
-                            "gene mean %0.2f:" % gene_mean,
-                            "gene std %0.2f:" % gene_stdDev,
-                            "Sliced section:",
-                            "exon mean %0.2f" % exon_mean,
-                            "exon std: %0.2f" % exon_stdDev,
-                            direction])
-        logger.info(out_str)
-        cut_off = exon_mean - (int(stand_dev_threshold) * exon_stdDev)
-        position_mean_cov = mean(all_coverage[exon_start:exon_stop])
-        # walk in 3 bases to find the position where coverage sig drops
-        current_end = stop
-        current_start = start
-        position_mean_cov = 10000000000000
-        if cut_off < 0.3:
-            cut_off = 0.3
-        while position_mean_cov > cut_off:
-            current_start, current_end = walk_away_from_start(current_start,
-                                                              current_end,
-                                                              direction, walk)
-            current_start, current_end = add_one_on_direction_aware(current_start,
-                                                                    current_end,
+                    break
+    ##            print("\n\npos_mean_cov", position_mean_cov,
+    ##                  "start", current_start, "end", current_end,
+    ##                  "cut_off = ", cut_off, "direction", direction, "\n\n")
+    ##            print(all_coverage[current_start:current_end])
+                position_mean_cov = mean(all_coverage
+                                         [current_start:current_end])
+                if position_mean_cov == False:
+                    position_mean_cov = 0
+                #print("setting position_mean_cov to: ", position_mean_cov)
+
+            # run the while loop again to find the position where the expression
+            # is less than the option min value
+            current_end1 = stop
+            current_start1 = start
+            position_mean_cov = 10000000000
+            write_min_value = "ok"
+            while position_mean_cov >= int(min_value):
+                current_start1, current_end1 = walk_away_from_start(current_start1,
+                                                                    current_end1,
+                                                                    direction, walk)
+                current_start1, current_end1 = add_one_direct_aware(current_start1,
+                                                                    current_end1,
                                                                     interation_value,
                                                                     direction)
-            if current_start < 1:
-                logger.warning("%s has fallen off start scaffold %s", gene, scaffold)
-                position_mean_cov = 0
-            if current_end >= len(seq_record.seq):
-                logger.warning("%s has fallen off end scaffold %s", gene, scaffold)
-                position_mean_cov = 0
-##            print("\n\npos_mean_cov", position_mean_cov,
-##                  "start", current_start, "end", current_end,
-##                  "cut_off = ", cut_off, "direction", direction, "\n\n")
-##            print(all_coverage[current_start:current_end])
-            position_mean_cov = mean(all_coverage[current_start:current_end])
-            if position_mean_cov == False:
-                position_mean_cov = 0
-            #print("setting position_mean_cov to: ", position_mean_cov)
+                if current_start < 1:
+                    logger.warning("%s has fallen off start scaffold %s", gene, scaffold)
+                    position_mean_cov = 0
+                    write_min_value = "not_ok"
+                    break
+                if current_end >= len(seq_record.seq):
+                    logger.warning("%s has fallen off end scaffold %s", gene, scaffold)
+                    position_mean_cov = 0
+                    write_min_value = "not_ok"
+                    break
+                # print("bases = ", all_coverage[current_start1:current_end1], "\n")
+                position_mean_cov = mean(all_coverage[current_start1:current_end1])
+                if position_mean_cov == False:
+                    position_mean_cov = 0
+                    break
 
-        # run the while loop again to find the position where the expression
-        # is less than the option min value
-        current_end1 = stop
-        current_start1 = start
-        position_mean_cov = 10000000000
-        while position_mean_cov > int(min_value):
-            current_start1, current_end1 = walk_away_from_start(current_start1,
-                                                                current_end1,
-                                                                direction, walk)
-            current_start1, current_end1 = add_one_on_direction_aware(current_start1,
-                                                                      current_end1,
-                                                                      interation_value,
-                                                                      direction)
-            if current_start < 1:
-                logger.warning("%s has fallen off start scaffold %s", gene, scaffold)
-                position_mean_cov = 0
-            if current_end >= len(seq_record.seq):
-                logger.warning("%s has fallen off end scaffold %s", gene, scaffold)
-                position_mean_cov = 0
-            # print("bases = ", all_coverage[current_start1:current_end1], "\n")
-            position_mean_cov = mean(all_coverage[current_start1:current_end1])
-            if position_mean_cov == False:
-                position_mean_cov = 0
-
-        out_str = "\t".join([gene,
-                             str(current_start),
-                             str(current_end),
-                             str(seq_record.seq[current_start:current_end]),
-                             str(current_start1),
-                             str(current_end1),
-                             str(seq_record.seq[current_start1:current_end1]),
-                             "%s" % start,
-                             "%s" % stop,
-                             "%0.2f" % gene_mean,
-                             "%0.2f" % gene_stdDev,
-                             "%0.2f" % exon_mean,
-                             "%0.2f" % exon_stdDev,
-                             direction,
-                             "\n"])
-        print("writing: ", out_str)
-        file_out.write(out_str)
-    logger.info("main function finished")
-    file_out.close()
+            out_str = "\t".join([gene,
+                                 str(current_start),
+                                 str(current_end),
+                                 str(seq_record.seq[current_start:current_end]),
+                                 str(current_start1),
+                                 str(current_end1),
+                                 str(seq_record.seq[current_start1:current_end1]),
+                                 "%s" % start,
+                                 "%s" % stop,
+                                 "%0.2f" % gene_mean,
+                                 "%0.2f" % gene_stdDev,
+                                 "%0.2f" % exon_mean,
+                                 "%0.2f" % exon_stdDev,
+                                 direction,
+                                 "\n"])
+            if write == "yes" and write_min_value == "ok":
+                print("writing: ", out_str)
+                file_out.write(out_str)
+        logger.info("main function finished")
 
 
 ###############################################################################################
@@ -443,6 +463,7 @@ THIS IS NOT finding the start
 
 python TranscriptionStart.py -g genome.fasta
     --bam index_sorted_bam_file.bam
+    --walk 5 --interation_value 1 
     --gff genes.gff -o outfile
 
 
@@ -487,9 +508,10 @@ parser.add_option("-b",
 parser.add_option("-s",
                   "--std",
                   dest="stand_dev_threshold",
-                  default=5,
+                  default=4,
                   help="If the expression of the current region is less then "
-                  " this number of std away from the first exon mean. Default = 5")
+                  " this number of std away from the first exon mean. " +
+                  "Default = 4")
 
 parser.add_option("-w",
                   "--walk",
@@ -513,6 +535,10 @@ parser.add_option("-i",
 
 parser.add_option("--help_full", dest="help_full", default=None,
                   help="prints out a full description of this program")
+
+parser.add_option("--keep_gene_depth",
+                  dest="keep_gene_depth", default="no",
+                  help="keep the output of the depth for the genes")
 
 parser.add_option("--logger", dest="logger", default=False,
                   help="Output logger filename. Default: " +
@@ -538,6 +564,13 @@ outfile= options.outfile
 stand_dev_threshold = options.stand_dev_threshold
 # logfile
 logger = options.logger
+# --walk
+walk = int(options.walk)
+# --interation_value
+interation_value = int(options.interation_value)
+#--min_value
+min_value = int(options.min_value)
+
 if not logger:
     log_out = "%s_%s_std.log" % (outfile, stand_dev_threshold)
 
@@ -602,7 +635,6 @@ if __name__ == '__main__':
                        "exon mean",
                        "exon std",
                        "coding direction\n"])
-    interation_value = int(options.interation_value)
     TranscriptionFind(genome,
                       gene_start_stop_dict,
                       gene_first_exon_dict,
@@ -612,11 +644,12 @@ if __name__ == '__main__':
                       gene_gff_line,
                       bam_file,
                       stand_dev_threshold,
-                      options.walk,
-                      options.min_value,
+                      walk,
+                      min_value,
                       interation_value,
                       outfile,
                       logger,
-                      TITLE)
+                      TITLE,
+                      options.keep_gene_depth)
     logger.info("Pipeline complete: %s", time.asctime())
 
