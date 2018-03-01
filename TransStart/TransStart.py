@@ -24,7 +24,7 @@ import re
 
 
 if "-v" in sys.argv or "--version" in sys.argv:
-    print("Transcription start finder based on read depth coverage v0.1.0")
+    print("TransStart.py Transcription start finder based on read depth coverage v0.1.0")
     cmd = "samtools 2>&1 | grep -i ^Version"
     sys.exit(os.system(cmd))
 
@@ -461,7 +461,7 @@ Transcription start finder based on read depth coverage v0.1.0
 THIS IS NOT finding the start
 # of coding squence. but where transcription binds and starts
 
-python TranscriptionStart.py -g genome.fasta
+python TransStart.py -g genome.fasta
     --bam index_sorted_bam_file.bam
     --walk 5 --interation_value 1 
     --gff genes.gff -o outfile
