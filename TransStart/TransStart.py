@@ -175,7 +175,8 @@ def average_standard_dev(positions):
     """function to return the avaerage and stadard deviation
     for a list of number.
     Uses Numpy to do the calculations"""
-    print("len pos = ", len(positions))
+    # print("len pos = ", len(positions))
+    # print(positions)
     if sum(positions) == 0:
         the_mean = 0
         standard_dev = 0
@@ -195,6 +196,19 @@ def mean_coverage(coverage_array, slice_start, slice_end):
     return mean(selected_coverage)
 
 
+def mean(list_of_values):
+    """Calculate the mean average of a list of numbers."""
+    # so don't have to worry about getting the divisor.
+    # Explicit float(...) to allow for Python 2 division.
+    try:
+        mean = sum(list_of_values) / float(len(list_of_values))
+        return mean
+    except:
+        return False
+
+assert mean([1,2,3,4,5]) == 3
+
+
 def middle_portion_of_transcript(seq):
     """return coordinates for middle portion"""
     coord_lower = int(len(seq)/4.0)
@@ -211,18 +225,20 @@ def subproces_func(cmd):
     return pipe
 
 
-def fill_in_zero_cov(all_coverage, depth_filename):
+def fill_in_zero_cov(all_coverage, depth_file):
     """ function to fil in the zero values returned by samtools depth,
     or not returned by"""
-    for line in open(depth_filename):
-        print(line)
+    f_in = open(depth_file, "r")
+    for line in f_in:
+        # print(depth_filename)
         ref, possition, coverage = line.rstrip("\n").split("\t")
         possition = int(possition) - 1
         # assign the correct coverage to the relavent postiton,
         # thus removing the zero value.
         # Or if there is no info, it remains as a zero.
         all_coverage[possition] = int(coverage)
-    return depth_filename, all_coverage
+    f_in.close()
+    return all_coverage
 
 
 def run_samtools_depth(scaffold_start_stop, bam_file, outfile, logger):
@@ -234,7 +250,7 @@ def run_samtools_depth(scaffold_start_stop, bam_file, outfile, logger):
                     bam_file,
                     ">",
                     outfile])
-    logger.info("samtools command: %s", cmd)
+    # logger.info("samtools command: %s", cmd)
     # call the func to run subprocess
     pipe = subproces_func(cmd)
     return pipe
@@ -250,7 +266,7 @@ def walk_away_from_start(start, stop,
         assert direction == "-", "direction does sign error!"
         current_end = stop + int(walk)
         current_start = int(stop)
-    return current_start, current_stop
+    return current_start, current_end
 
 
 def add_one_on_direction_aware(current_start, current_end, interation_value,
@@ -266,44 +282,20 @@ def add_one_on_direction_aware(current_start, current_end, interation_value,
 
 
 ##### main function
-def TranscriptionFind(genome,
-                      gene_start_stop_dict,
-                      gene_first_exon_dict,
-                      gene_scaff_dict,
-                      gene_direction,
-                      gene_set,
-                      gene_gff_line,
-                      bam,
-                      stand_dev_threshold,
-                      walk,
-                      min_value,
-                      interation_value,
-                      out_file,
-                      logger):
+def TranscriptionFind(genome, gene_start_stop_dict,
+                      gene_first_exon_dict, gene_scaff_dict,
+                      gene_direction, gene_set, gene_gff_line,
+                      bam, stand_dev_threshold, walk, min_value,
+                      interation_value, out_file, logger, TITLE):
     """iterate through gene in gff. Call samtools, get expression
     Does the expression fall within X standard deviations when compare
     to the first exon?
     """
+    logger.info("RESULTS in outfile: %s", out_file)
     genome_index = index_genome_file(genome, logger)
     # open outfile:
-    interation_value = int(interation_value)
     file_out = open(out_file, "w")
-    out_str = "\t".join(["#gene",
-                         "transcription start based on stats:",
-                         "start",
-                         "stop",
-                         "transcription start based on min value:",
-                         "start",
-                         "stop",
-                         "gene_start",
-                         "gene_stop"
-                         "gene_mean_RNAseq_cov",
-                         "gene_std_RNAseq_cov",
-                         "for 1st exon",
-                         "exon mean",
-                         "exom std",
-                         "coding direction\n"])
-    file_out.write(out_str)
+    file_out.write(TITLE)
 
     for gene in gene_set:
         gene = gene.rstrip()
@@ -321,38 +313,37 @@ def TranscriptionFind(genome,
         # call samtools to get the depth per posititon for
         # the transcript of interest
         depth_filename = os.path.join("temp_reads_per_base",
-                                      "depth.tmp")
-        exon_depth_file = os.path.join("temp_reads_per_base",
-                                      "exon_depth.tmp")
+                                      gene + "_depth.tmp")
+        #exon_depth_file = os.path.join("temp_reads_per_base",
+                                      #gene + "_exon_depth.tmp")
+        scaffold_depth_file = os.path.join("temp_reads_per_base",
+                                      scaffold + "_exon_depth.tmp")
         scaffold_start_stop = "%s:%s-%s" %(scaffold, start, stop)
         # call the func to run
         pipe = run_samtools_depth(scaffold_start_stop, bam_file,
                                   depth_filename, logger)
-        scaffold_exon_start_stop = "%s:%s-%s" %(scaffold, exon_start,
-                                                exon_stop)
-        pipe = run_samtools_depth(scaffold_exon_start_stop, bam_file,
-                                  exon_depth_file, logger)
+        pipe = run_samtools_depth(scaffold, bam_file,
+                                  scaffold_depth_file, logger)
+##        scaffold_exon_start_stop = "%s:%s-%s" %(scaffold, exon_start,
+##                                                exon_stop)
+##        pipe = run_samtools_depth(scaffold_exon_start_stop, bam_file,
+##                                  exon_depth_file, logger)
         # assign zeros to all positions of the transcript,
         # as samtool does no report zeros
         seq_record = genome_index[scaffold]
         all_coverage = [0] * len(seq_record.seq)
-        all_coverage, depth_filename = fill_in_zero_cov(all_coverage,
-                                                        depth_filename)
-        exon_all_coverage = [0] * len(seq_record.seq)
-        print("seq = ", len(seq_record.seq))
-
-        exon_all_coverage, exon_depth_file = fill_in_zero_cov(exon_all_coverage,
-                                                              exon_depth_file)
-        print(exon_all_coverage)
+        all_coverage = fill_in_zero_cov(all_coverage, scaffold_depth_file)
+        # print("seq = ", len(seq_record.seq))
+        # print(exon_all_coverage)
         # get the mean and std reads per base for exon 1
-        exon_mean, exon_stdDev = average_standard_dev(exon_all_coverage
+        exon_mean, exon_stdDev = average_standard_dev(all_coverage
                                                      [exon_start:exon_stop])
         # get the mean and std reads per base for exon 1
         gene_mean, gene_stdDev = average_standard_dev(all_coverage
                                                      [start:stop])
         if exon_mean == 0:
-            logger.info("No RNAseq expression for gene %s", gene)
-            logger.warning("%s gene failed", gene)
+            warn = "No RNAseq expression for gene exon 1 %s" % gene
+            # logger.warning("%s: gene failed", warn)
             continue
         out_str = "\t".join([gene + ":",
                             "Cov min: %i" % min(all_coverage),
@@ -361,19 +352,18 @@ def TranscriptionFind(genome,
                             "gene std %0.2f:" % gene_stdDev,
                             "Sliced section:",
                             "exon mean %0.2f" % exon_mean,
-                            "exom std: %0.2f" % exon_stdDev,
-                            direction,
-                            "\n"])
+                            "exon std: %0.2f" % exon_stdDev,
+                            direction])
         logger.info(out_str)
-
-        cut_off = exon_mean - (int(stand_dev_threshold)
-                               * exon_stdDev)
-
+        cut_off = exon_mean - (int(stand_dev_threshold) * exon_stdDev)
         position_mean_cov = mean(all_coverage[exon_start:exon_stop])
         # walk in 3 bases to find the position where coverage sig drops
         current_end = stop
         current_start = start
-        while position_mean_cov < cut_off:
+        position_mean_cov = 10000000000000
+        if cut_off < 0.3:
+            cut_off = 0.3
+        while position_mean_cov > cut_off:
             current_start, current_end = walk_away_from_start(current_start,
                                                               current_end,
                                                               direction, walk)
@@ -381,13 +371,27 @@ def TranscriptionFind(genome,
                                                                     current_end,
                                                                     interation_value,
                                                                     direction)
+            if current_start < 1:
+                logger.warning("%s has fallen off start scaffold %s", gene, scaffold)
+                position_mean_cov = 0
+            if current_end >= len(seq_record.seq):
+                logger.warning("%s has fallen off end scaffold %s", gene, scaffold)
+                position_mean_cov = 0
+##            print("\n\npos_mean_cov", position_mean_cov,
+##                  "start", current_start, "end", current_end,
+##                  "cut_off = ", cut_off, "direction", direction, "\n\n")
+##            print(all_coverage[current_start:current_end])
             position_mean_cov = mean(all_coverage[current_start:current_end])
+            if position_mean_cov == False:
+                position_mean_cov = 0
+            #print("setting position_mean_cov to: ", position_mean_cov)
 
         # run the while loop again to find the position where the expression
         # is less than the option min value
         current_end1 = stop
         current_start1 = start
-        while position_mean_cov < int(min_value):
+        position_mean_cov = 10000000000
+        while position_mean_cov > int(min_value):
             current_start1, current_end1 = walk_away_from_start(current_start1,
                                                                 current_end1,
                                                                 direction, walk)
@@ -395,26 +399,36 @@ def TranscriptionFind(genome,
                                                                       current_end1,
                                                                       interation_value,
                                                                       direction)
+            if current_start < 1:
+                logger.warning("%s has fallen off start scaffold %s", gene, scaffold)
+                position_mean_cov = 0
+            if current_end >= len(seq_record.seq):
+                logger.warning("%s has fallen off end scaffold %s", gene, scaffold)
+                position_mean_cov = 0
+            # print("bases = ", all_coverage[current_start1:current_end1], "\n")
             position_mean_cov = mean(all_coverage[current_start1:current_end1])
+            if position_mean_cov == False:
+                position_mean_cov = 0
 
-        out_str = "\t".join([gene + ":",
-                             "transcription start based on stats:",
+        out_str = "\t".join([gene,
                              str(current_start),
-                             str(current_stop),
-                             "transcription start based on min value:",
+                             str(current_end),
+                             str(seq_record.seq[current_start:current_end]),
                              str(current_start1),
-                             str(current_stop1),
-
-                             "gene start %s" % start,
-                             "gene ened %s" % stop,
-                             "gene mean %0.2f:" % gene_mean,
-                             "gene std %0.2f:" % gene_stdDev,
-                             "Sliced section:",
-                             "exon mean %0.2f" % exon_mean,
-                             "exom std: %0.2f" % exon_stdDev,
+                             str(current_end1),
+                             str(seq_record.seq[current_start1:current_end1]),
+                             "%s" % start,
+                             "%s" % stop,
+                             "%0.2f" % gene_mean,
+                             "%0.2f" % gene_stdDev,
+                             "%0.2f" % exon_mean,
+                             "%0.2f" % exon_stdDev,
                              direction,
                              "\n"])
-        logger.info("main function finished")
+        print("writing: ", out_str)
+        file_out.write(out_str)
+    logger.info("main function finished")
+    file_out.close()
 
 
 ###############################################################################################
@@ -574,6 +588,21 @@ if __name__ == '__main__':
                           gene_scaff_dict, gene_direction, gene_set,\
                           gene_gff_line = index_gff(gff)
     logger.info("running analysis, running with the devil")
+    TITLE = "\t".join(["#gene",
+                       "TranStart(stats) Start",
+                       "stop",
+                       "sequence",
+                       "TranStart(MinVal) Start",
+                       "stop",
+                       "sequence",
+                       "gene_start",
+                       "gene_stop",
+                       "gene_mean_cov",
+                       "gene_std_cov",
+                       "exon mean",
+                       "exon std",
+                       "coding direction\n"])
+    interation_value = int(options.interation_value)
     TranscriptionFind(genome,
                       gene_start_stop_dict,
                       gene_first_exon_dict,
@@ -585,8 +614,9 @@ if __name__ == '__main__':
                       stand_dev_threshold,
                       options.walk,
                       options.min_value,
-                      options.interation_value,
+                      interation_value,
                       outfile,
-                      logger)
+                      logger,
+                      TITLE)
     logger.info("Pipeline complete: %s", time.asctime())
 
