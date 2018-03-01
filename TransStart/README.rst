@@ -4,17 +4,11 @@ TranStart
 Transcription start finder based on read depth coverage v0.1.0
 THIS IS NOT finding the start of coding squence. but where transcription binds and starts
 
-python TransStart.py.py -g genome.fasta
-    --bam index_sorted_bam_file.bam
-    --walk 5 --interation_value 1
-    --gff genes.gff -o outfile
+python TransStart.py.py -g genome.fasta --bam index_sorted_bam_file.bam --walk 3 --interation_value 1 --gff genes.gff -o outfile
 
 
 Requirements:
-    you must have samtools in your PATH
-	python 3
-    Biopython
-    numpy
+    you must have samtools in your PATH,	python 3, Biopython, numpy
 
 steps:
 ======
