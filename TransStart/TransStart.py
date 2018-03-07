@@ -170,6 +170,25 @@ def index_gff(gff):
     return gene_start_stop_dict, gene_first_exon_dict, \
            gene_scaff_dict, gene_direction, gene_set, gene_gff_line
 
+def create_gff_line(gffline, gene, TranStart, TranStop):
+    """func to create a gff line with a new name and
+    the start of transcription and end of transcription"""
+    scaff, source, feature, start, stop, score, \
+              direction, frame, gene_info = gffline.split("\t")
+    gene_info = gene + "_predicted_UTR\n"
+    feature = "UTR"
+    source = "TranStart"
+    if direction == "+":
+        UTR_start = str(TranStart)
+        UTR_stop = str(start)
+    if direction == "-":
+        UTR_start = str(TranStop)
+        UTR_stop = str(stop)
+    new_gff_line = "\t".join([scaff, source, feature, UTR_start,
+                             UTR_stop, score,
+                             direction, frame, gene_info])
+    return new_gff_line
+
 
 def avg_std_dev(positions):
     """function to return the avaerage and stadard deviation
@@ -294,7 +313,15 @@ def TranscriptionFind(genome, gene_start_stop_dict,
     """
     logger.info("RESULTS in outfile: %s", out_file)
     genome_index = index_genome_file(genome, logger)
+    depth_set = set([])
     # open outfile:
+    out_file_gff = out_file.split(".")[0] + "based_on_min_value.gff"
+    out_file_gff2 = out_file.split(".")[0] + "based_on_SD_threshold.gff"
+    logger.info("gff info will be in %s", out_file_gff)
+    gff_out = open(out_file_gff, "w")
+    gff_sd_out = open(out_file_gff2, "w")
+    gene_failed_count = 0
+
     with open(out_file, 'w') as file_out:
         file_out.write(TITLE)
         for gene in gene_set:
@@ -317,14 +344,17 @@ def TranscriptionFind(genome, gene_start_stop_dict,
             #exon_depth_file = os.path.join("temp_reads_per_base",
                                           #gene + "_exon_depth.tmp")
             scaffold_depth_file = os.path.join("temp_reads_per_base",
-                                               "depth.tmp")
+                                               scaffold +"_depth.tmp")
             scaffold_start_stop = "%s:%s-%s" %(scaffold, start, stop)
             # call the func to run
             if "Y" in keep_gene_depth.upper():
                 pipe = run_samtools_depth(scaffold_start_stop, bam_file,
                                           depth_filename, logger)
-            pipe = run_samtools_depth(scaffold, bam_file,
-                                      scaffold_depth_file, logger)
+            if scaffold_depth_file not in depth_set:
+                depth_set.add(scaffold_depth_file)
+                # print("not seen %s" % scaffold)
+                pipe = run_samtools_depth(scaffold, bam_file,
+                                          scaffold_depth_file, logger)
     ##        scaffold_exon_start_stop = "%s:%s-%s" %(scaffold, exon_start,
     ##                                                exon_stop)
     ##        pipe = run_samtools_depth(scaffold_exon_start_stop, bam_file,
@@ -332,6 +362,8 @@ def TranscriptionFind(genome, gene_start_stop_dict,
             # assign zeros to all positions of the transcript,
             # as samtool does no report zeros
             seq_record = genome_index[scaffold]
+            # print(scaffold, gene, len(seq_record.seq), scaffold_depth_file)
+
             all_coverage = [0] * len(seq_record.seq)
             all_coverage = fill_in_zero_cov(all_coverage,
                                             scaffold_depth_file)
@@ -345,7 +377,8 @@ def TranscriptionFind(genome, gene_start_stop_dict,
                                                 [start:stop])
             if exon_mean == 0:
                 warn = "No RNAseq expression for gene exon 1 %s" % gene
-                # logger.warning("%s: gene failed", warn)
+                logger.warning("%s: gene failed", warn)
+                gene_failed_count = gene_failed_count + 1
                 continue
             out_str = "\t".join([gene + ":",
                                 "Cov min: %i" % min(all_coverage),
@@ -356,7 +389,7 @@ def TranscriptionFind(genome, gene_start_stop_dict,
                                 "exon mean %0.2f" % exon_mean,
                                 "exon std: %0.2f" % exon_stdDev,
                                 direction])
-            logger.info(out_str)
+            # logger.info(out_str)
             cut_off = exon_mean - (int(stand_dev_threshold) * exon_stdDev)
             position_mean_cov = mean(all_coverage[exon_start:exon_stop])
             # walk in 3 bases to find the position where coverage sig drops
@@ -446,9 +479,21 @@ def TranscriptionFind(genome, gene_start_stop_dict,
                                  direction,
                                  "\n"])
             if write == "yes" and write_min_value == "ok":
-                print("writing: ", out_str)
+                # print("writing: ", out_str)
                 file_out.write(out_str)
-        logger.info("main function finished")
+                GENE_gff = gene_gff_line[gene]
+                # for the min value approach
+                new_gff_line = create_gff_line(GENE_gff, gene, current_start1, current_end1)
+                gff_out.write(new_gff_line)
+                # for the standard dev approach
+                new2_gff_line = create_gff_line(GENE_gff, gene, current_start, current_end)
+                gff_sd_out.write(new2_gff_line)
+                
+        logger.info("deleting scaffold depth files")
+        for depthfile in depth_set:
+            os.remove(depthfile)            
+        logger.info("main function finished. %d gene failed", gene_failed_count)
+        gff_out.close()
 
 
 ###############################################################################################
@@ -480,6 +525,9 @@ steps:
     samtools sort unsorted.bam sorted.bam
 3) Index your sorted.bam
     samtools index sorted.bam
+
+CPU time: 27, 000 genes ~ 5 hours
+and requires 0.5 GB of RAM using a 500Mbp genome.
 
 """
 
