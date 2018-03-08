@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# title write a shelll to run metapy on mutli fastaq files.
+# title write a shell to run metapy on mutli fastaq files.
 
 import os
 import shutil
