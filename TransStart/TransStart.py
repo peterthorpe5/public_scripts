@@ -66,15 +66,6 @@ analysis on this to determine if the start of transcription
     sys.exit(os.system(cmd))
 
 
-
-# make a temp_folder_for_all_the_out_files
-dest_dir = os.path.join(os.getcwd(),
-                        'temp_reads_per_base')
-try:
-    os.makedirs(dest_dir)
-except OSError:
-    print ("folder already exists, I will write over what is in there")
-
 ##############################################################################
 # functions
 
@@ -187,7 +178,7 @@ def create_gff_line(gffline, gene, TranStart, TranStop):
     new_gff_line = "\t".join([scaff, source, feature, UTR_start,
                              UTR_stop, score,
                              direction, frame, gene_info])
-    return new_gff_line
+    return new_gff_line, UTR_start, UTR_stop
 
 
 def avg_std_dev(positions):
@@ -310,32 +301,35 @@ def iterate_coordinate_dict(gene_gff_line,
     predicted gene. It wanrs the user if the desired upstream
     regions falls into an existing gene. The coordinates will
     be altered upto this gene that is hits."""
+    current_start = int(current_start)
+    current_stop = int(current_stop)
     for gene, vals in gene_gff_line.items():
         # find the genes on the same scaffold
-        if scaffold in vals[0]:
-            dictionary_scaffold = vals[0]
+        if scaffold in vals:
             scaff, source, feature, start, stop, score, \
               direction, frame, gene_info = vals.split("\t")
             # if its is the same gene as the stop
             if gene_name in gene_info:
+                # print(gene_name, gene_info)
                 # we dont want to test it against intself!!
                 continue
-            if scaffold != dictionary_scaffold:
+            if scaffold.rstrip() != scaff.rstrip():
                 continue
-            else:
-                # debugging comment due to Roman numeral scaffold
-                # name being "within" eachother
-                # print ("scaffold = ", scaffold,
-                #        "acutally looking at", vals[0])
-                start = int(start)
-                stop = int(stop)
-
-                # print ("coord=%s, start=%s, stop=%s, gene_query=%s,
-                        # gene_GFF=%s" %(coordinates,
-                        # start, stop, gene_name, gene))
-                # basically does the coordinate fall in the current
-                # coordinate for a gene
-                if current_stop >= start and current_stop <= stop:
+            start = int(start) + 1
+            stop = int(stop)
+            # basically does the coordinate fall in the current
+            # coordinate for a gene
+            for UTR_coordinate in range(current_start, current_stop):
+                info = "checking %s current_start: %d current_stop %d\tat %d at scaff %s against %s: %d - %d" %(gene_name,
+                                                                                                                current_start,
+                                                                                                                current_stop,
+                                                            UTR_coordinate,
+                                                            scaff, gene_info.rstrip(),
+                                                                                start, stop)
+                if gene_name == "GROS_g00084":
+                    logger.info(info)
+                ##logger.info(info)
+                if UTR_coordinate > start and UTR_coordinate < stop:
                     warn = " ".join([gene_name,
                                      "UTR region falls into",
                                      "genic regions of",
@@ -343,11 +337,11 @@ def iterate_coordinate_dict(gene_gff_line,
                                      "on scaffold",
                                      scaffold])
                     logger.warning(warn)
-                return "HITS genic region"
+                    return "HITS genic region"
     return "OK"
 
 
-##### main function
+## main function
 def TranscriptionFind(genome, gene_start_stop_dict,
                       gene_first_exon_dict, gene_scaff_dict,
                       gene_direction, gene_set, gene_gff_line,
@@ -371,7 +365,7 @@ def TranscriptionFind(genome, gene_start_stop_dict,
     gene_failed_count = 0
     gene_results_printed_count = 0
     fall_off_contig_count = 0
-    default_cutoff = 0.5
+    default_cutoff = float(default_cutoff)
     logger.info("any problem and default cutoff is used. Which is %.1f",
                 default_cutoff)
 
@@ -389,7 +383,6 @@ def TranscriptionFind(genome, gene_start_stop_dict,
             exon_start, exon_stop = exon_start_exon_stop.split("\t")
             exon_start =int(exon_start)
             exon_stop = int(exon_stop)
-
             # call samtools to get the depth per posititon for
             # the transcript of interest
             depth_filename = os.path.join("temp_reads_per_base",
@@ -397,7 +390,7 @@ def TranscriptionFind(genome, gene_start_stop_dict,
             #exon_depth_file = os.path.join("temp_reads_per_base",
                                           #gene + "_exon_depth.tmp")
             scaffold_depth_file = os.path.join("temp_reads_per_base",
-                                               scaffold +"_depth.tmp")
+                                               scaffold + "_depth.tmp")
             scaffold_start_stop = "%s:%s-%s" %(scaffold, start, stop)
             # call the func to run
             if "Y" in keep_gene_depth.upper():
@@ -481,14 +474,7 @@ def TranscriptionFind(genome, gene_start_stop_dict,
                                          [current_start:current_end])
                 if position_mean_cov == False:
                     position_mean_cov = 0
-                #print("setting position_mean_cov to: ", position_mean_cov)
-            # Check to see if this hits a gene or not
-            Stand_d_Hits_geneic_or_not = iterate_coordinate_dict(gene_gff_line,
-                                                                 gene,
-                                                                 scaffold,
-                                                                 current_start,
-                                                                 current_end,
-                                                                 logger)
+            #print("setting position_mean_cov to: ", position_mean_cov)
             # run the while loop again to find the position where the expression
             # is less than the option min value
             current_end1 = stop
@@ -518,14 +504,6 @@ def TranscriptionFind(genome, gene_start_stop_dict,
                 if position_mean_cov == False:
                     position_mean_cov = 0
                     break
-            Min_val_Hits_geneic_or_not = iterate_coordinate_dict(gene_gff_line,
-                                                                 gene,
-                                                                 scaffold,
-                                                                 current_start1,
-                                                                 current_end1,
-                                                                 logger)
-
-
 
             out_str = "\t".join([gene,
                                  str(current_start),
@@ -548,19 +526,36 @@ def TranscriptionFind(genome, gene_start_stop_dict,
                     file_out.write(out_str)
                     GENE_gff = gene_gff_line[gene]
                     # for the min value approach
-                    if Min_val_Hits_geneic_or_not == "OK":
-                        new_gff_line = create_gff_line(GENE_gff, gene,
-                                                       current_start1,
-                                                       current_end1)
-                        gff_out.write(new_gff_line)
 
-                    else:
+                    new_gff_line1, UTR_start, UTR_stop = create_gff_line(GENE_gff, gene,
+                                                   current_start1,
+                                                   current_end1)
+                    Min_val_Hits_geneic_or_not = iterate_coordinate_dict(gene_gff_line,
+                                                             gene,
+                                                             scaffold,
+                                                             UTR_start,
+                                                             UTR_stop,
+                                                             logger)
+                    if Min_val_Hits_geneic_or_not == "HITS genic region":
                         gene_failed_count = gene_failed_count + 1
+                        continue
+                    if Min_val_Hits_geneic_or_not == "OK":
+                        gff_out.write(new_gff_line1)
                     # for the standard dev approach
+                    new_gff_line, UTR_start, UTR_stop = create_gff_line(GENE_gff, gene,
+                                                    current_start,
+                                                    current_end)
+                    # Check to see if this hits a gene or not
+                    Stand_d_Hits_geneic_or_not = iterate_coordinate_dict(gene_gff_line,
+                                                                 gene,
+                                                                 scaffold,
+                                                                 UTR_start,
+                                                                 UTR_stop,
+                                                                 logger)
+                    if Stand_d_Hits_geneic_or_not == "HITS genic region":
+                        gene_failed_count = gene_failed_count + 1
+                        continue
                     if Stand_d_Hits_geneic_or_not == "OK":
-                        new2_gff_line = create_gff_line(GENE_gff, gene,
-                                                        current_start,
-                                                        current_end)
                         gff_sd_out.write(new2_gff_line)
                         gene_results_printed_count = gene_results_printed_count + 1
             else:
@@ -662,12 +657,12 @@ parser.add_option("-i",
 
 parser.add_option("--default_cutoff",
                   dest="default_cutoff",
-                  default=0.5,
+                  default=1,
                   help="if there is a problem with " +
                   "cut_off = exon_mean - (int(stand_dev_threshold) * exon_stdDev) ." +
                   "If this is less than default_cutoff, then " +
                   "default_cutoff value is applied. " +
-                  " Default = 0.5")
+                  " Default = 1")
 
 parser.add_option("--help_full", dest="help_full", default=None,
                   help="prints out a full description of this program")
@@ -754,6 +749,13 @@ if __name__ == '__main__':
                         bam_file])
         # call the func
         pipe = subproces_func(cmd)
+    # make a temp_folder_for_all_the_out_files
+    dest_dir = os.path.join(os.getcwd(),
+                            'temp_reads_per_base')
+    try:
+        os.makedirs(dest_dir)
+    except OSError:
+        print ("folder already exists")
     logger.info("Indexidng gff: %s", gff)
     gene_start_stop_dict, gene_first_exon_dict,\
                           gene_scaff_dict, gene_direction, gene_set,\
@@ -790,12 +792,12 @@ if __name__ == '__main__':
                       TITLE,
                       options.keep_gene_depth,
                       default_cutoff)
-    out_file_gff = out_file.split(".")[0] + "based_on_min_value.gff"
-    out_file_gff2 = out_file.split(".")[0] + "based_on_SD_threshold.gff"
+    out_file_gff = outfile.split(".")[0] + "based_on_min_value.gff"
+    out_file_gff2 = outfile.split(".")[0] + "based_on_SD_threshold.gff"
     sort_cmd = "sort -k1n -k9n %s > temp1.gff" % out_file_gff
     sort_cmd2 = "sort -k1n -k9n %s > temp2.gff" % out_file_gff2
-    mv_cmd = "mv temp1.gff out_file_gff"
-    mv_cmd2 = "mv temp2.gff out_file_gff2"
+    mv_cmd = "mv temp1.gff %s" % out_file_gff
+    mv_cmd2 = "mv temp2.gff %s", out_file_gff2
     logger.info("sortintg gff output.")
     command_list = [sort_cmd, sort_cmd2, mv_cmd, mv_cmd2]
     for command in command_list:
