@@ -542,20 +542,20 @@ def TranscriptionFind(genome, gene_start_stop_dict,
                     if Min_val_Hits_geneic_or_not == "OK":
                         gff_out.write(new_gff_line1)
                     # for the standard dev approach
-                    new_gff_line, UTR_start, UTR_stop = create_gff_line(GENE_gff, gene,
+                    new2_gff_line, UTR_start, UTR_stop = create_gff_line(GENE_gff, gene,
                                                     current_start,
                                                     current_end)
                     # Check to see if this hits a gene or not
-                    Stand_d_Hits_geneic_or_not = iterate_coordinate_dict(gene_gff_line,
-                                                                 gene,
-                                                                 scaffold,
-                                                                 UTR_start,
-                                                                 UTR_stop,
-                                                                 logger)
-                    if Stand_d_Hits_geneic_or_not == "HITS genic region":
+                    sd_geneic_or_not = iterate_coordinate_dict(gene_gff_line,
+                                                               gene,
+                                                               scaffold,
+                                                               UTR_start,
+                                                               UTR_stop,
+                                                               logger)
+                    if sd_geneic_or_not == "HITS genic region":
                         gene_failed_count = gene_failed_count + 1
                         continue
-                    if Stand_d_Hits_geneic_or_not == "OK":
+                    if sd_geneic_or_not == "OK":
                         gff_sd_out.write(new2_gff_line)
                         gene_results_printed_count = gene_results_printed_count + 1
             else:
