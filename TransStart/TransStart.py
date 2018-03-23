@@ -320,14 +320,6 @@ def iterate_coordinate_dict(gene_gff_line,
             # basically does the coordinate fall in the current
             # coordinate for a gene
             for UTR_coordinate in range(current_start, current_stop):
-                info = "checking %s current_start: %d current_stop %d\tat %d at scaff %s against %s: %d - %d" %(gene_name,
-                                                                                                                current_start,
-                                                                                                                current_stop,
-                                                            UTR_coordinate,
-                                                            scaff, gene_info.rstrip(),
-                                                                                start, stop)
-                if gene_name == "GROS_g00084":
-                    logger.info(info)
                 ##logger.info(info)
                 if UTR_coordinate > start and UTR_coordinate < stop:
                     warn = " ".join([gene_name,
