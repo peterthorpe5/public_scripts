@@ -789,7 +789,7 @@ if __name__ == '__main__':
     sort_cmd = "sort -k1n -k9n %s > temp1.gff" % out_file_gff
     sort_cmd2 = "sort -k1n -k9n %s > temp2.gff" % out_file_gff2
     mv_cmd = "mv temp1.gff %s" % out_file_gff
-    mv_cmd2 = "mv temp2.gff %s", out_file_gff2
+    mv_cmd2 = "mv temp2.gff %s" % out_file_gff2
     logger.info("sortintg gff output.")
     command_list = [sort_cmd, sort_cmd2, mv_cmd, mv_cmd2]
     for command in command_list:
