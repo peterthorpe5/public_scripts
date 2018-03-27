@@ -129,12 +129,13 @@ gff = options.gff
 #-o
 outfile= options.outfile
 
-if not os.path.isfile(genome):
-    sys.exit("Input BAM file not found: %s" % genome)
-
 #######################################################################
 # Run as script
 if __name__ == '__main__':
     # no logging for this.
+    if not os.path.isfile(genome):
+        sys.exit("Input genome file not found: %s" % genome)
+    if not os.path.isfile(gff):
+        sys.exit("Input gff file not found: %s" % gff)
     gff_to_fasta(gff, genome, options.min_length,
                  options.max_length, outfile)
