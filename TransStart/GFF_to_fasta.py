@@ -138,6 +138,3 @@ if __name__ == '__main__':
     # no logging for this.
     gff_to_fasta(gff, genome, options.min_length,
                  options.max_length, outfile)
-    
-
-
