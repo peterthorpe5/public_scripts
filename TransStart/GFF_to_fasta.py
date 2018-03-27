@@ -2,8 +2,6 @@
 # title: GFF to fasta
 # (c) The James Hutton Institute 2018
 # Author: Peter Thorpe. The James Hutton Institute, Uk
-
-
 # imports
 import sys
 import os
@@ -24,19 +22,26 @@ def index_genome_file(genome):
     genome_database = SeqIO.index(genome, "fasta")
     return genome_database
 
+
 def check_line(line):
-    """checks if line is ok"""
+    """checks if line is ok
+    Starts with a comment of blank ine = not ok. """
     if line.startswith("#"):
         return False
     if not line.strip():
         return False
     return line
 
+
 def split_line(line):
-    """split the gff line"""
+    """split the gff line
+    Takes in a gff line. returns the elements, as str or int"""
+    warning_list = ["gene", "exon", "intron"]
     assert len(line.split("\t")) == 9 , "GFF fields wrong length should be 9"
     scaff, source, feature, start, stop, score, \
             direction, frame, gene_info = line.split("\t")
+    if feature in warning_list:
+        print("This script is for transtart output only. Be carfeful!!!")
     gene_info = gene_info.rstrip()
     start = int(start)
     stop = int(stop)
@@ -44,8 +49,14 @@ def split_line(line):
             direction, frame, gene_info
 
 
-def gff_to_fasta(gff, genome, min_length, outfile):
-    """take in gff file"""
+def gff_to_fasta(gff, genome, min_length, Max_length,
+                 outfile):
+    """take in gff file. Gets the seq defined by the gff coords.
+    If negative direction coding, the reverse complement is generated.
+    A min length of seq to return and max len is applied to remove seq
+    less than, for example 3 which cant be real and less that e.g., 25k
+    which will be flase positives and not informative in downstream analysis
+    """
     print("Indexing the genome")
     min_length = int(min_length)
     genome_database = index_genome_file(genome)
@@ -69,7 +80,7 @@ def gff_to_fasta(gff, genome, min_length, outfile):
     f_out.close()
 
 
-###############################################################################################
+#############################################################################
 #to run it:
 
 
@@ -79,10 +90,7 @@ python GFF_to_fasts.py --gff transtart.gff -g genome.fasta -o UTR.fasta
 
 """
 
-
-
 parser = OptionParser(usage=usage)
-
 
 parser.add_option("--gff", dest="gff",
                   default=None,
@@ -92,14 +100,20 @@ parser.add_option("--gff", dest="gff",
 parser.add_option("-g", "--genome",
                   dest="genome",
                   default=None,
-                  help="the genome sequence. Not currently used. TO DO",
+                  help="the genome sequence.",
                   metavar="FILE")
+
 parser.add_option("-m", "--min_length",
                   dest="min_length",
                   default=8,
                   help="min_length of seq to return",
                   metavar="FILE")
 
+parser.add_option("-x", "--max_length",
+                  dest="max_length",
+                  default=8000,
+                  help="max_length of seq to return",
+                  metavar="FILE")
 
 parser.add_option("-o", "--out", dest="outfile",
                   default="transtart.UTR.fasta",
@@ -108,24 +122,22 @@ parser.add_option("-o", "--out", dest="outfile",
 
 (options, args) = parser.parse_args()
 
-
 #-g
 genome = options.genome
 #--gff
 gff = options.gff
-
 #-o
 outfile= options.outfile
 
 if not os.path.isfile(genome):
     sys.exit("Input BAM file not found: %s" % genome)
 
-
 #######################################################################
 # Run as script
 if __name__ == '__main__':
     # no logging for this.
-    gff_to_fasta(gff, genome, options.min_length, outfile)
+    gff_to_fasta(gff, genome, options.min_length,
+                 options.max_length, outfile)
     
 
 
