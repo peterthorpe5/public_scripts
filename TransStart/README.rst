@@ -61,3 +61,30 @@ Options:
                         keep the output of the depth for the genes
   --logger=FILE         Output logger filename. Default: outfile_std.log
   -o FILE, --out=FILE   Output filename (default: results.out)
+
+  
+ convert the GFF output to fasta:
+ ================================
+``python GFF_to_fasta.py --gff TransStart_walk3based_on_min_value.gff -g nGr.v1.1.fa -o GROS_TSS_predition_maxLen1000.fasta -x 1000 -i 20``
+
+Warning: This is made for a specific purpose. With specific data
+      If you are using it, check it works for you!!
+Usage: Use as follows:
+
+python GFF_to_fasts.py --gff transtart.gff -m min len -x max len
+        -g genome.fasta -o UTR.fasta
+
+Options:
+  -h, --help            show this help message and exit
+  --gff=FILE            the predicted coordinate for the cds predictions .gff
+  -g FILE, --genome=FILE
+                        the genome sequence.
+  -m FILE, --min_length=FILE
+                        min_length of seq to return
+  -x FILE, --max_length=FILE
+                        max_length of seq to return
+  -i FILE, --into_TSS=FILE
+                        into_TSS of seq to return to the binding theory
+  -u FILE, --upstream=FILE
+                        upstream of TSS to return
+  -o FILE, --out=FILE   Output filename (transtart.UTR.fasta)
