@@ -50,7 +50,7 @@ def split_line(line):
 
 
 def gff_to_fasta(gff, genome, min_length, Max_length,
-                 outfile):
+                 outfile, upstream, into_TSS):
     """take in gff file. Gets the seq defined by the gff coords.
     If negative direction coding, the reverse complement is generated.
     A min length of seq to return and max len is applied to remove seq
@@ -62,6 +62,10 @@ def gff_to_fasta(gff, genome, min_length, Max_length,
     genome_database = index_genome_file(genome)
     print("Now iterating through the GFF. Assume it is sorted")
     f_out = open(outfile, "w")
+    bind_out = outfile.split(".fa")[0] + "_%dnt_upstream_%d_into_TSS.fasta" % (upstream,
+                                                                               into_TSS)
+    bind_out_fa = open(bind_out, "w")
+    upstream = int(upstream)
     with open(gff, "r") as f_handle:
         for line in f_handle:
             line = check_line(line)
@@ -71,13 +75,22 @@ def gff_to_fasta(gff, genome, min_length, Max_length,
             direction, frame, gene_info = split_line(line)
             seq_record = genome_database[scaff]
             if direction == "+":
-                seq_record.seq = seq_record.seq[start:stop]
+                UTR = seq_record.seq[start:stop]
+                bind_seq = seq_record.seq[(start - upstream):(start + into_TSS)]
             if direction == "-":
-                seq_record.seq = reverse_complement(seq_record.seq[start:stop])
-            outstr = ">%s\n%s\n" % (gene_info, seq_record.seq)
-            if len(seq_record.seq) > min_length:
+                UTR = reverse_complement(seq_record.seq[start:stop])
+                bind_seq = reverse_complement(seq_record.seq[(stop - into_TSS)
+                                                             :(stop + upstream)])
+            outstr = ">%s\n%s\n" % (gene_info, UTR)
+            bind_str = ">%s_%d_upstream_TSS\n%s\n" % (gene_info, upstream, bind_seq)
+            if len(UTR) > min_length and len(UTR) < Max_length:
                 f_out.write(outstr)
+                if "NNNN" in bind_seq:
+                    continue  #  we dont want NNNs
+                if len(bind_seq) >= upstream: 
+                    bind_out_fa.write(bind_str)
     f_out.close()
+    bind_out_fa.close()
 
 
 #############################################################################
@@ -111,8 +124,20 @@ parser.add_option("-m", "--min_length",
 
 parser.add_option("-x", "--max_length",
                   dest="max_length",
-                  default=8000,
+                  default=4000,
                   help="max_length of seq to return",
+                  metavar="FILE")
+
+parser.add_option("-i", "--into_TSS",
+                  dest="into_TSS",
+                  default=0,
+                  help="into_TSS of seq to return to the binding theory",
+                  metavar="FILE")
+
+parser.add_option("-u", "--upstream",
+                  dest="upstream",
+                  default=20,
+                  help="upstream of TSS to return",
                   metavar="FILE")
 
 parser.add_option("-o", "--out", dest="outfile",
@@ -128,6 +153,14 @@ genome = options.genome
 gff = options.gff
 #-o
 outfile= options.outfile
+# - upstream
+upstream = int(options.upstream)
+# -x
+max_length = int(options.max_length)
+# --min_length
+min_length = int(options.min_length)
+# into_TSS
+into_TSS = int(options.into_TSS)
 
 #######################################################################
 # Run as script
@@ -137,5 +170,6 @@ if __name__ == '__main__':
         sys.exit("Input genome file not found: %s" % genome)
     if not os.path.isfile(gff):
         sys.exit("Input gff file not found: %s" % gff)
-    gff_to_fasta(gff, genome, options.min_length,
-                 options.max_length, outfile)
+    gff_to_fasta(gff, genome, min_length,
+                 max_length, outfile, upstream,
+                 into_TSS)
