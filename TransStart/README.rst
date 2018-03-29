@@ -4,7 +4,7 @@ TranStart
 Transcription start finder based on read depth coverage v0.1.0
 THIS IS NOT finding the start of coding squence. but where transcription binds and starts
 
-``python TransStart.py -g genome.fasta --bam index_sorted_bam_file.bam --walk 3 --interation_value 1 --gff genes.gff -o outfile.txt``
+$ ``python TransStart.py -g genome.fasta --bam index_sorted_bam_file.bam --walk 3 --interation_value 1 --gff genes.gff -o outfile.txt``
 
 
 Requirements:
@@ -65,7 +65,7 @@ Options:
   
  convert the GFF output to fasta:
  ================================
-``python GFF_to_fasta.py --gff TransStart_walk3based_on_min_value.gff -g nGr.v1.1.fa -o GROS_TSS_predition_maxLen1000.fasta -x 1000 -i 20``
+$ ``python GFF_to_fasta.py --gff TransStart_walk3based_on_min_value.gff -g nGr.v1.1.fa -o GROS_TSS_predition_maxLen1000.fasta -x 1000 -i 20``
 
 Warning: This is made for a specific purpose. With specific data
       If you are using it, check it works for you!!
