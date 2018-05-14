@@ -330,6 +330,8 @@ def get_accession_number(line, logger):
             line = "\t".join(line.split())
         except ValueError:
             format_warning(logger)
+    if ("|") not in acces_column:
+        return acces_column.rstrip()
     if acces_column.startswith("gi"):
         # e.g. gi|66816243|ref|XP_642131.1|
         acc = acces_column.split("|")[3]
