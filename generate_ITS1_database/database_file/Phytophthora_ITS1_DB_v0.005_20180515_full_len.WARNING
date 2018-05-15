@@ -1,5 +1,6 @@
-Downloaded 205 GenBank records from NCBI
+Downloaded 207 GenBank records from NCBI
 Phytophthora_alni_subsp._alni	Phytophthora_alni_subsp.	AF139366	Does not match Genbank entry
+Phytophthora_alni_subsp._alni	Phytophthora_alni_subsp.	DQ335646	Does not match Genbank entry
 Phytophthora_alni_subsp._multiformis	Phytophthora_alni_subsp.	AF139368	Does not match Genbank entry
 Phytophthora_alni_subsp._uniformis	Phytophthora_alni_subsp.	AF139367	Does not match Genbank entry
 Phytophthora_amaranthi	Phytophthora_sp._TARI	GU111585	Does not match Genbank entry
@@ -34,13 +35,13 @@ Phytophthora_taxon_umtamvuna	Phytophthora_sp._Umtamvuna	KC855181	Does not match 
 Phytophthora_x_cambivora	Phytophthora_cambivora_isolate	KU899179	Does not match Genbank entry
 Phytophthora_X_pelgrandis	Phytophthora_nicotianae_x	EU660831	Does not match Genbank entry
 #DOWNLOAD INFO
-Wanted number = 208
-we found 204
-did not get {'', 'NA', 'NOT_TAKEN_DQ648146', 'na'}
+Wanted number = 210
+we found 206
+did not get {'', 'NOT_TAKEN_DQ648146', 'NA', 'na'}
 
 
 WANTED but not found!!:
 __
-2_Phytophthora_inflata_NA
 2_Phytophthora_citricola_typeI_III_NOT_TAKEN_DQ648146
+2_Phytophthora_inflata_NA
 7a_Phytophthora_vulcanica_na

@@ -21,19 +21,19 @@ duplicate seq found 1_Phytophthora_X_serendipita_JX276054	 matches 1_Phytophthor
 duplicate seq found 6b_Phytophthora_X_stagnum_KJ705086	 matches 6_Phytophthora_chlamydospora_KU647272
 Check 7_Phytophthora_x_heterohybrida_KU517151 for {'R'}
 not adding this to database
-Check 8d_Phytophthora_austrocedri_KU953997 for {'R'}
-not adding this to database
 Check 7_Phytophthora_x_incrassata_KU517156 for {'Y', 'W'}
+not adding this to database
+Check 6_Phytophthora_gemini_FJ217680 for {'Y'}
+not adding this to database
+Check 8d_Phytophthora_austrocedri_KU953997 for {'R'}
 not adding this to database
 Check 4_Phytophthora_boodjera_KJ372244 for {'K'}
 not adding this to database
-Check 7a_Phytophthora_alni_subsp._alni_AF139366 for {'Y', 'W'}
+Check 8b_Phytophthora_brassicae_voucher_HQ643157 for {'W'}
 not adding this to database
 Check 7a_Phytophthora_cambivora_KU681015 for {'K'}
 not adding this to database
-Check 8b_Phytophthora_brassicae_voucher_HQ643157 for {'W'}
-not adding this to database
-Check 6_Phytophthora_gemini_FJ217680 for {'Y'}
+Check 7a_Phytophthora_alni_subsp._alni_AF139366 for {'Y', 'W'}
 not adding this to database
 1	sequences with illegal characters
 19	duplciated sequences

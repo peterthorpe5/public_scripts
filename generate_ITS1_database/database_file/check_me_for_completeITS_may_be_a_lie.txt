@@ -4,7 +4,7 @@
 # Freely distributed under the GNU General Public License (GPLv3).
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # query HMM file:                  ./bin/Phytophora_ITS_20180104.hmm
-# target sequence database:        ./database_file/Phytophthora_ITS1_DB_v0.004_201802271_full_len.fasta
+# target sequence database:        ./database_file/Phytophthora_ITS1_DB_v0.005_20180515_full_len.fasta
 # per-dom hits tabular output:     ./database_file/ITS1_hmm_domain_table.out
 # domain reporting threshold:      E-value <= 1e-22
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -14,56 +14,57 @@ Scores for complete sequences (score includes all domains):
    --- full sequence ---   --- best 1 domain ---    -#dom-
     E-value  score  bias    E-value  score  bias    exp  N  Sequence                                         Description
     ------- ------ -----    ------- ------ -----   ---- --  --------                                         -----------
-    9.5e-44  143.3   6.6    3.6e-43  141.4   0.0    3.3  1  6_Phytophthora_bilorbang_JQ256377                 
-    1.9e-43  142.3   6.5    4.2e-43  141.2   0.0    3.3  1  6_Phytophthora_litoralis_HQ012948                 
+    9.6e-44  143.3   6.6    3.7e-43  141.4   0.0    3.3  1  6_Phytophthora_bilorbang_JQ256377                 
+    1.9e-43  142.3   6.5    4.3e-43  141.2   0.0    3.3  1  6_Phytophthora_litoralis_HQ012948                 
     3.6e-43  141.4   3.6    1.5e-41  136.2   0.0    3.4  1  6_Phytophthora_thermophila_EU301152               
     4.3e-43  141.2   6.5    3.9e-42  138.1   0.0    3.7  1  6_Phytophthora_riparia_HM004225                   
-    4.7e-43  141.0   3.8    9.7e-42  136.8   0.0    3.4  1  6_Phytophthora_lacustris_AF266793                 
-    5.8e-43  140.7   4.4    1.2e-41  136.5   0.0    3.4  1  6_Phytophthora_mississippiae_KF112852             
-      6e-43  140.7   5.4    5.2e-42  137.7   0.0    3.8  1  6_Phytophthora_borealis_JQ626599                  
-    6.3e-43  140.6   6.2    1.6e-42  139.4   0.0    3.3  1  6_Phytophthora_crassamura_KP863493                
-    7.1e-43  140.5   8.9    6.2e-42  137.4   0.0    3.5  1  6_Phytophthora_taxon_paludosa_HQ012953            
-    7.3e-43  140.4   7.0    1.6e-42  139.3   0.0    3.4  1  6_Phytophthora_megasperma_AF541899                
+    4.8e-43  141.0   3.8    9.8e-42  136.8   0.0    3.4  1  6_Phytophthora_lacustris_AF266793                 
+    5.9e-43  140.7   4.4    1.2e-41  136.5   0.0    3.4  1  6_Phytophthora_mississippiae_KF112852             
+    6.1e-43  140.7   5.4    5.3e-42  137.7   0.0    3.8  1  6_Phytophthora_borealis_JQ626599                  
+    6.4e-43  140.6   6.2    1.6e-42  139.4   0.0    3.3  1  6_Phytophthora_crassamura_KP863493                
+    7.2e-43  140.5   8.9    6.3e-42  137.4   0.0    3.5  1  6_Phytophthora_taxon_paludosa_HQ012953            
+    7.4e-43  140.4   7.0    1.6e-42  139.3   0.0    3.4  1  6_Phytophthora_megasperma_AF541899                
     8.9e-43  140.2   8.0    6.6e-42  137.3   0.0    3.5  1  6_Phytophthora_gibbosa_HQ012933                   
     1.1e-42  139.9   4.7    2.4e-41  135.5   0.0    3.2  1  2c_Phytophthora_multivesiculata_AF266790          
     1.4e-42  139.6   8.4    1.6e-42  139.3   0.0    3.4  1  6_Phytophthora_megasperma_AF541895                
-    1.8e-42  139.1   4.5    4.6e-41  134.6   0.0    3.4  1  6b_Phytophthora_X_stagnum_KJ705084                
-    2.8e-42  138.5   2.5    1.4e-40  133.0   0.0    3.2  1  6_Phytophthora_inundata_AF266791                  
-    2.8e-42  138.5   5.0    4.9e-41  134.5   0.0    3.4  1  6b_Phytophthora_X_stagnum_KJ705085                
-    3.2e-42  138.3   5.8      1e-41  136.7   0.0    3.4  1  6_Phytophthora_moyootj_KJ372256                   
+    1.9e-42  139.1   4.5    4.6e-41  134.6   0.0    3.4  1  6b_Phytophthora_X_stagnum_KJ705084                
+    2.9e-42  138.5   2.5    1.5e-40  133.0   0.0    3.2  1  6_Phytophthora_inundata_AF266791                  
+    2.9e-42  138.5   5.0    4.9e-41  134.5   0.0    3.4  1  6b_Phytophthora_X_stagnum_KJ705085                
+    3.3e-42  138.3   5.8      1e-41  136.7   0.0    3.4  1  6_Phytophthora_moyootj_KJ372256                   
     6.6e-42  137.3   6.9    1.7e-41  136.0   0.0    3.4  1  6_Phytophthora_gonapodyides_H_14_JF912516         
-    7.7e-42  137.1   7.8    2.6e-41  135.4   0.0    3.6  1  6_Phytophthora_ornamentata_KP863496               
+    7.8e-42  137.1   7.8    2.6e-41  135.4   0.0    3.6  1  6_Phytophthora_ornamentata_KP863496               
     1.4e-41  136.2   2.0    1.1e-39  130.1   0.0    3.2  1  6_Phytophthora_humicola_FJ196747                  
     1.5e-41  136.1   6.9    3.9e-41  134.8   0.0    3.4  1  6_Phytophthora_gonapodyides_voucher_HQ643236      
-    1.9e-41  135.8   3.7    9.3e-40  130.4   0.0    3.4  1  6_Phytophthora_chlamydospora_KU647272             
-    2.1e-41  135.7   7.4    2.8e-41  135.3   0.0    3.4  1  6_Phytophthora_megasperma_GU258796                
+      2e-41  135.8   3.7    9.4e-40  130.4   0.0    3.4  1  6_Phytophthora_chlamydospora_KU647272             
+    2.1e-41  135.7   7.4    2.9e-41  135.3   0.0    3.4  1  6_Phytophthora_megasperma_GU258796                
     2.6e-41  135.4   2.9    2.6e-40  132.2   0.0    3.2  1  1_Phytophthora_X_serendipita_JX276054             
-    3.2e-41  135.1   4.4    8.8e-41  133.7   0.0    3.1  1  1_Phytophthora_cactorum_AF266772                  
-    3.2e-41  135.1   5.2    2.5e-40  132.2   0.0    3.0  1  2c_Phytophthora_taxon_aquatilis_FJ666126          
-    3.2e-41  135.1   4.3      9e-40  130.4   0.0    3.4  1  6b_Phytophthora_X_stagnum_KJ705086                
-      4e-41  134.8   4.2    1.3e-40  133.1   0.0    3.1  1  1_Phytophthora_idaei_voucher_HQ643246             
+    3.2e-41  135.1   4.4    8.9e-41  133.7   0.0    3.1  1  1_Phytophthora_cactorum_AF266772                  
+    3.2e-41  135.1   5.2    2.6e-40  132.2   0.0    3.0  1  2c_Phytophthora_taxon_aquatilis_FJ666126          
+    3.2e-41  135.1   4.3    9.1e-40  130.4   0.0    3.4  1  6b_Phytophthora_X_stagnum_KJ705086                
+      4e-41  134.8   4.2    1.4e-40  133.1   0.0    3.1  1  1_Phytophthora_idaei_voucher_HQ643246             
     4.1e-41  134.8   4.2    5.6e-40  131.1   0.0    3.4  1  6_Phytophthora_fluvialis_JF701436                 
-    4.7e-41  134.6   4.6    1.4e-40  133.1   0.0    3.1  1  1_Phytophthora_idaei_AF266773                     
+    4.8e-41  134.6   4.6    1.4e-40  133.1   0.0    3.1  1  1_Phytophthora_idaei_AF266773                     
     6.5e-41  134.1   5.0    6.1e-40  131.0   0.0    3.3  1  6_Phytophthora_sp._personii_EU301169              
-    6.9e-41  134.0   3.7    2.2e-39  129.1   0.0    3.3  1  6_Phytophthora_asparagi_EF185089                  
-    9.8e-41  133.5   4.4    1.4e-40  133.1   0.0    3.0  1  1_Phytophthora_pseudotsugae_AF266774              
+      7e-41  134.0   3.7    2.3e-39  129.1   0.0    3.3  1  6_Phytophthora_asparagi_EF185089                  
+    9.9e-41  133.5   4.4    1.4e-40  133.1   0.0    3.0  1  1_Phytophthora_pseudotsugae_AF266774              
     1.5e-40  133.0   5.3    2.5e-40  132.2   0.0    3.2  1  1_Phytophthora_hedraiandra_AY707987               
     1.7e-40  132.8   3.1    1.7e-38  126.3   0.0    3.3  1  7b_Phytophthora_cinnamomi_HQ643194                
     1.9e-40  132.6   5.6    1.6e-39  129.6   0.0    3.4  1  2_Phytophthora_elongata_JX113301                  
-    2.6e-40  132.2   3.4    4.6e-39  128.1   0.0    3.1  1  6_Phytophthora_pinifolia_EU725805                 
-    4.7e-40  131.3   5.0    1.3e-39  129.9   0.0    3.2  1  6_Phytophthora_amnicola_JQ029956                  
-    7.5e-40  130.7   7.6    1.7e-38  126.2   0.0    3.2  1  4_Phytophthora_sp_Pecan_GU997621                  
-    9.8e-40  130.3   5.7    4.3e-39  128.2   0.0    3.6  1  6_Phytophthora_rosacearum_EU925376                
+    2.6e-40  132.2   3.4    4.7e-39  128.1   0.0    3.1  1  6_Phytophthora_pinifolia_EU725805                 
+    4.8e-40  131.3   5.0    1.3e-39  129.9   0.0    3.2  1  6_Phytophthora_amnicola_JQ029956                  
+    7.6e-40  130.7   7.6    1.8e-38  126.2   0.0    3.2  1  4_Phytophthora_sp_Pecan_GU997621                  
+    9.9e-40  130.3   5.7    4.4e-39  128.2   0.0    3.6  1  6_Phytophthora_rosacearum_EU925376                
     1.6e-39  129.6   4.9    1.4e-38  126.6   0.0    3.2  1  4_Phytophthora_quercetorum_EF539174               
-    4.4e-39  128.2   4.4    8.6e-38  124.0   0.0    3.5  1  7a_Phytophthora_cambivora_KU681015                
-    6.9e-39  127.5   4.9    1.2e-37  123.5   0.0    3.5  1  6_Phytophthora_taxon_cyperaceae_KJ372258          
+    4.4e-39  128.2   4.4    8.7e-38  124.0   0.0    3.5  1  7a_Phytophthora_cambivora_KU681015                
+    5.8e-39  127.8   3.0    3.2e-37  122.2   0.0    3.3  1  7b_Phytophthora_cinnamomi_KU726740                
+      7e-39  127.5   4.9    1.2e-37  123.5   0.0    3.5  1  6_Phytophthora_taxon_cyperaceae_KJ372258          
     7.2e-39  127.5   5.4    6.2e-38  124.5   0.0    3.4  1  7a_Phytophthora_uliginosa_AF449495                
     7.3e-39  127.5   4.8    1.1e-37  123.7   0.0    3.4  1  7a_Phytophthora_alni_subsp._alni_AF139366         
-    7.5e-39  127.4   4.8    2.3e-37  122.6   0.0    3.2  1  4_Phytophthora_litchii_GU111615                   
-    7.7e-39  127.4   5.8    6.3e-38  124.4   0.0    3.4  1  6_Phytophthora_gemini_FJ217679                    
-    7.8e-39  127.4   0.0    7.8e-39  127.4   0.0    3.6  1  7_Phytophthora_flexuosa_KU517152                  
-    8.2e-39  127.3   0.0    8.2e-39  127.3   0.0    3.5  1  7a_Phytophthora_europaea_AF449493                 
-    1.1e-38  126.8   5.8      1e-37  123.8   0.0    3.4  1  6_Phytophthora_gemini_FJ217680                    
+    7.6e-39  127.4   4.8    2.3e-37  122.6   0.0    3.2  1  4_Phytophthora_litchii_GU111615                   
+    7.8e-39  127.4   5.8    6.4e-38  124.4   0.0    3.4  1  6_Phytophthora_gemini_FJ217679                    
+    7.9e-39  127.4   0.0    7.9e-39  127.4   0.0    3.6  1  7_Phytophthora_flexuosa_KU517152                  
+    8.3e-39  127.3   0.0    8.3e-39  127.3   0.0    3.5  1  7a_Phytophthora_europaea_AF449493                 
+    1.2e-38  126.8   5.8      1e-37  123.8   0.0    3.4  1  6_Phytophthora_gemini_FJ217680                    
     1.3e-38  126.7   4.6    3.6e-38  125.2   0.0    3.1  1  5_Phytophthora_castaneae_TW76_KU682559            
     1.3e-38  126.7   4.8    3.5e-38  125.3   0.0    3.2  1  5_Phytophthora_agathidicida_KP295308              
     1.3e-38  126.6   7.3    4.3e-38  125.0   0.0    3.9  1  8a_Phytophthora_sansomeana_EU925375               
@@ -71,153 +72,154 @@ Scores for complete sequences (score includes all domains):
     1.9e-38  126.1   0.0    1.9e-38  126.1   0.0    3.5  1  8a_Phytophthora_cryptogea_AY659433                
       2e-38  126.1   2.5    1.7e-37  123.1   0.0    3.0  1  1_Phytophthora_phaseoli_AF266778                  
     2.2e-38  125.9   5.6    2.5e-37  122.5   0.0    3.2  1  4_Phytophthora_alticola_HQ013214                  
-    2.3e-38  125.9   4.3    6.2e-38  124.5   0.0    3.1  1  5_Phytophthora_cocois_KP295304                    
-    2.4e-38  125.8   2.7    7.8e-37  120.9   0.0    3.3  1  7_Phytophthora_parvispora_KC478667                
-    2.7e-38  125.6   4.5    5.8e-37  121.3   0.0    3.5  1  7_Phytophthora_x_heterohybrida_KU517151           
+    2.3e-38  125.9   4.3    6.3e-38  124.5   0.0    3.1  1  5_Phytophthora_cocois_KP295304                    
+    2.4e-38  125.8   2.7    7.9e-37  120.9   0.0    3.3  1  7_Phytophthora_parvispora_KC478667                
+    2.8e-38  125.6   4.5    5.8e-37  121.3   0.0    3.5  1  7_Phytophthora_x_heterohybrida_KU517151           
     2.8e-38  125.6   6.2    2.5e-37  122.5   0.0    3.2  1  4_Phytophthora_arenaria_HQ013219                  
     2.9e-38  125.5   2.4    1.2e-36  120.3   0.0    3.0  1  4_Phytophthora_palmivora_GU111659                 
-      4e-38  125.1   3.8    4.3e-37  121.7   0.0    3.1  1  4_Phytophthora_megakarya_AF266782                 
+    4.1e-38  125.1   3.8    4.4e-37  121.7   0.0    3.1  1  4_Phytophthora_megakarya_AF266782                 
     4.1e-38  125.1   0.0    4.1e-38  125.1   0.0    3.6  1  7_Phytophthora_formosa_KU517153                   
-    4.3e-38  125.0   0.0    4.3e-38  125.0   0.0    3.6  1  7a_Phytophthora_fragariae_AF266762                
-    4.3e-38  125.0   4.0      2e-37  122.8   0.0    3.2  1  1_Phytophthora_X_pelgrandis_EU660831              
-    4.3e-38  125.0   0.0    4.3e-38  125.0   0.0    3.5  1  7a_Phytophthora_rubi_AF266761                     
-    4.5e-38  124.9   5.2    6.3e-37  121.2   0.0    3.1  1  4_Phytophthora_boodjera_KJ372244                  
-    5.2e-38  124.7   0.0    5.2e-38  124.7   0.0    3.6  1  7_Phytophthora_intricata_KU517155                 
-    5.2e-38  124.7   3.8    3.3e-36  118.9   0.0    3.3  1  3_Phytophthora_pseudosyringae_AY230190            
+    4.4e-38  125.0   0.0    4.4e-38  125.0   0.0    3.6  1  7a_Phytophthora_fragariae_AF266762                
+    4.4e-38  125.0   4.0    2.1e-37  122.8   0.0    3.2  1  1_Phytophthora_X_pelgrandis_EU660831              
+    4.4e-38  125.0   0.0    4.4e-38  125.0   0.0    3.5  1  7a_Phytophthora_rubi_AF266761                     
+    4.6e-38  124.9   5.2    6.4e-37  121.2   0.0    3.1  1  4_Phytophthora_boodjera_KJ372244                  
+    5.3e-38  124.7   0.0    5.3e-38  124.7   0.0    3.6  1  7_Phytophthora_intricata_KU517155                 
+    5.3e-38  124.7   3.8    3.3e-36  118.9   0.0    3.3  1  3_Phytophthora_pseudosyringae_AY230190            
     5.5e-38  124.6   6.6    6.2e-38  124.5   0.0    3.2  1  8c_Phytophthora_hibernalis_HQ643240               
-    5.7e-38  124.6   0.0    5.7e-38  124.6   0.0    3.5  1  8a_Phytophthora_pseudocryptogea_KY212008          
+    5.8e-38  124.6   0.0    5.8e-38  124.6   0.0    3.5  1  8a_Phytophthora_pseudocryptogea_KY212008          
     6.1e-38  124.5   2.2    6.5e-37  121.2   0.0    2.9  1  1_Phytophthora_infestans_EU216567                 
     6.3e-38  124.4   8.4    8.5e-38  124.0   0.0    3.5  1  7a_Phytophthora_alni_subsp._uniformis_AF139367    
-    7.1e-38  124.3   2.7    5.9e-37  121.3   0.0    3.0  1  1c_Phytophthora_andina_AY770741                   
-    7.3e-38  124.2   2.3    6.9e-37  121.1   0.0    2.9  1  1_Phytophthora_ipomoeae_KF777191                  
-    8.6e-38  124.0   0.0    8.6e-38  124.0   0.0    3.6  1  7a_Phytophthora_cambivora_KU899159                
-    1.1e-37  123.6   0.0    1.1e-37  123.6   0.0    3.6  1  7_Phytophthora_x_cambivora_KU899179               
-    1.1e-37  123.6   0.0    1.1e-37  123.6   0.0    3.6  1  7a_Phytophthora_cambivora_KU899163                
+    7.1e-38  124.3   2.7      6e-37  121.3   0.0    3.0  1  1c_Phytophthora_andina_AY770741                   
+    7.4e-38  124.2   2.3      7e-37  121.1   0.0    2.9  1  1_Phytophthora_ipomoeae_KF777191                  
+    8.7e-38  124.0   0.0    8.7e-38  124.0   0.0    3.6  1  7a_Phytophthora_cambivora_KU899159                
+    1.2e-37  123.6   0.0    1.2e-37  123.6   0.0    3.6  1  7_Phytophthora_x_cambivora_KU899179               
+    1.2e-37  123.6   0.0    1.2e-37  123.6   0.0    3.6  1  7a_Phytophthora_cambivora_KU899163                
     1.3e-37  123.4   0.0    1.3e-37  123.4   0.0    3.5  1  7a_Phytophthora_alni_subsp._multiformis_AF139368  
     1.4e-37  123.3   4.1    2.7e-37  122.4   0.0    3.0  1  1_Phytophthora_nicotianae_KJ494916                
       2e-37  122.8   7.3    2.8e-37  122.3   0.0    3.5  1  8c_Phytophthora_lateralis_HQ643263                
     2.4e-37  122.5   0.0    2.4e-37  122.5   0.0    3.5  1  8a_Phytophthora_cryptogea_AY659438                
     2.4e-37  122.5   0.0    2.4e-37  122.5   0.0    3.5  1  8a_Phytophthora_cryptogea_AF266796                
-    3.4e-37  122.1   4.7    9.5e-37  120.6   0.0    3.2  1  5_Phytophthora_castaneae_HQ643255                 
+    3.4e-37  122.1   4.7    9.6e-37  120.6   0.0    3.2  1  5_Phytophthora_castaneae_HQ643255                 
     3.6e-37  122.0   3.3    7.5e-36  117.7   0.0    3.1  1  3_Phytophthora_psychrophila_AF449494              
-    4.5e-37  121.7   5.4    2.5e-36  119.2   0.0    3.4  1  2_Phytophthora_frigida_HQ261569                   
+    4.6e-37  121.7   5.4    2.5e-36  119.2   0.0    3.4  1  2_Phytophthora_frigida_HQ261569                   
     5.9e-37  121.3   0.0    5.9e-37  121.3   0.0    3.5  1  8a_Phytophthora_cryptogea_AY659421                
-    6.2e-37  121.2   9.5    9.3e-37  120.6   0.0    3.6  1  8a_Phytophthora_medicaginis_FJ801480              
+    6.2e-37  121.2   9.5    9.4e-37  120.6   0.0    3.6  1  8a_Phytophthora_medicaginis_FJ801480              
     6.2e-37  121.2   2.5    5.3e-36  118.2   0.0    3.0  1  1_Phytophthora_mirabilis_AF266777                 
-    7.1e-37  121.0   3.8      1e-35  117.3   0.0    3.2  1  6_Phytophthora_humicola_HQ643245                  
-    7.2e-37  121.0   3.3      2e-35  116.4   0.0    3.1  1  3_Phytophthora_nemorosa_AY332654                  
+    7.2e-37  121.0   3.8      1e-35  117.3   0.0    3.2  1  6_Phytophthora_humicola_HQ643245                  
+    7.3e-37  121.0   3.3      2e-35  116.4   0.0    3.1  1  3_Phytophthora_nemorosa_AY332654                  
     7.3e-37  121.0   3.9      1e-35  117.3   0.0    3.2  1  6_Phytophthora_humicola_HQ643244                  
       1e-36  120.5   4.2    2.2e-36  119.4   0.0    3.2  1  1_Phytophthora_nicotianae_AF266776                
     1.1e-36  120.5   4.7    3.6e-36  118.7   0.0    3.2  1  5_Phytophthora_heveae_HQ643238                    
     1.2e-36  120.3   0.0    1.2e-36  120.3   0.0    3.6  1  7_Phytophthora_attenuata_KU517154                 
     1.5e-36  119.9   4.4    1.8e-35  116.5   0.0    3.6  1  3_Phytophthora_pluvialis_KC529657                 
     1.7e-36  119.8   9.3    2.2e-36  119.4   0.0    3.5  1  2a_Phytophthora_botryosa_AF266784                 
-    1.7e-36  119.8   0.0    1.7e-36  119.8   0.0    3.4  1  8c_Phytophthora_ramorum_JQ653034                  
+    1.8e-36  119.8   0.0    1.8e-36  119.8   0.0    3.4  1  8c_Phytophthora_ramorum_JQ653034                  
     1.8e-36  119.7   6.5    1.4e-35  116.8   0.0    3.4  1  2_Phytophthora_citricola_sensu_stricto_FJ237526   
-    1.9e-36  119.7   3.9    5.6e-36  118.1   0.0    3.2  1  1_Phytophthora_nicotianae_JF792528                
-    2.2e-36  119.4   4.7    1.2e-35  117.0   0.0    3.2  1  4_Phytophthora_quercina_AJ131986                  
+    1.9e-36  119.7   3.9    5.7e-36  118.1   0.0    3.2  1  1_Phytophthora_nicotianae_JF792528                
+    2.3e-36  119.4   4.7    1.2e-35  117.0   0.0    3.2  1  4_Phytophthora_quercina_AJ131986                  
     2.3e-36  119.4   6.7      1e-35  117.3   0.0    3.5  1  2_Phytophthora_bisheria_AY241924                  
-      3e-36  119.0   8.4      6e-36  118.0   0.0    3.5  1  8a_Phytophthora_trifolii_FJ746644                 
+      3e-36  119.0   8.4    6.1e-36  118.0   0.0    3.5  1  8a_Phytophthora_trifolii_FJ746644                 
       3e-36  119.0   4.3    6.1e-35  114.8   0.0    3.2  1  3_Phytophthora_ilicis_P_KJ458953                  
-    3.6e-36  118.7   8.8    3.7e-36  118.7   0.0    3.5  1  7_Phytophthora_x_incrassata_KU517156              
-    3.9e-36  118.6   3.6    9.5e-35  114.1   0.0    3.5  1  8c_Phytophthora_foliorum_EF120469                 
-    7.3e-36  117.7   9.1    9.5e-36  117.4   0.0    3.6  1  2_Phytophthora_colocasiae_JN618819                
+    3.6e-36  118.8   8.8      4e-36  118.6   0.0    3.5  1  7a_Phytophthora_alni_subsp._alni_DQ335646         
+    3.7e-36  118.7   8.8    3.7e-36  118.7   0.0    3.5  1  7_Phytophthora_x_incrassata_KU517156              
+    3.9e-36  118.6   3.6    9.6e-35  114.1   0.0    3.5  1  8c_Phytophthora_foliorum_EF120469                 
+    7.4e-36  117.7   9.1    9.6e-36  117.4   0.0    3.6  1  2_Phytophthora_colocasiae_JN618819                
       1e-35  117.3   7.2    3.1e-35  115.7   0.0    3.4  1  2_Phytophthora_pachypleura_KC855330               
-    1.1e-35  117.2   5.5    2.1e-34  113.0   0.0    3.4  1  2_Phytophthora_citricola_E_AF266788               
+    1.1e-35  117.2   5.5    2.2e-34  113.0   0.0    3.4  1  2_Phytophthora_citricola_E_AF266788               
     1.2e-35  117.0   7.1    1.9e-35  116.4   0.0    3.5  1  8c_Phytophthora_lateralis_AF266804                
     1.4e-35  116.8   0.0    1.4e-35  116.8   0.0    3.4  1  6_Phytophthora_taxon_pocumtuck_KP749380           
     1.6e-35  116.6   0.0    1.6e-35  116.6   0.0    3.5  1  8a_Phytophthora_erythroseptica_AF266797           
-    1.6e-35  116.6   6.2    7.5e-35  114.5   0.0    3.3  1  2c_Phytophthora_capensis_GU191231                 
+    1.6e-35  116.6   6.2    7.6e-35  114.5   0.0    3.3  1  2c_Phytophthora_capensis_GU191231                 
     1.8e-35  116.5   6.9    1.1e-34  113.9   0.0    3.6  1  7b_Phytophthora_sojae_KU211500                    
-    2.2e-35  116.2   7.2    1.1e-34  114.0   0.0    3.6  1  7b_Phytophthora_sojae_KU211412                    
-    2.3e-35  116.1  10.5    3.8e-35  115.4   0.0    3.6  1  2_Phytophthora_citrophthora_AF266785              
-    2.9e-35  115.8   5.3    3.4e-34  112.3   0.0    3.4  1  2_Phytophthora_multivora_FJ237521                 
+    2.3e-35  116.2   7.2    1.1e-34  114.0   0.0    3.6  1  7b_Phytophthora_sojae_KU211412                    
+    2.4e-35  116.1  10.5    3.8e-35  115.4   0.0    3.6  1  2_Phytophthora_citrophthora_AF266785              
+      3e-35  115.8   5.3    3.5e-34  112.3   0.0    3.4  1  2_Phytophthora_multivora_FJ237521                 
       3e-35  115.8   7.0      1e-34  114.0   0.0    3.4  1  7_Phytophthora_asiatica_AB538397                  
     3.2e-35  115.7   6.3    2.2e-34  113.0   0.0    3.4  1  2_Phytophthora_acerina_JX951285                   
-    3.3e-35  115.6  10.5    5.5e-35  114.9   0.0    3.6  1  2a_Phytophthora_occultans_JX978155                
-    3.4e-35  115.6   9.6    8.7e-35  114.3   0.0    3.6  1  2a_Phytophthora_terminalis_JX978167               
+    3.4e-35  115.6  10.5    5.6e-35  114.9   0.0    3.6  1  2a_Phytophthora_occultans_JX978155                
+    3.5e-35  115.6   9.6    8.8e-35  114.3   0.0    3.6  1  2a_Phytophthora_terminalis_JX978167               
     5.3e-35  115.0   0.0    5.3e-35  115.0   0.0    3.6  1  2a_Phytophthora_meadii_GU993903                   
-    9.5e-35  114.1   0.0    9.5e-35  114.1   0.0    3.5  1  2_Phytophthora_plurivora_FJ665225                 
-    9.9e-35  114.1   5.3    1.6e-33  110.2   0.0    3.4  1  2_Phytophthora_pini_FJ392322                      
+    9.6e-35  114.1   0.0    9.6e-35  114.1   0.0    3.5  1  2_Phytophthora_plurivora_FJ665225                 
+      1e-34  114.1   5.3    1.6e-33  110.2   0.0    3.4  1  2_Phytophthora_pini_FJ392322                      
     1.2e-34  113.8   8.6    1.6e-34  113.4   0.0    3.5  1  7b_Phytophthora_niederhauserii_AY550915           
     1.3e-34  113.7   6.2    1.7e-33  110.1   0.0    3.6  1  8d_Phytophthora_obscura_HQ917910                  
-    1.5e-34  113.5   0.9    3.4e-33  109.1   0.0    3.1  1  1_Phytophthora_clandestina_AJ131989               
+    1.5e-34  113.5   0.9    3.5e-33  109.1   0.0    3.1  1  1_Phytophthora_clandestina_AJ131989               
     1.7e-34  113.3   4.2    3.3e-33  109.1   0.0    3.2  1  3_Phytophthora_ilicis_voucher_P3939_HQ261583      
-    5.1e-34  111.8   2.6      2e-32  106.6   0.0    3.6  1  8d_Phytophthora_austrocedri_DQ995184              
-    5.8e-34  111.6   2.5    4.6e-33  108.7   0.0    3.0  1  1_Phytophthora_infestans_FJ801744                 
-    7.9e-34  111.2   9.7    2.1e-33  109.8   0.0    3.5  1  2_Phytophthora_citrophthora_voucher_MF115290      
-      1e-33  110.8   7.5    1.4e-33  110.4   0.0    3.5  1  7b_Phytophthora_pistaciae_AF403505                
-    1.2e-33  110.5   5.1      2e-32  106.6   0.0    3.5  1  8d_Phytophthora_austrocedri_KU953997              
+    5.1e-34  111.8   2.6    2.1e-32  106.6   0.0    3.6  1  8d_Phytophthora_austrocedri_DQ995184              
+    5.9e-34  111.6   2.5    4.6e-33  108.7   0.0    3.0  1  1_Phytophthora_infestans_FJ801744                 
+      8e-34  111.2   9.7    2.1e-33  109.8   0.0    3.5  1  2_Phytophthora_citrophthora_voucher_MF115290      
+    1.1e-33  110.8   7.5    1.4e-33  110.4   0.0    3.5  1  7b_Phytophthora_pistaciae_AF403505                
+    1.3e-33  110.5   5.1      2e-32  106.6   0.0    3.5  1  8d_Phytophthora_austrocedri_KU953997              
     1.3e-33  110.5   5.5      2e-32  106.6   0.0    3.6  1  8d_Phytophthora_austrocedri_KU954009              
-    1.4e-33  110.3   6.6    1.6e-33  110.2   0.0    3.2  1  7b_Phytophthora_melonis_AF266767                  
+    1.5e-33  110.3   6.6    1.6e-33  110.2   0.0    3.2  1  7b_Phytophthora_melonis_AF266767                  
     1.6e-33  110.2   4.7    4.2e-33  108.8   0.0    3.3  1  11_Phytophthora_stricta_KF192695                  
     2.4e-33  109.6   2.9    1.7e-32  106.8   0.0    3.1  1  1_Phytophthora_iranica_AJ131987                   
     2.5e-33  109.6   2.6    1.1e-31  104.2   0.0    3.1  1  3_Phytophthora_ilicis_AJ131990                    
     3.9e-33  108.9   4.9    3.7e-32  105.8   0.0    3.3  1  7b_Phytophthora_cajani_AF266765                   
     5.5e-33  108.4   7.8      1e-32  107.5   0.0    3.4  1  7_Phytophthora_pisi_HQ894399                      
       6e-33  108.3   2.8    2.5e-32  106.3   0.0    2.8  1  6_Phytophthora_chlamydospora_KU725882             
-    6.2e-33  108.3   0.0    6.2e-33  108.3   0.0    3.7  1  8a_Phytophthora_drechsleri_AF266798               
-    8.4e-33  107.8   5.0    2.4e-32  106.3   0.0    3.5  1  8d_Phytophthora_syringae_KJ755130                 
-    9.8e-33  107.6   0.0    9.8e-33  107.6   0.0    2.9  1  10_Phytophthora_boehmeriae_Voucher_HQ643149       
-    9.8e-33  107.6   0.0    9.8e-33  107.6   0.0    2.9  1  10_Phytophthora_boehmeriae_Voucher_HQ643149       
+    6.3e-33  108.3   0.0    6.3e-33  108.3   0.0    3.7  1  8a_Phytophthora_drechsleri_AF266798               
+    8.5e-33  107.8   5.0    2.4e-32  106.3   0.0    3.5  1  8d_Phytophthora_syringae_KJ755130                 
+    9.9e-33  107.6   0.0    9.9e-33  107.6   0.0    2.9  1  10_Phytophthora_boehmeriae_Voucher_HQ643149       
+    9.9e-33  107.6   0.0    9.9e-33  107.6   0.0    2.9  1  10_Phytophthora_boehmeriae_Voucher_HQ643149       
       1e-32  107.6   0.0      1e-32  107.6   0.0    2.9  1  10_Phytophthora_boehmeriae_FJ801955               
-      2e-32  106.6   5.8    8.5e-31  101.3   0.0    3.6  1  2_Phytophthora_capsici_AF266787                   
-    2.8e-32  106.1   5.0    8.5e-31  101.3   0.0    3.5  1  2b_Phytophthora_glovera_AF279124                  
-    3.3e-32  105.9   5.6    9.3e-31  101.2   0.0    3.5  1  2_Phytophthora_capsici_KY819081                   
-    3.9e-32  105.6   9.9    4.1e-32  105.6   0.0    3.7  1  2_Phytophthora_mengei_EU748545                    
-    4.7e-32  105.4   9.7    7.7e-32  104.7   0.0    3.6  1  2_Phytophthora_tropicalis_FJ801320                
-      8e-32  104.7   8.3    1.1e-31  104.3   0.0    3.4  1  7_Phytophthora_pisi_HQ894398                      
-    9.9e-32  104.4   9.3    3.8e-31  102.4   0.0    3.6  1  2_Phytophthora_mexicana_HQ261620                  
-    1.4e-31  103.8   5.3    1.3e-30  100.7   0.0    3.3  1  7b_Phytophthora_vignae_AF266766                   
+      2e-32  106.6   5.8    8.6e-31  101.3   0.0    3.6  1  2_Phytophthora_capsici_AF266787                   
+    2.9e-32  106.1   5.0    8.6e-31  101.3   0.0    3.5  1  2b_Phytophthora_glovera_AF279124                  
+    3.3e-32  105.9   5.6    9.4e-31  101.2   0.0    3.5  1  2_Phytophthora_capsici_KY819081                   
+      4e-32  105.6   9.9    4.2e-32  105.6   0.0    3.7  1  2_Phytophthora_mengei_EU748545                    
+    4.7e-32  105.4   9.7    7.8e-32  104.7   0.0    3.6  1  2_Phytophthora_tropicalis_FJ801320                
+    8.1e-32  104.7   8.3    1.1e-31  104.3   0.0    3.4  1  7_Phytophthora_pisi_HQ894398                      
+      1e-31  104.4   9.3    3.9e-31  102.4   0.0    3.6  1  2_Phytophthora_mexicana_HQ261620                  
+    1.4e-31  103.8   5.3    1.4e-30  100.7   0.0    3.3  1  7b_Phytophthora_vignae_AF266766                   
     1.8e-31  103.5   0.0    1.8e-31  103.5   0.0    2.9  1  10_Phytophthora_boehmeriae_DQ297406               
-    3.5e-31  102.6   7.0    6.3e-31  101.7   0.0    3.8  1  2_Phytophthora_siskiyouensis_EF523386             
-    5.6e-31  101.9   2.0    6.2e-29   95.3   0.0    3.1  1  7_Phytophthora_nagaii_AB688356                    
+    3.6e-31  102.6   7.0    6.4e-31  101.7   0.0    3.8  1  2_Phytophthora_siskiyouensis_EF523386             
+    5.7e-31  101.9   2.0    6.3e-29   95.3   0.0    3.1  1  7_Phytophthora_nagaii_AB688356                    
     7.6e-31  101.5  10.4    1.3e-30  100.7   0.0    3.6  1  2c_Phytophthora_himalsilva_HM752789               
-    9.9e-31  101.1   1.8    1.2e-28   94.3   0.0    3.1  1  7_Phytophthora_fragariaefolia_KX094871            
-    9.9e-31  101.1   6.6    4.4e-30   99.0   0.0    3.9  1  8b_Phytophthora_lactucae_KC478768                 
-    1.4e-30  100.7   2.7    7.7e-29   95.0   0.0    3.1  1  7_Phytophthora_fragariaefolia_AB305060            
-    2.5e-30   99.8   3.6    5.3e-30   98.7   0.0    2.9  1  10_Phytophthora_gallica_DQ286726                  
+      1e-30  101.1   1.8    1.2e-28   94.3   0.0    3.1  1  7_Phytophthora_fragariaefolia_KX094871            
+      1e-30  101.1   6.6    4.5e-30   99.0   0.0    3.9  1  8b_Phytophthora_lactucae_KC478768                 
+    1.4e-30  100.7   2.7    7.8e-29   95.0   0.0    3.1  1  7_Phytophthora_fragariaefolia_AB305060            
+    2.5e-30   99.8   3.6    5.4e-30   98.7   0.0    2.9  1  10_Phytophthora_gallica_DQ286726                  
     3.1e-30   99.5   5.8    8.6e-30   98.1   0.0    3.7  1  8b_Phytophthora_cichorii_KC478773                 
-    3.2e-30   99.5   3.7    5.7e-30   98.6   0.0    2.9  1  10_Phytophthora_gallica_KF286894                  
-    4.4e-30   99.0   1.7    1.4e-29   97.4   0.0    2.5  1  10_Phytophthora_kernoviae_AY940661                
-    8.8e-30   98.0   8.6    3.2e-29   96.2   0.0    3.6  1  2_Phytophthora_amaranthi_GU111585                 
+    3.2e-30   99.5   3.7    5.8e-30   98.6   0.0    2.9  1  10_Phytophthora_gallica_KF286894                  
+    4.5e-30   99.0   1.7    1.4e-29   97.4   0.0    2.5  1  10_Phytophthora_kernoviae_AY940661                
+    8.9e-30   98.0   8.6    3.3e-29   96.2   0.0    3.6  1  2_Phytophthora_amaranthi_GU111585                 
       7e-29   95.1   2.3    1.3e-28   94.3   0.0    2.5  1  10_Phytophthora_morindae_FJ469147                 
-    8.5e-29   94.8   5.7    4.8e-28   92.4   0.0    3.7  1  8b_Phytophthora_dauci_KC478761                    
+    8.6e-29   94.8   5.7    4.9e-28   92.4   0.0    3.7  1  8b_Phytophthora_dauci_KC478761                    
     2.7e-28   93.2   0.1    2.7e-28   93.2   0.1    3.6  1  2a_Phytophthora_sp._aff._meadii_KC875839          
     2.7e-28   93.2   0.1    2.7e-28   93.2   0.1    3.6  1  2a_Phytophthora_sp._mekongensis_type3_KM501564    
-    3.9e-28   92.7   8.0      1e-27   91.3   0.1    3.4  1  2_Phytophthora_caryae_KJ631538                    
-    7.5e-28   91.8   0.0    7.5e-28   91.8   0.0    2.9  1  10_Phytophthora_intercalaris_KT163268             
-    8.8e-28   91.6   6.4    3.3e-27   89.7   0.0    3.7  1  8b_Phytophthora_brassicae_voucher_HQ643157        
+      4e-28   92.7   8.0    1.1e-27   91.3   0.1    3.4  1  2_Phytophthora_caryae_KJ631538                    
+    7.6e-28   91.8   0.0    7.6e-28   91.8   0.0    2.9  1  10_Phytophthora_intercalaris_KT163268             
+    8.9e-28   91.6   6.4    3.3e-27   89.7   0.0    3.7  1  8b_Phytophthora_brassicae_voucher_HQ643157        
     1.1e-27   91.3   6.5    3.7e-27   89.5   0.0    3.8  1  8b_Phytophthora_brassicae_HQ643158                
-    1.1e-27   91.2   6.6    3.7e-27   89.5   0.0    3.8  1  8b_Phytophthora_brassicae_voucher_HQ643156        
+    1.1e-27   91.2   6.6    3.8e-27   89.5   0.0    3.8  1  8b_Phytophthora_brassicae_voucher_HQ643156        
     1.3e-27   91.0   0.0    1.3e-27   91.0   0.0    3.5  1  9_Phytophthora_chrysanthemi_AB437135              
     2.1e-27   90.3   0.2    2.1e-27   90.3   0.2    3.6  1  2a_Phytophthora_sp._mekongensis_type1_KC875838    
-    3.6e-27   89.6   4.2    6.8e-27   88.7   0.0    3.1  1  8b_Phytophthora_primulae_KC478752                 
-    4.6e-27   89.2   3.2    1.7e-26   87.4   0.0    3.0  1  8b_Phytophthora_porri_KC478749                    
+    3.7e-27   89.6   4.2    6.9e-27   88.7   0.0    3.1  1  8b_Phytophthora_primulae_KC478752                 
+    4.7e-27   89.2   3.2    1.8e-26   87.4   0.0    3.0  1  8b_Phytophthora_porri_KC478749                    
     2.2e-26   87.1   0.0    2.2e-26   87.1   0.0    3.3  1  9_Phytophthora_fallax_Voucher_HQ261559            
       3e-26   86.6   8.8    1.9e-25   84.0   0.0    3.4  1  9_Phytophthora_macilentosa_KF192700               
       3e-26   86.6   4.0    1.1e-24   81.5   0.0    3.2  1  9_Phytophthora_parsiana_AY659736                  
-    3.1e-26   86.5   0.0    3.1e-26   86.5   0.0    3.4  1  9_Phytophthora_fallax_SPLA61_HQ013223             
-    4.8e-26   85.9   5.8    5.3e-24   79.3   0.0    3.5  1  9_Phytophthora_parsiana_AY659737                  
-    9.3e-26   85.0   7.7    1.3e-24   81.3   0.0    3.6  1  9_Phytophthora_aquimorbida_FJ666127               
+    3.2e-26   86.5   0.0    3.2e-26   86.5   0.0    3.4  1  9_Phytophthora_fallax_SPLA61_HQ013223             
+    4.8e-26   85.9   5.8    5.4e-24   79.3   0.0    3.5  1  9_Phytophthora_parsiana_AY659737                  
+    9.4e-26   85.0   7.7    1.3e-24   81.3   0.0    3.6  1  9_Phytophthora_aquimorbida_FJ666127               
     1.4e-25   84.4   0.0    1.4e-25   84.4   0.0    3.3  1  9a_Phytophthora_fallax_DQ297391                   
     1.8e-25   84.1   3.8    4.1e-24   79.7   0.0    3.1  1  9_Phytophthora_taxon_umtamvuna_KC855181           
     2.2e-25   83.8   0.0    2.2e-25   83.8   0.0    3.4  1  9a_Phytophthora_captiosa_DQ297402                 
-    1.1e-24   81.6   4.5    5.1e-23   76.1   0.0    3.3  1  9_Phytophthora_taxon_kunnunara_EF437222           
+    1.1e-24   81.6   4.5    5.2e-23   76.1   0.0    3.3  1  9_Phytophthora_taxon_kunnunara_EF437222           
     1.6e-24   81.0   0.0    1.6e-24   81.0   0.0    3.4  1  9_Phytophthora_constricta_HQ013225                
     2.3e-24   80.5   0.0    2.3e-24   80.5   0.0    3.8  1  9_Phytophthora_quininea_HQ261661                  
     3.1e-24   80.1   0.0    3.1e-24   80.1   0.0    3.7  1  9_Phytophthora_richardiae_AF271221                
     3.1e-24   80.1   0.0    3.1e-24   80.1   0.0    3.6  1  9b_Phytophthora_macrochlamydospora_KP070720       
-    3.9e-24   79.7   4.8    9.6e-23   75.2   0.0    3.3  1  9_Phytophthora_virginiana_KC295544                
-    4.3e-24   79.6   6.2    6.6e-23   75.8   0.0    3.5  1  9_Phytophthora_parsiana_AY659739                  
-    7.1e-24   78.9   4.5    1.4e-23   77.9   0.0    3.2  1  9_Phytophthora_taxon_cuyabensis_FJ801995          
+      4e-24   79.7   4.8    9.7e-23   75.2   0.0    3.3  1  9_Phytophthora_virginiana_KC295544                
+    4.4e-24   79.6   6.2    6.7e-23   75.8   0.0    3.5  1  9_Phytophthora_parsiana_AY659739                  
+    7.2e-24   78.9   4.5    1.5e-23   77.9   0.0    3.2  1  9_Phytophthora_taxon_cuyabensis_FJ801995          
     1.2e-23   78.1   7.2    1.1e-22   75.1   0.0    3.4  0  9_Phytophthora_hydrogena_KC249960                 
     3.9e-23   76.5   0.0    3.9e-23   76.5   0.0    3.3  1  9a_Phytophthora_polonica_DQ396409                 
-    1.1e-22   75.1   2.8    5.6e-21   69.5   0.0    3.2  0  9_Phytophthora_hydropathica_HG934150              
-    6.8e-22   72.5   0.0    6.8e-22   72.5   0.0    3.5  0  9a_Phytophthora_insolita_AF271222                 
+    1.1e-22   75.1   2.8    5.7e-21   69.5   0.0    3.2  0  9_Phytophthora_hydropathica_HG934150              
+    6.9e-22   72.5   0.0    6.9e-22   72.5   0.0    3.5  0  9a_Phytophthora_insolita_AF271222                 
     1.3e-21   71.5   6.0    1.6e-21   71.3   0.0    3.7  0  9_Phytophthora_irrigata_EU334634                  
-      2e-20   67.7   4.8    2.8e-19   64.0   0.0    3.3  0  9_Phytophthora_hydropathica_KJ631555              
-    6.2e-20   66.1   0.1    6.2e-20   66.1   0.1    2.9  0  10_Phytophthora_taxon_gondwanense_KP070696        
+    2.1e-20   67.7   4.8    2.9e-19   64.0   0.0    3.3  0  9_Phytophthora_hydropathica_KJ631555              
+    6.3e-20   66.1   0.1    6.3e-20   66.1   0.1    2.9  0  10_Phytophthora_taxon_gondwanense_KP070696        
     3.4e-16   54.0   0.4    3.4e-16   54.0   0.4    3.5  0  9a_Phytophthora_sp._prodigiosa_KC875840           
 
 
@@ -225,10 +227,10 @@ Domain annotation for each sequence (and alignments):
 >> 6_Phytophthora_bilorbang_JQ256377  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  141.4   0.0   3.6e-43   3.6e-43       1     183 []       1     192 [.       1     192 [. 0.94
+   1 !  141.4   0.0   3.7e-43   3.7e-43       1     183 []       1     192 [.       1     192 [. 0.94
 
   Alignments for each domain:
-  == domain 1  score: 141.4 bits;  conditional E-value: 3.6e-43
+  == domain 1  score: 141.4 bits;  conditional E-value: 3.7e-43
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttag.ttgggggcttgct... 58 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaaccc ttta  ttgggggcttgct   
                 6_Phytophthora_bilorbang_JQ256377   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCCTTTAAtTTGGGGGCTTGCTcgg 62 
@@ -252,10 +254,10 @@ Domain annotation for each sequence (and alignments):
 >> 6_Phytophthora_litoralis_HQ012948  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  141.2   0.0   4.2e-43   4.2e-43       1     183 []       1     192 [.       1     192 [. 0.94
+   1 !  141.2   0.0   4.3e-43   4.3e-43       1     183 []       1     192 [.       1     192 [. 0.94
 
   Alignments for each domain:
-  == domain 1  score: 141.2 bits;  conditional E-value: 4.2e-43
+  == domain 1  score: 141.2 bits;  conditional E-value: 4.3e-43
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct.... 58 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaaccctttta ttgggggcttg+t    
                 6_Phytophthora_litoralis_HQ012948   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCTTTTAATTGGGGGCTTGTTtggc 62 
@@ -333,10 +335,10 @@ Domain annotation for each sequence (and alignments):
 >> 6_Phytophthora_lacustris_AF266793  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  136.8   0.0   9.7e-42   9.7e-42       1     183 []       1     194 [.       1     194 [. 0.93
+   1 !  136.8   0.0   9.8e-42   9.8e-42       1     183 []       1     194 [.       1     194 [. 0.93
 
   Alignments for each domain:
-  == domain 1  score: 136.8 bits;  conditional E-value: 9.7e-42
+  == domain 1  score: 136.8 bits;  conditional E-value: 9.8e-42
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttag.ttgggggcttgct... 58 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaaccc t ta  t gggggcttgct   
                 6_Phytophthora_lacustris_AF266793   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCCTATAAtTCGGGGGCTTGCTcgg 62 
@@ -387,10 +389,10 @@ Domain annotation for each sequence (and alignments):
 >> 6_Phytophthora_borealis_JQ626599  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  137.7   0.0   5.2e-42   5.2e-42       1     183 []     378     570 ..     378     570 .. 0.94
+   1 !  137.7   0.0   5.3e-42   5.3e-42       1     183 []     378     570 ..     378     570 .. 0.94
 
   Alignments for each domain:
-  == domain 1  score: 137.7 bits;  conditional E-value: 5.2e-42
+  == domain 1  score: 137.7 bits;  conditional E-value: 5.3e-42
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttag.ttgggggcttgct... 58 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaaccc tt+a  ttgggggcttgct   
                  6_Phytophthora_borealis_JQ626599 378 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCCTTAAAtTTGGGGGCTTGCTcgg 439
@@ -441,10 +443,10 @@ Domain annotation for each sequence (and alignments):
 >> 6_Phytophthora_taxon_paludosa_HQ012953  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  137.4   0.0   6.2e-42   6.2e-42       1     183 []       1     191 [.       1     191 [. 0.93
+   1 !  137.4   0.0   6.3e-42   6.3e-42       1     183 []       1     191 [.       1     191 [. 0.93
 
   Alignments for each domain:
-  == domain 1  score: 137.4 bits;  conditional E-value: 6.2e-42
+  == domain 1  score: 137.4 bits;  conditional E-value: 6.3e-42
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacct.aaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct... 58 
                                                       ccacacct aaaaaactttccacgtgaaccgtatcaaccc ttta ttgggggcttgct   
            6_Phytophthora_taxon_paludosa_HQ012953   1 CCACACCTaAAAAAACTTTCCACGTGAACCGTATCAACCCCTTTAATTGGGGGCTTGCTcgg 62 
@@ -603,10 +605,10 @@ Domain annotation for each sequence (and alignments):
 >> 6_Phytophthora_inundata_AF266791  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  133.0   0.0   1.4e-40   1.4e-40       1     183 []       1     193 [.       1     193 [. 0.93
+   1 !  133.0   0.0   1.5e-40   1.5e-40       1     183 []       1     193 [.       1     193 [. 0.93
 
   Alignments for each domain:
-  == domain 1  score: 133.0 bits;  conditional E-value: 1.4e-40
+  == domain 1  score: 133.0 bits;  conditional E-value: 1.5e-40
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttag.ttgggggcttgct... 58 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaaccc tt+ag ttggg gcttgct   
                  6_Phytophthora_inundata_AF266791   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCCTTAAGaTTGGGAGCTTGCTcgg 62 
@@ -792,10 +794,10 @@ Domain annotation for each sequence (and alignments):
 >> 6_Phytophthora_chlamydospora_KU647272  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  130.4   0.0   9.3e-40   9.3e-40       1     183 []       6     200 ..       6     200 .. 0.93
+   1 !  130.4   0.0   9.4e-40   9.4e-40       1     183 []       6     200 ..       6     200 .. 0.93
 
   Alignments for each domain:
-  == domain 1  score: 130.4 bits;  conditional E-value: 9.3e-40
+  == domain 1  score: 130.4 bits;  conditional E-value: 9.4e-40
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacct.aaaaaactttccacgtgaaccgtatcaacccttttag.ttgggggcttgct.. 58 
                                                       ccacacct aaaaaactttccacgtgaaccgtatcaaccc tt+a  ttgggggcttgct  
             6_Phytophthora_chlamydospora_KU647272   6 CCACACCTaAAAAAACTTTCCACGTGAACCGTATCAACCCCTTAAAtTTGGGGGCTTGCTcg 67 
@@ -819,10 +821,10 @@ Domain annotation for each sequence (and alignments):
 >> 6_Phytophthora_megasperma_GU258796  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  135.3   0.0   2.8e-41   2.8e-41       1     183 []       1     192 [.       1     192 [. 0.94
+   1 !  135.3   0.0   2.9e-41   2.9e-41       1     183 []       1     192 [.       1     192 [. 0.94
 
   Alignments for each domain:
-  == domain 1  score: 135.3 bits;  conditional E-value: 2.8e-41
+  == domain 1  score: 135.3 bits;  conditional E-value: 2.9e-41
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttag.ttgggggcttgct... 58 
                                                       ccacacct aaaaactttccacgtgaaccgtatcaaccc tt+a  ttgggggcttgct   
                6_Phytophthora_megasperma_GU258796   1 CCACACCT-AAAAACTTTCCACGTGAACCGTATCAACCCCTTAAAtTTGGGGGCTTGCTcgg 61 
@@ -873,10 +875,10 @@ Domain annotation for each sequence (and alignments):
 >> 1_Phytophthora_cactorum_AF266772  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  133.7   0.0   8.8e-41   8.8e-41       1     183 []       1     184 [.       1     184 [. 0.93
+   1 !  133.7   0.0   8.9e-41   8.9e-41       1     183 []       1     184 [.       1     184 [. 0.93
 
   Alignments for each domain:
-  == domain 1  score: 133.7 bits;  conditional E-value: 8.8e-41
+  == domain 1  score: 133.7 bits;  conditional E-value: 8.9e-41
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct.... 58 
                                                       ccacacct aaaaactttccacgtgaaccgt tcaa cc+  tagttggggg++t+ t    
                  1_Phytophthora_cactorum_AF266772   1 CCACACCT-AAAAACTTTCCACGTGAACCGTTTCAAACCAAATAGTTGGGGGTCTTGTctgg 61 
@@ -900,10 +902,10 @@ Domain annotation for each sequence (and alignments):
 >> 2c_Phytophthora_taxon_aquatilis_FJ666126  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  132.2   0.0   2.5e-40   2.5e-40       1     183 []       1     191 [.       1     191 [. 0.86
+   1 !  132.2   0.0   2.6e-40   2.6e-40       1     183 []       1     191 [.       1     191 [. 0.86
 
   Alignments for each domain:
-  == domain 1  score: 132.2 bits;  conditional E-value: 2.5e-40
+  == domain 1  score: 132.2 bits;  conditional E-value: 2.6e-40
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacct.aaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct..g 59 
                                                       ccacacct aaaaaactttccacgtgaaccgtatcaacccttttagttggggg++t+    g
          2c_Phytophthora_taxon_aquatilis_FJ666126   1 CCACACCTaAAAAAACTTTCCACGTGAACCGTATCAACCCTTTTAGTTGGGGGTCTTGCttG 62 
@@ -927,10 +929,10 @@ Domain annotation for each sequence (and alignments):
 >> 6b_Phytophthora_X_stagnum_KJ705086  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  130.4   0.0     9e-40     9e-40       1     183 []       1     195 [.       1     195 [. 0.93
+   1 !  130.4   0.0   9.1e-40   9.1e-40       1     183 []       1     195 [.       1     195 [. 0.93
 
   Alignments for each domain:
-  == domain 1  score: 130.4 bits;  conditional E-value: 9e-40
+  == domain 1  score: 130.4 bits;  conditional E-value: 9.1e-40
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacct.aaaaaactttccacgtgaaccgtatcaacccttttag.ttgggggcttgct.. 58 
                                                       ccacacct aaaaaactttccacgtgaaccgtatcaaccc tt+a  ttgggggcttgct  
                6b_Phytophthora_X_stagnum_KJ705086   1 CCACACCTaAAAAAACTTTCCACGTGAACCGTATCAACCCCTTAAAtTTGGGGGCTTGCTcg 62 
@@ -954,10 +956,10 @@ Domain annotation for each sequence (and alignments):
 >> 1_Phytophthora_idaei_voucher_HQ643246  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  133.1   0.0   1.3e-40   1.3e-40       1     183 []       1     184 [.       1     184 [. 0.93
+   1 !  133.1   0.0   1.4e-40   1.4e-40       1     183 []       1     184 [.       1     184 [. 0.93
 
   Alignments for each domain:
-  == domain 1  score: 133.1 bits;  conditional E-value: 1.3e-40
+  == domain 1  score: 133.1 bits;  conditional E-value: 1.4e-40
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct.... 58 
                                                       ccacacct aaaaactttccacgtgaaccgt tcaa cc+  tagttggggg++t+ t    
             1_Phytophthora_idaei_voucher_HQ643246   1 CCACACCT-AAAAACTTTCCACGTGAACCGTTTCAAACCAAATAGTTGGGGGTCTTGTctgg 61 
@@ -1062,10 +1064,10 @@ Domain annotation for each sequence (and alignments):
 >> 6_Phytophthora_asparagi_EF185089  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  129.1   0.0   2.2e-39   2.2e-39       1     183 []       1     193 [.       1     193 [. 0.88
+   1 !  129.1   0.0   2.3e-39   2.3e-39       1     183 []       1     193 [.       1     193 [. 0.88
 
   Alignments for each domain:
-  == domain 1  score: 129.1 bits;  conditional E-value: 2.2e-39
+  == domain 1  score: 129.1 bits;  conditional E-value: 2.3e-39
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct..gg 60 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaaccc+ ttagttgggggcttgct  gg
                  6_Phytophthora_asparagi_EF185089   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCAATTAGTTGGGGGCTTGCTctGG 62 
@@ -1197,10 +1199,10 @@ Domain annotation for each sequence (and alignments):
 >> 6_Phytophthora_pinifolia_EU725805  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  128.1   0.0   4.6e-39   4.6e-39       1     183 []       1     189 [.       1     189 [. 0.93
+   1 !  128.1   0.0   4.7e-39   4.7e-39       1     183 []       1     189 [.       1     189 [. 0.93
 
   Alignments for each domain:
-  == domain 1  score: 128.1 bits;  conditional E-value: 4.6e-39
+  == domain 1  score: 128.1 bits;  conditional E-value: 4.7e-39
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttag.ttgggggcttgct... 58 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaaccc tt+a  ttgggggcttgct   
                 6_Phytophthora_pinifolia_EU725805   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCCTTAAAtTTGGGGGCTTGCTcgg 62 
@@ -1251,10 +1253,10 @@ Domain annotation for each sequence (and alignments):
 >> 4_Phytophthora_sp_Pecan_GU997621  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  126.2   0.0   1.7e-38   1.7e-38       1     183 []       1     180 [.       1     180 [. 0.90
+   1 !  126.2   0.0   1.8e-38   1.8e-38       1     183 []       1     180 [.       1     180 [. 0.90
 
   Alignments for each domain:
-  == domain 1  score: 126.2 bits;  conditional E-value: 1.7e-38
+  == domain 1  score: 126.2 bits;  conditional E-value: 1.8e-38
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct.... 58 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaa     ttagttggggg++t++t    
                  4_Phytophthora_sp_Pecan_GU997621   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAAAAT--TTAGTTGGGGGTCTTTTtcgg 60 
@@ -1278,10 +1280,10 @@ Domain annotation for each sequence (and alignments):
 >> 6_Phytophthora_rosacearum_EU925376  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  128.2   0.0   4.3e-39   4.3e-39       1     183 []     378     572 ..     378     572 .. 0.92
+   1 !  128.2   0.0   4.4e-39   4.4e-39       1     183 []     378     572 ..     378     572 .. 0.92
 
   Alignments for each domain:
-  == domain 1  score: 128.2 bits;  conditional E-value: 4.3e-39
+  == domain 1  score: 128.2 bits;  conditional E-value: 4.4e-39
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacct..aaaaaactttccacgtgaaccgtatcaacccttttag.ttgggggcttgct. 58 
                                                       ccacacct  aaaaaactttccacgtgaaccgtatcaaccc t ta  ttggg gcttg+t 
                6_Phytophthora_rosacearum_EU925376 378 CCACACCTaaAAAAAACTTTCCACGTGAACCGTATCAACCCCTATAAtTTGGGAGCTTGTTt 439
@@ -1332,10 +1334,10 @@ Domain annotation for each sequence (and alignments):
 >> 7a_Phytophthora_cambivora_KU681015  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  124.0   0.0   8.6e-38   8.6e-38       1     183 []       1     199 [.       1     199 [. 0.91
+   1 !  124.0   0.0   8.7e-38   8.7e-38       1     183 []       1     199 [.       1     199 [. 0.91
 
   Alignments for each domain:
-  == domain 1  score: 124.0 bits;  conditional E-value: 8.6e-38
+  == domain 1  score: 124.0 bits;  conditional E-value: 8.7e-38
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct.... 58 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaaccc+ ttagttgggggct g+     
                7a_Phytophthora_cambivora_KU681015   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCACTTAGTTGGGGGCTAGTCccgg 62 
@@ -1355,6 +1357,33 @@ Domain annotation for each sequence (and alignments):
                                                       t a+tactgaatatact
                7a_Phytophthora_cambivora_KU681015 183 TGAATACTGAATATACT 199
                                                       ***************97 PP
+
+>> 7b_Phytophthora_cinnamomi_KU726740  
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !  122.2   0.0   3.2e-37   3.2e-37       1     183 []       2     198 ..       2     198 .. 0.91
+
+  Alignments for each domain:
+  == domain 1  score: 122.2 bits;  conditional E-value: 3.2e-37
+  Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct.... 58 
+                                                      ccacacct aaaaactttccacgtgaaccgtatcaaccc+ ttagttgggggc+tgct    
+               7b_Phytophthora_cinnamomi_KU726740   2 CCACACCT-AAAAACTTTCCACGTGAACCGTATCAACCCAATTAGTTGGGGGCCTGCTctgg 62 
+                                                      79******.8999******************************************9997664 PP
+
+  Phytophora_ITS_database_v0.002_no_5.8.fasta.aln  59 .ggtg.....tgctggtgtgttagtgggcggcttgctgc..ttgggcgggccctatcatggg 112
+                                                          g     tg++g+tgt ++agt g cggct gctgc  ++ ggcgggccctatca  gg
+               7b_Phytophthora_cinnamomi_KU726740  63 gC--GgcggcTGTCGATGTCAAAGTCGACGGCT-GCTGCtgCGTGGCGGGCCCTATCACTGG 121
+                                                      30..2555779999******************9.77776666999*************888* PP
+
+  Phytophora_ITS_database_v0.002_no_5.8.fasta.aln 113 cgagcgtttgggcttc......aaggtctgggctagtagttttttttttaaacccattctta 168
+                                                      cgagcgtttggg++ c      ++g  ctg+gctagtag+ t+t ttttaaacccattct +
+               7b_Phytophthora_cinnamomi_KU726740 122 CGAGCGTTTGGGTCCCtctcggGGGAACTGAGCTAGTAGCCTCTCTTTTAAACCCATTCTGT 183
+                                                      ************9887667766678899********************************** PP
+
+  Phytophora_ITS_database_v0.002_no_5.8.fasta.aln 169 attactgaatatact 183
+                                                      a+tactgaa+atact
+               7b_Phytophthora_cinnamomi_KU726740 184 AATACTGAACATACT 198
+                                                      *************97 PP
 
 >> 6_Phytophthora_taxon_cyperaceae_KJ372258  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
@@ -1467,10 +1496,10 @@ Domain annotation for each sequence (and alignments):
 >> 6_Phytophthora_gemini_FJ217679  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  124.4   0.0   6.3e-38   6.3e-38       1     183 []       1     187 [.       1     187 [. 0.91
+   1 !  124.4   0.0   6.4e-38   6.4e-38       1     183 []       1     187 [.       1     187 [. 0.91
 
   Alignments for each domain:
-  == domain 1  score: 124.4 bits;  conditional E-value: 6.3e-38
+  == domain 1  score: 124.4 bits;  conditional E-value: 6.4e-38
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttag.ttgggggcttgct... 58 
                                                       ccacacct aaaaactttccacgtgaaccgtatcaaccc tt+   ttgggggcttgct   
                    6_Phytophthora_gemini_FJ217679   1 CCACACCT-AAAAACTTTCCACGTGAACCGTATCAACCCCTTATAaTTGGGGGCTTGCTtgg 61 
@@ -1494,10 +1523,10 @@ Domain annotation for each sequence (and alignments):
 >> 7_Phytophthora_flexuosa_KU517152  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  127.4   0.0   7.8e-39   7.8e-39       1     183 []       1     199 [.       1     199 [. 0.91
+   1 !  127.4   0.0   7.9e-39   7.9e-39       1     183 []       1     199 [.       1     199 [. 0.91
 
   Alignments for each domain:
-  == domain 1  score: 127.4 bits;  conditional E-value: 7.8e-39
+  == domain 1  score: 127.4 bits;  conditional E-value: 7.9e-39
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct.... 58 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaaccc+tttagttgggggcttg+     
                  7_Phytophthora_flexuosa_KU517152   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCATTTAGTTGGGGGCTTGTCctgg 62 
@@ -1521,10 +1550,10 @@ Domain annotation for each sequence (and alignments):
 >> 7a_Phytophthora_europaea_AF449493  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  127.3   0.0   8.2e-39   8.2e-39       1     183 []      27     225 ..      27     225 .. 0.91
+   1 !  127.3   0.0   8.3e-39   8.3e-39       1     183 []      27     225 ..      27     225 .. 0.91
 
   Alignments for each domain:
-  == domain 1  score: 127.3 bits;  conditional E-value: 8.2e-39
+  == domain 1  score: 127.3 bits;  conditional E-value: 8.3e-39
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct.... 58 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaaccc+tttagttgggggcttg+     
                 7a_Phytophthora_europaea_AF449493  27 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCATTTAGTTGGGGGCTTGTCctgg 88 
@@ -1754,10 +1783,10 @@ Domain annotation for each sequence (and alignments):
 >> 5_Phytophthora_cocois_KP295304  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  124.5   0.0   6.2e-38   6.2e-38       1     183 []       6     187 ..       6     187 .. 0.88
+   1 !  124.5   0.0   6.3e-38   6.3e-38       1     183 []       6     187 ..       6     187 .. 0.88
 
   Alignments for each domain:
-  == domain 1  score: 124.5 bits;  conditional E-value: 6.2e-38
+  == domain 1  score: 124.5 bits;  conditional E-value: 6.3e-38
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct.ggt 61 
                                                       ccacacctaaaaaactttccacgtgaaccgta caa cc+ t+  ttgggggc  g+t gg+
                    5_Phytophthora_cocois_KP295304   6 CCACACCTAAAAAACTTTCCACGTGAACCGTAACAAACCAATAG-TTGGGGGCGAGTTtGGC 66 
@@ -1781,10 +1810,10 @@ Domain annotation for each sequence (and alignments):
 >> 7_Phytophthora_parvispora_KC478667  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  120.9   0.0   7.8e-37   7.8e-37       1     183 []       1     198 [.       1     198 [. 0.91
+   1 !  120.9   0.0   7.9e-37   7.9e-37       1     183 []       1     198 [.       1     198 [. 0.91
 
   Alignments for each domain:
-  == domain 1  score: 120.9 bits;  conditional E-value: 7.8e-37
+  == domain 1  score: 120.9 bits;  conditional E-value: 7.9e-37
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct.... 58 
                                                       ccacacctaaaaa ctttccacgtgaaccgtatcaaccc  tt gttgggggc+tgct    
                7_Phytophthora_parvispora_KC478667   1 CCACACCTAAAAATCTTTCCACGTGAACCGTATCAACCCCCTTCGTTGGGGGCCTGCTctgg 62 
@@ -1889,10 +1918,10 @@ Domain annotation for each sequence (and alignments):
 >> 4_Phytophthora_megakarya_AF266782  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  121.7   0.0   4.3e-37   4.3e-37       1     183 []       1     179 [.       1     179 [. 0.90
+   1 !  121.7   0.0   4.4e-37   4.4e-37       1     183 []       1     179 [.       1     179 [. 0.90
 
   Alignments for each domain:
-  == domain 1  score: 121.7 bits;  conditional E-value: 4.3e-37
+  == domain 1  score: 121.7 bits;  conditional E-value: 4.4e-37
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct.... 58 
                                                       ccacacct aaaaactttccacgtgaaccgtatcaacc tt +  ttggggg++t++t    
                 4_Phytophthora_megakarya_AF266782   1 CCACACCT-AAAAACTTTCCACGTGAACCGTATCAACCTTTAG--TTGGGGGTCTTTTtcgg 59 
@@ -1943,10 +1972,10 @@ Domain annotation for each sequence (and alignments):
 >> 7a_Phytophthora_fragariae_AF266762  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  125.0   0.0   4.3e-38   4.3e-38       1     183 []       1     199 [.       1     199 [. 0.91
+   1 !  125.0   0.0   4.4e-38   4.4e-38       1     183 []       1     199 [.       1     199 [. 0.91
 
   Alignments for each domain:
-  == domain 1  score: 125.0 bits;  conditional E-value: 4.3e-38
+  == domain 1  score: 125.0 bits;  conditional E-value: 4.4e-38
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct.... 58 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaaccc+ ttagttgggggc+tg+     
                7a_Phytophthora_fragariae_AF266762   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCACTTAGTTGGGGGCCTGTCctgg 62 
@@ -1970,10 +1999,10 @@ Domain annotation for each sequence (and alignments):
 >> 1_Phytophthora_X_pelgrandis_EU660831  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  122.8   0.0     2e-37     2e-37       1     183 []       1     161 [.       1     161 [. 0.93
+   1 !  122.8   0.0   2.1e-37   2.1e-37       1     183 []       1     161 [.       1     161 [. 0.93
 
   Alignments for each domain:
-  == domain 1  score: 122.8 bits;  conditional E-value: 2e-37
+  == domain 1  score: 122.8 bits;  conditional E-value: 2.1e-37
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggtg 62 
                                                       ccacacct  aaaactttccacgtgaaccgt tcaa cc+  tagttggggg++t+ t    
              1_Phytophthora_X_pelgrandis_EU660831   1 CCACACCT--AAAACTTTCCACGTGAACCGTTTCAAACCAAATAGTTGGGGGTCTTGT---- 56 
@@ -1992,10 +2021,10 @@ Domain annotation for each sequence (and alignments):
 >> 7a_Phytophthora_rubi_AF266761  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  125.0   0.0   4.3e-38   4.3e-38       1     183 []       1     199 [.       1     199 [. 0.91
+   1 !  125.0   0.0   4.4e-38   4.4e-38       1     183 []       1     199 [.       1     199 [. 0.91
 
   Alignments for each domain:
-  == domain 1  score: 125.0 bits;  conditional E-value: 4.3e-38
+  == domain 1  score: 125.0 bits;  conditional E-value: 4.4e-38
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct.... 58 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaaccc+ ttagttgggggc+tg+     
                     7a_Phytophthora_rubi_AF266761   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCACTTAGTTGGGGGCCTGTCctgg 62 
@@ -2019,10 +2048,10 @@ Domain annotation for each sequence (and alignments):
 >> 4_Phytophthora_boodjera_KJ372244  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  121.2   0.0   6.3e-37   6.3e-37       1     183 []       1     180 [.       1     180 [. 0.90
+   1 !  121.2   0.0   6.4e-37   6.4e-37       1     183 []       1     180 [.       1     180 [. 0.90
 
   Alignments for each domain:
-  == domain 1  score: 121.2 bits;  conditional E-value: 6.3e-37
+  == domain 1  score: 121.2 bits;  conditional E-value: 6.4e-37
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct..gg 60 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaa c tt   gttggggg++t++t  gg
                  4_Phytophthora_boodjera_KJ372244   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAAACTTTA--GTTGGGGGTCTTTTtcGG 60 
@@ -2046,10 +2075,10 @@ Domain annotation for each sequence (and alignments):
 >> 7_Phytophthora_intricata_KU517155  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  124.7   0.0   5.2e-38   5.2e-38       1     183 []       1     198 [.       1     198 [. 0.91
+   1 !  124.7   0.0   5.3e-38   5.3e-38       1     183 []       1     198 [.       1     198 [. 0.91
 
   Alignments for each domain:
-  == domain 1  score: 124.7 bits;  conditional E-value: 5.2e-38
+  == domain 1  score: 124.7 bits;  conditional E-value: 5.3e-38
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct.... 58 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaaccc+tttagttgggggcttg+     
                 7_Phytophthora_intricata_KU517155   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCATTTAGTTGGGGGCTTGTCctgg 62 
@@ -2122,10 +2151,10 @@ Domain annotation for each sequence (and alignments):
 >> 8a_Phytophthora_pseudocryptogea_KY212008  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  124.6   0.0   5.7e-38   5.7e-38       1     183 []       1     174 [.       1     174 [. 0.90
+   1 !  124.6   0.0   5.8e-38   5.8e-38       1     183 []       1     174 [.       1     174 [. 0.90
 
   Alignments for each domain:
-  == domain 1  score: 124.6 bits;  conditional E-value: 5.7e-38
+  == domain 1  score: 124.6 bits;  conditional E-value: 5.8e-38
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttag.ttgggggcttgctggt 61 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaacc tttta  ttgggggct  c    
          8a_Phytophthora_pseudocryptogea_KY212008   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCTTTTTAAaTTGGGGGCTCCCG--- 59 
@@ -2198,10 +2227,10 @@ Domain annotation for each sequence (and alignments):
 >> 1c_Phytophthora_andina_AY770741  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  121.3   0.0   5.9e-37   5.9e-37       1     183 []       1     187 [.       1     187 [. 0.90
+   1 !  121.3   0.0     6e-37     6e-37       1     183 []       1     187 [.       1     187 [. 0.90
 
   Alignments for each domain:
-  == domain 1  score: 121.3 bits;  conditional E-value: 5.9e-37
+  == domain 1  score: 121.3 bits;  conditional E-value: 6e-37
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct...g 59 
                                                       ccacacct aaaaactttccacgtgaaccgt tcaaccc+ t+ +t gggg ctt ct    
                   1c_Phytophthora_andina_AY770741   1 CCACACCT-AAAAACTTTCCACGTGAACCGTTTCAACCCAATAGTTGGGGGTCTTACTtggC 61 
@@ -2225,10 +2254,10 @@ Domain annotation for each sequence (and alignments):
 >> 1_Phytophthora_ipomoeae_KF777191  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  121.1   0.0   6.9e-37   6.9e-37       1     183 []      12     198 ..      12     198 .. 0.90
+   1 !  121.1   0.0     7e-37     7e-37       1     183 []      12     198 ..      12     198 .. 0.90
 
   Alignments for each domain:
-  == domain 1  score: 121.1 bits;  conditional E-value: 6.9e-37
+  == domain 1  score: 121.1 bits;  conditional E-value: 7e-37
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct...g 59 
                                                       ccacacct aaaaactttccacgtgaaccgt tcaaccc+ t+ +t gggg ctt ct    
                  1_Phytophthora_ipomoeae_KF777191  12 CCACACCT-AAAAACTTTCCACGTGAACCGTTTCAACCCAATAGTTGGGGGTCTTACTtggC 72 
@@ -2252,10 +2281,10 @@ Domain annotation for each sequence (and alignments):
 >> 7a_Phytophthora_cambivora_KU899159  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  124.0   0.0   8.6e-38   8.6e-38       1     183 []       1     199 [.       1     199 [. 0.91
+   1 !  124.0   0.0   8.7e-38   8.7e-38       1     183 []       1     199 [.       1     199 [. 0.91
 
   Alignments for each domain:
-  == domain 1  score: 124.0 bits;  conditional E-value: 8.6e-38
+  == domain 1  score: 124.0 bits;  conditional E-value: 8.7e-38
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct.... 58 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaaccc+ ttagttgggggct g+     
                7a_Phytophthora_cambivora_KU899159   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCACTTAGTTGGGGGCTAGTCccgg 62 
@@ -2279,10 +2308,10 @@ Domain annotation for each sequence (and alignments):
 >> 7_Phytophthora_x_cambivora_KU899179  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  123.6   0.0   1.1e-37   1.1e-37       1     183 []       1     199 [.       1     199 [. 0.91
+   1 !  123.6   0.0   1.2e-37   1.2e-37       1     183 []       1     199 [.       1     199 [. 0.91
 
   Alignments for each domain:
-  == domain 1  score: 123.6 bits;  conditional E-value: 1.1e-37
+  == domain 1  score: 123.6 bits;  conditional E-value: 1.2e-37
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct.... 58 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaaccc+ ttagttgggggct g+     
               7_Phytophthora_x_cambivora_KU899179   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCACTTAGTTGGGGGCTAGTCccgg 62 
@@ -2306,10 +2335,10 @@ Domain annotation for each sequence (and alignments):
 >> 7a_Phytophthora_cambivora_KU899163  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  123.6   0.0   1.1e-37   1.1e-37       1     183 []       1     199 [.       1     199 [. 0.91
+   1 !  123.6   0.0   1.2e-37   1.2e-37       1     183 []       1     199 [.       1     199 [. 0.91
 
   Alignments for each domain:
-  == domain 1  score: 123.6 bits;  conditional E-value: 1.1e-37
+  == domain 1  score: 123.6 bits;  conditional E-value: 1.2e-37
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct.... 58 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaaccc+ ttagttgggggct g+     
                7a_Phytophthora_cambivora_KU899163   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCACTTAGTTGGGGGCTAGTCccgg 62 
@@ -2458,10 +2487,10 @@ Domain annotation for each sequence (and alignments):
 >> 5_Phytophthora_castaneae_HQ643255  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  120.6   0.0   9.5e-37   9.5e-37       1     183 []       1     183 [.       1     183 [. 0.87
+   1 !  120.6   0.0   9.6e-37   9.6e-37       1     183 []       1     183 [.       1     183 [. 0.87
 
   Alignments for each domain:
-  == domain 1  score: 120.6 bits;  conditional E-value: 9.5e-37
+  == domain 1  score: 120.6 bits;  conditional E-value: 9.6e-37
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaac.tttccacgtgaaccgtatcaacccttttagttgggggcttgct.gg 60 
                                                       ccacacctaaaaaac tttccacgtgaaccgta caa cc+ t+  ttgggggc  g+t gg
                 5_Phytophthora_castaneae_HQ643255   1 CCACACCTAAAAAACtTTTCCACGTGAACCGTAACAAACCAATAG-TTGGGGGCGAGTTtGG 61 
@@ -2556,10 +2585,10 @@ Domain annotation for each sequence (and alignments):
 >> 8a_Phytophthora_medicaginis_FJ801480  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  120.6   0.0   9.3e-37   9.3e-37       1     183 []       1     171 [.       1     171 [. 0.86
+   1 !  120.6   0.0   9.4e-37   9.4e-37       1     183 []       1     171 [.       1     171 [. 0.86
 
   Alignments for each domain:
-  == domain 1  score: 120.6 bits;  conditional E-value: 9.3e-37
+  == domain 1  score: 120.6 bits;  conditional E-value: 9.4e-37
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggtg 62 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaacc ttt+a ttgggggctt c     
              8a_Phytophthora_medicaginis_FJ801480   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCTTTTAAATTGGGGGCTTCCG---- 58 
@@ -2801,10 +2830,10 @@ Domain annotation for each sequence (and alignments):
 >> 8c_Phytophthora_ramorum_JQ653034  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  119.8   0.0   1.7e-36   1.7e-36       1     183 []      33     202 ..      33     202 .. 0.88
+   1 !  119.8   0.0   1.8e-36   1.8e-36       1     183 []      33     202 ..      33     202 .. 0.88
 
   Alignments for each domain:
-  == domain 1  score: 119.8 bits;  conditional E-value: 1.7e-36
+  == domain 1  score: 119.8 bits;  conditional E-value: 1.8e-36
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggtg 62 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaa  c  ttagttgggggctt +     
                  8c_Phytophthora_ramorum_JQ653034  33 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAAAACCCTTAGTTGGGGGCTTCTG---- 90 
@@ -2850,10 +2879,10 @@ Domain annotation for each sequence (and alignments):
 >> 1_Phytophthora_nicotianae_JF792528  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  118.1   0.0   5.6e-36   5.6e-36       1     183 []       8     200 ..       8     200 .. 0.85
+   1 !  118.1   0.0   5.7e-36   5.7e-36       1     183 []       8     200 ..       8     200 .. 0.85
 
   Alignments for each domain:
-  == domain 1  score: 118.1 bits;  conditional E-value: 5.6e-36
+  == domain 1  score: 118.1 bits;  conditional E-value: 5.7e-36
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct...g 59 
                                                       ccacacct aaaaactttccacgtgaaccgt tcaaccc+ t+ +t gggg ctt +t    
                1_Phytophthora_nicotianae_JF792528   8 CCACACCT-AAAAACTTTCCACGTGAACCGTTTCAACCCAATAGTTGGGGGTCTTATTtggC 68 
@@ -2931,10 +2960,10 @@ Domain annotation for each sequence (and alignments):
 >> 8a_Phytophthora_trifolii_FJ746644  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  118.0   0.0     6e-36     6e-36       1     183 []      10     180 ..      10     180 .. 0.85
+   1 !  118.0   0.0   6.1e-36   6.1e-36       1     183 []      10     180 ..      10     180 .. 0.85
 
   Alignments for each domain:
-  == domain 1  score: 118.0 bits;  conditional E-value: 6e-36
+  == domain 1  score: 118.0 bits;  conditional E-value: 6.1e-36
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggtg 62 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaacc ttt+a ttggg gctt+c     
                 8a_Phytophthora_trifolii_FJ746644  10 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCTTTTAAATTGGGAGCTTTCG---- 67 
@@ -2972,6 +3001,33 @@ Domain annotation for each sequence (and alignments):
                  3_Phytophthora_ilicis_P_KJ458953 117 ACTTC--GGTCTGAGCTAGTAG-CTATTTTTTAAACCCATTCTTTAATACTGATTATACT 173
                                                       *****..***************.56778999***************************97 PP
 
+>> 7a_Phytophthora_alni_subsp._alni_DQ335646  
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !  118.6   0.0     4e-36     4e-36       1     183 []       1     201 [.       1     201 [. 0.90
+
+  Alignments for each domain:
+  == domain 1  score: 118.6 bits;  conditional E-value: 4e-36
+  Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacct.aaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct... 58 
+                                                      ccacacct aaaaaactttccacgtgaaccgtatcaaccc+ ttagttgggggc+ + t   
+        7a_Phytophthora_alni_subsp._alni_DQ335646   1 CCACACCTaAAAAAACTTTCCACGTGAACCGTATCAACCCACTTAGTTGGGGGCCATGTccc 62 
+                                                      79******7888999**********************************9999988777666 PP
+
+  Phytophora_ITS_database_v0.002_no_5.8.fasta.aln  59 ..ggtg......tgctggtgtgttagtgggcggcttgctgc..ttgggcgggccctatcatg 110
+                                                           g      tg++g+tgt ++agt+g cggct gctgc  t+ g cgggccctatcatg
+        7a_Phytophthora_alni_subsp._alni_DQ335646  63 ggC--GgctggcTGTCGATGTCAAAGTTGACGGCT-GCTGCtgTGTGTCGGGCCCTATCATG 121
+                                                      440..245566699999******************.888886678999*************9 PP
+
+  Phytophora_ITS_database_v0.002_no_5.8.fasta.aln 111 ggcgagcgtttgggcttc......aaggtctgggctagtag..ttttttttttaaacccatt 164
+                                                       gcgagcgtttggg++ c      ++g  ctg+gc agtag  +tt t ttttaaacccatt
+        7a_Phytophthora_alni_subsp._alni_DQ335646 122 -GCGAGCGTTTGGGTCCCtctcggGGGAACTGAGCCAGTAGccCTTATCTTTTAAACCCATT 182
+                                                      .*************9887667766678899***********88788999************* PP
+
+  Phytophora_ITS_database_v0.002_no_5.8.fasta.aln 165 cttaattactgaatatact 183
+                                                      ctt a+tactgaa+atact
+        7a_Phytophthora_alni_subsp._alni_DQ335646 183 CTTGAATACTGAACATACT 201
+                                                      *****************97 PP
+
 >> 7_Phytophthora_x_incrassata_KU517156  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
@@ -3002,10 +3058,10 @@ Domain annotation for each sequence (and alignments):
 >> 8c_Phytophthora_foliorum_EF120469  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  114.1   0.0   9.5e-35   9.5e-35       1     183 []      21     188 ..      21     188 .. 0.86
+   1 !  114.1   0.0   9.6e-35   9.6e-35       1     183 []      21     188 ..      21     188 .. 0.86
 
   Alignments for each domain:
-  == domain 1  score: 114.1 bits;  conditional E-value: 9.5e-35
+  == domain 1  score: 114.1 bits;  conditional E-value: 9.6e-35
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggtg 62 
                                                       ccacacct aaaaactttccacgtgaaccgtatcaac c  ttagttgggggct  +     
                 8c_Phytophthora_foliorum_EF120469  21 CCACACCT-AAAAACTTTCCACGTGAACCGTATCAACACCCTTAGTTGGGGGCTGCTG---- 77 
@@ -3029,10 +3085,10 @@ Domain annotation for each sequence (and alignments):
 >> 2_Phytophthora_colocasiae_JN618819  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  117.4   0.0   9.5e-36   9.5e-36       1     183 []       1     159 [.       1     159 [. 0.95
+   1 !  117.4   0.0   9.6e-36   9.6e-36       1     183 []       1     159 [.       1     159 [. 0.95
 
   Alignments for each domain:
-  == domain 1  score: 117.4 bits;  conditional E-value: 9.5e-36
+  == domain 1  score: 117.4 bits;  conditional E-value: 9.6e-36
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggtg 62 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttggggg+ t+      
                2_Phytophthora_colocasiae_JN618819   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCTTTTAGTTGGGGGTGTTGC---- 58 
@@ -3073,10 +3129,10 @@ Domain annotation for each sequence (and alignments):
 >> 2_Phytophthora_citricola_E_AF266788  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  113.0   0.0   2.1e-34   2.1e-34       1     183 []       1     150 [.       1     150 [. 0.93
+   1 !  113.0   0.0   2.2e-34   2.2e-34       1     183 []       1     150 [.       1     150 [. 0.93
 
   Alignments for each domain:
-  == domain 1  score: 113.0 bits;  conditional E-value: 2.1e-34
+  == domain 1  score: 113.0 bits;  conditional E-value: 2.2e-34
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggtg 62 
                                                       ccacacctaaaaaacttt cacgtgaaccgtatcaacccttttagttggggg++t+      
               2_Phytophthora_citricola_E_AF266788   1 CCACACCTAAAAAACTTTTCACGTGAACCGTATCAACCCTTTTAGTTGGGGGTCTT------ 56 
@@ -3166,10 +3222,10 @@ Domain annotation for each sequence (and alignments):
 >> 2c_Phytophthora_capensis_GU191231  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  114.5   0.0   7.5e-35   7.5e-35       1     183 []      11     160 ..      11     160 .. 0.93
+   1 !  114.5   0.0   7.6e-35   7.6e-35       1     183 []      11     160 ..      11     160 .. 0.93
 
   Alignments for each domain:
-  == domain 1  score: 114.5 bits;  conditional E-value: 7.5e-35
+  == domain 1  score: 114.5 bits;  conditional E-value: 7.6e-35
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggtg 62 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttggggg++t+      
                 2c_Phytophthora_capensis_GU191231  11 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCTTTTAGTTGGGGGTCTT------ 66 
@@ -3264,10 +3320,10 @@ Domain annotation for each sequence (and alignments):
 >> 2_Phytophthora_multivora_FJ237521  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  112.3   0.0   3.4e-34   3.4e-34       1     183 []       1     151 [.       1     151 [. 0.93
+   1 !  112.3   0.0   3.5e-34   3.5e-34       1     183 []       1     151 [.       1     151 [. 0.93
 
   Alignments for each domain:
-  == domain 1  score: 112.3 bits;  conditional E-value: 3.4e-34
+  == domain 1  score: 112.3 bits;  conditional E-value: 3.5e-34
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacct.aaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggt 61 
                                                       ccacacct aaaaaactttccacgtgaaccgtatcaacccttt agttgggggc+t+     
                 2_Phytophthora_multivora_FJ237521   1 CCACACCTaAAAAAACTTTCCACGTGAACCGTATCAACCCTTTCAGTTGGGGGCCTTGC--- 59 
@@ -3335,10 +3391,10 @@ Domain annotation for each sequence (and alignments):
 >> 2a_Phytophthora_occultans_JX978155  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  114.9   0.0   5.5e-35   5.5e-35       1     183 []       1     162 [.       1     162 [. 0.93
+   1 !  114.9   0.0   5.6e-35   5.6e-35       1     183 []       1     162 [.       1     162 [. 0.93
 
   Alignments for each domain:
-  == domain 1  score: 114.9 bits;  conditional E-value: 5.5e-35
+  == domain 1  score: 114.9 bits;  conditional E-value: 5.6e-35
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacct.aaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggt 61 
                                                       ccacacct aaaaaactttccacgtgaaccgtatcaacccttttagttggggg+ t+     
                2a_Phytophthora_occultans_JX978155   1 CCACACCTaAAAAAACTTTCCACGTGAACCGTATCAACCCTTTTAGTTGGGGGTGTTGC--- 59 
@@ -3357,10 +3413,10 @@ Domain annotation for each sequence (and alignments):
 >> 2a_Phytophthora_terminalis_JX978167  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  114.3   0.0   8.7e-35   8.7e-35       1     183 []       1     162 [.       1     162 [. 0.93
+   1 !  114.3   0.0   8.8e-35   8.8e-35       1     183 []       1     162 [.       1     162 [. 0.93
 
   Alignments for each domain:
-  == domain 1  score: 114.3 bits;  conditional E-value: 8.7e-35
+  == domain 1  score: 114.3 bits;  conditional E-value: 8.8e-35
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacct.aaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggt 61 
                                                       ccacacct aaaaaactttccacgtgaaccgtatcaacccttttagttggggg+ t+     
               2a_Phytophthora_terminalis_JX978167   1 CCACACCTaAAAAAACTTTCCACGTGAACCGTATCAACCCTTTTAGTTGGGGGTGTTGC--- 59 
@@ -3401,10 +3457,10 @@ Domain annotation for each sequence (and alignments):
 >> 2_Phytophthora_plurivora_FJ665225  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  114.1   0.0   9.5e-35   9.5e-35       1     183 []       1     151 [.       1     151 [. 0.95
+   1 !  114.1   0.0   9.6e-35   9.6e-35       1     183 []       1     151 [.       1     151 [. 0.95
 
   Alignments for each domain:
-  == domain 1  score: 114.1 bits;  conditional E-value: 9.5e-35
+  == domain 1  score: 114.1 bits;  conditional E-value: 9.6e-35
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggtg 62 
                                                       ccacacctaaaaaacttt cacgtgaaccgtatcaacccttttagttggggg++t+      
                 2_Phytophthora_plurivora_FJ665225   1 CCACACCTAAAAAACTTTTCACGTGAACCGTATCAACCCTTTTAGTTGGGGGTCTT------ 56 
@@ -3494,10 +3550,10 @@ Domain annotation for each sequence (and alignments):
 >> 1_Phytophthora_clandestina_AJ131989  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  109.1   0.0   3.4e-33   3.4e-33       1     183 []       1     179 [.       1     179 [. 0.90
+   1 !  109.1   0.0   3.5e-33   3.5e-33       1     183 []       1     179 [.       1     179 [. 0.90
 
   Alignments for each domain:
-  == domain 1  score: 109.1 bits;  conditional E-value: 3.4e-33
+  == domain 1  score: 109.1 bits;  conditional E-value: 3.5e-33
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct.... 58 
                                                       ccacacctaaaaa  tttccacgtgaaccgt tcaaccc+  +a ttggggg++t+ t    
               1_Phytophthora_clandestina_AJ131989   1 CCACACCTAAAAA--TTTCCACGTGAACCGTTTCAACCCAAAAAATTGGGGGTCTTGTttgg 60 
@@ -3543,10 +3599,10 @@ Domain annotation for each sequence (and alignments):
 >> 8d_Phytophthora_austrocedri_DQ995184  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  106.6   0.0     2e-32     2e-32       1     183 []     378     550 ..     378     550 .. 0.82
+   1 !  106.6   0.0   2.1e-32   2.1e-32       1     183 []     378     550 ..     378     550 .. 0.82
 
   Alignments for each domain:
-  == domain 1  score: 106.6 bits;  conditional E-value: 2e-32
+  == domain 1  score: 106.6 bits;  conditional E-value: 2.1e-32
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttag.ttgggggcttgctggt 61 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaa  c  tt + ttgggggctt +    
              8d_Phytophthora_austrocedri_DQ995184 378 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAAAACCCTTTTaTTGGGGGCTTCTG--- 436
@@ -3879,10 +3935,10 @@ Domain annotation for each sequence (and alignments):
 >> 8a_Phytophthora_drechsleri_AF266798  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  108.3   0.0   6.2e-33   6.2e-33       1     183 []       1     172 [.       1     172 [. 0.88
+   1 !  108.3   0.0   6.3e-33   6.3e-33       1     183 []       1     172 [.       1     172 [. 0.88
 
   Alignments for each domain:
-  == domain 1  score: 108.3 bits;  conditional E-value: 6.2e-33
+  == domain 1  score: 108.3 bits;  conditional E-value: 6.3e-33
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttag.ttgggggcttgctggt 61 
                                                       ccacacctaaaaaac ttccacgtgaaccgtatcaacc tttta  ttgggggctt c    
               8a_Phytophthora_drechsleri_AF266798   1 CCACACCTAAAAAAC-TTCCACGTGAACCGTATCAACCTTTTTAAaTTGGGGGCTTCCG--- 58 
@@ -3928,10 +3984,10 @@ Domain annotation for each sequence (and alignments):
 >> 10_Phytophthora_boehmeriae_Voucher_HQ643149  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  107.6   0.0   9.8e-33   9.8e-33       1     183 []       1     172 [.       1     172 [. 0.86
+   1 !  107.6   0.0   9.9e-33   9.9e-33       1     183 []       1     172 [.       1     172 [. 0.86
 
   Alignments for each domain:
-  == domain 1  score: 107.6 bits;  conditional E-value: 9.8e-33
+  == domain 1  score: 107.6 bits;  conditional E-value: 9.9e-33
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggtg 62 
                                                       ccacacctaaaaaactttccacgtgaaccgt tcaacc  tttagttgggg ct  +     
       10_Phytophthora_boehmeriae_Voucher_HQ643149   1 CCACACCTAAAAAACTTTCCACGTGAACCGT-TCAACCT-TTTAGTTGGGGACTCCTC---- 56 
@@ -3950,10 +4006,10 @@ Domain annotation for each sequence (and alignments):
 >> 10_Phytophthora_boehmeriae_Voucher_HQ643149  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  107.6   0.0   9.8e-33   9.8e-33       1     183 []       1     172 [.       1     172 [. 0.86
+   1 !  107.6   0.0   9.9e-33   9.9e-33       1     183 []       1     172 [.       1     172 [. 0.86
 
   Alignments for each domain:
-  == domain 1  score: 107.6 bits;  conditional E-value: 9.8e-33
+  == domain 1  score: 107.6 bits;  conditional E-value: 9.9e-33
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggtg 62 
                                                       ccacacctaaaaaactttccacgtgaaccgt tcaacc  tttagttgggg ct  +     
       10_Phytophthora_boehmeriae_Voucher_HQ643149   1 CCACACCTAAAAAACTTTCCACGTGAACCGT-TCAACCT-TTTAGTTGGGGACTCCTC---- 56 
@@ -3994,10 +4050,10 @@ Domain annotation for each sequence (and alignments):
 >> 2_Phytophthora_capsici_AF266787  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  101.3   0.0   8.5e-31   8.5e-31       1     183 []       1     140 [.       1     140 [. 0.96
+   1 !  101.3   0.0   8.6e-31   8.6e-31       1     183 []       1     140 [.       1     140 [. 0.96
 
   Alignments for each domain:
-  == domain 1  score: 101.3 bits;  conditional E-value: 8.5e-31
+  == domain 1  score: 101.3 bits;  conditional E-value: 8.6e-31
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggtg 62 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttggggg++t+ t    
                   2_Phytophthora_capsici_AF266787   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCTTTTAGTTGGGGGTCTTGT---- 58 
@@ -4016,10 +4072,10 @@ Domain annotation for each sequence (and alignments):
 >> 2b_Phytophthora_glovera_AF279124  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  101.3   0.0   8.5e-31   8.5e-31       1     183 []       1     140 [.       1     140 [. 0.96
+   1 !  101.3   0.0   8.6e-31   8.6e-31       1     183 []       1     140 [.       1     140 [. 0.96
 
   Alignments for each domain:
-  == domain 1  score: 101.3 bits;  conditional E-value: 8.5e-31
+  == domain 1  score: 101.3 bits;  conditional E-value: 8.6e-31
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggtg 62 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttggggg++t+ t    
                  2b_Phytophthora_glovera_AF279124   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCTTTTAGTTGGGGGTCTTGT---- 58 
@@ -4038,10 +4094,10 @@ Domain annotation for each sequence (and alignments):
 >> 2_Phytophthora_capsici_KY819081  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  101.2   0.0   9.3e-31   9.3e-31       1     183 []      13     152 ..      13     152 .. 0.96
+   1 !  101.2   0.0   9.4e-31   9.4e-31       1     183 []      13     152 ..      13     152 .. 0.96
 
   Alignments for each domain:
-  == domain 1  score: 101.2 bits;  conditional E-value: 9.3e-31
+  == domain 1  score: 101.2 bits;  conditional E-value: 9.4e-31
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggtg 62 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttggggg++t+ t    
                   2_Phytophthora_capsici_KY819081  13 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCTTTTAGTTGGGGGTCTTGT---- 70 
@@ -4060,10 +4116,10 @@ Domain annotation for each sequence (and alignments):
 >> 2_Phytophthora_mengei_EU748545  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  105.6   0.0   4.1e-32   4.1e-32       1     183 []       1     140 [.       1     140 [. 0.97
+   1 !  105.6   0.0   4.2e-32   4.2e-32       1     183 []       1     140 [.       1     140 [. 0.97
 
   Alignments for each domain:
-  == domain 1  score: 105.6 bits;  conditional E-value: 4.1e-32
+  == domain 1  score: 105.6 bits;  conditional E-value: 4.2e-32
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggtg 62 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttggggg++t+ t    
                    2_Phytophthora_mengei_EU748545   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCTTTTAGTTGGGGGTCTTGT---- 58 
@@ -4082,10 +4138,10 @@ Domain annotation for each sequence (and alignments):
 >> 2_Phytophthora_tropicalis_FJ801320  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  104.7   0.0   7.7e-32   7.7e-32       1     183 []       1     140 [.       1     140 [. 0.97
+   1 !  104.7   0.0   7.8e-32   7.8e-32       1     183 []       1     140 [.       1     140 [. 0.97
 
   Alignments for each domain:
-  == domain 1  score: 104.7 bits;  conditional E-value: 7.7e-32
+  == domain 1  score: 104.7 bits;  conditional E-value: 7.8e-32
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggtg 62 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttggggg++t+ t    
                2_Phytophthora_tropicalis_FJ801320   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCTTTTAGTTGGGGGTCTTGT---- 58 
@@ -4131,10 +4187,10 @@ Domain annotation for each sequence (and alignments):
 >> 2_Phytophthora_mexicana_HQ261620  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  102.4   0.0   3.8e-31   3.8e-31       1     183 []       1     140 [.       1     140 [. 0.97
+   1 !  102.4   0.0   3.9e-31   3.9e-31       1     183 []       1     140 [.       1     140 [. 0.97
 
   Alignments for each domain:
-  == domain 1  score: 102.4 bits;  conditional E-value: 3.8e-31
+  == domain 1  score: 102.4 bits;  conditional E-value: 3.9e-31
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggtg 62 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttggggg++t+ t    
                  2_Phytophthora_mexicana_HQ261620   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCTTTTAGTTGGGGGTCTTGT---- 58 
@@ -4153,10 +4209,10 @@ Domain annotation for each sequence (and alignments):
 >> 7b_Phytophthora_vignae_AF266766  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  100.7   0.0   1.3e-30   1.3e-30       1     183 []       1     200 [.       1     200 [. 0.87
+   1 !  100.7   0.0   1.4e-30   1.4e-30       1     183 []       1     200 [.       1     200 [. 0.87
 
   Alignments for each domain:
-  == domain 1  score: 100.7 bits;  conditional E-value: 1.3e-30
+  == domain 1  score: 100.7 bits;  conditional E-value: 1.4e-30
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacct.aaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct... 58 
                                                       ccacacct aaaaaactttccacgtgaaccgt tcaac   t +  ttgggggc+tgct   
                   7b_Phytophthora_vignae_AF266766   1 CCACACCTaAAAAAACTTTCCACGTGAACCGTTTCAACAAGTAG--TTGGGGGCCTGCTctg 60 
@@ -4202,10 +4258,10 @@ Domain annotation for each sequence (and alignments):
 >> 2_Phytophthora_siskiyouensis_EF523386  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !  101.7   0.0   6.3e-31   6.3e-31       1     183 []     378     517 ..     378     517 .. 0.96
+   1 !  101.7   0.0   6.4e-31   6.4e-31       1     183 []     378     517 ..     378     517 .. 0.96
 
   Alignments for each domain:
-  == domain 1  score: 101.7 bits;  conditional E-value: 6.3e-31
+  == domain 1  score: 101.7 bits;  conditional E-value: 6.4e-31
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacct.aaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggt 61 
                                                       ccacacct aaaaaactttccacgtgaaccgtatcaacccttttagttggggg++t+ t   
             2_Phytophthora_siskiyouensis_EF523386 378 CCACACCTaAAAAAACTTTCCACGTGAACCGTATCAACCCTTTTAGTTGGGGGTCTTGT--- 436
@@ -4224,10 +4280,10 @@ Domain annotation for each sequence (and alignments):
 >> 7_Phytophthora_nagaii_AB688356  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !   95.3   0.0   6.2e-29   6.2e-29       1     182 [.       1     203 [.       1     204 [. 0.78
+   1 !   95.3   0.0   6.3e-29   6.3e-29       1     182 [.       1     203 [.       1     204 [. 0.78
 
   Alignments for each domain:
-  == domain 1  score: 95.3 bits;  conditional E-value: 6.2e-29
+  == domain 1  score: 95.3 bits;  conditional E-value: 6.3e-29
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggtg 62 
                                                       ccacacctaaaaaact tccacgtgaaccgtatcaaccc+  tagttgggggc t+   gt 
                    7_Phytophthora_nagaii_AB688356   1 CCACACCTAAAAAACTGTCCACGTGAACCGTATCAACCCAAGTAGTTGGGGGCGTTACTGTT 62 
@@ -4300,10 +4356,10 @@ Domain annotation for each sequence (and alignments):
 >> 8b_Phytophthora_lactucae_KC478768  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !   99.0   0.0   4.4e-30   4.4e-30       1     183 []       1     170 [.       1     170 [. 0.82
+   1 !   99.0   0.0   4.5e-30   4.5e-30       1     183 []       1     170 [.       1     170 [. 0.82
 
   Alignments for each domain:
-  == domain 1  score: 99.0 bits;  conditional E-value: 4.4e-30
+  == domain 1  score: 99.0 bits;  conditional E-value: 4.5e-30
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttag.ttgggggcttgctggt 61 
                                                       ccacacctaaaaaactttccacgtgaaccgtatcaaccctt + + ttgggggct  +    
                 8b_Phytophthora_lactucae_KC478768   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCTTGATTaTTGGGGGCTGCTG--- 59 
@@ -4327,10 +4383,10 @@ Domain annotation for each sequence (and alignments):
 >> 7_Phytophthora_fragariaefolia_AB305060  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !   95.0   0.0   7.7e-29   7.7e-29       1     182 [.      33     235 ..      33     236 .. 0.77
+   1 !   95.0   0.0   7.8e-29   7.8e-29       1     182 [.      33     235 ..      33     236 .. 0.77
 
   Alignments for each domain:
-  == domain 1  score: 95.0 bits;  conditional E-value: 7.7e-29
+  == domain 1  score: 95.0 bits;  conditional E-value: 7.8e-29
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggtg 62 
                                                       ccacacctaaaaaact tccacgtgaaccgtatcaaccc+  tagttgggggc t+   gt 
            7_Phytophthora_fragariaefolia_AB305060  33 CCACACCTAAAAAACTGTCCACGTGAACCGTATCAACCCAAGTAGTTGGGGGCGTTACTGTT 94 
@@ -4354,10 +4410,10 @@ Domain annotation for each sequence (and alignments):
 >> 10_Phytophthora_gallica_DQ286726  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !   98.7   0.0   5.3e-30   5.3e-30       1     183 []       1     190 [.       1     190 [. 0.80
+   1 !   98.7   0.0   5.4e-30   5.4e-30       1     183 []       1     190 [.       1     190 [. 0.80
 
   Alignments for each domain:
-  == domain 1  score: 98.7 bits;  conditional E-value: 5.3e-30
+  == domain 1  score: 98.7 bits;  conditional E-value: 5.4e-30
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct...g 59 
                                                       ccacacctaaaaaactttccacgtgaaccgtat+a c c   +  ttgggg ct +ct   g
                  10_Phytophthora_gallica_DQ286726   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATTACCACCCAG--TTGGGGACTCTCTgttG 60 
@@ -4408,10 +4464,10 @@ Domain annotation for each sequence (and alignments):
 >> 10_Phytophthora_gallica_KF286894  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !   98.6   0.0   5.7e-30   5.7e-30       1     183 []      38     227 ..      38     227 .. 0.80
+   1 !   98.6   0.0   5.8e-30   5.8e-30       1     183 []      38     227 ..      38     227 .. 0.80
 
   Alignments for each domain:
-  == domain 1  score: 98.6 bits;  conditional E-value: 5.7e-30
+  == domain 1  score: 98.6 bits;  conditional E-value: 5.8e-30
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgct...g 59 
                                                       ccacacctaaaaaactttccacgtgaaccgtat+a c c   +  ttgggg ct +ct   g
                  10_Phytophthora_gallica_KF286894  38 CCACACCTAAAAAACTTTCCACGTGAACCGTATTACCACCCAG--TTGGGGACTCTCTgttG 97 
@@ -4457,10 +4513,10 @@ Domain annotation for each sequence (and alignments):
 >> 2_Phytophthora_amaranthi_GU111585  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !   96.2   0.0   3.2e-29   3.2e-29       1     183 []      56     196 ..      56     196 .. 0.96
+   1 !   96.2   0.0   3.3e-29   3.3e-29       1     183 []      56     196 ..      56     196 .. 0.96
 
   Alignments for each domain:
-  == domain 1  score: 96.2 bits;  conditional E-value: 3.2e-29
+  == domain 1  score: 96.2 bits;  conditional E-value: 3.3e-29
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacct.aaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggt 61 
                                                       ccacacct aaaaaactttccacgtgaaccgtatcaacccttttagttggggg++t+ t   
                 2_Phytophthora_amaranthi_GU111585  56 CCACACCTaAAAAAACTTTCCACGTGAACCGTATCAACCCTTTTAGTTGGGGGTCTTGT--- 114
@@ -4501,10 +4557,10 @@ Domain annotation for each sequence (and alignments):
 >> 8b_Phytophthora_dauci_KC478761  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !   92.4   0.0   4.8e-28   4.8e-28       1     183 []       1     169 [.       1     169 [. 0.82
+   1 !   92.4   0.0   4.9e-28   4.9e-28       1     183 []       1     169 [.       1     169 [. 0.82
 
   Alignments for each domain:
-  == domain 1  score: 92.4 bits;  conditional E-value: 4.8e-28
+  == domain 1  score: 92.4 bits;  conditional E-value: 4.9e-28
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttag.ttgggggcttgctggt 61 
                                                       ccacacct aaaaactttccacgtgaaccgtatcaaccctt + + ttgggggct  +    
                    8b_Phytophthora_dauci_KC478761   1 CCACACCT-AAAAACTTTCCACGTGAACCGTATCAACCCTTGATTaTTGGGGGCTGCTG--- 58 
@@ -4572,10 +4628,10 @@ Domain annotation for each sequence (and alignments):
 >> 2_Phytophthora_caryae_KJ631538  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !   91.3   0.1     1e-27     1e-27      15     183 .]       1     136 [.       1     136 [. 0.92
+   1 !   91.3   0.1   1.1e-27   1.1e-27      15     183 .]       1     136 [.       1     136 [. 0.92
 
   Alignments for each domain:
-  == domain 1  score: 91.3 bits;  conditional E-value: 1e-27
+  == domain 1  score: 91.3 bits;  conditional E-value: 1.1e-27
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln  15 ctttccacgtgaaccgtatcaacccttttagttgggggcttgctggtgtgctggtgtgttag 76 
                                                       cttt cacgtgaaccgtatcaacccttttagttggggg++t+                    
                    2_Phytophthora_caryae_KJ631538   1 CTTTTCACGTGAACCGTATCAACCCTTTTAGTTGGGGGTCTT-------------------- 42 
@@ -4594,10 +4650,10 @@ Domain annotation for each sequence (and alignments):
 >> 10_Phytophthora_intercalaris_KT163268  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !   91.8   0.0   7.5e-28   7.5e-28       1     183 []       1     201 [.       1     201 [. 0.76
+   1 !   91.8   0.0   7.6e-28   7.6e-28       1     183 []       1     201 [.       1     201 [. 0.76
 
   Alignments for each domain:
-  == domain 1  score: 91.8 bits;  conditional E-value: 7.5e-28
+  == domain 1  score: 91.8 bits;  conditional E-value: 7.6e-28
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggtg 62 
                                                       ccacacctaaaaaactttccacgtgaaccgtat+a c  + ttagttgggg ct  ctg tg
             10_Phytophthora_intercalaris_KT163268   1 CCACACCTAAAAAACTTTCCACGTGAACCGTATTACCAAAGTTAGTTGGGGACTCCCTGTTG 62 
@@ -4675,10 +4731,10 @@ Domain annotation for each sequence (and alignments):
 >> 8b_Phytophthora_brassicae_voucher_HQ643156  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !   89.5   0.0   3.7e-27   3.7e-27       2     183 .]       1     167 [.       1     167 [. 0.81
+   1 !   89.5   0.0   3.8e-27   3.8e-27       2     183 .]       1     167 [.       1     167 [. 0.81
 
   Alignments for each domain:
-  == domain 1  score: 89.5 bits;  conditional E-value: 3.7e-27
+  == domain 1  score: 89.5 bits;  conditional E-value: 3.8e-27
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   2 cacacctaaaaaactttccacgtgaaccgtatcaacccttttag.ttgggggcttgctggtg 62 
                                                       cacacctaaaaaactttccacgtgaaccgtatcaaccctt + + ttgggggct  +     
        8b_Phytophthora_brassicae_voucher_HQ643156   1 CACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCTTGATTaTTGGGGGCTGCTG---- 58 
@@ -4751,10 +4807,10 @@ Domain annotation for each sequence (and alignments):
 >> 8b_Phytophthora_primulae_KC478752  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !   88.7   0.0   6.8e-27   6.8e-27       1     183 []       1     169 [.       1     169 [. 0.81
+   1 !   88.7   0.0   6.9e-27   6.9e-27       1     183 []       1     169 [.       1     169 [. 0.81
 
   Alignments for each domain:
-  == domain 1  score: 88.7 bits;  conditional E-value: 6.8e-27
+  == domain 1  score: 88.7 bits;  conditional E-value: 6.9e-27
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttag.ttgggggcttgctggt 61 
                                                       ccacacct aaaaactt cc cgtgaaccgtatcaaccctttt + ttgggggct  +    
                 8b_Phytophthora_primulae_KC478752   1 CCACACCT-AAAAACTTCCCCCGTGAACCGTATCAACCCTTTTTTaTTGGGGGCTGCTG--- 58 
@@ -4778,10 +4834,10 @@ Domain annotation for each sequence (and alignments):
 >> 8b_Phytophthora_porri_KC478749  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !   87.4   0.0   1.7e-26   1.7e-26       1     183 []       1     168 [.       1     168 [. 0.80
+   1 !   87.4   0.0   1.8e-26   1.8e-26       1     183 []       1     168 [.       1     168 [. 0.80
 
   Alignments for each domain:
-  == domain 1  score: 87.4 bits;  conditional E-value: 1.7e-26
+  == domain 1  score: 87.4 bits;  conditional E-value: 1.8e-26
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttag.ttgggggcttgctggt 61 
                                                       ccacacct aaaaactttcc cgtgaaccgtatcaaccctttt + ttgggggct  +    
                    8b_Phytophthora_porri_KC478749   1 CCACACCT-AAAAACTTTCCCCGTGAACCGTATCAACCCTTTTTTaTTGGGGGCTGCTG--- 58 
@@ -4871,10 +4927,10 @@ Domain annotation for each sequence (and alignments):
 >> 9_Phytophthora_fallax_SPLA61_HQ013223  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !   86.5   0.0   3.1e-26   3.1e-26       1     180 [.       1     168 [.       1     171 [. 0.87
+   1 !   86.5   0.0   3.2e-26   3.2e-26       1     180 [.       1     168 [.       1     171 [. 0.87
 
   Alignments for each domain:
-  == domain 1  score: 86.5 bits;  conditional E-value: 3.1e-26
+  == domain 1  score: 86.5 bits;  conditional E-value: 3.2e-26
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttagttgggggcttgctggtg 62 
                                                       ccacacctaaaaaa  ttccacgtgaac+gtat+  c     +a+t gggg +t  +t    
             9_Phytophthora_fallax_SPLA61_HQ013223   1 CCACACCTAAAAAAA-TTCCACGTGAACTGTATTGTCAACCAAATTCGGGGATTCCTT---- 57 
@@ -4893,10 +4949,10 @@ Domain annotation for each sequence (and alignments):
 >> 9_Phytophthora_parsiana_AY659737  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !   79.3   0.0   5.3e-24   5.3e-24       1     183 []       1     152 [.       1     152 [. 0.85
+   1 !   79.3   0.0   5.4e-24   5.4e-24       1     183 []       1     152 [.       1     152 [. 0.85
 
   Alignments for each domain:
-  == domain 1  score: 79.3 bits;  conditional E-value: 5.3e-24
+  == domain 1  score: 79.3 bits;  conditional E-value: 5.4e-24
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttag.ttgggggcttgctggt 61 
                                                       ccacacct aaaaactttccacgtgaac+gt       ct t+a+ ttgggggc+tg+  g+
                  9_Phytophthora_parsiana_AY659737   1 CCACACCT-AAAAACTTTCCACGTGAACTGT-------CTGTGATgTTGGGGGCCTGTCTGC 54 
@@ -5013,10 +5069,10 @@ Domain annotation for each sequence (and alignments):
 >> 9_Phytophthora_taxon_kunnunara_EF437222  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !   76.1   0.0   5.1e-23   5.1e-23       1     183 []       1     146 [.       1     146 [. 0.86
+   1 !   76.1   0.0   5.2e-23   5.2e-23       1     183 []       1     146 [.       1     146 [. 0.86
 
   Alignments for each domain:
-  == domain 1  score: 76.1 bits;  conditional E-value: 5.1e-23
+  == domain 1  score: 76.1 bits;  conditional E-value: 5.2e-23
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttag.ttgggggcttgctggt 61 
                                                       ccacacct aaaaactttccacgtgaac+gt       ct t+a+ ttgggggc tg+    
           9_Phytophthora_taxon_kunnunara_EF437222   1 CCACACCT-AAAAACTTTCCACGTGAACTGT-------CTGTGATgTTGGGGGCGTGTC--- 51 
@@ -5128,10 +5184,10 @@ Domain annotation for each sequence (and alignments):
 >> 9_Phytophthora_virginiana_KC295544  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !   75.2   0.0   9.6e-23   9.6e-23       1     183 []       1     146 [.       1     146 [. 0.86
+   1 !   75.2   0.0   9.7e-23   9.7e-23       1     183 []       1     146 [.       1     146 [. 0.86
 
   Alignments for each domain:
-  == domain 1  score: 75.2 bits;  conditional E-value: 9.6e-23
+  == domain 1  score: 75.2 bits;  conditional E-value: 9.7e-23
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttag.ttgggggcttgctggt 61 
                                                       ccacacct aaaaactttccacgtgaac+gt       ct t+a+ ttgggggc tgc    
                9_Phytophthora_virginiana_KC295544   1 CCACACCT-AAAAACTTTCCACGTGAACTGT-------CTGTGATgTTGGGGGCGTGCC--- 51 
@@ -5155,10 +5211,10 @@ Domain annotation for each sequence (and alignments):
 >> 9_Phytophthora_parsiana_AY659739  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !   75.8   0.0   6.6e-23   6.6e-23       2     183 .]       2     152 ..       1     152 [. 0.85
+   1 !   75.8   0.0   6.7e-23   6.7e-23       2     183 .]       2     152 ..       1     152 [. 0.85
 
   Alignments for each domain:
-  == domain 1  score: 75.8 bits;  conditional E-value: 6.6e-23
+  == domain 1  score: 75.8 bits;  conditional E-value: 6.7e-23
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   2 cacacctaaaaaactttccacgtgaaccgtatcaacccttttag.ttgggggcttgctggtg 62 
                                                       c cacct aaaaactttccacgtgaac+gt       ct t+a+ ttgggggc+tg+  g+ 
                  9_Phytophthora_parsiana_AY659739   2 CGCACCT-AAAAACTTTCCACGTGAACTGT-------CTGTGATgTTGGGGGCCTGTCTGC- 54 
@@ -5177,10 +5233,10 @@ Domain annotation for each sequence (and alignments):
 >> 9_Phytophthora_taxon_cuyabensis_FJ801995  
    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
-   1 !   77.9   0.0   1.4e-23   1.4e-23       1     183 []       1     143 [.       1     143 [. 0.88
+   1 !   77.9   0.0   1.5e-23   1.5e-23       1     183 []       1     143 [.       1     143 [. 0.88
 
   Alignments for each domain:
-  == domain 1  score: 77.9 bits;  conditional E-value: 1.4e-23
+  == domain 1  score: 77.9 bits;  conditional E-value: 1.5e-23
   Phytophora_ITS_database_v0.002_no_5.8.fasta.aln   1 ccacacctaaaaaactttccacgtgaaccgtatcaacccttttag.ttgggggcttgctggt 61 
                                                       ccacacct aaaaactttccacgtgaac+gt       ct t+a+ ttgggggc+  c    
          9_Phytophthora_taxon_cuyabensis_FJ801995   1 CCACACCT-AAAAACTTTCCACGTGAACTGT-------CTGTGATgTTGGGGGCCGCCG--- 51 
@@ -5249,14 +5305,14 @@ Domain annotation for each sequence (and alignments):
 Internal pipeline statistics summary:
 -------------------------------------
 Query model(s):                              1  (183 nodes)
-Target sequences:                          205  (168258 residues searched)
-Passed MSV filter:                       205  (1); expected 4.1 (0.02)
-Passed bias filter:                      205  (1); expected 4.1 (0.02)
-Passed Vit filter:                       205  (1); expected 0.2 (0.001)
-Passed Fwd filter:                       205  (1); expected 0.0 (1e-05)
-Initial search space (Z):                205  [actual number of targets]
-Domain search space  (domZ):             205  [number of targets reported over threshold]
-# CPU time: 0.94u 0.01s 00:00:00.95 Elapsed: 00:00:00.97
-# Mc/sec: 31.74
+Target sequences:                          207  (169928 residues searched)
+Passed MSV filter:                       207  (1); expected 4.1 (0.02)
+Passed bias filter:                      207  (1); expected 4.1 (0.02)
+Passed Vit filter:                       207  (1); expected 0.2 (0.001)
+Passed Fwd filter:                       207  (1); expected 0.0 (1e-05)
+Initial search space (Z):                207  [actual number of targets]
+Domain search space  (domZ):             207  [number of targets reported over threshold]
+# CPU time: 0.97u 0.01s 00:00:00.98 Elapsed: 00:00:00.99
+# Mc/sec: 31.41
 //
 [ok]

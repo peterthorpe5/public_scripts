@@ -1,6 +1,7 @@
 Phytophthora acerina	1	150
 Phytophthora agathidicida	6	187
 Phytophthora alni subsp. alni	1	199
+Phytophthora alni subsp. alni	1	201
 Phytophthora alni subsp. multiformis	1	199
 Phytophthora alni subsp. uniformis	1	199
 Phytophthora alticola	1	180
@@ -45,6 +46,7 @@ Phytophthora chlamydospora	6	200
 Phytophthora chlamydospora	1	176
 Phytophthora chrysanthemi	1	165
 Phytophthora cichorii	1	169
+Phytophthora cinnamomi	2	198
 Phytophthora cinnamomi	1	198
 Phytophthora citricola E	1	150
 Phytophthora citricola sensu stricto	1	151
