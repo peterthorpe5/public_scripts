@@ -504,6 +504,7 @@ def parse_diamond_tab(diamond_tab_output,
                 tax_id = acc_to_tax_id[accession.rstrip()]
             else:
                 tax_id = tax_id_warning(accession, logger)
+                continue
         # TODO ADD TAX FILTER
         # TAXONOMY FILTERING - default is no!
         # taxomony_filter(tax_dictionary,
