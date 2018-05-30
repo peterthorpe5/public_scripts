@@ -63,7 +63,8 @@ def get_args():
     parser = argparse.ArgumentParser(description="Pipeline: cluster " +
                                      "data for metabarcoding ",
                                      add_help=False)
-    file_directory = os.path.realpath(__file__).split("metapy.py")[0]
+    file_directory = os.path.realpath(__file__).split("metapy")[0]
+    file_directory = os.path.join(file_directory, "metapy")
     optional = parser.add_argument_group('optional arguments')
     optional.add_argument("--thread", dest='threads',
                           action="store", default="4",
