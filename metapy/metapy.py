@@ -1503,8 +1503,8 @@ if __name__ == '__main__':
                                                              PREFIX +
                                                              "_Rand_compar" +
                                                              "ison.txt"))
-        for comp in result:
-            logger.info("Rand comparison: %s", comp)
+        #for comp in Rand_results:
+            #logger.info("Rand comparison: %s", comp)
     except ValueError:
         logger.warning("Rand comparison failed.")
     # compress the reads to save space
@@ -1590,8 +1590,9 @@ if __name__ == '__main__':
             except:
                 logger.info("could not find %s", unwanted)
     shutil.rmtree(PREFIX)
-    shutil.rmtree("dada2")
-    shutil.rmtree("filtered")
+    if args.Run_dada2.upper() == "YES":
+        shutil.rmtree("dada2")
+        shutil.rmtree("filtered")
     if ERROR_CORRECTION and args.cleanup:
         # this folders will only be there is EC was run
         shutil.rmtree(os.path.join(EC_FOLDER))
