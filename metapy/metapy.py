@@ -99,7 +99,6 @@ def get_args():
     optional.add_argument("-d", "--OTU_DB", dest='OTU_DB',
                           action="store",
                           default=os.path.join(file_directory,
-                                               "metapy",
                                                "data",
                                                "Phytophora_ITS_" +
                                                "database_v0.005.fasta"),
