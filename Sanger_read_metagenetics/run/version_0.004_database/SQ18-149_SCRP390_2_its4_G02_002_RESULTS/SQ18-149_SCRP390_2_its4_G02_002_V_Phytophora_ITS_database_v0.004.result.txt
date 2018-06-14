@@ -1,3 +1,0 @@
-#Query	mismatches	evalue	percent_identity	database
-SCRP390_2_its4	1	9.65374e-67	25.5	gnl|BL_ORD_ID|153 8c_Phytophthora_lateralis_AF266804
-SCRP390_2_its4	1	9.65374e-67	25.5	gnl|BL_ORD_ID|109 8c_Phytophthora_lateralis_HQ643263
