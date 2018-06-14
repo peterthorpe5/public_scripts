@@ -57,7 +57,7 @@ def get_args():
 
     optional.add_argument("-o", "--out", dest='out',
                           action="store",
-                          default="Illumina01112017_results.txt",
+                          default="Illumina_results.txt",
                           type=str,
                           help="the tab file to fill in. Input file")
 
@@ -80,13 +80,15 @@ def test_line(line):
         return False  # comment line
     return line.rstrip()
 
+
 def split_line_return_sample(line, sample_set):
     """func to split up a line and return a list of samples
     - because result havd come with a mixture of underscores and
     hyphens in all possible plces, I will just replace these."""
     line = line.rstrip()
     data = line.split("\t")  # inconsitent data entry!! cannot assign
-    sample_name = data[1]
+    # used to be [1] for thapbi project
+    sample_name = data[0]
     sample_set.add(sample_name.rstrip())  # all kinds of whitespace
     return sample_set
 
@@ -129,8 +131,9 @@ def write_out_result(indata, outfile):
     title = "#plate_well\tSample_Number\tSample_type_(root/plant/water/blank/other)" +\
             "\tHost_Common_Name\tHost_latin_name/Sampling_Name\tPhytophthora_species\t" +\
             "num_reads\tPhytophthora_species\tnum_reads\n"
-    f_out.write(title)
-    indata = indata.replace("_abundance=1", "")
+    #f_out.write(title)
+    #indata = indata.replace("_abundance=1", "")
+    print "indata = ", indata
     for result in indata:
         f_out.write(result)
     f_out.close()
@@ -144,11 +147,18 @@ def populate_result_list(full_data, entry, result,
     """
     for data in full_data:
         data = data.rstrip("\n")
-        data_list = data.split("\t")
-        sample = data_list[1]
-        if sample.strip() == entry.strip():
-            full_data_with_phytophora = full_data_with_phytophora + \
-                                        data.strip() + "\t" + result.strip() + "\n"
+        # used to be [1] fr thapbi project
+        if len(data.split("\t"))> 1:
+            data_list = data.split("\t")
+            sample = data_list[0]
+        else:
+            sample = data
+        if sample.strip().replace("_RESULTS", "") == entry.strip().replace("_RESULTS", ""):
+            print "SAMPLE:", sample, "Entry", entry, "results", result
+
+            full_data_with_phytophora = sample + "\t" + full_data_with_phytophora + \
+                                        data.strip() + "\t" + result.rstrip() + "\n"
+    print "full_data_with_phytophora = ", full_data_with_phytophora
     return full_data_with_phytophora
 
 
@@ -166,6 +176,8 @@ if __name__ == '__main__':
         if PROG_OF_INTEREST in result:
             if "DADA2" not in result:
                 for entry in sample_set:
+                    if entry.endswith("_RESULTS"):
+                        entry = entry.split("_RESULTS")[0]
                     wanted_file = entry + "_swarm_results_1.RESULTS"
                     wanted_file_full = os.path.join(result, wanted_file)
                     if os.path.isfile(wanted_file_full):
@@ -179,6 +191,7 @@ if __name__ == '__main__':
                                                                          entry,
                                                                          result,
                                                                          full_data_with_phytophora)
+    print full_data_with_phytophora
     # call the function to write out the full_data_with_phytophora
     write_out_result(full_data_with_phytophora, args.out)
 

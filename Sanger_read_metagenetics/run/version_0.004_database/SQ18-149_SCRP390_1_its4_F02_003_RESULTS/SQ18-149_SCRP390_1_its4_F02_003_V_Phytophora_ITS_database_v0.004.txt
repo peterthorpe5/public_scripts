@@ -1,0 +1,11 @@
+Sequence: gnl|BL_ORD_ID|153 8c_Phytophthora_lateralis_AF266804
+Query_name = SCRP390_1_its4
+query_length: 794
+subject_length: 169
+e value: 1.44458e-81
+percent_identiy: 20
+AGTATATTCAGTATTTAGGAATGGGTTTAAAAAGAGGGCTACTAGCTCAGACCCGAAGGCCCATGCGCTCGCCATGATAGAGCCGCCGCCCAGCCAGCCGAAGCCAGCCGAA-AGAAGCCCCC-ACTAAGGGTTTTGATACGGTTCACGTGGAAGTTTTTTAGGGGTG
+                                                                                                                X          X                                        X   
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||| |||||||||||||||||||||||||||||||||||||||| |||
+AGTATATTCAGTATTTAGGAATGGGTTTAAAAAGAGGGCTACTAGCTCAGACCCGAAGGCCCATGCGCTCGCCATGATAGAGCCGCCGCCCAGCCAGCCGAAGCCAGCCGAACAGAAGCCCCCAACTAAGGGTTTTGATACGGTTCACGTGGAAGTTTTTTAGGTGTG
+

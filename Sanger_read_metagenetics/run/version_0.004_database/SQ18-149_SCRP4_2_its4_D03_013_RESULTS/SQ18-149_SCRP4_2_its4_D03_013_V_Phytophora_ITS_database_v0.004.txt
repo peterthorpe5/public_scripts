@@ -1,0 +1,11 @@
+Sequence: gnl|BL_ORD_ID|152 7a_Phytophthora_alni_subsp._multiformis_AF139368
+Query_name = SCRP4_2_its4
+query_length: 697
+subject_length: 199
+e value: 2.83564e-53
+percent_identiy: 16
+AGTATGTTCAGTATTCAAGAATGGGTTTAAAAGATAAGGGCTACTGGCTCAGTTCCCCCGAGAGGGACCCAA-CGCTCGCCATGATAGGGCC-GACACACAGCAGCAGCCGTCA
+                                                                        X                   X                     
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| ||||||||||||||||||| |||||||||||||||||||||
+AGTATGTTCAGTATTCAAGAATGGGTTTAAAAGATAAGGGCTACTGGCTCAGTTCCCCCGAGAGGGACCCAAACGCTCGCCATGATAGGGCCCGACACACAGCAGCAGCCGTCA
+

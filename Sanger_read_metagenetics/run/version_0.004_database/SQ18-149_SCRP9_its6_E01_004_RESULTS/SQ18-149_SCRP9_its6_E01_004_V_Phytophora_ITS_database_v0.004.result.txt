@@ -1,0 +1,10 @@
+#Query	mismatches	evalue	percent_identity	database
+SCRP9_its6	0	3.44524e-75	35.4	gnl|BL_ORD_ID|19 7a_Phytophthora_alni_subsp._uniformis_AF139367
+SCRP9_its6	1	1.60291e-73	35.2	gnl|BL_ORD_ID|127 7_Phytophthora_formosa_KU517153
+SCRP9_its6	1	2.0735e-72	34.7	gnl|BL_ORD_ID|39 7a_Phytophthora_fragariae_AF266762_7a_P._rubi_AF266761
+SCRP9_its6	2	7.45763e-72	35.0	gnl|BL_ORD_ID|55 7a_Phytophthora_cambivora_KU899163_7_P._x_cambivora_KU899179
+SCRP9_its6	3	3.4697e-70	34.7	gnl|BL_ORD_ID|164 7_Phytophthora_attenuata_KU517154
+SCRP9_its6	2	3.4697e-70	34.5	gnl|BL_ORD_ID|71 7_Phytophthora_intricata_KU517155
+SCRP9_its6	3	4.48834e-69	34.2	gnl|BL_ORD_ID|152 7a_Phytophthora_alni_subsp._multiformis_AF139368
+SCRP9_its6	3	4.48834e-69	34.2	gnl|BL_ORD_ID|91 7a_Phytophthora_uliginosa_AF449495
+SCRP9_its6	3	4.48834e-69	34.2	gnl|BL_ORD_ID|81 7a_Phytophthora_europaea_AF449493_7_P._flexuosa_KU517152

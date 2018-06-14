@@ -1,0 +1,20 @@
+#Query	mismatches	evalue	percent_identity	database
+SCRP417_1_its4	0	2.1043e-39	12.5	gnl|BL_ORD_ID|160 6_Phytophthora_gonapodyides_H_14_JF912516
+SCRP417_1_its4	0	2.1043e-39	12.5	gnl|BL_ORD_ID|126 6_Phytophthora_megasperma_AF541899
+SCRP417_1_its4	0	2.1043e-39	12.5	gnl|BL_ORD_ID|52 6_Phytophthora_ornamentata_KP863496
+SCRP417_1_its4	0	2.1043e-39	12.5	gnl|BL_ORD_ID|43 6_Phytophthora_mississippiae_KF112852
+SCRP417_1_its4	0	2.1043e-39	12.5	gnl|BL_ORD_ID|28 6_Phytophthora_megasperma_GU258796
+SCRP417_1_its4	0	2.1043e-39	12.5	gnl|BL_ORD_ID|23 6_Phytophthora_megasperma_AF541895
+SCRP417_1_its4	0	2.1043e-39	12.5	gnl|BL_ORD_ID|12 6_Phytophthora_gonapodyides_voucher_HQ643236
+SCRP417_1_its4	0	2.1043e-39	12.5	gnl|BL_ORD_ID|0 6_Phytophthora_crassamura_KP863493
+SCRP417_1_its4	1	9.79036e-38	12.3	gnl|BL_ORD_ID|132 6_Phytophthora_taxon_pocumtuck_KP749380
+SCRP417_1_its4	1	9.79036e-38	12.3	gnl|BL_ORD_ID|121 6_Phytophthora_borealis_JQ626599
+SCRP417_1_its4	1	9.79036e-38	12.3	gnl|BL_ORD_ID|6 6_Phytophthora_litoralis_HQ012948
+SCRP417_1_its4	1	3.52124e-37	12.3	gnl|BL_ORD_ID|136 6b_Phytophthora_X_stagnum_KJ705084
+SCRP417_1_its4	2	4.55501e-36	12.3	gnl|BL_ORD_ID|88 6_Phytophthora_chlamydospora_KU647272_6b_P._X_stagnum_KJ705086
+SCRP417_1_its4	2	4.55501e-36	12.3	gnl|BL_ORD_ID|70 6_Phytophthora_chlamydospora_KU725882
+SCRP417_1_its4	2	4.55501e-36	12.3	gnl|BL_ORD_ID|20 6_Phytophthora_moyootj_KJ372256
+SCRP417_1_its4	2	1.63827e-35	12.2	gnl|BL_ORD_ID|50 6b_Phytophthora_X_stagnum_KJ705085
+SCRP417_1_its4	3	5.89228e-35	12.3	gnl|BL_ORD_ID|135 6_Phytophthora_amnicola_JQ029956
+SCRP417_1_its4	3	2.11924e-34	12.2	gnl|BL_ORD_ID|120 6_Phytophthora_thermophila_EU301152
+SCRP417_1_its4	1	1.27545e-31	10.7	gnl|BL_ORD_ID|108 6_Phytophthora_pinifolia_EU725805

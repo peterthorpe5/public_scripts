@@ -1,0 +1,33 @@
+Sequence: gnl|BL_ORD_ID|109 8c_Phytophthora_lateralis_HQ643263
+Query_name = SCRP390_1_its6
+query_length: 538
+subject_length: 170
+e value: 2.06856e-88
+percent_identiy: 31
+CCACACCTAAAAAACTTTCCACGTGAACCGTATCAAAACCCTTAGTTGGGGGCTTCTGTTCGGCTGGCTTCGGCTGGCTGGGCGGCGGCTCTATCATGGCGAGCGCATGGGCCTTCGGGTCTGAGCTAGTAGCCCTCTTTTTAAACCCATTCCTAAATACTGAATATACT
+                                                                                                                                                                          
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+CCACACCTAAAAAACTTTCCACGTGAACCGTATCAAAACCCTTAGTTGGGGGCTTCTGTTCGGCTGGCTTCGGCTGGCTGGGCGGCGGCTCTATCATGGCGAGCGCATGGGCCTTCGGGTCTGAGCTAGTAGCCCTCTTTTTAAACCCATTCCTAAATACTGAATATACT
+
+Sequence: gnl|BL_ORD_ID|153 8c_Phytophthora_lateralis_AF266804
+Query_name = SCRP390_1_its6
+query_length: 538
+subject_length: 169
+e value: 3.46143e-86
+percent_identiy: 31
+CCACACCTAAAAAACTTTCCACGTGAACCGTATCAAAACCCTTAGTTGGGGGCTTCTGTTCGGCTGGCTTCGGCTGGCTGGGCGGCGGCTCTATCATGGCGAGCGCATGGGCCTTCGGGTCTGAGCTAGTAGCCCTCTTTTTAAACCCATTCCTAAATACTGAATATACT
+               X                                                                                                                                                          
+||||||||||||||| ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+CCACACCTAAAAAAC-TTCCACGTGAACCGTATCAAAACCCTTAGTTGGGGGCTTCTGTTCGGCTGGCTTCGGCTGGCTGGGCGGCGGCTCTATCATGGCGAGCGCATGGGCCTTCGGGTCTGAGCTAGTAGCCCTCTTTTTAAACCCATTCCTAAATACTGAATATACT
+
+Sequence: gnl|BL_ORD_ID|163 8c_Phytophthora_ramorum_JQ653034
+Query_name = SCRP390_1_its6
+query_length: 538
+subject_length: 170
+e value: 2.08325e-83
+percent_identiy: 31
+CCACACCTAAAAAACTTTCCACGTGAACCGTATCAAAACCCTTAGTTGGGGGCTTCTGTTCGGCTGGCTTCGGCTGGCTGGGCGGCGGCTCTATCATGGCGAGCGCATGGGCCTTCGGGTCTGAGCTAGTAGCCCTCTTTTTAAACCCATTCCTAAATACTGAATATACT
+                                                                                                          X  X                         X                                  
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| || ||||||||||||||||||||||||| ||||||||||||||||||||||||||||||||||
+CCACACCTAAAAAACTTTCCACGTGAACCGTATCAAAACCCTTAGTTGGGGGCTTCTGTTCGGCTGGCTTCGGCTGGCTGGGCGGCGGCTCTATCATGGCGAGCGCTTGAGCCTTCGGGTCTGAGCTAGTAGCCCACTTTTTAAACCCATTCCTAAATACTGAATATACT
+

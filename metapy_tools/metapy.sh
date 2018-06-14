@@ -1,12 +1,14 @@
-cd $HOME/scratch/tree_health/Illumina_results_2017Nov_first_run/version0.003
+#!/bin/bash
+#$ -cwd
+cd $HOME/scratch/tree_health/Scot_gov
 
 # FILL THESE IN:
 interest_list="Control_C1 Control_C2 Control_C3 Control_C4 Control austroc ramorum 
 lateralis cactorum gonapodyides agathidicida"
 
-Working_directory=$HOME/scratch/tree_health/Illumina_results_2017Nov_first_run/version0.003/
+Working_directory=$HOME/scratch/tree_health/Scot_gov
 
-Raw_illumna_data=/mnt/shared/projects/Phytophthora/201711_ITS1_metabarcoding_1_THAPBI/static/RawData/
+#Raw_illumna_data=/mnt/shared/projects/Phytophthora/201711_ITS1_metabarcoding_1_THAPBI/static/RawData/
 
 # Nothing to fill in from here!
 #######################################
@@ -28,11 +30,6 @@ mkdir swarm_results
 mkdir bowtie_results
 mkdir Novel_blast_results_swarm
 
-mv *fastq* ./reads
-#  dont delete for now
-#rm -rf reads
-
-
 ############################################################################################
 # This nest of code blast the novel clusters against nt. Only those clusters which are over
 # threshold in size. see ~/public_scripts/metapy_tools/bin/Novel_top_hits.py for more details
@@ -40,7 +37,7 @@ mv *fastq* ./reads
 folders=*_RESULTS
 PROGAM=Swarm_d1
 
-export BLASTDB=/mnt/scratch/local/blast/ncbi/
+export BLASTDB=/mnt/apps/databases/blast-ncbi/
 # iterate through the results
 for folder in ${folders}
 do
@@ -48,14 +45,14 @@ do
 	echo "NOW RUNNING:  ${folder}"
 	Sample_name=${folder%????????}
 	cd ./${Sample_name}_${PROGAM}
-	cp .RESULTS ${Working_directory}/swarm_results
+	cp *.RESULTS ${Working_directory}/swarm_results
 	cd ./clusters_results/ 
 	cd ./novel*
 	rm *.txt
 	pwd
 	python ~/public_scripts/metapy_tools/bin/Novel_top_hits.py
 	cp *.txt ${Working_directory}/Novel_blast_results_swarm
-	cd ../../../../
+	cd ${Working_directory}
 done
 
 ###############################################################################
@@ -69,7 +66,7 @@ do
 	grep -H "${species}" *.RESULTS >> ${species}_swarm_identified.out
 done
 
-cd ../
+cd ${Working_directory}
 
 ############################################################################################
 # Also copies the results to folders of the clustering
@@ -84,10 +81,10 @@ do
 	echo "NOW RUNNING:  ${folder}"
 	Sample_name=${folder%????????}
 	cd ./${Sample_name}_${PROGAM}
-	cp .RESULTS ${Working_directory}/bowtie_results
+	cp *.RESULTS ${Working_directory}/bowtie_results
 	cd ./clusters_results/ 
 	cd ./novel*
-	cd ../../../../
+	cd ${Working_directory}
 done
 
 ########################################
@@ -96,12 +93,12 @@ cd bowtie_results
 grep -H "percent of assembled-reads clustering with database" *.RESULTS > bowtie_percentage_cluster_with_db.txt
 grep -H "Total number of assembled sequences" *.RESULTS > total_number_of_assembled_sequences.txt
 
-cd ../
+cd ${Working_directory}
 cd swarm_results
 grep -H "percent of assembled-reads clustering with database" *.RESULTS > swarm_percentage_cluster_with_db.txt
 grep -H "Total number of assembled sequences" *.RESULTS > total_number_of_assembled_sequences.txt
 
-cd ../
+cd ${Working_directory}
 
 ######################################
 # search the bowtie reasults for species of interest
@@ -113,7 +110,13 @@ do
 	grep -H "${species}" *.RESULTS >> ${species}_bowtie_identified.out
 done
 
-cd ../
+cd ${Working_directory}
+
+mv *fastq* ./reads
+#  dont delete for now
+#rm -rf reads
 
 echo "FINISHED"
+
+####################################################################################################################################################
 

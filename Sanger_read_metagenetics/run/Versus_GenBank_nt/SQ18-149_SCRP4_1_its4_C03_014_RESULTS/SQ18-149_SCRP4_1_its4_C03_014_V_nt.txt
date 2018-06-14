@@ -1,0 +1,341 @@
+Sequence: gi|643192911|gb|KJ755097.1| Phytophthora alni subsp. multiformis strain BBA PAM54 a1 18S ribosomal RNA gene, partial sequence; internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence; and 28S ribosomal RNA gene, partial sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 867
+e value: 0.0
+percent_identiy: 99
+GGT-CATTGAGATGCC-CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+   X            X                                                                                                                   X                                                                                                                                                                                                                                                                         
+||| |||||||||||| ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+GGTCCATTGAGATGCCACCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCCTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|643192913|gb|KJ755099.1| Phytophthora alni subsp. multiformis strain BBA PAM54 a2 18S ribosomal RNA gene, partial sequence; internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence; and 28S ribosomal RNA gene, partial sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 836
+e value: 0.0
+percent_identiy: 98
+ATTGAGATGCC-CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+           X                                                                                                                   X                                                                                                                                                                                                                                                                         
+||||||||||| ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+ATTGAGATGCCACCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCCTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|284432439|gb|GU258880.1| Phytophthora alni culture-collection WPC:11646B1024 18S ribosomal RNA gene, partial sequence; internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence; and 28S ribosomal RNA gene, partial sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 829
+e value: 0.0
+percent_identiy: 98
+TTGAGATGCC-CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+          X                                  X                                                                                                                                                                                                                                                                                                                                                          
+|||||||||| |||||||||||||||||||||||||||||||||| ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+TTGAGATGCCACCCGCAGCACACCGAAGCGCGCCGCAGAGACACAAGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|227810793|gb|FJ801621.1| Phytophthora alni clone WPC11650B957 internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 831
+e value: 0.0
+percent_identiy: 98
+TTGAGATGCC-CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+          X                                                                                                                   X                                                                                                                                                                                                                                                                         
+|||||||||| ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+TTGAGATGCCACCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCCTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|1327826708|gb|MG783372.1| Phytophthora x multiformis strain CPHST BL 2 internal transcribed spacer 1, partial sequence; 5.8S ribosomal RNA gene and internal transcribed spacer 2, complete sequence; and large subunit ribosomal RNA gene, partial sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 861
+e value: 0.0
+percent_identiy: 98
+ATTGAGATGCC-CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+           X                                  X                                                                                X                                                                                                                                                                                                                                                                         
+||||||||||| |||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+ATTGAGATGCCACCCGCAGCACACCGAAGCGCGCCGCAGAGACACAAGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCCTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|1021691715|gb|KU053266.1| Phytophthora cambivora isolate WA1.5.S4 18S ribosomal RNA gene, partial sequence; internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence; and 28S ribosomal RNA gene, partial sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 870
+e value: 0.0
+percent_identiy: 98
+ATTGAGATGCC-CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+           X                                  X                                                                                                                                                                                                                                                                                                                                  X                       
+||||||||||| |||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||
+ATTGAGATGCCACCCGCAGCACACCGAAGCGCGCCGCAGAGACACAAGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCACCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|506484844|gb|KC602460.1| Phytophthora cambivora strain 302HR07 18S ribosomal RNA gene, partial sequence; internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence; and 28S ribosomal RNA gene, partial sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 854
+e value: 0.0
+percent_identiy: 98
+ATTGAGATGCC-CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+           X                                  X                                                                                                                                                                                                                                                                                                                                  X                       
+||||||||||| |||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||
+ATTGAGATGCCACCCGCAGCACACCGAAGCGCGCCGCAGAGACACAAGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCACCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|506484843|gb|KC602459.1| Phytophthora cambivora strain 301HR07 18S ribosomal RNA gene, partial sequence; internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence; and 28S ribosomal RNA gene, partial sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 867
+e value: 0.0
+percent_identiy: 98
+ATTGAGATGCC-CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+           X                                  X                                                                                                                                                                                                                                                                                                                                  X                       
+||||||||||| |||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||
+ATTGAGATGCCACCCGCAGCACACCGAAGCGCGCCGCAGAGACACAAGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCACCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|410026299|gb|JX276035.1| Phytophthora alni strain IBL/2011/2/1 18S ribosomal RNA gene, partial sequence; internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence; and 28S ribosomal RNA gene, partial sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 832
+e value: 0.0
+percent_identiy: 98
+ATTGAGATGCC-CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+           X                                  X                                                                                X                                                                                                                                                                                                                                                                         
+||||||||||| |||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+ATTGAGATGCCACCCGCAGCACACCGAAGCGCGCCGCAGAGACACAAGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCCTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|410026298|gb|JX276034.1| Phytophthora alni strain IBL/2011/1/1 18S ribosomal RNA gene, partial sequence; internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence; and 28S ribosomal RNA gene, partial sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 834
+e value: 0.0
+percent_identiy: 98
+ATTGAGATGCC-CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+           X                                  X                                                                                X                                                                                                                                                                                                                                                                         
+||||||||||| |||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+ATTGAGATGCCACCCGCAGCACACCGAAGCGCGCCGCAGAGACACAAGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCCTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|224923393|gb|FJ746679.1| Phytophthora alni subsp. alni strain ATCC MYA-4081 internal transcribed spacer 1, partial sequence; 5.8S ribosomal RNA gene and internal transcribed spacer 2, complete sequence; and 28S ribosomal RNA gene, partial sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 830
+e value: 0.0
+percent_identiy: 98
+ATTGAGATGCC-CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+           X                                  X                                                                                X                                                                                                                                                                                                                                                                         
+||||||||||| |||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+ATTGAGATGCCACCCGCAGCACACCGAAGCGCGCCGCAGAGACACAAGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCCTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|1129800197|gb|KX083686.1| Phytophthora alni isolate PH055 internal transcribed spacer 1, partial sequence; 5.8S ribosomal RNA gene, complete sequence; and internal transcribed spacer 2, partial sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 831
+e value: 0.0
+percent_identiy: 98
+TTGAGATGCC-CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+          X                                  X                                                                                X                                                                                                                                                                                                                                                                         
+|||||||||| |||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+TTGAGATGCCACCCGCAGCACACCGAAGCGCGCCGCAGAGACACAAGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCCTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|284432674|gb|GU259115.1| Phytophthora alni culture-collection WPC:16202D1243 18S ribosomal RNA gene, partial sequence; internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence; and 28S ribosomal RNA gene, partial sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 833
+e value: 0.0
+percent_identiy: 98
+TTGAGATGCC-CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+          X                                  X                                                                                X                                                                                                                                                                                                                                                                         
+|||||||||| |||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+TTGAGATGCCACCCGCAGCACACCGAAGCGCGCCGCAGAGACACAAGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCCTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|284432587|gb|GU259028.1| Phytophthora alni culture-collection WPC:10276A596 18S ribosomal RNA gene, partial sequence; internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence; and 28S ribosomal RNA gene, partial sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 830
+e value: 0.0
+percent_identiy: 98
+TTGAGATGCC-CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+          X                                  X                                                                                 X                                                                                                                                                                                                                                                                        
+|||||||||| |||||||||||||||||||||||||||||||||| ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+TTGAGATGCCACCCGCAGCACACCGAAGCGCGCCGCAGAGACACAAGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTCCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|284432437|gb|GU258878.1| Phytophthora alni culture-collection WPC:11643B1000 18S ribosomal RNA gene, partial sequence; internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence; and 28S ribosomal RNA gene, partial sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 832
+e value: 0.0
+percent_identiy: 98
+TTGAGATGCC-CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+          X                                  X                                                                                X                                                                                                                                                                                                                                                                         
+|||||||||| |||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+TTGAGATGCCACCCGCAGCACACCGAAGCGCGCCGCAGAGACACAAGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCCTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|227810771|gb|FJ801599.1| Phytophthora alni clone WPC11399A1243 internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 831
+e value: 0.0
+percent_identiy: 98
+TTGAGATGCC-CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+          X                                  X                                                                                X                                                                                                                                                                                                                                                                         
+|||||||||| |||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+TTGAGATGCCACCCGCAGCACACCGAAGCGCGCCGCAGAGACACAAGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCCTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|227810629|gb|FJ801457.1| Phytophthora alni clone WPC10569A101 internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 831
+e value: 0.0
+percent_identiy: 98
+TTGAGATGCC-CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+          X                                  X                                                                                X                                                                                                                                                                                                                                                                         
+|||||||||| |||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+TTGAGATGCCACCCGCAGCACACCGAAGCGCGCCGCAGAGACACAAGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCCTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|227810411|gb|FJ801239.1| Phytophthora alni clone WPC10565A97 internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 830
+e value: 0.0
+percent_identiy: 98
+TTGAGATGCC-CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+          X                                  X                                                                                X                                                                                                                                                                                                                                                                         
+|||||||||| |||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+TTGAGATGCCACCCGCAGCACACCGAAGCGCGCCGCAGAGACACAAGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCCTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|119887880|gb|EF152518.1| Phytophthora alni subsp. multiformis isolate 825a 18S ribosomal RNA gene, partial sequence; internal transcribed spacer 1 and 5.8S ribosomal RNA gene, complete sequence; and internal transcribed spacer 2, partial sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 842
+e value: 0.0
+percent_identiy: 98
+TTGAGATGCC-CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+          X                                  X                                                                                X                                                                                                                                                                                                                                                                         
+|||||||||| |||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+TTGAGATGCCACCCGCAGCACACCGAAGCGCGCCGCAGAGACACAAGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCCTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|119887878|gb|EF152516.1| Phytophthora alni subsp. multiformis isolate 825c 18S ribosomal RNA gene, partial sequence; internal transcribed spacer 1 and 5.8S ribosomal RNA gene, complete sequence; and internal transcribed spacer 2, partial sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 852
+e value: 0.0
+percent_identiy: 98
+TTGAGATGCC-CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+          X                                  X                                                                                X                                                                                                                                                                                                                                                                         
+|||||||||| |||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+TTGAGATGCCACCCGCAGCACACCGAAGCGCGCCGCAGAGACACAAGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCCTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|84785879|gb|DQ335646.1| Phytophthora alni subsp. alni isolate UASWS0194 internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 833
+e value: 0.0
+percent_identiy: 98
+TTGAGATGCC-CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+          X                                  X                                                                                X                                                                                                                                                                                                                                                                         
+|||||||||| |||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+TTGAGATGCCACCCGCAGCACACCGAAGCGCGCCGCAGAGACACAAGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCCTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|5070434|gb|AF139368.1| Phytophthora alni subsp. multiformis internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence >gi|119887879|gb|EF152517.1| Phytophthora alni subsp. multiformis isolate 825b internal transcribed spacer 1, partial sequence; 5.8S ribosomal RNA gene, complete sequence; and internal transcribed spacer 2, partial sequence >gi|155008477|gb|EU048808.1| Phytophthora alni isolate P10564 internal transcribed spacer 1 and 5.8S ribosomal RNA gene, complete sequence; and internal transcribed spacer 2, partial sequence >gi|155008478|gb|EU048809.1| Phytophthora alni isolate P11193 internal transcribed spacer 1 and 5.8S ribosomal RNA gene, complete sequence; and internal transcribed spacer 2, partial sequence >gi|155008479|gb|EU048810.1| Phytophthora alni isolate P11318 internal transcribed spacer 1 and 5.8S ribosomal RNA gene, complete sequence; and internal transcribed spacer 2, partial sequence >gi|155008480|gb|EU048811.1| Phytophthora alni isolate P11341 internal transcribed spacer 1 and 5.8S ribosomal RNA gene, complete sequence; and internal transcribed spacer 2, partial sequence >gi|227810410|gb|FJ801238.1| Phytophthora alni clone WPC10564A684 internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence >gi|227810752|gb|FJ801580.1| Phytophthora alni clone WPC11193A1127 internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence >gi|227810763|gb|FJ801591.1| Phytophthora alni clone WPC11318A1209 internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence >gi|227810768|gb|FJ801596.1| Phytophthora alni clone WPC11341A1177 internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence >gi|227810792|gb|FJ801620.1| Phytophthora alni clone WPC11645B1025 internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence >gi|284432339|gb|GU258780.1| Phytophthora alni culture-collection WPC:11850B513 18S ribosomal RNA gene, partial sequence; internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence; and 28S ribosomal RNA gene, partial sequence >gi|284432438|gb|GU258879.1| Phytophthora alni culture-collection WPC:11644B1007 18S ribosomal RNA gene, partial sequence; internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence; and 28S ribosomal RNA gene, partial sequence >gi|284432851|gb|GU259292.1| Phytophthora alni subsp. alni culture-collection WPC:16203D1211 18S ribosomal RNA gene, partial sequence; internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence; and 28S ribosomal RNA gene, partial sequence >gi|308745366|gb|HQ261495.1| Phytophthora alni voucher P11318 18S ribosomal RNA gene, partial sequence; internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence; and 28S ribosomal RNA gene, partial sequence >gi|308745367|gb|HQ261496.1| Phytophthora alni voucher P11193 18S ribosomal RNA gene, partial sequence; internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence; and 28S ribosomal RNA gene, partial sequence >gi|308745368|gb|HQ261497.1| Phytophthora alni voucher P10564 18S ribosomal RNA gene, partial sequence; internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence; and 28S ribosomal RNA gene, partial sequence >gi|1036639520|gb|KU681014.1| Phytophthora sp. JB-2016e internal transcribed spacer 1, partial sequence; 5.8S ribosomal RNA gene, complete sequence; and internal transcribed spacer 2, partial sequence >gi|1093393316|gb|KU899170.1| Phytophthora x multiformis isolate 4971496 internal transcribed spacer 1, partial sequence; 5.8S ribosomal RNA gene, complete sequence; and internal transcribed spacer 2, partial sequence >gi|1093393317|gb|KU899171.1| Phytophthora x multiformis isolate PHAPI 12 internal transcribed spacer 1, partial sequence; 5.8S ribosomal RNA gene, complete sequence; and internal transcribed spacer 2, partial sequence >gi|1093393330|gb|KU899184.1| Phytophthora x multiformis isolate PAM 396 internal transcribed spacer 1, partial sequence; 5.8S ribosomal RNA gene, complete sequence; and internal transcribed spacer 2, partial sequence >gi|1093393331|gb|KU899185.1| Phytophthora x multiformis isolate PAM 859 internal transcribed spacer 1, partial sequence; 5.8S ribosomal RNA gene, complete sequence; and internal transcribed spacer 2, partial sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 831
+e value: 0.0
+percent_identiy: 98
+TTGAGATGCC-CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+          X                                  X                                                                                X                                                                                                                                                                                                                                                                         
+|||||||||| |||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+TTGAGATGCCACCCGCAGCACACCGAAGCGCGCCGCAGAGACACAAGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCCTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|308745365|gb|HQ261494.1| Phytophthora alni voucher P16202 18S ribosomal RNA gene, partial sequence; internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence; and 28S ribosomal RNA gene, partial sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 832
+e value: 0.0
+percent_identiy: 97
+TGAGATGCC-CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+         X                                  X                                                                                X                                                                                                                                                                                                                                                                         
+||||||||| |||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+TGAGATGCCACCCGCAGCACACCGAAGCGCGCCGCAGAGACACAAGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCCTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|262357442|gb|GU108602.1| Phytophthora alni subsp. alni isolate EFA 685-A(1) internal transcribed spacer 1, partial sequence; 5.8S ribosomal RNA gene, complete sequence; and internal transcribed spacer 2, partial sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 673
+e value: 0.0
+percent_identiy: 96
+GCC-CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+   X                                  X                                                                                X                                                                                                                                                                                                                                                                         
+||| |||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+GCCACCCGCAGCACACCGAAGCGCGCCGCAGAGACACAAGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCCTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|1050987179|gb|KX447690.1| Phytophthora cambivora isolate ZLVG 505 internal transcribed spacer 1, partial sequence; 5.8S ribosomal RNA gene and internal transcribed spacer 2, complete sequence; and 28S ribosomal RNA gene, partial sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 836
+e value: 0.0
+percent_identiy: 95
+CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+                                  X                                                                                X                                                                                                                                                                                                                                                 X                       
+|||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||
+CCCGCAGCACACCGAAGCGCGCCGCAGAGACACAAGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCCTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCACCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|410026325|gb|JX276061.1| Phytophthora europaea strain IBL/2011/20 18S ribosomal RNA gene, partial sequence; internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence; and 28S ribosomal RNA gene, partial sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 821
+e value: 0.0
+percent_identiy: 95
+CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+                                                                                                           X       X                                                                                                                                                                                                                                                 X                       
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| ||||||| ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||
+CCCGCAGCACACCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAAGCCAAGCCTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCACCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|227810628|gb|FJ801456.1| Phytophthora alni clone WPC10568A577 internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 811
+e value: 0.0
+percent_identiy: 92
+CCGAAGCGCGCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+                       X                                                                                X                                                                                                                                                                                                                                                                         
+||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+CCGAAGCGCGCCGCAGAGACACAAGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCCTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|1021691705|gb|KU053256.1| Phytophthora cambivora isolate OR2.5.S6 18S ribosomal RNA gene, partial sequence; internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence; and 28S ribosomal RNA gene, partial sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 803
+e value: 0.0
+percent_identiy: 90
+GCCGCAGAGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+              X                                                                                X                                                                                                                                                                                                                                                 X                       
+|||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||
+GCCGCAGAGACACAAGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCCTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCACCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|323301464|gb|HQ643172.1| Phytophthora cambivora voucher CBS35678 18S ribosomal RNA gene, partial sequence; internal transcribed spacer 1, 5.8S ribosomal RNA gene, and internal transcribed spacer 2, complete sequence; and 28S ribosomal RNA gene, partial sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 793
+e value: 1.0139e-180
+percent_identiy: 88
+AGACACATGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+       X                                                                                                                                                                                                                                                                                                                                  X                       
+||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||
+AGACACAAGTTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCACCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|1654061|emb|Y08655.1| P.cambivora ribosomal internal transcribed spacer, ITS2
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 403
+e value: 4.75073e-174
+percent_identiy: 86
+TTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+                                                                               X                                                                                                                                                                                                                                   X             X                       
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| ||||||||||||| |||||||||||||||||||||||
+TTCCCAAATGGATCGACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCCTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGCCAGCCCGAAGACCACCCGCAAGACACCTCACGTCTGG
+
+Sequence: gi|1122816919|gb|KX090045.1| Phytophthora x multiformis isolate EFA 374 internal transcribed spacer 1, partial sequence; 5.8S ribosomal RNA gene, complete sequence; and internal transcribed spacer 2, partial sequence
+Query_name = SCRP4_1_its4
+query_length: 396
+subject_length: 569
+e value: 1.33026e-169
+percent_identiy: 83
+GACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCTTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+                                                                 X                                                                                                                                                                                                                                                                         
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+GACCCCTCGACAGCCGAAGCCGCCACCCTACTTCGCGACCAACACCGCCGGTTCAAAGGCCAAGCCTCGCACAGCTACGGTTCACCGATCCGTACCGCCACAGCAGGAAGAACGTCCAATAAGCGCATTGTTCAGCCGAAGCCAACCATACCGCGAATCGAACACTCCTCCATTAAACGCCGCAGCAGACAAACCGGTCGCCGACTGGCCACACAGGCAGCCTCCACAACCAACAACGTCACGCTTTTCGAGCAAAGAGAAGTACAGTTCAGTACATTTCAAGGGACTCGCAGGCAGCCCGAAGACCTCCCGCAAGACACCTCACGTCTGG
+

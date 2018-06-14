@@ -89,7 +89,8 @@ def split_line_return_sample(line, sample_set):
     hyphens in all possible plces, I will just replace these."""
     line = line.rstrip()
     data = line.split("\t")  # inconsitent data entry!! cannot assign
-    sample_name = data[1]
+    # was [1] for thapbi data
+    sample_name = data[0]
     sample_set.add(sample_name.rstrip())  # all kinds of whitespace
     return sample_set
 
@@ -176,7 +177,10 @@ def populate_result_list(full_data,
         data_list = data.split("\t")
         while len(data_list) < 6:
             data_list.append("\t")
-        sample = data_list[1]
+            # was [1] for thpabi data
+        sample = data_list[0]
+        sample = sample.replace("_RESULTS", "")
+        print sample
         try:
             blast_result = sample_name_to_blast_hit[sample.rstrip()]
         except:

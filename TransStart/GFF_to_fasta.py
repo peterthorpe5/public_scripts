@@ -50,7 +50,7 @@ def split_line(line):
 
 
 def gff_to_fasta(gff, genome, min_length, Max_length,
-                 outfile, upstream, into_TSS):
+                 outfile, upstream, into_TSS, NNN):
     """take in gff file. Gets the seq defined by the gff coords.
     If negative direction coding, the reverse complement is generated.
     A min length of seq to return and max len is applied to remove seq
@@ -66,6 +66,10 @@ def gff_to_fasta(gff, genome, min_length, Max_length,
                                                                                into_TSS)
     bind_out_fa = open(bind_out, "w")
     upstream = int(upstream)
+    NNN_reject_count = 0
+    starting_UTR_count = 0
+    fa_out_count = 0
+    missing = 0
     with open(gff, "r") as f_handle:
         for line in f_handle:
             line = check_line(line)
@@ -74,21 +78,44 @@ def gff_to_fasta(gff, genome, min_length, Max_length,
             scaff, source, feature, start, stop, score, \
             direction, frame, gene_info = split_line(line)
             seq_record = genome_database[scaff]
+            starting_UTR_count += 1
             if direction == "+":
                 UTR = seq_record.seq[start:stop]
                 bind_seq = seq_record.seq[(start - upstream):(start + into_TSS)]
+                new_co_start = start - upstream
+                new_co_stop = start + into_TSS
             if direction == "-":
                 UTR = reverse_complement(seq_record.seq[start:stop])
                 bind_seq = reverse_complement(seq_record.seq[(stop - into_TSS)
                                                              :(stop + upstream)])
+                new_co_start = stop + upstream
+                new_co_stop = stop - into_TSS
+            coordinate_info = "\tScaffold: %s UTR_and_TSS: %d:%d  Coding_direction: %s  " % (scaff,
+                                                                                 start,
+                                                                                 stop,
+                                                                                 direction)
+            fastaextra = "returning: %d upstream of TSS and %d into UTR and or gene:" % (upstream,
+                                                                                     into_TSS)
+            new_coord = "  %d: %d" % (new_co_start, new_co_stop)
+            description = coordinate_info + fastaextra + new_coord
             outstr = ">%s\n%s\n" % (gene_info, UTR)
-            bind_str = ">%s_%d_upstream_TSS\n%s\n" % (gene_info, upstream, bind_seq)
+            bind_str = ">%s_TSS%s\n%s\n" % (gene_info,
+                                            description,
+                                            bind_seq)
             if len(UTR) > min_length and len(UTR) < Max_length:
                 f_out.write(outstr)
-                if "NNNN" in bind_seq:
+                if (NNN*"N") in bind_seq:
+                    NNN_reject_count += 1
                     continue  #  we dont want NNNs
                 if len(bind_seq) >= upstream: 
                     bind_out_fa.write(bind_str)
+                    fa_out_count += 1
+            else:
+                missing += 1
+    print("%d number of genes were rejected due to NNN in seq" % NNN_reject_count)
+    print("we had %d UTR and TSS predictions" % starting_UTR_count)
+    print("we have outputted %d fasta sequences" % fa_out_count)
+    print("missing due to length problems %d" % missing)
     f_out.close()
     bind_out_fa.close()
 
@@ -99,7 +126,8 @@ def gff_to_fasta(gff, genome, min_length, Max_length,
 
 usage = """Use as follows:
 
-python GFF_to_fasts.py --gff transtart.gff -g genome.fasta -o UTR.fasta
+python GFF_to_fasts.py --gff transtart.gff -m min len -x max len
+        -g genome.fasta -o UTR.fasta
 
 """
 
@@ -140,6 +168,12 @@ parser.add_option("-u", "--upstream",
                   help="upstream of TSS to return",
                   metavar="FILE")
 
+parser.add_option("-n", "--NNN",
+                  dest="NNN",
+                  default=300,
+                  help="number of NNN in a row to be rejected from the output",
+                  metavar="FILE")
+
 parser.add_option("-o", "--out", dest="outfile",
                   default="transtart.UTR.fasta",
                   help="Output filename (transtart.UTR.fasta)",
@@ -161,6 +195,8 @@ max_length = int(options.max_length)
 min_length = int(options.min_length)
 # into_TSS
 into_TSS = int(options.into_TSS)
+# -n
+NNN = int(options.NNN)
 
 #######################################################################
 # Run as script
@@ -172,4 +208,4 @@ if __name__ == '__main__':
         sys.exit("Input gff file not found: %s" % gff)
     gff_to_fasta(gff, genome, min_length,
                  max_length, outfile, upstream,
-                 into_TSS)
+                 into_TSS, NNN)

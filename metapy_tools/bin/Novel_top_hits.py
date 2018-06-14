@@ -217,7 +217,7 @@ if __name__ == '__main__':
             xml_out = filename.split(".fa")[0] + ".xml"
             cmd_blastrun = " ".join(["blastn",
                                      "-db",
-                                     "/mnt/scratch/local/blast/ncbi/" + OTU_DATABASE,
+                                     "/mnt/apps/databases/blast-ncbi/" + OTU_DATABASE,
                                      "-query",
                                      "temp.fasta",
                                      "-evalue",
@@ -229,7 +229,7 @@ if __name__ == '__main__':
                                      args.threads,
                                      "-out",
                                      xml_out])
-            logger.info("%s make cmd_blastrun command", cmd_blastrun)
+            logger.info("%s : make cmd_blastrun command", cmd_blastrun)
             pipe = subprocess.run(cmd_blastrun, shell=True,
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE,

@@ -47,7 +47,7 @@ for filename in os.listdir(".") :
                            "-a",
                            filename,
                            "--thread",
-                           "16"])#,
+                           "16"])
                            #"-d", "~/misc_python/THAPBI/THAPBI-pycits/data/Phytophora_ITS_database_v0.004.fasta"])
 
     #"-d", "~/misc_python/THAPBI/THAPBI-pycits/data/Phytophora_ITS_database_v0.004.fasta"

@@ -394,8 +394,8 @@ if __name__ == '__main__':
         run_parse_cmd(cmd_parse, logger)
         if mismatches == 30:
             break
-    remove_list = [fa_out_all, fa_out, xml_out] #fq_out
-    if args.cleanup == "yes":
+    remove_list = [fq_out, fa_out_all, fa_out, xml_out]
+    if args.cleanup.upper() == "YES":
         for unwanted in remove_list:
             try:
                 os.remove(unwanted)

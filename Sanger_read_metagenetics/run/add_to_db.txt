@@ -1,0 +1,26 @@
+SCRP10, SCRP9 and SCRP4 identified in the culture collection as P. alni, SCRP 390 identified as P. lateralis and SCRP417 identified as P. megasperma.
+
+SCRP10, SCRP9 and SCRP4   P. alni, 
+SCRP390  P. lateralis 
+SCRP417  P. megasperma.
+
+There are a lot of Phytophthora uniformis and Phytophthora cambivora that come up in these hits, but I think overall they are Phytophthora alni
+
+#Sanger	versus_nt	version_db_0.004	NOTES
+SCRP4_1_its4	Phytophthora alni	FAILED	No P. alni hit under 3 mismatches. No seq added to DB
+SCRP4_1_its6	Phytophthora alni	FAILED	DQ335646.1| Phytophthora alni has 0 mismatches. Maybe add to database.
+SCRP4_2_its4	Phytophthora alni	7a_Phytophthora_alni_subsp._multiformis_AF139368 2 mismatches	Nothing better in nt blast results
+SCRP4_2_its6	Phytophthora alni	FAILED	DQ335646.1| Phytophthora alni has 2 mismatches. Maybe add to database.
+SCRP9_its4	Phytophthora alni	FAILED	gi|959167664|gb|KT726385.1| Phytophthora alni subsp. 0 mismtaches.    DQ335646.1| Phytophthora alni has 2 mismatches
+SCRP9_its6	Phytophthora alni	7a_Phytophthora_alni_subsp._uniformis_AF139367 0 mismatches
+SCRP10_1_its4	Phytophthora alni	FAILED	gi|959167664|gb|KT726385.1| Phytophthora alni subsp 0 mismtaches. DQ335646.1| Phytophthora alni has 2 mismatches
+SCRP10_1_its6	Phytophthora alni	7a_Phytophthora_alni_subsp._uniformis_AF139367 0 mismatches
+SCRP10_2_its4	Phytophthora alni	FAILED
+SCRP10_2_its6	Phytophthora alni	7a_Phytophthora_alni_subsp._uniformis_AF139367 0 mismatches
+
+FROM HERE THESE ARE CLEAR CUT AS TO WHAT SPECIES THEY ARE
+SCRP390_1_its4	Phytophthora lateralis	8c_Phytophthora_lateralis_AF266804 3 mismatches
+SCRP390_1_its6	Phytophthora lateralis	8c_Phytophthora_lateralis_HQ643263 0 mismatches
+
+SCRP417_1_its6	Phytophthora megasperma	6_Phytophthora_megasperma_GU258796 0 mismatches
+
