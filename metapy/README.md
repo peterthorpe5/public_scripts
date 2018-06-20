@@ -14,29 +14,9 @@ This repository is for development of ITS1-based diagnostic/profiling tools for 
 SEE ``USAGE.md`` on how to use the tool
 
 
-# DEVELOPER NOTES
+# Set up a virutal machine
 
-## Python style conventions
-
-In this repository, we're trying to keep to the Python [PEP8 style convention](https://www.python.org/dev/peps/pep-0008/), the [PEP257 docstring conventions](https://www.python.org/dev/peps/pep-0257/), and the [Zen of Python](https://www.python.org/dev/peps/pep-0020/). To help in this, a pre-commit hook script is provided in the `git_hooks` subdirectory that, if deployed in the `Git` repository, checks Python code for PEP8 correctness before permitting a `git commit` command to go to completion.
-
-If the `pep8` module is not already present, it can be installed using `pip install pep8`
-
-Whether you choose to use this or not, the `THAPBI-pycits` repository is registered with `landscape.io`, and the "health" of the code is assessed and reported for every repository push.
-
-* [`landscape.io` page](https://landscape.io/github/widdowquinn/THAPBI-pycits)
-
-### Installing the `git hook`
-
-To install the pre-commit hook:
-
-1. clone the repository with `git clone https://github.com/widdowquinn/THAPBI` (you may already have done this)
-2. change directory to the root of the repository with `cd THAPBI-pycits`
-3. copy the pre-commit script to the `.git/hooks` directory with `cp git_hooks/pre-commit .git/hooks/`
-
-## Using a virtual environment with the repository
-
-In the root directory of the repository:
+In the root directory of the repository, make sure you activate it whenever you want to run ``metapy.py``:
 
 ```
 $ virtualenv -p python3.5 venv-THAPBI-pycits
@@ -265,6 +245,29 @@ export PATH=$HOME/samtools_1.2/bin/:$PATH
 wget https://github.com/torognes/vsearch/releases/download/v2.4.0/vsearch-2.4.0-linux-x86_64.tar.gz
 tar xzf vsearch-2.4.0-linux-x86_64.tar.gz
 ```
+
+
+# DEVELOPER NOTES
+
+## Python style conventions
+
+In this repository, we're trying to keep to the Python [PEP8 style convention](https://www.python.org/dev/peps/pep-0008/), the [PEP257 docstring conventions](https://www.python.org/dev/peps/pep-0257/), and the [Zen of Python](https://www.python.org/dev/peps/pep-0020/). To help in this, a pre-commit hook script is provided in the `git_hooks` subdirectory that, if deployed in the `Git` repository, checks Python code for PEP8 correctness before permitting a `git commit` command to go to completion.
+
+If the `pep8` module is not already present, it can be installed using `pip install pep8`
+
+Whether you choose to use this or not, the `THAPBI-pycits` repository is registered with `landscape.io`, and the "health" of the code is assessed and reported for every repository push.
+
+* [`landscape.io` page](https://landscape.io/github/widdowquinn/THAPBI-pycits)
+
+### Installing the `git hook`
+
+To install the pre-commit hook:
+
+1. clone the repository with `git clone https://github.com/widdowquinn/THAPBI` (you may already have done this)
+2. change directory to the root of the repository with `cd THAPBI-pycits`
+3. copy the pre-commit script to the `.git/hooks` directory with `cp git_hooks/pre-commit .git/hooks/`
+
+## Using a virtual environment with the repository
 
 
 ### More information
