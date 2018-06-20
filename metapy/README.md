@@ -142,6 +142,28 @@ chmod 755 fastqc
 put this in your PATH
 ```
 
+### `DADA2`
+
+* [home page](https://benjjneb.github.io/dada2/tutorial.html)
+
+`DADA2`: This is an R package. So you need R on your system. If this is not installed, it will not run it, and will not crash.
+
+Binary installation is available through the Bioconductor package repository. Binary installation of the current release version (1.8) requires R 3.5.0 and Bioconductor version 3.7:
+
+
+## try http:// if https:// URLs are not supported
+source("https://bioconductor.org/biocLite.R")
+biocLite("dada2")
+
+```
+wget http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.5.zip
+unzip fastqc_v0.11.5.zip
+cd FastQC
+chmod 755 fastqc
+put this in your PATH
+```
+
+
 ### `spades`
 
 * [home page](http://bioinf.spbau.ru/spades)
