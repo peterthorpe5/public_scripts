@@ -221,5 +221,5 @@
 # Target file:     ./database_file/Phytophthora_ITS1_DB_v0.006_20180620_full_len.fasta
 # Option settings: hmmsearch --domtblout ./database_file/ITS1_hmm_domain_table.out --domE 1e-22 ./bin/Phytophora_ITS_20180104.hmm ./database_file/Phytophthora_ITS1_DB_v0.006_20180620_full_len.fasta 
 # Current dir:     /mnt/shared/users/pt40963/public_scripts/generate_ITS1_database
-# Date:            Wed Jun 20 14:23:43 2018
+# Date:            Wed Jun 20 17:35:02 2018
 # [ok]

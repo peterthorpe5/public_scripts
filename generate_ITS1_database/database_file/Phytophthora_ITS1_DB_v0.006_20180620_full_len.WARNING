@@ -44,11 +44,11 @@ Phytophthora_cooljarloo	Phytophthora_sp._kwongan/TIB-2010	HQ012957	Does not matc
 #DOWNLOAD INFO
 Wanted number = 222
 we found 218
-did not get {'', 'NOT_TAKEN_DQ648146', 'na', 'NA'}
+did not get {'', 'NA', 'na', 'NOT_TAKEN_DQ648146'}
 
 
 WANTED but not found!!:
 6_Phytophthora_gonapodyides_
-2_Phytophthora_citricola_typeI_III_NOT_TAKEN_DQ648146
-na_Phytophthora_umhlaba_na
 2_Phytophthora_inflata_NA
+na_Phytophthora_umhlaba_na
+2_Phytophthora_citricola_typeI_III_NOT_TAKEN_DQ648146

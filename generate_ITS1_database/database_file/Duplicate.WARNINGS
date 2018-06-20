@@ -23,23 +23,23 @@ duplicate seq found 11_Phytophthora_castanetorum_MF036182	 matches 4_Phytophthor
 duplicate seq found 2a_Phytophthora_sp._mekongensis_type3_KM501564	 matches 2a_Phytophthora_sp._aff._meadii_KC875839
 duplicate seq found 7a_Phytophthora_tyrrhenica_KU899188	 matches 7a_Phytophthora_europaea_AF449493_7_P._flexuosa_KU517152
 duplicate seq found 11_Phytophthora_versiformis_KX011279	 matches 4_Phytophthora_quercina_AJ131986_11_P._castanetorum_MF036182
-Check 7_Phytophthora_x_heterohybrida_KU517151 for {'R'}
-not adding this to database
-Check 4_Phytophthora_boodjera_KJ372244 for {'K'}
-not adding this to database
-Check 7_Phytophthora_x_incrassata_KU517156 for {'W', 'Y'}
-not adding this to database
-Check 6b_Phytophthora_condilina_KJ372262 for {'W'}
-not adding this to database
-Check 7a_Phytophthora_alni_subsp._alni_AF139366 for {'W', 'Y'}
+Check 7_Phytophthora_x_incrassata_KU517156 for {'Y', 'W'}
 not adding this to database
 Check 6a_Phytophthora_gemini_FJ217680 for {'Y'}
 not adding this to database
+Check 6b_Phytophthora_condilina_KJ372262 for {'W'}
+not adding this to database
 Check 8b_Phytophthora_brassicae_voucher_HQ643157 for {'W'}
+not adding this to database
+Check 7a_Phytophthora_alni_subsp._alni_AF139366 for {'Y', 'W'}
+not adding this to database
+Check 4_Phytophthora_boodjera_KJ372244 for {'K'}
 not adding this to database
 Check 8d_Phytophthora_austrocedri_KU953997 for {'R'}
 not adding this to database
 Check 7a_Phytophthora_cambivora_KU681015 for {'K'}
+not adding this to database
+Check 7_Phytophthora_x_heterohybrida_KU517151 for {'R'}
 not adding this to database
 1	sequences with illegal characters
 23	duplciated sequences

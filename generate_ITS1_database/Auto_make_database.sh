@@ -144,6 +144,15 @@ echo ${ITS_cmd}
 eval ${ITS_cmd}
 wait
 
+# STEP 8 add the synthetic control sequences:
+echo "add the synthetic control sequences"
+controls_cmd="cat Phytophora_ITS_database_v${version}.fasta ./bin/random_synthestic_controls.fasta > db_controls.fasta"
+echo ${controls_cmd}
+eval ${controls_cmd}
+wait
+
+mv db_controls.fasta Phytophora_ITS_database_v${version}.fasta
+
 rm temp.fasta
 rm temp_v${version}.fasta
 
