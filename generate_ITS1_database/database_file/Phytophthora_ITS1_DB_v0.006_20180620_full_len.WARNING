@@ -1,0 +1,54 @@
+Downloaded 220 GenBank records from NCBI
+Phytophthora_pini	Phytophthora_citricola_I	FJ392322	Does not match Genbank entry
+Phytophthora_citricola_sensu_stricto	Phytophthora_citricola_strain	FJ237526	Does not match Genbank entry
+Phytophthora_gonapodyides_H_14	Phytophthora_gonapodyides_isolate	JF912516	Does not match Genbank entry
+Phytophthora_ilicis_P	Phytophthora_ilicis_isolate	KJ458953	Does not match Genbank entry
+Phytophthora_ilicis_voucher_P3939	Phytophthora_ilicis_voucher	HQ261583	Does not match Genbank entry
+Phytophthora_castaneae_TW76	Phytophthora_castaneae_isolate	KU682559	Does not match Genbank entry
+Phytophthora_castaneae	Phytophthora_katsurae_voucher	HQ643255	Does not match Genbank entry
+Phytophthora_alni_subsp._alni	Phytophthora_alni_subsp.	AF139366	Does not match Genbank entry
+Phytophthora_alni_subsp._alni	Phytophthora_alni_subsp.	DQ335646	Does not match Genbank entry
+Phytophthora_alni_subsp._multiformis	Phytophthora_alni_subsp.	AF139368	Does not match Genbank entry
+Phytophthora_alni_subsp._uniformis	Phytophthora_alni_subsp.	AF139367	Does not match Genbank entry
+Phytophthora_austrocedri	Phytophthora_sp._austrocedrae	DQ995184	Does not match Genbank entry
+Phytophthora_austrocedri	Phytophthora_austrocedrae_strain	KU953997	Does not match Genbank entry
+Phytophthora_austrocedri	Phytophthora_austrocedrae_strain	KU954009	Does not match Genbank entry
+Phytophthora_irrigata	Phytophthora_sp._23J7	EU334634	Does not match Genbank entry
+Phytophthora_mengei	Phytophthora_sp._CH-2008b	EU748545	Does not match Genbank entry
+Phytophthora_X_pelgrandis	Phytophthora_nicotianae_x	EU660831	Does not match Genbank entry
+Phytophthora_aquimorbida	Phytophthora_sp._CCH-2009b	FJ666127	Does not match Genbank entry
+Phytophthora_asparagi	Phytophthora_sp._LT	EF185089	Does not match Genbank entry
+Phytophthora_fallax_SPLA61	Phytophthora_fallax_strain	HQ013223	Does not match Genbank entry
+Phytophthora_taxon_aquatilis	Phytophthora_sp._CCH-2009a	FJ666126	Does not match Genbank entry
+Phytophthora_pachypleura	Phytophthora_sp._1	KC855330	Does not match Genbank entry
+Phytophthora_taxon_gondwanense	Phytophthora_sp._gondwanense	KP070696	Does not match Genbank entry
+Phytophthora_amaranthi	Phytophthora_sp._TARI	GU111585	Does not match Genbank entry
+Phytophthora_caryae	Phytophthora_citricola_isolate	KJ631538	Does not match Genbank entry
+Phytophthora_taxon_pocumtuck	Phytophthora_sp._NJB-2015	KP749380	Does not match Genbank entry
+Phytophthora_x_cambivora	Phytophthora_cambivora_isolate	KU899179	Does not match Genbank entry
+Phytophthora_sp._aff._meadii	Phytophthora_aff._meadii	KC875839	Does not match Genbank entry
+Phytophthora_sp._mekongensis_type1	Phytophthora_aff._meadii	KC875838	Does not match Genbank entry
+Phytophthora_sp._mekongensis_type3	Phytophthora_aff._meadii	KM501564	Does not match Genbank entry
+Phytophthora_sp._prodigiosa	Phytophthora_insolita_isolate	KC875840	Does not match Genbank entry
+Phytophthora_sp_Pecan	Phytophthora_sp._P16825	GU997621	Does not match Genbank entry
+Phytophthora_taxon_cuyabensis	Phytophthora_cuyabensis_clone	FJ801995	Does not match Genbank entry
+Phytophthora_balyanboodja	Phytophthora_taxon_cyperaceae	KJ372258	Does not match Genbank entry
+Phytophthora_taxon_kunnunara	Phytophthora_sp._Kunnunara	EF437222	Does not match Genbank entry
+Phytophthora_taxon_umtamvuna	Phytophthora_sp._Umtamvuna	KC855181	Does not match Genbank entry
+Phytophthora_oleae	Phytophthora_sp._isolate	KY982930	Does not match Genbank entry
+Phytophthora_oleae	Phytophthora_sp._isolate	KY982934	Does not match Genbank entry
+Phytophthora_condilina	Phytophthora_taxon_casuarina	KJ372262	Does not match Genbank entry
+Phytophthora_balyanboodja	Phytophthora_taxon_cyperaceae	KJ372258	Does not match Genbank entry
+Phytophthora_pseudorosacearum	Phytophthora_aff._rosacearum	KJ372267	Does not match Genbank entry
+Phytophthora_cooljarloo	Phytophthora_sp._kwongan/TIB-2010	HQ012957	Does not match Genbank entry
+#DOWNLOAD INFO
+Wanted number = 222
+we found 218
+did not get {'', 'NOT_TAKEN_DQ648146', 'na', 'NA'}
+
+
+WANTED but not found!!:
+6_Phytophthora_gonapodyides_
+2_Phytophthora_citricola_typeI_III_NOT_TAKEN_DQ648146
+na_Phytophthora_umhlaba_na
+2_Phytophthora_inflata_NA
