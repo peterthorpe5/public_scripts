@@ -9,6 +9,7 @@ This shell will automatically generate a phyto ITS1 databse. You have to update 
 
 # PUT the db file name here
 ``DATA_TAB_FILE="Phytophthora_ITS1_DB_v0.006_20180620.txt"``
+
 ``version="0.006"``
 
 
