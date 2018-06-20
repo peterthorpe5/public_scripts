@@ -18,6 +18,13 @@ in DATA_TAB_FILE variable, WITHOUT a space, and the version you want it to be.  
 
 ``version="0.006"``
 
+ALTER this line:
+
+``source ~/misc_python/THAPBI/THAPBI-pycits/venv-THAPBI-pycits-py3/bin/activate``
+
+This is my VM. Put a pth to yours, if you want to use a VM
+
+
 3) Run the shell on Linux:  ``./Auto_make_database.sh``
 
 each python script in ./bin/ can be run with -h to see what they do
