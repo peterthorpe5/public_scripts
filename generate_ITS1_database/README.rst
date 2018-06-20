@@ -3,23 +3,28 @@ READme Generate ITS1 database
 
 basic usage:
 
-``./Auto_make_database.sh``
+STEPS
+=====
 
-This shell will automatically generate a phyto ITS1 databse. You have to update the following in the shell to run it:
+1) Open the ``excel sheet`` and save the file as a ``txt file``, e.g. ``Phytophthora_ITS1_DB_v0.006_20180620.txt``
+
+2) You have to update the following in the shell to run it:  open ``./Auto_make_database.sh`` in a text editor, put the name 
+in DATA_TAB_FILE variable, WITHOUT a space, and the version you want it to be.  Eg. 
 
 # PUT the db file name here
+
 ``DATA_TAB_FILE="Phytophthora_ITS1_DB_v0.006_20180620.txt"``
 
 ``version="0.006"``
 
-
-Open the excel sheet and save the file as a txt file, put the name in DATA_TAB_FILE, and the version you want it to be.
+3) Run the shell on Linux:  ``./Auto_make_database.sh``
 
 each python script in ./bin/ can be run with -h to see what they do
 
 
 
-``Requires``:
+Requires:
+=========
 python3
 Biopython
 hmmsearch
