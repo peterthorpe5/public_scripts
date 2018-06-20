@@ -8,28 +8,11 @@ Run this to see the command options:
 ====================================
 ``metapy.py`` -h
 
-usage: metapy.py [--thread THREADS] [-l LEFT] [-r RIGHT] [-d OTU_DB]
-                 [-a {pear,flash}] [--adaptors ADAPTORS]
-                 [--left_trim LEFT_TRIM] [--right_trim RIGHT_TRIM]
-                 [--phred PHRED] [--cdhit_threshold CDHIT_THRESHOLD]
-                 [--swarm_d_value SWARM_D_VALUE]
-                 [--blastclust_threshold BLASTCLUST_THRESHOLD]
-                 [--vesearch_threshold VESEARCH_THRESHOLD] [--verbose] [-e]
-                 [--align] [--percent_identity]
-                 [--min_novel_cluster_threshold MIN_NOVEL_CLUSTER_THRESHOLD]
-                 [--blastclust BLASTCLUST] [--muscle MUSCLE] [--flash FLASH]
-                 [--pear PEAR] [--cd-hit-est CD_HIT] [--bowtie2 BOWTIE2]
-                 [--fastqc FASTQC] [--spades SPADES] [--vsearch VSEARCH]
-                 [--trimmomatic TRIMMOMATIC] [--swarm SWARM]
-                 [--samtools SAMTOOLS] [--logfile LOGFILE]
-                 [--Run_blastclust RUN_BLASTCLUST] [--Run_cdhit RUN_CDHIT]
-                 [--Run_dada2 RUN_DADA2] [--plot PLOTS] [--pvalue PVALUE]
-                 [--standard_deviation STD] [--cleanup] [--qc] [-h]
-                 [--version]
+usage: metapy.py 
 
 Pipeline: cluster data for metabarcoding
 
-optional arguments:
+options:
   --thread THREADS      number of threads
   -l LEFT, --left LEFT  left illumina reads, default is for tests
   -r RIGHT, --right RIGHT
