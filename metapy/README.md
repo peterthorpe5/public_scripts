@@ -6,7 +6,7 @@
 * [`codecov.io` page](https://codecov.io/gh/widdowquinn/THAPBI-pycits)
 * [`landscape.io` page](https://landscape.io/github/widdowquinn/THAPBI-pycits/1)
 
-# README.py - `THAPBI-pycits`
+# README.py - `THAPBI-metapy`
 This repository is for development of ITS1-based diagnostic/profiling tools for the THAPBI Phyto-Threats project, funded by BBSRC.
 
 # USAGE:
@@ -16,11 +16,14 @@ SEE ``USAGE.md`` on how to use the tool
 
 # Set up a virutal machine
 
+Setting up a VM is easier than you think and worth it to make sure you have exact version of tools. To do this:
+
+
 In the root directory of the repository, make sure you activate it whenever you want to run ``metapy.py``:
 
 ```
-$ virtualenv -p python3.5 venv-THAPBI-pycits
-$ source venv-THAPBI-pycits/bin/activate
+$ virtualenv -p python3.5 venv-metapy
+$ source venv-metapy/bin/activate
 <activity>
 $ deactivate
 ```
