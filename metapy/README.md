@@ -9,6 +9,11 @@
 # README.py - `THAPBI-pycits`
 This repository is for development of ITS1-based diagnostic/profiling tools for the THAPBI Phyto-Threats project, funded by BBSRC.
 
+# USAGE:
+
+SEE ``USAGE.md`` on how to use the tool
+
+
 # DEVELOPER NOTES
 
 ## Python style conventions
