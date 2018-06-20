@@ -3,7 +3,7 @@ READme Generate ITS1 database
 
 basic usage:
 
-``../Auto_make_database.sh``
+``./Auto_make_database.sh``
 
 This shell will automatically generate a phyto ITS1 databse. You have to update the following in the shell to run it:
 
