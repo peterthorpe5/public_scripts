@@ -38,9 +38,12 @@ internet access
 
 OUTPUT
 ======
-The main fasta file on the ITS1 only region called: Phytophora_ITS_database_v${version}.fasta
+The main fasta file on the ITS1 only region called: 
 
-seqid_domain_coordinates.txt = the coordinates of the ITS1 domain as Identified by the HMM.
+``Phytophora_ITS_database_v${version}.fasta``
+
+
+``seqid_domain_coordinates.txt`` = the coordinates of the ITS1 domain as Identified by the HMM.
 
 Folder -  database_files
 ========================
