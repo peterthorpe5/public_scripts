@@ -27,9 +27,13 @@ each python script in ./bin/ can be run with -h to see what they do
 Requires:
 =========
 python3
+
 Biopython
+
 hmmsearch
+
 muscle
+
 internet access
 
 OUTPUT
