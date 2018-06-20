@@ -1,0 +1,6 @@
+swarm	tests/test_data/compare_clusters/DNAMIX_S95_L001_swarm_results_1.RESULTS
+cdhit	tests/test_data/compare_clusters/DNAMIX_S95_L001_cdhit_results_0.99.RESULTS
+vsearch	tests/test_data/compare_clusters/DNAMIX_S95_L001_vsearch_results_0.99.RESULTS
+vse_faclus	tests/test_data/compare_clusters/DNAMIX_S95_L001_vserach_clu_fasta_results_0.99.RESULTS
+bowtie	tests/test_data/compare_clusters/bowtie_perfect.RESULTS
+blastclust	tests/test_data/compare_clusters/DNAMIX_S95_L001_blastclust_results_0.9.RESULTS

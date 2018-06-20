@@ -1,0 +1,22 @@
+# cluster_number	species	number_of_reads_hitting_species
+11	7Phytophthora_fragariae_CBS20946 7Phytophthora_rubi_CBS109892	679
+33	Phytophthora_megasperma_IMI133317_AF266794	205
+61	3Phytophthora_quercina_CBS78195 3Phytophthora_sp_ohioensis_P16050	2
+63	1Phytophthora_cactorum_CBS113344 1Phytophthora_idaei_P6767	30
+73	5Phytophthora_katsurae_CBS58785 5Phytophthora_sp_novaeguinea_P1256	250
+84	4Phytophthora_arecae_CBS30562 4Phytophthora_palmivora_CBS17926	1
+120	9Phytophthora_fallax_P10722	3
+154	2Phytophthora_plurivora02_CBS37961 2Phytophthora_acerina_BO57	732
+155	2Phytophthora_plurivora_CBS37961	182
+157	2Phytophthora_citricola_CBS22188 2Phytophthora_sp._FFM22.2 2Phytophthora_sp._UK92615	5
+197	2Phytophthora_capsici_CBS12823 2Phytophthora_sp_glovera_P10618	235
+    # Fasta file assembled seq summary:
+    # min_contig = 113 max_contig = 233 avg_contig = 189
+    # Total number of assembled sequences = 3414
+    # number of assembled-reads clustering with database = 2324
+    # number of starting reads = 5159
+    # percent of assembled-reads clustering with database = 68.07
+    # db_fa_summary:
+    # dbmin_contig = 159 dbmax_contig = 224 dbavg_contig = 195
+    # number of db_seq = 153
+    

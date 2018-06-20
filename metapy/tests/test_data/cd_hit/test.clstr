@@ -1,0 +1,704 @@
+>Cluster 0
+0	233nt, >a0d08ac2d84bef65dac14d7e3b117b49_1... *
+>Cluster 1
+0	224nt, >7Phytophthora_sp_nov_P3600_1... *
+>Cluster 2
+0	222nt, >7Phytophthora_alni_CBS117375_1... *
+>Cluster 3
+0	219nt, >7Phytophthora_europaea_BR1072_1... at +/100.00%
+1	220nt, >7Phytophthora_uliginosa_P10413_1... *
+>Cluster 4
+0	220nt, >1Phytophthora_nicotianae_CBS30329_1... *
+>Cluster 5
+0	219nt, >7Phytophthora_sp_niederhauserii_P10279_1... *
+1	219nt, >7Phytophthora_sojae_CBS38261_1... at +/99.09%
+>Cluster 6
+0	219nt, >7Phytophthora_cinnamomi_var_robiniae_P16351_1... *
+>Cluster 7
+0	219nt, >7Phytophthora_pistaciae_P6196_1... *
+>Cluster 8
+0	219nt, >7Phytophthora_melonis_CBS58269_1... *
+1	219nt, >7Phytophthora_sinensis_CBS55788_1... at +/100.00%
+>Cluster 9
+0	219nt, >7Phytophthora_cajani_P3105_1... *
+1	219nt, >7Phytophthora_vignae_P7471_1... at +/99.09%
+>Cluster 10
+0	219nt, >7Phytophthora_fragariae_CBS20946_1... *
+1	218nt, >7Phytophthora_rubi_CBS109892_1... at +/100.00%
+2	219nt, >1121495e413a34be38540f751f1ddeba_5... at +/99.54%
+3	218nt, >fca0bad9d7e8a697bbca692ef6ba2e7e_3... at +/99.08%
+4	218nt, >882cc009fa85a8653fdea189581f4ac1_148... at +/99.08%
+5	218nt, >71a67da40d0d533ebf77a13e7c1e66e6_102... at +/100.00%
+6	218nt, >9581eb2820919eb0cfcb137f59067fa0_42... at +/99.08%
+7	219nt, >aaf4ab2b58c23350fa01f4445c043df4_1... at +/99.09%
+8	218nt, >b24df13b18547a579771e0232129f2a2_7... at +/99.54%
+9	217nt, >d01d422d130723524d51d6a91e2586b6_1... at +/99.54%
+10	218nt, >61ad366dd15725d63a4d41324bacff19_1... at +/99.08%
+11	219nt, >19d8c84b2ca271a36e63da1b7c57c957_1... at +/99.09%
+12	218nt, >060eeba0b4a14a7876e851f91efe297f_196... at +/99.54%
+13	218nt, >9b369b03d74fe875ad4ca2ae3db74f0a_2... at +/99.54%
+14	218nt, >1b9f880ccabb82ad2fd8529ea31b5a31_1... at +/99.08%
+15	217nt, >92d2d3f3b4558b001485ed972f997876_1... at +/100.00%
+16	218nt, >f651abcb7494e4809ae6d384782d4189_6... at +/99.08%
+17	219nt, >584aaa1a8b07cdeb9f25059f9004eeba_1... at +/99.09%
+18	217nt, >0aecc28bc336e0706cae927c3d68c4af_2... at +/99.54%
+19	218nt, >a3101a16524f15fce3cd5b46c1d2cff7_1... at +/99.08%
+20	219nt, >94b1e0919099efb6374e11b4907a81ac_1... at +/99.09%
+21	218nt, >d2482dc5389474653e6644521bb0b261_1... at +/99.08%
+22	218nt, >8065703a72e6077102faa1030cff3eaf_9... at +/99.54%
+23	218nt, >950c0dc1f5c2d41d0bd1a6d4846309f0_1... at +/99.08%
+24	218nt, >e660d833c6f5efc788f194a69e6fc861_5... at +/99.08%
+25	218nt, >b0329ec49fe8bb6643df70ef6a866244_1... at +/99.08%
+26	218nt, >7e321405436fd220f8738db22a86d8a6_140... at +/99.54%
+>Cluster 11
+0	219nt, >7ea9ce560d5b146499bd79892aa23a4b_1... *
+1	218nt, >2ef163bee146219aa84eb3a0a29af1c8_1... at +/99.08%
+>Cluster 12
+0	219nt, >09e7f690411465175adfa7c4388c08e7_1... *
+1	219nt, >1c7f7f232d3cc37c08bc3f382a211c54_1... at +/99.09%
+>Cluster 13
+0	218nt, >c919788cdf390c28a5c53767292e68ac_18... at +/99.08%
+1	218nt, >f706ecae9eba5a9f2576054c38695ff3_1... at +/99.08%
+2	218nt, >7c3abe52e214f12377e33b668cb16df0_1... at +/99.08%
+3	219nt, >4f91588b5e5943029be2da6219444158_3... *
+4	218nt, >93310b425ab6428a8152799530a0d968_3... at +/99.08%
+5	218nt, >987ec2e587ca45802011ece3ccd197c4_2... at +/99.08%
+>Cluster 14
+0	218nt, >7Phytophthora_cambivora_P0592_1... *
+>Cluster 15
+0	218nt, >7Phytophthora_cinnamomi_var_parvispora_CBS41196_1... *
+>Cluster 16
+0	218nt, >3edc297b59c1507054326a403bc8dba0_2... *
+>Cluster 17
+0	218nt, >5ebf9fe7517bcd062fc6d79003a25c09_2... *
+>Cluster 18
+0	218nt, >f70b76ad0aa4ed0b424ac7b8efe06776_2... *
+>Cluster 19
+0	218nt, >6af0f90715c6a6d993c3654cb6a978a6_3... *
+>Cluster 20
+0	217nt, >7Phytophthora_cinnamomi_CBS14422_1... *
+>Cluster 21
+0	216nt, >Phytophthora_amnicola_CBS131652_JQ029956_1... *
+1	216nt, >P._amnicola_CBS131652_1... at +/99.54%
+>Cluster 22
+0	215nt, >PPhytophthora_fluvialis_CBS129424_JF701436__1... *
+>Cluster 23
+0	215nt, >6Phytophthora_sp_nov_CBS114338_1... *
+1	215nt, >Phytophthora_taxon_PgChlamydo_VHS3753_EU301160_1... at +/100.00%
+>Cluster 24
+0	215nt, >P._taxon_walnut_P281_1... *
+>Cluster 25
+0	214nt, >Phytophthora_thermophila_CBS127954_EU301155_1... *
+>Cluster 26
+0	214nt, >Phytophthora_gonapodyides_H_14_02_JF912516_1... *
+>Cluster 27
+0	213nt, >P._riparia_VI_3100B9F_HM004225_1... at +/99.06%
+1	214nt, >Phytophthora_lacustris_P245_AF266793_1... *
+2	207nt, >8Phytophthora_sp_nov_CBS111346_1... at +/100.00%
+>Cluster 28
+0	212nt, >Phytophthora_bilorbang_CBS161653_JQ256377_1... at +/99.06%
+1	214nt, >Phytophthora_gibbosa_CBS127951_HQ012933_1... *
+2	214nt, >Phytophthora_gregata_CBS127952_HQ012942_1... at +/100.00%
+3	213nt, >Phytophthora_taxon_raspberry_P1050_AF541905_1... at +/100.00%
+>Cluster 29
+0	214nt, >P._aff._rosacearum_DDS2909_1... *
+1	214nt, >P._rosacearum_P292_1... at +/100.00%
+2	214nt, >P._taxon_kwongon_TCH009_1... at +/99.07%
+>Cluster 30
+0	214nt, >P._taxon_kwongonlike_CLJO100_1... *
+>Cluster 31
+0	214nt, >1Phytophthora_tabaci_CBS30529_1... *
+>Cluster 32
+0	213nt, >Phytophthora_megasperma_IMI133317_AF266794_1... at +/99.53%
+1	213nt, >d57c53c31bbb162c25762d7d8c998838_53... at +/100.00%
+2	213nt, >f26a9525b95a21fa019c482662407488_1... at +/99.06%
+3	213nt, >1113b236fb10305d8022784f6845a254_2... at +/99.06%
+4	213nt, >b441851252d0ab8daa8cb9e2875b12d0_22... at +/99.53%
+5	213nt, >4bc3fb4671b1b7eac685ba4077f2b9fb_45... at +/99.53%
+6	213nt, >ecb1186926adc90d7421f6599ab85155_1... at +/99.53%
+7	213nt, >70701bad243a6c9aa63a7ca4bd571eff_4... at +/99.06%
+8	213nt, >6039d6dee8f7c9b2d50b89d0745167ee_2... at +/99.06%
+9	213nt, >ee2e69921ed88ce9cfb1d1cd83ac9280_1... at +/99.53%
+10	214nt, >d68b07c08ec91992e19115c42d51bdca_1... *
+11	213nt, >0a38d223fd26cbd89983e4e0091f0d57_5... at +/99.06%
+12	213nt, >bab05f90013401243757e131cb48b35a_63... at +/99.06%
+13	212nt, >0e2a5ce2c659c869958d8e9e3c908f25_2... at +/99.53%
+14	213nt, >b3d027ae711d5a5369bc0965fb4c5c66_1... at +/99.06%
+15	214nt, >008b0a28c876e78ee709df875e0b0e02_1... at +/99.53%
+16	212nt, >cd9365b62437c46c22c68296461bc3a6_1... at +/100.00%
+>Cluster 33
+0	213nt, >Phytophthora_asparagi_VHS17644_EU301168_1... *
+>Cluster 34
+0	213nt, >P._taxon_personii_P11555_1... *
+>Cluster 35
+0	211nt, >P._humicolalike_PAB11.04_1... at +/99.53%
+1	212nt, >Phytophthora_humicola_P6702_FJ801938_1... at +/99.53%
+2	213nt, >Phytophthora_inundata_IMI390121_GU993898_1... *
+>Cluster 36
+0	213nt, >6Phytophthora_sp_nov_BR333_1... *
+1	213nt, >Phytophthora_taxon_hungarica_JA566_1... at +/99.06%
+2	212nt, >P._borealis_AKWA58.10708_HM004232_1... at +/99.06%
+>Cluster 37
+0	213nt, >Phytophthora_taxon_Forestsoil_H_6_02_1... *
+>Cluster 38
+0	213nt, >VHS17779_1... *
+>Cluster 39
+0	213nt, >117149b242d55dbca219a67775e5e67d_9... *
+1	212nt, >fc5fb1d8fce082a200c8b59cd3bfdad5_1... at +/100.00%
+>Cluster 40
+0	213nt, >ca6325021ec3436903b9e22b0069809c_1... *
+>Cluster 41
+0	213nt, >8464218c15722f971a7d2ca6feea26d5_3... *
+>Cluster 42
+0	213nt, >586ef05df5b3bcb33aa3d0161363f5e4_2... *
+>Cluster 43
+0	212nt, >Phytophthora_litoralis_CBS127953_HQ012948_1... *
+>Cluster 44
+0	212nt, >2Phytophthora_frigida_P16051_1... *
+>Cluster 45
+0	212nt, >ea69e50a60cdc0e26dbb4f4dbafb598e_3... *
+>Cluster 46
+0	212nt, >2bb3ebecb3a7732a1609064137c54108_1... *
+>Cluster 47
+0	211nt, >Phytophthora_taxon_paludosa_MUCC765_HQ012953_1... *
+>Cluster 48
+0	211nt, >HSA2304_1... *
+>Cluster 49
+0	210nt, >10Phytophthora_gallica_GU983636_1... *
+>Cluster 50
+0	210nt, >P._taxon_sedge__VHS25675_R1C_1... *
+>Cluster 51
+0	210nt, >2Phytophthora_multivesiculata_CBS54596_1... *
+>Cluster 52
+0	209nt, >Phytophthora_pinifolia_CMW26668_EU725806_1... *
+>Cluster 53
+0	209nt, >2Phytophthora_bisheria_P10117_1... *
+>Cluster 54
+0	209nt, >c31973b2f2cc2358939242006dc8e2ac_1... *
+>Cluster 55
+0	209nt, >670470b0ab213ebfdf94456b3670c755_2... *
+>Cluster 56
+0	208nt, >6a7f0eb904e91fd824c54ddb97dafcfb_1... *
+>Cluster 57
+0	207nt, >P._gemini_CBS268.85_1... *
+>Cluster 58
+0	207nt, >1Phytophthora_aff_infestans_P13660_1... *
+1	207nt, >1Phytophthora_infestans_CBS36651_1... at +/100.00%
+2	207nt, >1Phytophthora_ipomoeae_P10225_1... at +/100.00%
+3	207nt, >1Phytophthora_mirabilis_CBS67885_1... at +/100.00%
+4	207nt, >1Phytophthora_sp_andina_EC3163_1... at +/100.00%
+5	207nt, >1Phytophthora_phaseoli_CBS55688_1... at +/99.52%
+>Cluster 59
+0	206nt, >bdc8499223be052cdfee3475410997f6_1... *
+1	205nt, >ad8bd306abab9d636c7e82c581ca2181_2... at +/99.02%
+2	205nt, >acd6181e21193d71da334182acd667d4_4... at +/100.00%
+3	205nt, >1bdb2588e3e18c3f7e204151eb06ffbc_1... at +/99.51%
+>Cluster 60
+0	205nt, >3Phytophthora_quercina_CBS78195_1... *
+1	205nt, >3Phytophthora_sp_ohioensis_P16050_1... at +/100.00%
+2	205nt, >a9f7c0f799be4fa3b5eef5a80d8e417d_2... at +/99.02%
+>Cluster 61
+0	205nt, >22e624f401e535128a13d13b580a577f_2... *
+>Cluster 62
+0	204nt, >1Phytophthora_cactorum_CBS113344_1... at +/99.02%
+1	204nt, >1Phytophthora_idaei_P6767_1... at +/99.51%
+2	204nt, >819d59eb1e51f6c59266ea1ff14eaad7_14... at +/99.02%
+3	204nt, >8877fb1ce2112b5146dff314fc6dbb20_3... at +/99.02%
+4	204nt, >b0dcb21eec900e876403b3115a3de2d8_1... at +/99.51%
+5	204nt, >98b9c7ebb8879a8c3abc5799be02b97e_1... at +/99.02%
+6	204nt, >a79b5d4463390a6bedf51bb370ea3502_4... at +/99.51%
+7	204nt, >b19a04367e7f42213f100322d0c7606b_2... at +/100.00%
+8	205nt, >3e2f3cb68ebdf45b8cf9df36e9664085_1... *
+9	204nt, >eb4c86623064f22b08081ed1c40fc382_3... at +/99.02%
+10	204nt, >e09ad4b62f1673ea443ff422c6ff919a_1... at +/99.51%
+>Cluster 63
+0	205nt, >2c464b592721f9be3470c148dba9d522_1... *
+>Cluster 64
+0	205nt, >3b040ce6c75765f9d5118873240369ee_1... *
+>Cluster 65
+0	204nt, >1Phytophthora_hedraiandra_CBS118732_1... *
+>Cluster 66
+0	204nt, >35ac940d7f8ff8182a42adbcf62ebbed_1... *
+>Cluster 67
+0	204nt, >0ccb734e0ebccf634fc71fdebeeea6d3_2... *
+>Cluster 68
+0	204nt, >d1052723d7b0e256050f6c01b000cdbd_2... *
+>Cluster 69
+0	204nt, >ff32ca7b5d718bff6f45ed8a786f13b5_3... *
+>Cluster 70
+0	204nt, >5c2f5b9a72f125b973158b913b377443_1... *
+>Cluster 71
+0	203nt, >9Phytophthora_insolita_288805_1... *
+>Cluster 72
+0	203nt, >5Phytophthora_katsurae_CBS58785_1... *
+1	202nt, >5Phytophthora_sp_novaeguinea_P1256_1... at +/100.00%
+2	202nt, >bcd37658fcd80317fbd1d3cce000c2c8_2... at +/99.01%
+3	202nt, >55d2e00aa348ede527cd1f4a5bc43ff5_3... at +/99.01%
+4	202nt, >039cca64a0459b0f40ae9bb7ceeaafcd_3... at +/99.01%
+5	202nt, >24b9c12022303e109f7dbb7dc21483eb_10... at +/99.50%
+6	202nt, >7dcd46d4b37940a784de7838cf322769_2... at +/99.01%
+7	202nt, >8e090a13a03b93695e72c4115a4e5cb6_41... at +/99.01%
+8	201nt, >5b2b47aeed8f3c85b7d4f250fa518b32_2... at +/99.50%
+9	202nt, >587d2fe35f5e51a7bf9cecb00dfd7379_12... at +/99.01%
+10	202nt, >21bcad1abdf055b68cf2878527b762e6_1... at +/99.01%
+11	202nt, >e807eda398f380b8e86ad9fba863eab3_1... at +/99.01%
+12	202nt, >e658cec9d30d4045025a1f7690ca232d_44... at +/100.00%
+13	202nt, >2811325c421d75bd5e54883aa7b1bcb4_4... at +/99.50%
+14	202nt, >c292b8174400e38327cdbca0bbeed4e5_1... at +/99.50%
+15	201nt, >b157d23efd586dc25cc6b08b21a83800_2... at +/100.00%
+16	200nt, >1c09b0cd821b92898e4f57f1a7b8f995_1... at +/99.50%
+17	202nt, >22aa820ebaf2f9bb749ddba825de2914_1... at +/99.50%
+18	202nt, >c6a86088c4e0b08e067cf80648ca21c7_48... at +/99.50%
+19	202nt, >8acd555751406cdebd3b0af8a983b087_65... at +/99.50%
+20	202nt, >53c8b73365ebe7ccd2da7ab8e1342c8a_4... at +/99.50%
+21	202nt, >41b4317e478d70d12e62071168a1b3d1_3... at +/99.50%
+>Cluster 73
+0	202nt, >b55314414a58768f88365c90510337a5_3... at +/99.50%
+1	201nt, >f92d5cfa5cb73956c9db05eefb9f65a7_1... at +/99.00%
+2	203nt, >d9d7c2081e6f5711f1d4faeb1478e0cf_1... *
+3	202nt, >46bd0060622b76e70f2d335be1fcec5f_1... at +/99.01%
+4	201nt, >6a5d5ba3c638a0f00800ce81c7efbe85_1... at +/99.50%
+5	202nt, >ceb21d0fc701b0f17f96923e215d79c6_1... at +/99.50%
+6	202nt, >4a27a6894b98500b5a7778de42e6cf30_6... at +/99.50%
+>Cluster 74
+0	203nt, >5b36138f739e9b2f1db9485ec38c0a94_2... *
+>Cluster 75
+0	202nt, >1Phytophthora_tentaculata_CBS100411_1... *
+>Cluster 76
+0	202nt, >465b35acf0323d35a1782fa500829b09_2... *
+1	201nt, >7d022b38b806dc8b26678fa703b06d46_2... at +/99.00%
+>Cluster 77
+0	201nt, >1Phytophthora_iranica_CBS37472_1... *
+>Cluster 78
+0	201nt, >dc5d1f9d4c00cba791aa20d73a3c150f_1... *
+>Cluster 79
+0	200nt, >4Phytophthora_litchii_CBS10081_1... *
+>Cluster 80
+0	200nt, >4Phytophthora_alticola_P16052_1... *
+>Cluster 81
+0	200nt, >4Phytophthora_quercetorum_P15555_1... *
+>Cluster 82
+0	199nt, >4Phytophthora_megakarya_P1664_1... *
+>Cluster 83
+0	199nt, >4Phytophthora_arecae_CBS30562_1... *
+1	199nt, >4Phytophthora_palmivora_CBS17926_1... at +/100.00%
+2	199nt, >7184bae17a9f01b4fe3d8bb21d8e4d8f_1... at +/100.00%
+>Cluster 84
+0	199nt, >1Phytophthora_clandestina_P3942_1... *
+>Cluster 85
+0	197nt, >9Phytophthora_polonica_P15005_1... *
+>Cluster 86
+0	195nt, >6508d6f49b592f8badb7c3db47d5b08b_2... at +/99.49%
+1	192nt, >b2403f8e96ea20b48297ff14a0b4d9df_1... at +/99.48%
+2	193nt, >cc8c3decf4453d5c1b532cd3dbad2d4d_1... at +/99.48%
+3	194nt, >b32cd1c4d5f082bd723fae41115e6ff5_16... at +/99.48%
+4	196nt, >f7fefcb6e079655e4d28ea00117f2ecf_1... *
+5	195nt, >5057ecbe16defa55778f5513b9a43951_1... at +/99.49%
+6	194nt, >c0245e26e7480f21bf03702559b0b588_3... at +/99.48%
+7	194nt, >2c276a2b74d7369acf371f57d05cfeb6_19... at +/99.48%
+8	194nt, >49a53993a109deef364e6050d5ac836c_75... at +/100.00%
+9	194nt, >99dc55cb5d35a10fea257401f211af65_45... at +/99.48%
+10	194nt, >36f23cb77a2875c6b14e78baeb93f0ce_99... at +/99.48%
+11	193nt, >bd93507dd54f68b3af18243f2a3ff914_1... at +/100.00%
+12	193nt, >6bf0c06473f01326aab64e02aca60673_3... at +/99.48%
+13	194nt, >67322716d71c6588872c029ff0cdb002_2... at +/99.48%
+14	194nt, >12071dbc38a0f8c7e0260dc257c99de1_1... at +/99.48%
+>Cluster 87
+0	195nt, >3Phytophthora_psychrophila_P10433_1... *
+>Cluster 88
+0	195nt, >80bb7c9faafc5490ef9a0efd3d36e177_1... *
+1	194nt, >fec7c78635c0981b80d37ffe5cbb3525_1... at +/99.48%
+2	194nt, >62e132c974d99b6337490bc458bca931_15... at +/99.48%
+3	194nt, >b8c4af544eb2cfd4a32e4adec10b9292_86... at +/99.48%
+4	194nt, >00b400a55d0c28e3683313a281101b00_2... at +/99.48%
+5	193nt, >96b39bff079c617d57ab244cc6bc2869_2... at +/99.48%
+6	193nt, >809f0713488fd036690a39f0d221f84d_1... at +/100.00%
+7	194nt, >c807302da9b337cca26712dedf364b91_62... at +/100.00%
+8	193nt, >04699b3f2663f7f34a7b277d04fbad8d_1... at +/99.48%
+9	194nt, >55bda76cef6b820b488f17382d2b9300_1... at +/99.48%
+10	195nt, >ad9a7c0b18af9d0b80ab18328480d9f4_1... at +/99.49%
+>Cluster 89
+0	195nt, >0bcd042aaf45f5e60d7813258aa2c02c_1... *
+>Cluster 90
+0	194nt, >eb3f6ba37aa4da6b1793e58f76f95ff1_2... at +/99.48%
+1	194nt, >ff079448ddbb9460f41d8b3202f2e073_2... at +/99.48%
+2	194nt, >7e58287ed5602cc2133e3041bd1066d3_39... at +/99.48%
+3	193nt, >a7bdd350509b0f9b169dd187ec64a279_1... at +/99.48%
+4	194nt, >e7804a426ec951bf5400a9294fa1cf88_19... at +/99.48%
+5	193nt, >0ce1f20517ecae58a9f5d84eb8efa6a4_1... at +/99.48%
+6	194nt, >3b06edc5572f954f74ace384e1b17a2a_4... at +/99.48%
+7	195nt, >f61d87eddedca58dfca75a1b6f3498f6_1... *
+>Cluster 91
+0	194nt, >8Phytophthora_sansomeana_CBS95787_1... *
+>Cluster 92
+0	194nt, >8Phytophthora_sp_kelmania_CBS30762_1... *
+>Cluster 93
+0	194nt, >3Phytophthora_nemorosa_CBS114870_1... *
+1	192nt, >3Phytophthora_ilicis_P3939_1... at +/99.48%
+2	194nt, >3Phytophthora_pseudosyringae_391716_1... at +/99.48%
+>Cluster 94
+0	194nt, >ac70adc71078d9236efd7580e0aed5f3_1... *
+>Cluster 95
+0	194nt, >81b46acd4f12a7acc599d07543c890cd_1... *
+>Cluster 96
+0	194nt, >8783f10e6e41e24d6ddd75d175632888_1... *
+1	194nt, >c7308f7e41821f116f974d474244e680_8... at +/99.48%
+>Cluster 97
+0	194nt, >f4b723739b817d6d926464725f1873b8_1... *
+>Cluster 98
+0	194nt, >316c272353a344d7684ef3c5fa60ea1a_1... *
+>Cluster 99
+0	194nt, >51ff725bfa3e5532bdaa756dd8cdb35e_2... *
+>Cluster 100
+0	194nt, >ef3d3c521807ae545b5a897a4e928d87_1... *
+>Cluster 101
+0	194nt, >16aaddb83892f591894ec34a5ab5736d_1... *
+>Cluster 102
+0	194nt, >5a1e25f0522d0b8b1937796f557285df_3... *
+1	194nt, >2827e4fa4707877680a1f1e3658612b8_60... at +/99.48%
+>Cluster 103
+0	194nt, >299dce36565b511cc56c0305be2fd284_1... *
+1	194nt, >a05d5df302878fd41ef2620dd8c19427_5... at +/99.48%
+2	194nt, >3d03f500c6602e42f1d60cf810c26b2d_3... at +/99.48%
+3	193nt, >3a8b2db3b8716a2c81d3b7766b7fffa8_2... at +/99.48%
+>Cluster 104
+0	194nt, >eaacd05818c53a344abe80ca799c4099_3... *
+1	194nt, >ddd98de0b051f0ee919016813fe9a483_4... at +/99.48%
+>Cluster 105
+0	194nt, >6d49c4cf0ba2dfc3e6965ead9eb2050c_1... *
+1	194nt, >3b94f8398e27518840bef4e969b2cf3a_5... at +/99.48%
+>Cluster 106
+0	194nt, >0356a5142a1a1cb9aa749bdac37cf388_2... *
+1	194nt, >fe15675cc08024d47350e5852e0caf56_3... at +/99.48%
+>Cluster 107
+0	194nt, >eb211e40d49641338df8e5de48060470_1... *
+1	194nt, >743d27523996b96fe0b868dbbb2969fc_2... at +/99.48%
+>Cluster 108
+0	194nt, >63fe2915bb7ac3c04b5bab2f81b3d751_3... *
+>Cluster 109
+0	194nt, >54eadba46e6d2e6bee6a11ff454f3a37_1... *
+>Cluster 110
+0	194nt, >1800113c476baf2c3e84af9a6c0c78fc_1... *
+>Cluster 111
+0	194nt, >a846303f51e8122f850610f7a2284e59_1... *
+>Cluster 112
+0	193nt, >123af073a3c67ee2cc5adadd3c466ffc_3... at +/99.48%
+1	194nt, >e8ca8b2b272abc2d378a7f8a58a9b65b_3... *
+>Cluster 113
+0	193nt, >8Phytophthora_drechsleri_P10331_1... *
+>Cluster 114
+0	193nt, >8Phytophthora_cryptogea_CBS11319_1... *
+1	192nt, >8Phytophthora_erythroseptica_CBS111343_1... at +/99.48%
+2	192nt, >8Phytophthora_himalayensis_CBS35759_1... at +/99.48%
+>Cluster 115
+0	193nt, >8Phytophthora_syringae_CBS110161_1... *
+>Cluster 116
+0	193nt, >552969d90fb2534aebac60ea762abebc_1... *
+>Cluster 117
+0	192nt, >10Phytophthora_boehmeriae_CBS29129_1... *
+>Cluster 118
+0	192nt, >a5751f63669f435ea455be5a28845eb4_2... *
+>Cluster 119
+0	191nt, >9Phytophthora_captiosa_P10719_1... *
+>Cluster 120
+0	191nt, >9Phytophthora_fallax_P10722_1... *
+1	191nt, >30ac872f6985362ccd19f724a6036c96_3... at +/99.48%
+>Cluster 121
+0	191nt, >8Phytophthora_trifolii_CBS117688_1... *
+>Cluster 122
+0	191nt, >c5845b8eefcfe819ec5c5643e41f29ab_2... *
+>Cluster 123
+0	191nt, >0e61a0cf1354638f308a76d2c5afd540_3... *
+>Cluster 124
+0	191nt, >6f025f3025ae765903defa62481b4388_3... *
+>Cluster 125
+0	190nt, >8Phytophthora_lateralis_Lev1213_1... *
+>Cluster 126
+0	189nt, >9Phytophthora_constricta_HQ013225_1... *
+>Cluster 127
+0	189nt, >8Phytophthora_sp_nov_P10728_1... *
+>Cluster 128
+0	189nt, >8Phytophthora_aff_primulae_P6817_1... *
+1	189nt, >8Phytophthora_primulae_CBS110162_1... at +/100.00%
+>Cluster 129
+0	189nt, >8Phytophthora_hibernalis_CBS119904_1... *
+>Cluster 130
+0	189nt, >8Phytophthora_foliorum_P10969_1... *
+>Cluster 131
+0	189nt, >8Phytophthora_ramorum_CBS101553_1... *
+>Cluster 132
+0	188nt, >10Phytophthora_morindae_GQ166764_1... *
+>Cluster 133
+0	188nt, >10Phytophthora_kernoviae_393172_1... *
+>Cluster 134
+0	188nt, >8Phytophthora_porri_CBS14287_1... *
+>Cluster 135
+0	187nt, >8Phytophthora_medicaginis_BR610_1... *
+>Cluster 136
+0	187nt, >8Phytophthora_brassicae_CBS112277_1... *
+>Cluster 137
+0	187nt, >e383687d3d3bcfcf454f141cd235d78b_1... *
+>Cluster 138
+0	186nt, >8Phytophthora_sp_nov_P6207_1... *
+>Cluster 139
+0	185nt, >9Phytophthora_chrysanthemi_AB511826TYPE_1... *
+>Cluster 140
+0	183nt, >2Phytophthora_citrophthora_CBS111338_1... *
+1	181nt, >2Phytophthora_botryosa_CBS58169_1... at +/99.45%
+>Cluster 141
+0	181nt, >5Phytophthora_heveae_CBS29629_1... *
+>Cluster 142
+0	180nt, >9Phytophthora_aquimorbida_40F9_FJ666129_1... *
+>Cluster 143
+0	179nt, >2Phytophthora_colocasiae_P6290_1... at +/100.00%
+1	179nt, >2Phytophthora_meadii_CBS21988_1... at +/100.00%
+2	180nt, >2Phytophthora_aff_meadii_CBS23530_1... *
+>Cluster 144
+0	180nt, >0f1761af4f6b1b4e535009dc1563e8a9_1... *
+>Cluster 145
+0	179nt, >9Phytophthora_sp_napoensis_P8221_1... *
+>Cluster 146
+0	179nt, >c723bae5282793f310c02e2a0078a149_1... *
+>Cluster 147
+0	178nt, >8Phytophthora_austrocedrae_P15132_1... *
+>Cluster 148
+0	178nt, >4866a325cb727d3fb041b3f0a2a63137_1... *
+>Cluster 149
+0	175nt, >f5ce0fd9e311024e6503a2408fdc12a8_1... *
+>Cluster 150
+0	172nt, >9Phytophthora_parsiana_AY659739TYPE_1... *
+>Cluster 151
+0	172nt, >9Phytophthora_sp_thermophilum_P10457_1... *
+>Cluster 152
+0	172nt, >2Phytophthora_multivora_CBS113347_1... *
+1	163nt, >2Phytophthora_multivora_DDS3480_1... at +/100.00%
+2	163nt, >2Phytophthora_multivora_VHS21011_1... at +/100.00%
+>Cluster 153
+0	164nt, >2Phytophthora_plurivora02_CBS37961_1... at +/100.00%
+1	163nt, >2Phytophthora_acerina_BO57_1... at +/99.39%
+2	171nt, >a9206e3448776d5de2836a17cc2da74a_193... at +/99.42%
+3	172nt, >075b1e6ea89b3ff35d4f760c896b5286_2... *
+4	172nt, >9d70b0ce48ff510fc4fe5cc31dac6204_1... at +/99.42%
+5	172nt, >7b44f334d10727504026571b19e4728a_2... at +/99.42%
+6	170nt, >a383eb22cdda2a1f40e07383037fb11d_1... at +/99.41%
+7	170nt, >48e1a1f971007cf1383ffaed35d2d339_1... at +/100.00%
+8	170nt, >b82d2290aa91eae6233eecd165916a74_1... at +/99.41%
+9	170nt, >b8c38304e60ae099ae7fc4dfe43aff1b_1... at +/99.41%
+10	170nt, >c5314d9bd5e14a6ad2ba42384f039c40_2... at +/100.00%
+11	170nt, >6b5badeb769fc4f42bfb3cc941d814b4_1... at +/100.00%
+12	171nt, >e914ce56d0abf468debf590993685877_7... at +/99.42%
+13	171nt, >4def70913bee636008b8cce00f28a72c_9... at +/99.42%
+14	171nt, >feefe20806afbd7f9842299c00093a0a_1... at +/99.42%
+15	170nt, >215069e0349c88c76a2b94c16c3e8923_2... at +/99.41%
+16	170nt, >7791705cae85ab3952a3848703b9a4c8_1... at +/100.00%
+17	171nt, >79ef9cc1b449adcd8b0cef10322b6d96_1... at +/99.42%
+18	171nt, >2f1454d16278fda2d44f26ebf7a0ed05_310... at +/99.42%
+19	170nt, >79ec123972e317921b8347525ad2002d_1... at +/99.41%
+20	170nt, >769379d882a6ac4b034fe9bd5fc16816_2... at +/100.00%
+21	171nt, >db63d14af8b86a08159858577b2bf795_4... at +/99.42%
+22	171nt, >342f628eb1796eb9745efe2ac7751989_180... at +/100.00%
+23	171nt, >2836553eff0d15261cee98c9e500cebb_1... at +/99.42%
+24	170nt, >14c06b374ea876f291609d1475aabf27_3... at +/99.41%
+25	170nt, >daa67d96e85f6a012575000b22e1bed7_3... at +/100.00%
+>Cluster 154
+0	172nt, >8c9bbac274844b50eaf82503b3dcdd91_1... *
+>Cluster 155
+0	171nt, >2Phytophthora_plurivora_CBS37961_1... at +/99.42%
+1	171nt, >8f4f346b82cbd2cf3271a87153bdab24_4... at +/100.00%
+2	171nt, >709227d4b21a16ec89a33e210ac40da4_4... at +/99.42%
+3	171nt, >796ea00c786a60299f24266919a6233c_1... at +/99.42%
+4	170nt, >539914fcefd78b4253675671b8513fd1_2... at +/99.41%
+5	171nt, >3d52a99944e051730d2a14cff40d1931_1... at +/99.42%
+6	170nt, >e53b904a5db07c2a656fdef847fb0c11_1... at +/99.41%
+7	172nt, >91b3841602df5454a6900ec82705b134_1... *
+8	171nt, >1458223d99d5dc89a3af31aee870449f_26... at +/99.42%
+9	170nt, >8986c4de9ecd82ffd256fbc5b2a67485_1... at +/100.00%
+10	171nt, >56485338b4d7e14e9f202f9d05c97723_141... at +/99.42%
+>Cluster 156
+0	171nt, >2Phytophthora_citricola_CBS22188_1... *
+1	163nt, >2Phytophthora_sp._FFM22.2_1... at +/100.00%
+2	163nt, >2Phytophthora_sp._UK92615_1... at +/100.00%
+3	170nt, >c6ee38703e929826a0f9e482ace7db3d_2... at +/99.41%
+4	171nt, >032660518948e0f7d2af0ecc725a3e3a_1... at +/99.42%
+5	171nt, >abb93fc2a9b5a1369ba38ab69a25f8e6_2... at +/99.42%
+>Cluster 157
+0	171nt, >2Phytophthora_pini_CBS18125_1... *
+1	164nt, >2Phytophthora_pini02_CBS18125_1... at +/100.00%
+>Cluster 158
+0	171nt, >fb45dbe1986dcbfbfa7435f9dc433d49_2... *
+>Cluster 159
+0	171nt, >31f17d583e6c9b912f8d718d3c9d2c2b_3... *
+1	171nt, >9f1a695b8fdb3018a0331213b212b252_3... at +/99.42%
+>Cluster 160
+0	163nt, >2Phytophthora_capensis_P1819_1... at +/99.39%
+1	163nt, >2_Phytophthora_emanzi_CMW35510_1... at +/99.39%
+2	171nt, >94d6e4cdb725d1d1a5ab9a2bfb491ea6_2... *
+3	170nt, >edd85177342c7538a6dc77059005d579_4... at +/99.41%
+4	169nt, >af249243c9ba8f49a3a485a9ee838c6c_2... at +/100.00%
+5	170nt, >d9bc4a2f22a2d3af2ac6b861b848aff5_4... at +/100.00%
+>Cluster 161
+0	171nt, >dbeb06e029c600211e6b5e64e5f7a3bc_1... *
+1	171nt, >0808b28ffed36509f1343182985bbddf_19... at +/99.42%
+>Cluster 162
+0	171nt, >bfa1391a87dd084774ee36941064d27e_1... *
+1	171nt, >0e1858587f40bb9654ba7b1598d57ee2_7... at +/99.42%
+>Cluster 163
+0	171nt, >9ec46c73fde5aa834273720c4589bd2e_1... *
+>Cluster 164
+0	171nt, >4f5163dfdc6a6e28f6fd95d2251e20e6_1... *
+>Cluster 165
+0	171nt, >1a0d5992b1c28498e1d0e2681b5d68d6_1... *
+>Cluster 166
+0	171nt, >803b98fdae233585cd2a71a489827784_1... *
+>Cluster 167
+0	171nt, >eaa09ef80004c526a257fb1ee7207f65_1... *
+>Cluster 168
+0	171nt, >c2e352504641a1a3da0c6a17ec383952_1... *
+>Cluster 169
+0	171nt, >6ee1f0c24fa2b3104c0e90dc2428a497_1... *
+>Cluster 170
+0	171nt, >d263d89c5054f272b9eb9190b3461ff0_1... *
+>Cluster 171
+0	171nt, >eefbe7293da83a073f7c3e4eb9faf61d_37... *
+1	171nt, >5ea4393f41ed25161fbaace477687a19_1... at +/99.42%
+2	171nt, >623be2a52c527adf5f5e027641b9a200_1... at +/99.42%
+>Cluster 172
+0	171nt, >3f4851db7e333179ec2eb5bda7f289fd_1... *
+>Cluster 173
+0	171nt, >ce52683b61185b8ecca6a527070c0ed5_1... *
+1	171nt, >de9f44f4018254446e1c9f2c10f10d8a_2... at +/99.42%
+>Cluster 174
+0	171nt, >d11cc32b9e86b7adf6b87dda5afc12a4_1... *
+>Cluster 175
+0	171nt, >3219043bae21ac780da0c5d4b9520b9c_1... *
+>Cluster 176
+0	171nt, >d7e33887522a2f769176e3a4c67e3828_1... *
+1	171nt, >bf48a08b72245d830ddef62f98df6546_9... at +/99.42%
+>Cluster 177
+0	171nt, >28c90ff5a26eb4f5f3abad7368ab2d3f_5... *
+>Cluster 178
+0	170nt, >a5cb3ff80659cfa172f202c389470a4d_2... at +/99.41%
+1	171nt, >c2a99fb513f0d424ab5fadba7ac837d5_2... *
+2	171nt, >f8ab4d4e43992e5567463b0140581f83_3... at +/99.42%
+>Cluster 179
+0	171nt, >83a9d64c052fc2679f584f3e6d43d890_2... *
+1	171nt, >d49b38eccd0ee0018f34f8435e2b6f2d_1... at +/99.42%
+>Cluster 180
+0	171nt, >106572e756fdaf0dffb211323e6e93fa_1... *
+>Cluster 181
+0	171nt, >321ee4235f7f8a5809eaf8f4e3599499_2... *
+>Cluster 182
+0	171nt, >93562b13137313c9e0a2b64b514bb379_1... *
+>Cluster 183
+0	168nt, >9Phytophthora_quininea_HQ261661_1... at +/99.40%
+1	170nt, >9Phytophthora_macrochlamydospora_351473_1... *
+>Cluster 184
+0	170nt, >2Phytophthora_sp_nov_CBS36879_1... *
+>Cluster 185
+0	170nt, >e3b1b2bf0c496c2599161221b611d504_1... *
+>Cluster 186
+0	170nt, >b2388fb7dbaf3f1d655657d7c2bc820a_3... *
+>Cluster 187
+0	170nt, >0cc8e2e771f71996f2c475b651b98bc2_1... *
+>Cluster 188
+0	170nt, >6c31f91577d18a987b6c572d9ee6d2ff_2... *
+>Cluster 189
+0	170nt, >c28460b7b06141b690f356a4f9ce7f4a_1... *
+>Cluster 190
+0	169nt, >9Phytophthora_hydropathica_EU583793TYPE_1... *
+>Cluster 191
+0	169nt, >9Phytophthora_richardiae_FJ801391_1... *
+>Cluster 192
+0	169nt, >92f3a411d45adba49464fcce20d73638_2... *
+>Cluster 193
+0	168nt, >453969342e1b5261bd11d9e510487fdc_1... *
+>Cluster 194
+0	168nt, >48f464bc80c02e46c965193affa1ea11_1... *
+>Cluster 195
+0	166nt, >9Phytophthora_sp_lagoariana_P8220_1... *
+>Cluster 196
+0	164nt, >9Phytophthora_sp_cuyabensis_P8213_1... *
+>Cluster 197
+0	161nt, >9Phytophthora_irrigata_FJ196758TYPE_1... *
+>Cluster 198
+0	160nt, >P.infestans_ITS1_1... at +/99.38%
+1	161nt, >2Phytophthora_tropicalis_CBS43491_1... *
+>Cluster 199
+0	160nt, >2Phytophthora_capsici_CBS12823_1... at +/99.38%
+1	160nt, >2Phytophthora_sp_glovera_P10618_1... at +/99.38%
+2	159nt, >b136fb7d49a8c99a686a10d84bc8cf19_1... at +/100.00%
+3	161nt, >77a2eadf0f7de6fdfe46262bfe59e86e_1... *
+4	159nt, >ad911355a6e570a81068cacb49f80bbd_14... at +/100.00%
+5	160nt, >56aa39c5d09c58edec1c43d2979f9d63_65... at +/99.38%
+6	160nt, >0ecd68923b3397a5e05f1c08d4e226da_3... at +/99.38%
+7	160nt, >c8363818e04911e10b5075e8aaba5201_4... at +/99.38%
+8	159nt, >29f231e80ff6a388e680ea7ca1fe79bb_1... at +/100.00%
+9	159nt, >4abed1c8c6cd4be9d3c3d55896b62619_2... at +/99.37%
+10	159nt, >a393143397183bbf855eea13e5d85e76_7... at +/99.37%
+11	160nt, >743901464b1c11cb548e067fc2102676_72... at +/100.00%
+12	160nt, >b604d8f7481cf6e1bc0c14b8bdaaf761_5... at +/99.38%
+13	160nt, >6e6e85d06a1fe38112e23d5f7848b4cc_36... at +/99.38%
+14	160nt, >4b9b226f7b46dbb61fd3e4843fb169a1_1... at +/99.38%
+15	159nt, >a7d6572025516a085470de3a76a2e55a_2... at +/99.37%
+16	159nt, >4420a8cebce85a89bca38b8cb422ab1c_18... at +/99.37%
+17	159nt, >3f15058837982fe46724a2882e0240ea_3... at +/99.37%
+>Cluster 200
+0	160nt, >4fdd6fe3f7a01461f838b85168653f50_1... at +/99.38%
+1	161nt, >5a4cdcb9e742991275a8f9005971c25b_1... *
+>Cluster 201
+0	160nt, >2Phytophthora_sp_nov_P1212_1... *
+>Cluster 202
+0	160nt, >2Phytophthora_mengei_P10139_1... *
+>Cluster 203
+0	160nt, >2Phytophthora_mexicana_P0646_1... *
+>Cluster 204
+0	160nt, >cc598cd79ba2765e9ed98201384d6e2e_2... *
+1	160nt, >8125f56668973a5bd29a714a5922737b_1... at +/99.38%
+>Cluster 205
+0	160nt, >f869f93d8b7521e3381f700a331a27db_77... *
+1	158nt, >747845683e7ef9210570199d04d41128_1... at +/100.00%
+2	160nt, >49b61f1dcae453cc2a46726c7c4c8220_1... at +/99.38%
+3	160nt, >0db5f78defd9ab1f3700d052d623cd39_1... at +/99.38%
+4	160nt, >59ba5ed4ef28c0ce9202a07d7418f7f7_1... at +/99.38%
+5	159nt, >df065aa88f0ba35ec094a7bbde3c70f6_1... at +/100.00%
+6	159nt, >2d768d4084af292fd03cd7d2da80a708_1... at +/99.37%
+7	159nt, >c7cb094976275a8543507efcc7ec8829_1... at +/99.37%
+8	160nt, >ed621e48dccf3d0fa17fb1201378a46a_6... at +/99.38%
+9	160nt, >b252de1be0f61a7222c127dac50ce330_19... at +/99.38%
+10	159nt, >6fea4c2166ad886abd67892439020a62_5... at +/99.37%
+11	159nt, >65c513d476c667a51eaca20f7e180d25_24... at +/100.00%
+>Cluster 206
+0	160nt, >4084bef72be7fa95690ef144a2b23dd9_1... *
+>Cluster 207
+0	160nt, >294af21235e506a6c8f1bf7d5ecff293_9... *
+1	159nt, >4827f742d449b9532b80e1b242f6550b_1... at +/100.00%
+>Cluster 208
+0	160nt, >a689467ce2b0a370876e16120dcedf6b_2... *
+1	159nt, >235d400abfa1fa4e50d511688763ad2e_4... at +/99.37%
+>Cluster 209
+0	160nt, >29e33493c410b53ce48b8dbd5b573679_1... *
+>Cluster 210
+0	160nt, >7fbe550ffbc89f486b357856df8b1731_1... *
+>Cluster 211
+0	160nt, >8313a8101a58f24620fe15ae88811edd_3... *
+>Cluster 212
+0	160nt, >48897efdc8ad054b3a48610ce6e8751a_2... *
+>Cluster 213
+0	160nt, >4df7e1dfbae9a87a4195a883bdbd84ba_3... *
+>Cluster 214
+0	158nt, >f9371545e75275786e752e103d33754e_1... at +/100.00%
+1	160nt, >4254f0e2c1472ce9bb9130a430bc6d29_10... *
+>Cluster 215
+0	160nt, >34a6a9e39ef7e645b7f626c60bd85c55_1... *
+>Cluster 216
+0	159nt, >2Phytophthora_siskiyouensis_P15122_1... *
+>Cluster 217
+0	159nt, >af288f54880e570ab51e3e4b5206812f_2... *
+>Cluster 218
+0	159nt, >bbee971721ccfc2b923b06936b3f5ee7_1... *
+>Cluster 219
+0	159nt, >98b2f9b1dc578f7154e9e45b5b710bef_1... *
+>Cluster 220
+0	116nt, >b5bc32d14536a7369a68ecd3ce2df0c1_1... *
+>Cluster 221
+0	113nt, >7ebe44ed2e64fc8497f9a102d0514c44_1... *

@@ -1,0 +1,15 @@
+M01157:20:000000000-D07KA:1:1101:16943:1488	seqID1
+DupliAbundance2	seqID2
+DupliAB	seqID3
+singleton	seqID4
+singleton	seqID5
+doubletA	seqID6
+doubletAB	seqID7
+TripletA	seqID8
+SingletonNestedInTriplet	seqID9
+TripletAB	seqID10
+TripletAC	seqID11
+Quartet_1	seqID12
+Quartet_2	seqID13
+Quartet_3	seqID14
+Quartet_4	seqID15
