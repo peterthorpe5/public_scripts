@@ -10,8 +10,8 @@ cd $HOME/public_scripts/generate_ITS1_database
 
 ###############################################################################
 # PUT the db file name here
-DATA_TAB_FILE="Phytophthora_ITS1_DB_v0.005_20180515.txt"
-version="0.005"
+DATA_TAB_FILE="Phytophthora_ITS1_DB_v0.006_20180620.txt"
+version="0.006"
 #
 ###############################################################################
 

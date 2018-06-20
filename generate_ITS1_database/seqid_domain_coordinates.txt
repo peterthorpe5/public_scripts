@@ -1,202 +1,216 @@
-Phytophthora acerina	1	150
-Phytophthora agathidicida	6	187
-Phytophthora alni subsp. alni	1	199
-Phytophthora alni subsp. alni	1	201
-Phytophthora alni subsp. multiformis	1	199
-Phytophthora alni subsp. uniformis	1	199
-Phytophthora alticola	1	180
-Phytophthora amaranthi	56	196
-Phytophthora amnicola	1	196
-Phytophthora andina	1	187
-Phytophthora aquimorbida	1	160
-Phytophthora arenaria	1	180
-Phytophthora asiatica	1	199
-Phytophthora asparagi	1	193
-Phytophthora attenuata	1	199
-Phytophthora austrocedri	378	550
-Phytophthora austrocedri	1	173
-Phytophthora austrocedri	1	173
-Phytophthora bilorbang	1	192
-Phytophthora bisheria	1	189
+Phytophthora infestans	5	184
+Phytophthora infestans	31	217
+Phytophthora cactorum	1	184
+Phytophthora phaseoli	1	187
+Phytophthora nicotianae	8	200
+Phytophthora nicotianae	1	195
+Phytophthora nicotianae	31	223
+Phytophthora colocasiae	1	159
+Phytophthora syringae	33	205
+Phytophthora palmivora	56	234
+Phytophthora erythroseptica	1	172
+Phytophthora meadii	1	159
+Phytophthora cryptogea	1	173
+Phytophthora cryptogea	1	173
+Phytophthora cryptogea	1	174
+Phytophthora cryptogea	1	173
+Phytophthora capsici	13	152
+Phytophthora capsici	1	140
+Phytophthora cinnamomi	2	198
+Phytophthora cinnamomi	1	198
+Phytophthora mexicana	1	140
+Phytophthora citrophthora voucher	4	163
+Phytophthora citrophthora	1	162
+Phytophthora hibernalis	1	169
+Phytophthora pini	1	151
 Phytophthora boehmeriae	1	173
 Phytophthora boehmeriae	1	171
 Phytophthora boehmeriae Voucher	1	172
 Phytophthora boehmeriae Voucher	1	172
 Phytophthora boehmeriae Voucher	1	172
 Phytophthora boehmeriae Voucher	1	172
-Phytophthora boodjera	1	180
-Phytophthora borealis	378	570
+Phytophthora cambivora	1	199
+Phytophthora cambivora	1	199
+Phytophthora cambivora	1	199
+Phytophthora citricola E	1	150
+Phytophthora citricola sensu stricto	1	151
+Phytophthora gonapodyides H 14	1	194
+Phytophthora richardiae	1	148
+Phytophthora heveae	1	161
+Phytophthora drechsleri	1	172
+Phytophthora megasperma	1	192
+Phytophthora megasperma	1	193
+Phytophthora megasperma	1	193
+Phytophthora porri	1	168
+Phytophthora fragariae	1	199
+Phytophthora lateralis	1	169
+Phytophthora lateralis	1	170
+Phytophthora quininea	1	147
+Phytophthora primulae	1	169
+Phytophthora ilicis P	1	173
+Phytophthora ilicis	1	171
+Phytophthora ilicis voucher P3939	1	172
+Phytophthora vignae	1	200
+Phytophthora sojae	39	237
+Phytophthora sojae	41	239
 Phytophthora botryosa	1	161
+Phytophthora iranica	1	181
+Phytophthora castaneae TW76	28	209
+Phytophthora castaneae	1	183
+Phytophthora cajani	1	199
+Phytophthora megakarya	1	179
+Phytophthora pseudotsugae	1	184
+Phytophthora clandestina	1	179
+Phytophthora humicola	3	193
+Phytophthora humicola	1	184
+Phytophthora humicola	1	184
+Phytophthora mirabilis	1	186
+Phytophthora macrochlamydospora	1	149
+Phytophthora medicaginis	1	171
+Phytophthora trifolii	10	180
+Phytophthora idaei voucher	1	184
+Phytophthora idaei	1	184
+Phytophthora tentaculata	1	182
+Phytophthora multivesiculata	1	190
+Phytophthora quercina	1	185
+Phytophthora pistaciae	1	199
+Phytophthora ramorum	33	202
+Phytophthora tropicalis	1	140
 Phytophthora brassicae	1	167
 Phytophthora brassicae voucher	1	167
 Phytophthora brassicae voucher	1	167
-Phytophthora cactorum	1	184
-Phytophthora cajani	1	199
-Phytophthora cambivora	1	199
-Phytophthora cambivora	1	199
-Phytophthora cambivora	1	199
-Phytophthora capensis	11	160
-Phytophthora capsici	13	152
-Phytophthora capsici	1	140
-Phytophthora captiosa	1	168
-Phytophthora caryae	1	136
-Phytophthora castaneae TW76	28	209
-Phytophthora castaneae	1	183
-Phytophthora chlamydospora	6	200
-Phytophthora chlamydospora	1	176
-Phytophthora chrysanthemi	1	165
-Phytophthora cichorii	1	169
-Phytophthora cinnamomi	2	198
-Phytophthora cinnamomi	1	198
-Phytophthora citricola E	1	150
-Phytophthora citricola sensu stricto	1	151
-Phytophthora citrophthora voucher	4	163
-Phytophthora citrophthora	1	162
-Phytophthora clandestina	1	179
-Phytophthora cocois	6	187
-Phytophthora colocasiae	1	159
-Phytophthora constricta	1	166
-Phytophthora crassamura	1	193
-Phytophthora cryptogea	1	173
-Phytophthora cryptogea	1	173
-Phytophthora cryptogea	1	174
-Phytophthora cryptogea	1	173
-Phytophthora dauci	1	169
-Phytophthora drechsleri	1	172
-Phytophthora elongata	1	192
-Phytophthora erythroseptica	1	172
 Phytophthora europaea	27	225
+Phytophthora ipomoeae	12	198
+Phytophthora psychrophila	27	201
+Phytophthora uliginosa	27	226
+Phytophthora inundata	1	193
+Phytophthora nemorosa	31	204
+Phytophthora pseudosyringae	1	174
+Phytophthora alni subsp. alni	1	199
+Phytophthora alni subsp. alni	1	201
+Phytophthora alni subsp. multiformis	1	199
+Phytophthora alni subsp. uniformis	1	199
+Phytophthora hedraiandra	1	184
+Phytophthora kernoviae	1	168
+Phytophthora captiosa	1	168
 Phytophthora fallax	1	168
-Phytophthora fallax Voucher	1	168
-Phytophthora fallax SPLA61	1	168
-Phytophthora flexuosa	1	199
-Phytophthora fluvialis	1	195
 Phytophthora foliorum	21	188
-Phytophthora formosa	1	199
-Phytophthora fragariae	1	199
-Phytophthora fragariaefolia	33	235
-Phytophthora fragariaefolia	6	208
+Phytophthora polonica	1	177
+Phytophthora alticola	1	180
+Phytophthora austrocedri	378	550
+Phytophthora austrocedri	1	173
+Phytophthora austrocedri	1	173
 Phytophthora frigida	1	193
+Phytophthora litchii	45	224
+Phytophthora melonis	1	199
+Phytophthora rubi	1	199
+Phytophthora bisheria	1	189
 Phytophthora gallica	1	190
 Phytophthora gallica	38	227
+Phytophthora parsiana	1	149
+Phytophthora parsiana	1	152
+Phytophthora parsiana	2	152
+Phytophthora pinifolia	1	189
+Phytophthora quercetorum	18	197
+Phytophthora siskiyouensis	378	517
+Phytophthora mengei	1	140
+Phytophthora multivora	1	151
+Phytophthora plurivora	1	151
+Phytophthora rosacearum	378	572
+Phytophthora sansomeana	378	551
+Phytophthora X pelgrandis	1	161
+Phytophthora andina	1	187
+Phytophthora capensis	11	160
+Phytophthora elongata	1	192
+Phytophthora morindae	1	168
+Phytophthora aquimorbida	1	160
+Phytophthora arenaria	1	180
+Phytophthora chrysanthemi	1	165
+Phytophthora constricta	1	166
+Phytophthora fluvialis	1	195
 Phytophthora gemini	1	187
 Phytophthora gemini	1	187
 Phytophthora gibbosa	1	194
 Phytophthora glovera	1	140
-Phytophthora gonapodyides voucher	1	194
-Phytophthora gonapodyides H 14	1	194
-Phytophthora hedraiandra	1	184
-Phytophthora heveae	1	161
-Phytophthora hibernalis	1	169
+Phytophthora gregata	1	194
 Phytophthora himalsilva	1	160
-Phytophthora humicola	3	193
-Phytophthora humicola	1	184
-Phytophthora humicola	1	184
-Phytophthora idaei voucher	1	184
-Phytophthora idaei	1	184
-Phytophthora ilicis P	1	173
-Phytophthora ilicis	1	171
-Phytophthora ilicis voucher P3939	1	172
-Phytophthora infestans	5	184
-Phytophthora infestans	31	217
-Phytophthora intercalaris	1	201
-Phytophthora intricata	1	198
-Phytophthora inundata	1	193
-Phytophthora ipomoeae	12	198
-Phytophthora iranica	1	181
-Phytophthora kernoviae	1	168
+Phytophthora litoralis	1	192
+Phytophthora thermophila	1	194
+Phytophthora amnicola	1	196
+Phytophthora asparagi	1	193
+Phytophthora bilorbang	1	192
+Phytophthora borealis	378	570
+Phytophthora fallax Voucher	1	168
+Phytophthora fallax SPLA61	1	168
+Phytophthora obscura	1	171
+Phytophthora riparia	378	570
+Phytophthora taxon aquatilis	1	191
+Phytophthora X serendipita	1	184
+Phytophthora cichorii	1	169
+Phytophthora dauci	1	169
 Phytophthora lactucae	1	170
 Phytophthora lacustris	1	194
-Phytophthora lateralis	1	169
-Phytophthora lateralis	1	170
-Phytophthora litchii	45	224
-Phytophthora litoralis	1	192
-Phytophthora macilentosa	1	159
-Phytophthora macrochlamydospora	1	149
-Phytophthora meadii	1	159
-Phytophthora medicaginis	1	171
-Phytophthora megakarya	1	179
-Phytophthora megasperma	1	192
-Phytophthora megasperma	1	193
-Phytophthora megasperma	1	193
-Phytophthora melonis	1	199
-Phytophthora mengei	1	140
-Phytophthora mexicana	1	140
-Phytophthora mirabilis	1	186
 Phytophthora mississippiae	1	194
-Phytophthora morindae	1	168
-Phytophthora moyootj	1	194
-Phytophthora multivesiculata	1	190
-Phytophthora multivora	1	151
-Phytophthora nagaii	1	203
-Phytophthora nemorosa	31	204
-Phytophthora nicotianae	8	200
-Phytophthora nicotianae	1	195
-Phytophthora nicotianae	31	223
-Phytophthora niederhauserii	1	199
-Phytophthora obscura	1	171
-Phytophthora occultans	1	162
-Phytophthora ornamentata	1	195
-Phytophthora pachypleura	1	150
-Phytophthora palmivora	56	234
-Phytophthora parsiana	1	149
-Phytophthora parsiana	1	152
-Phytophthora parsiana	2	152
-Phytophthora parvispora	1	198
-Phytophthora phaseoli	1	187
-Phytophthora pini	1	151
-Phytophthora pinifolia	1	189
 Phytophthora pisi	1	194
 Phytophthora pisi	1	200
-Phytophthora pistaciae	1	199
-Phytophthora plurivora	1	151
 Phytophthora pluvialis	378	551
-Phytophthora polonica	1	177
-Phytophthora porri	1	168
-Phytophthora primulae	1	169
-Phytophthora pseudocryptogea	1	174
-Phytophthora pseudosyringae	1	174
-Phytophthora pseudotsugae	1	184
-Phytophthora psychrophila	27	201
-Phytophthora quercetorum	18	197
-Phytophthora quercina	1	185
-Phytophthora quininea	1	147
-Phytophthora ramorum	33	202
-Phytophthora richardiae	1	148
-Phytophthora riparia	378	570
-Phytophthora rosacearum	378	572
-Phytophthora rubi	1	199
-Phytophthora sansomeana	378	551
-Phytophthora siskiyouensis	378	517
-Phytophthora sojae	39	237
-Phytophthora sojae	41	239
-Phytophthora sp. aff. meadii	1	145
-Phytophthora sp. mekongensis type1	1	145
-Phytophthora sp. mekongensis type3	1	145
-Phytophthora sp. personii	1	193
-Phytophthora sp Pecan	1	180
+Phytophthora acerina	1	150
+Phytophthora asiatica	1	199
+Phytophthora fragariaefolia	33	235
+Phytophthora fragariaefolia	6	208
+Phytophthora macilentosa	1	159
+Phytophthora moyootj	1	194
+Phytophthora nagaii	1	203
+Phytophthora niederhauserii	1	199
+Phytophthora pachypleura	1	150
+Phytophthora parvispora	1	198
 Phytophthora stricta	1	185
-Phytophthora syringae	33	205
-Phytophthora taxon aquatilis	1	191
-Phytophthora taxon cuyabensis	1	143
-Phytophthora taxon cyperaceae	1	190
-Phytophthora taxon kunnunara	1	146
-Phytophthora taxon pocumtuck	1	179
-Phytophthora taxon umtamvuna	1	145
-Phytophthora taxon paludosa	1	191
-Phytophthora tentaculata	1	182
-Phytophthora terminalis	1	162
-Phytophthora thermophila	1	194
-Phytophthora trifolii	10	180
-Phytophthora tropicalis	1	140
-Phytophthora uliginosa	27	226
-Phytophthora vignae	1	200
-Phytophthora virginiana	1	146
-Phytophthora x cambivora	1	199
-Phytophthora x heterohybrida	1	199
-Phytophthora x incrassata	1	198
-Phytophthora X pelgrandis	1	161
-Phytophthora X serendipita	1	184
 Phytophthora X stagnum	1	192
 Phytophthora X stagnum	1	192
 Phytophthora X stagnum	1	195
+Phytophthora agathidicida	6	187
+Phytophthora boodjera	1	180
+Phytophthora chlamydospora	6	200
+Phytophthora chlamydospora	1	176
+Phytophthora cocois	6	187
+Phytophthora crassamura	1	193
+Phytophthora occultans	1	162
+Phytophthora ornamentata	1	195
+Phytophthora terminalis	1	162
+Phytophthora amaranthi	56	196
+Phytophthora attenuata	1	199
+Phytophthora caryae	1	136
+Phytophthora flexuosa	1	199
+Phytophthora formosa	1	199
+Phytophthora intercalaris	1	201
+Phytophthora intricata	1	198
+Phytophthora pseudocryptogea	1	174
+Phytophthora taxon pocumtuck	1	179
+Phytophthora x cambivora	1	199
+Phytophthora x heterohybrida	1	199
+Phytophthora x incrassata	1	198
+Phytophthora castanetorum	1	185
+Phytophthora sp. aff. meadii	1	145
+Phytophthora sp. mekongensis type1	1	145
+Phytophthora sp. mekongensis type3	1	145
+Phytophthora tubulina	1	185
+Phytophthora tyrrhenica	1	199
+Phytophthora vulcanica	1	198
+Phytophthora gonapodyides voucher	1	194
+Phytophthora sp. personii	1	193
+Phytophthora sp Pecan	1	180
+Phytophthora taxon cuyabensis	1	143
+Phytophthora balyanboodja	1	190
+Phytophthora balyanboodja	1	190
+Phytophthora taxon kunnunara	1	146
+Phytophthora taxon umtamvuna	1	145
+Phytophthora taxon paludosa	1	191
+Phytophthora oleae	1	141
+Phytophthora oleae	1	142
+Phytophthora condilina	1	192
+Phytophthora balyanboodja	1	190
+Phytophthora balyanboodja	1	190
+Phytophthora pseudorosacearum	1	193
+Phytophthora kwongonina	1	194
+Phytophthora cooljarloo	1	195
+Phytophthora versiformis	1	185
