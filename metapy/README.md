@@ -150,19 +150,12 @@ put this in your PATH
 
 Binary installation is available through the Bioconductor package repository. Binary installation of the current release version (1.8) requires R 3.5.0 and Bioconductor version 3.7:
 
-
-try http:// if https:// URLs are not supported
+```
+#try http:// if https:// URLs are not supported
 
 source("https://bioconductor.org/biocLite.R")
 
 biocLite("dada2")
-
-```
-wget http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.5.zip
-unzip fastqc_v0.11.5.zip
-cd FastQC
-chmod 755 fastqc
-put this in your PATH
 ```
 
 
