@@ -1,3 +1,11 @@
+Usage instruction for metapy.py
+===============================
+
+It is a python3 tool and because it runs lots of tools it has a lot of requirements. You dont need to install them all.
+Minimum you need ``trimmomatic``, ``Swarm``, ``pear``, ``biopython``
+
+Run this to see the command options:
+====================================
 ``metapy.py`` -h
 
 usage: metapy.py [--thread THREADS] [-l LEFT] [-r RIGHT] [-d OTU_DB]
