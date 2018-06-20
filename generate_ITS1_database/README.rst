@@ -6,7 +6,7 @@ basic usage:
 STEPS
 =====
 
-1) Open the ``excel sheet`` and save the file as a ``txt file``, e.g. ``Phytophthora_ITS1_DB_v0.006_20180620.txt``
+1) Open the ``excel sheet`` and save the file as a ``txt file``, e.g. ``Phytophthora_ITS1_DB_v0.006_20180620.txt``.
 
 
 2) You have to update the following in the shell to run it:  open ``./Auto_make_database.sh`` in a text editor, put the name 
