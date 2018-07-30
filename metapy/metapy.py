@@ -328,9 +328,11 @@ def get_args():
 
     optional.add_argument("--cleanup",
                           dest="cleanup",
-                          action="store_true",
-                          default=True,
-                          help="deletes most files the program creates ")
+                          action="store",
+                          type=str,
+                          default="YES",
+                          help="deletes most files the program creates " +
+                          " yes/ no")
     optional.add_argument("--qc",
                           dest="qc",
                           action="store_true",
@@ -1547,7 +1549,7 @@ if __name__ == '__main__':
                               check=True)
     except ValueError:
         logger.warning("overall comparison failed.")
-    if args.cleanup == True:
+    if args.cleanup.upper() == "YES":
         # remove loads of files for the user
         # as previously having other files confused people
         remove_list = [ASSEMBLED + "for_swarm.fasta",
