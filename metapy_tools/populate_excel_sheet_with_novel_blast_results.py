@@ -14,15 +14,21 @@ if "--version" in sys.argv:
     sys.exit(1)
 
 usage = """
-
 Save the lists of sample with the hosts into a text file:
-#plate_well	Sample_Number	Sample_type_(root/plant/water/blank/other)	Host_Common_Name
-2D	N010-161128-2A-F_S38_L001	Filter		Reservoir used for whole site before NaOCl treatment
+Save the lists of sample with the hosts into a text file:
+sample_1_RESULTS
+sample_2_RESULTS
+etc ..
+
 
 This is an example. This will go through all the "novel blast " results
 in a folder  and populate a new text file with
 the old info and add the species found. But only those with more reads
-that the given threshold. Default 5 mismatches (-m)
+that the given threshold. Default 5 mismatches (-m). Default if to look at the
+so caled novel swarm clusters. -p is the default program 
+
+run from within the folder with all the results.
+
 
  python populate_excel_sheet_with_novel_blast_results.py -m 5 -i infile.tx -o outfile.text
 
@@ -89,13 +95,15 @@ def split_line_return_sample(line, sample_set):
     hyphens in all possible plces, I will just replace these."""
     line = line.rstrip()
     data = line.split("\t")  # inconsitent data entry!! cannot assign
-    sample_name = data[1]
+    # was [1] for thapbi data
+    sample_name = data[0]
     sample_set.add(sample_name.rstrip())  # all kinds of whitespace
     return sample_set
 
 
 def get_blast_data_element(line, novel_hit, sample_name,
                            sample_name_to_blast_hit,
+                           cluster_size,
                            mismatches_threshold):
     """function to eturn the individual element of the blast output.
     #Query	mismatches	evalue	percent_identity	database
@@ -105,7 +113,7 @@ def get_blast_data_element(line, novel_hit, sample_name,
         accession_number = database.split("|")[3]
         database  = database.split("|")[4]
         species_name = " ".join(database.split()[:4])
-        data = "%s %s|%s\t" % (novel_hit, str(accession_number), str(species_name))
+        data = "%s%s|%s\t%s\t" % (novel_hit, str(accession_number), str(species_name), cluster_size)
         sample_name_to_blast_hit[sample_name] += data
     return sample_name_to_blast_hit
 
@@ -131,6 +139,7 @@ def split_line_blast_file(filename, mismatches,
                 sample_name_to_blast_hit = get_blast_data_element(line, novel_hit,
                                                                   sample_name,
                                                                   sample_name_to_blast_hit,
+                                                                  cluster_size,
                                                                   mismatches)
     return sample_name_to_blast_hit, sample_name_to_cluster_size
 
@@ -151,9 +160,7 @@ def parse_text_file(text_file):
 def write_out_result(indata, outfile):
     """takes in string, writres out to file"""
     f_out = open(outfile, "w")
-    title = "#plate_well\tSample_Number\tSample_type_(root/plant/water/blank/other)" +\
-            "\tHost_Common_Name\tHost_latin_name/Sampling_Name\tcluster_size" +\
-            "\tspecies\tspecies\tspecies\tetc ...\n"
+    title = "#Species (cluster with %d mismatches or less)\tcluster_sizes\tSpecies\tnumber_of_reads\tSpecies\tnumber_of_reads\n" % args.mismatches
     f_out.write(title)
     indata = indata.replace("_abundance=1", "")
     for result in indata:
@@ -174,7 +181,10 @@ def populate_result_list(full_data,
         data_list = data.split("\t")
         while len(data_list) < 6:
             data_list.append("\t")
-        sample = data_list[1]
+            # was [1] for thpabi data
+        sample = data_list[0]
+        sample = sample.replace("_RESULTS", "")
+        print sample
         try:
             blast_result = sample_name_to_blast_hit[sample.rstrip()]
         except:

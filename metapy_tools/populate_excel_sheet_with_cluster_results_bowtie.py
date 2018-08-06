@@ -15,16 +15,20 @@ if "--version" in sys.argv:
 usage = """
 
 Save the lists of sample with the hosts into a text file:
-#plate_well	Sample_Number	Sample_type_(root/plant/water/blank/other)	Host_Common_Name
-2D	N010-161128-2A-F_S38_L001	Filter		Reservoir used for whole site before NaOCl treatment
+sample_1_RESULTS
+sample_2_RESULTS
+etc ..
 
 This is an example. This will go through all the results in a folder
 for a tool of your choice and populate a new text file with
 the old info and add the species found. But only those with more reads
-that the given threshold. Dafault 50.
+that the given threshold. Dafault 10.
 
  python populate_excel_sheet_swarm.py -t 100 -i infile.tx -o outfile.text
- 
+
+
+  NOTE: line 1 of the results is all the ouput an needs to be deleted.
+ This is a known bug. 
 """
 if "--help" or "-h" in sys.argv:
     print(usage)
@@ -40,7 +44,7 @@ def get_args():
                           action="store", default=10,
                           type=int,
                           help="min number of reads to consider this an" +
-                          " actual hit. Default 50")
+                          " actual hit. Default 10")
 
     optional.add_argument("-i", "--in", dest='infile',
                           action="store",
@@ -128,9 +132,7 @@ def parse_swarm_result(swarm_result_file, threshold):
 def write_out_result(indata, outfile):
     """takes in string, writres out to file"""
     f_out = open(outfile, "w")
-    title = "#plate_well\tSample_Number\tSample_type_(root/plant/water/blank/other)" +\
-            "\tHost_Common_Name\tHost_latin_name/Sampling_Name\tPhytophthora_species\t" +\
-            "num_reads\tPhytophthora_species\tnum_reads\n"
+    title = "#Sample (greater than %dread)\tspecies\n" % args.threshold
     #f_out.write(title)
     #indata = indata.replace("_abundance=1", "")
     print "indata = ", indata

@@ -34,7 +34,7 @@ for i in sorted(seen_set):
                          "-l", left,
                          "-r", right,
                          "--thread",
-                         "32"])
+                         "16"])#,"--cleanup", "NO"])
     print(commmand)
     pipe = subprocess.run(commmand, shell=True,
                           stdout=subprocess.PIPE,
@@ -63,6 +63,7 @@ for i in sorted(seen_set):
                    "temp"]
     for unwanted in remove_list:
         try:
+            # pass
             os.remove(unwanted)
         except:
             pass
