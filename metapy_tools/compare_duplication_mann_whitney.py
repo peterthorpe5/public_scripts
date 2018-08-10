@@ -76,6 +76,11 @@ def get_args():
                           default=None,
                           type=str,
                           help="infile2")
+    optional.add_argument("-h", "--help",
+                          action="help",
+                          default=argparse.SUPPRESS,
+                          help="Displays this help message"
+                          " type --version for version")
 
     optional.add_argument('--version',
                           action='version',

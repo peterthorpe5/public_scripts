@@ -8,6 +8,7 @@ interest_list="Control_C1 Control_C2 Control_C3 Control_C4 Control austroc ramor
 lateralis cactorum gonapodyides agathidicida"
 
 Working_directory=$HOME/scratch/tree_health/control_plate_no_cleanup/data_from_other_plates
+project="Control_plate"
 
 #Raw_illumna_data=/mnt/shared/projects/Phytophthora/201807_ITS1_Meta_Control_plate/RawData/
 
@@ -88,7 +89,7 @@ do
 	echo "NOW RUNNING:  ${folder}"
 	Sample_name=${folder%????????}
 	cd ./${Sample_name}_${PROGAM}
-	cp .RESULTS ${Working_directory}/bowtie_results
+	cp *RESULTS ${Working_directory}/bowtie_results
 	cd ./clusters_results/ 
 	cd ./novel*
 	cd ${Working_directory}
@@ -121,10 +122,10 @@ cd ${Working_directory}
 
 
 cd ${Working_directory}/swarm_results
-python ~/public_scripts/metapy_tools/populate_excel_sheet_long_format.py -t 50 -i ../samples.txt -o RESULTS_IN_LONG_FORMAT.txt
+python ~/public_scripts/metapy_tools/populate_excel_sheet_long_format.py --prefix ${project}_-t 50 -i ../samples.txt -o ${project}_RESULTS_IN_LONG_FORMAT.txt
 
 cd ${Working_directory}/bowtie_results/
-python ~/public_scripts/metapy_tools/populate_excel_sheet_long_format.py -t 10 -i ../samples.txt -o RESULTS_IN_LONG_FORMAT_bowtie.txt
+python ~/public_scripts/metapy_tools/populate_excel_sheet_long_format.py --prefix ${project}_ -t 10 -i ../samples.txt -o ${project}_RESULTS_IN_LONG_FORMAT_bowtie.txt
 
 echo "FINISHED"
 

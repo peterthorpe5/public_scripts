@@ -184,7 +184,7 @@ def populate_result_list(full_data,
             # was [1] for thpabi data
         sample = data_list[0]
         sample = sample.replace("_RESULTS", "")
-        print sample
+        print(sample)
         try:
             blast_result = sample_name_to_blast_hit[sample.rstrip()]
         except:

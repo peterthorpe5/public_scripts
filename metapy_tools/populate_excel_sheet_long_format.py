@@ -60,6 +60,13 @@ def get_args():
                           type=str,
                           help="program of interest to get results for" +
                           ". Default Swarm.")
+    optional.add_argument("--prefix",
+                          dest='prefix',
+                          action="store",
+                          default="Results",
+                          type=str,
+                          help="prefix for outfile name" +
+                          ". Default Results.")
 
     optional.add_argument("-o", "--out", dest='out',
                           action="store",
@@ -214,7 +221,7 @@ if __name__ == '__main__':
     sample_name_to_cluster_size = defaultdict(str)
     PROG_OF_INTEREST = args.program
     f_out = open(args.out, "w")
-    f_out2 = open("short_format.txt", "w")
+    f_out2 = open(args.prefix + "_short_format.txt", "w")
     title = "#sample\tspecies\treads\n"
     f_out.write(title)
     f_out2.write(title)
@@ -228,7 +235,6 @@ if __name__ == '__main__':
         hits = ""
         for species in species_reads:
             data_formatted = "%s\t%s\n" % (sample.replace("_swarm_results_1.RESULTS", ""), species.rstrip())
-
             hits = hits + species.rstrip() + "\t"
             # call the function to write out the data_formatted
             f_out.write(data_formatted)

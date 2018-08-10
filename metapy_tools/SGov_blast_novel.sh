@@ -87,7 +87,7 @@ do
 	echo "NOW RUNNING:  ${folder}"
 	Sample_name=${folder%????????}
 	cd ./${Sample_name}_${PROGAM}
-	cp .RESULTS ${Working_directory}/bowtie_results
+	cp *RESULTS ${Working_directory}/bowtie_results
 	cd ./clusters_results/ 
 	cd ./novel*
 	cd ${Working_directory}
