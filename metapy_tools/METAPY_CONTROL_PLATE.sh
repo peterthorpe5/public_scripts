@@ -119,5 +119,12 @@ done
 
 cd ${Working_directory}
 
+
+cd ${Working_directory}/swarm_results
+python ~/public_scripts/metapy_tools/populate_excel_sheet_long_format.py -t 50 -i ../samples.txt -o RESULTS_IN_LONG_FORMAT.txt
+
+cd ${Working_directory}/bowtie_results/
+python ~/public_scripts/metapy_tools/populate_excel_sheet_long_format.py -t 10 -i ../samples.txt -o RESULTS_IN_LONG_FORMAT_bowtie.txt
+
 echo "FINISHED"
 

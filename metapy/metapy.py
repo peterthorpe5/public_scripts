@@ -345,7 +345,7 @@ def get_args():
                           default=argparse.SUPPRESS,
                           help="Displays this help message"
                           " type --version for version")
-    optional.add_argument('--version',
+    optional.add_argument('-v', '--version',
                           action='version',
                           version="%s: metapy.py " + VERSION)
     args = parser.parse_args()
