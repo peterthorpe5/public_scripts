@@ -54,9 +54,9 @@ def get_args():
 
     optional.add_argument("-s", "--suffix", dest='suffix',
                           action="store",
-                          default=".assembled.fastq",
+                          default=".assembled.fastq.bio.chopped",
                           type=str,
-                          help="suffix: .assembled.fastq")
+                          help="suffix: .assembled.fastq.bio.chopped")
     
     optional.add_argument("-k", "--kmer", dest='kmer',
                           action="store",

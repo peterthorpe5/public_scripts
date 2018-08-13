@@ -68,9 +68,12 @@ def domain_getter(filename, HMM_search_file, outfile):
                                            HMM_search_position_stop)
                 domain_tbl_out.write(domain)
                 ITS = seq_record.seq[HMM_search_position_start_real:HMM_search_position_stop]
-
                 output_formatted = '>%s\n%s\n' %(seq_record.id,
                                                  ITS)
+                # use this line if the names are not unique
+                #output_formatted = '>%s_%s_%s\n%s\n' %(seq_record.id, str(HMM_search_position_start_real ),
+                                                 #str(HMM_search_position_stop),
+                                                 #ITS)
                 f_out.write(output_formatted)
     f_out.close()
     domain_tbl_out.close()
