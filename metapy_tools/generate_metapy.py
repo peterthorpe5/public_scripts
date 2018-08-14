@@ -26,7 +26,7 @@ for i in sorted(list_of_read_files):
 		#print prefix
 		seen_set.add(prefix)
 
-# add for modified santis db: "-d", "sarah.fasta"
+# add for different db: "-d", "name.fasta"
 for i in sorted(seen_set):
     left = i + "_R1_001.fastq.gz"
     right = i + "_R2_001.fastq.gz"

@@ -1,24 +1,25 @@
 #!/bin/bash
 #$ -cwd
-#$ -l hostname="n17*"
-cd $HOME/scratch/tree_health/control_plate_no_cleanup/data_from_other_plates
+ ### not needed   #$ -l hostname="n17*"
+cd $HOME/scratch/tree_health/soils_scot_gov
 
 # FILL THESE IN:
 interest_list="Control_C1 Control_C2 Control_C3 Control_C4 Control austroc ramorum 
 lateralis cactorum gonapodyides agathidicida"
 
-Working_directory=$HOME/scratch/tree_health/control_plate_no_cleanup/data_from_other_plates
+Working_directory=$HOME/scratch/tree_health/soils_scot_gov
 project="Control_plate"
 
-#Raw_illumna_data=/mnt/shared/projects/Phytophthora/201807_ITS1_Meta_Control_plate/RawData/
+Raw_illumna_data=/mnt/shared/projects/Phytophthora/201808_Soils_Scot_Gov_ITS_Metabarcoding/RawData/
 
 # Nothing to fill in from here!
 #######################################
 
 
 # copy reads from source. Never alter the master copy.
-# cp ${Raw_illumna_data}/* ./
-
+ cp ${Raw_illumna_data}/* ./
+rm *_I*_001.fastq.gz
+rm Undetermined_*
 # activate the VM
 source ~/misc_python/THAPBI/THAPBI-pycits/venv-THAPBI-pycits-py3/bin/activate
 
@@ -34,7 +35,7 @@ mkdir Novel_blast_results_swarm
 
 mv *fastq* ./reads
 #  dont delete for now
-#rm -rf reads
+rm -rf reads
 
 
 ############################################################################################
