@@ -43,14 +43,10 @@ def get_args():
                                      add_help=False)
     file_directory = os.path.realpath(__file__).split("metapy")[0]
     optional = parser.add_argument_group('optional arguments')
-    optional.add_argument("-t", "--threshold", dest='threshold',
-                          action="store", default=50,
-                          type=int,
-                          help="min number of reads to consider this an" +
-                          " actual hit. Default 50")
+
     optional.add_argument("-i", "--in", dest='infile',
                           action="store",
-                          default="samples.txt",
+                          default="Illumina01112017.txt",
                           type=str,
                           help="the tab file to fill in. Input file")
 
@@ -60,25 +56,18 @@ def get_args():
                           type=str,
                           help="program of interest to get results for" +
                           ". Default Swarm.")
-    optional.add_argument("--prefix",
-                          dest='prefix',
+
+    optional.add_argument("-m", "--mismatches", dest='mismatches',
                           action="store",
-                          default="Results",
-                          type=str,
-                          help="prefix for outfile name" +
-                          ". Default Results.")
+                          default=5,
+                          type=int,
+                          help="number of mismatches to filter results with")
 
     optional.add_argument("-o", "--out", dest='out',
                           action="store",
                           default="Illumina01112017_novel_blast_results.txt",
                           type=str,
                           help="the tab file to fill in. Input file")
-    
-    optional.add_argument("-h", "--help",
-                          action="help",
-                          default=argparse.SUPPRESS,
-                          help="Displays this help message"
-                          " type --version for version")
 
     optional.add_argument('--version',
                           action='version',
@@ -124,7 +113,7 @@ def get_blast_data_element(line, novel_hit, sample_name,
         accession_number = database.split("|")[3]
         database  = database.split("|")[4]
         species_name = " ".join(database.split()[:4])
-        data = "%s%s|%s\t%s\t" % (novel_hit, str(accession_number), str(species_name), cluster_size)
+        data = "%s%s|%s\t%s\n" % (novel_hit, str(accession_number), str(species_name), cluster_size)
         sample_name_to_blast_hit[sample_name] += data
     return sample_name_to_blast_hit
 
@@ -139,10 +128,10 @@ def split_line_blast_file(filename, mismatches,
     sample_name = os.path.split(filename)[-1]
     cluster_size = sample_name.split("len")[1]
     cluster_size = cluster_size.split("_vs")[0]
-    sample_name = sample_name.split("_" + PROGRAM)[0]
+    #sample_name = sample_name.split("_" + PROGRAM)[0]
     novel_hit = ""
     cluster_string = cluster_size + ", "
-    sample_name_to_cluster_size[sample_name] += cluster_string
+    sample_name_to_cluster_size[sample_name] += cluster_size
     with open(filename) as handle:
         for line in handle:
             if test_line(line):
@@ -155,6 +144,7 @@ def split_line_blast_file(filename, mismatches,
     return sample_name_to_blast_hit, sample_name_to_cluster_size
 
 
+
 def parse_text_file(text_file):
     """func to open and parse the text file"""
     sample_set = set([])
@@ -165,6 +155,17 @@ def parse_text_file(text_file):
             if test_line(line):
                 sample_set = split_line_return_sample(line, sample_set)
     return full_data, sample_set
+
+
+def write_out_result(indata, outfile):
+    """takes in string, writres out to file"""
+    f_out = open(outfile, "w")
+    title = "#Species (cluster with %d mismatches or less)\tcluster_sizes\tSpecies\tnumber_of_reads\tSpecies\tnumber_of_reads\n" % args.mismatches
+    f_out.write(title)
+    indata = indata.replace("_abundance=1", "")
+    for result in indata:
+        f_out.write(result)
+    f_out.close()
 
 
 def populate_result_list(full_data,
@@ -196,51 +197,50 @@ def populate_result_list(full_data,
     return full_data_with_phytophora
 
 
-def parse_swarm_result(filename, sample_name_to_hit, threshold):
-    """funct to parse the swarm result file and return
-    a default of species found .
-    infile:     # cluster_number species number_of_reads_hitting_species
-
-    """
-    with open(filename) as handle:
-        for line in handle:
-            if test_line(line):
-                sample_name = os.path.split(filename)[-1]
-                cluster_number, species, number_of_reads = line.rstrip().split("\t")
-                cluster_result = "%s\t%s" % (species.strip(), number_of_reads.strip())
-                cluster_result = cluster_result.replace("_abundance=1", "")
-                if int(number_of_reads) >= int(threshold):
-                    sample_name_to_hit[sample_name].append(cluster_result)
-    return sample_name_to_hit
-
-
 args, FILE_DIRECTORY = get_args()
 # Run as script
 if __name__ == '__main__':
-    sample_name_to_hit = defaultdict(list)
+    sample_name_to_blast_hit = defaultdict(str)
     sample_name_to_cluster_size = defaultdict(str)
     PROG_OF_INTEREST = args.program
-    f_out = open(args.out, "w")
-    f_out2 = open(args.prefix + "_short_format.txt", "w")
-    title = "#sample\tspecies\treads\n"
-    f_out.write(title)
-    f_out2.write(title)
     # call the function to get a list of results wanted
     # full_data, sample_set = parse_text_file(args.infile)
+    directory = "."
+    full_data_with_phytophora = ""
+    last_name = ""
+    last_hit = ""
+    result = ""
     for filename in os.listdir(".") :
-        if not filename.endswith(".RESULTS"):
+        if not filename.endswith(".result.txt"):
             continue
-        sample_name_to_hit = parse_swarm_result(filename, sample_name_to_hit, args.threshold)
-    for sample, species_reads in sample_name_to_hit.items():
+        sample_name_to_blast_hit, \
+            sample_name_to_cluster_size = split_line_blast_file(filename,
+                                                                args.mismatches,
+                                                                sample_name_to_blast_hit,
+                                                                sample_name_to_cluster_size,
+                                                                PROG_OF_INTEREST)
+
+##    full_data_with_phytophora = populate_result_list(sample_name_to_blast_hit,
+##                                                     sample_name_to_cluster_size,
+##                                                     full_data_with_phytophora)
+    
+    for sample, species_reads in sample_name_to_blast_hit.items():
+        species_hits = species_reads.split("\n")
+        for wanted in species_hits:
+            print sample.split("_" + args.program)[0], "\t", wanted
         hits = ""
+        cluster_size = sample_name_to_cluster_size[sample]
         for species in species_reads:
-            data_formatted = "%s\t%s\n" % (sample.replace("_swarm_results_1.RESULTS", ""), species.rstrip())
+            data_formatted = "%s\t%s\n" % (sample.replace("_abunance=", ""), species.rstrip())
             hits = hits + species.rstrip() + "\t"
+            #print hits
             # call the function to write out the data_formatted
-            f_out.write(data_formatted)
+            #f_out.write(data_formatted)
         out_str = "%s\t%s\n" % (sample, hits)
-        f_out2.write(out_str)
-    f_out.close()
-    f_out2.close()
+        #f_out2.write(out_str)
+        
+        
+    # call the function to write out the full_data_with_phytophora
+    write_out_result(full_data_with_phytophora, args.out)
 
 

@@ -122,10 +122,13 @@ cd ${Working_directory}
 
 
 cd ${Working_directory}/swarm_results
-python ~/public_scripts/metapy_tools/populate_excel_sheet_long_format.py --prefix ${project}_-t 50 -i ../samples.txt -o ${project}_RESULTS_IN_LONG_FORMAT.txt
+python ~/public_scripts/metapy_tools/results_summary.py --prefix ${project}_-t 50 -i ../samples.txt -o ${project}_Swarm_RESULTS
 
 cd ${Working_directory}/bowtie_results/
-python ~/public_scripts/metapy_tools/populate_excel_sheet_long_format.py --prefix ${project}_ -t 10 -i ../samples.txt -o ${project}_RESULTS_IN_LONG_FORMAT_bowtie.txt
+python ~/public_scripts/metapy_tools/results_summary.py --prefix ${project}_ -t 10 -i ../samples.txt -o ${project}_Bowtie_RESULTS
+
+cd ${Working_directory}/Novel_blast_results_swarm/
+python ~/public_scripts/metapy_tools/results_summary.py --blast yes --prefix ${project}_ -t 10 -i ../samples.txt -o ${project}_Novel_BLAST_results
 
 echo "FINISHED"
 
