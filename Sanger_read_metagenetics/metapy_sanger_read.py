@@ -92,7 +92,7 @@ def get_args():
 
     optional.add_argument("-e", "--evalue", dest='evalue',
                           action="store",
-                          default=1e-05,
+                          default=1e-30,
                           type=float,
                           help="evalue to filter results with")
 
