@@ -14,17 +14,23 @@ import os
 import subprocess
 import sys
 
+fail_warning = """
+did you activate the virtual environment?"
+if you are using 3.6, change this line in the script:
+    sys.version_info[:2] != (3, 5): to
+    sys.version_info[:2] != (3, 6):
+    It may still work ok. - not tested though
+"""
+
 if sys.version_info[:2] != (3, 5):
     # e.g. sys.version_info(major=3, minor=5, micro=2,
     # releaselevel='final', serial=0)
     # break the program
-    if sys.version_info[:2] != (2, 7):
-        print ("currently using:", sys.version_info,
-               "  version of python")
-        raise ImportError("Python 3.5 or 2.7 is required for " +
-                          "metapy_sanger_read.py")
-        print ("did you activate the virtual environment?")
-        sys.exit(1)
+    print ("currently using:", sys.version_info,
+           "  version of python")
+    raise ImportError("Python 3.5 is required for " +
+                      "metapy_sanger_read.py\n%s" % fail_warning)    
+    sys.exit(1)
 
 VERSION = """Pycits/ metapy classify OTU using Sanger ab1 files: v1.0.0.
 This script will run the method of all .abi or .ab1 files in a folder. 

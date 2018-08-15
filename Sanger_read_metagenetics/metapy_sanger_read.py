@@ -37,17 +37,23 @@ from pycits.metapy_tools_sanger import convert_ab1_to_fq, \
 from pycits import tools, \
      clean_up, muscle, trimmomatic
 
+fail_warning = """
+did you activate the virtual environment?"
+if you are using 3.6, change this line in the script:
+    sys.version_info[:2] != (3, 5): to
+    sys.version_info[:2] != (3, 6):
+    It may still work ok. - not tested though
+"""
+
 if sys.version_info[:2] != (3, 5):
     # e.g. sys.version_info(major=3, minor=5, micro=2,
     # releaselevel='final', serial=0)
     # break the program
-    if sys.version_info[:2] != (2, 7):
-        print ("currently using:", sys.version_info,
-               "  version of python")
-        raise ImportError("Python 3.5 or 2.7 is required for " +
-                          "metapy_sanger_read.py")
-        print ("did you activate the virtual environment?")
-        sys.exit(1)
+    print ("currently using:", sys.version_info,
+           "  version of python")
+    raise ImportError("Python 3.5 is required for " +
+                      "metapy_sanger_read.py\n%s" % fail_warning)    
+    sys.exit(1)
 
 VERSION = "Pycits classify OTU using Sanger ab1 files: v1.0.0"
 if "--version" in sys.argv:
@@ -78,9 +84,11 @@ def get_args():
 
     optional.add_argument("-d", "--OTU_DB", dest='OTU_DB',
                           action="store",
-                          default="/mnt/scratch/local/blast/ncbi/nt",
+                          default="/mnt/apps/databases/blast-ncbi/nt",
                           type=str,
-                          help="database of seq of to compare against")
+                          help="database of seq of to compare against" +
+                          " Defauklt is: /mnt/apps/databases/blast-ncbi/nt " +
+                          ". This will be different on your system")
 
     optional.add_argument("-e", "--evalue", dest='evalue',
                           action="store",
@@ -343,7 +351,9 @@ if __name__ == '__main__':
     # blast, make blast db
     db_name = os.path.split(OTU_DATABASE)[-1]
     if not os.path.isfile(OTU_DATABASE + ".nhr"):
-        if not OTU_DATABASE == "/mnt/scratch/local/blast/ncbi/nt":
+        db_suffix = os.path.split(OTU_DATABASE)[-1]
+        print(db_suffix)
+        if not db_suffix == "nt":
             cmd_blast_db = " ".join(["makeblastdb",
                                      "-in",
                                      OTU_DATABASE,
