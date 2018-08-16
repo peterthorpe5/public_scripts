@@ -274,7 +274,9 @@ if __name__ == '__main__':
                 continue
             file_count += 1
             sample_name_to_hit = parse_swarm_result(filename, sample_name_to_hit, args.threshold)
+        samples_over_threshold = 0
         for sample, species_reads in sample_name_to_hit.items():
+            samples_over_threshold += 1
             hits = ""
             for species in species_reads:
                 data_formatted = "%s\t%s\n" % (sample.replace("_swarm_results_1.RESULTS", ""), species.rstrip())
@@ -286,6 +288,7 @@ if __name__ == '__main__':
         f_out.close()
         f_out2.close()
         print("found %d files" % file_count)
+        print("found %d samples_over_threshold" % samples_over_threshold)
     
     if args.blast.upper() == "YES":
         f_out = open(args.out + "_LONG_format.txt", "w")
