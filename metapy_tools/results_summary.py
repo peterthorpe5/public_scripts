@@ -14,40 +14,52 @@ if "--version" in sys.argv:
     sys.exit(1)
 
 usage = """
-Save the lists of sample with the hosts into a text file:
-Save the lists of sample with the hosts into a text file:
-sample_1_RESULTS
-sample_2_RESULTS
-etc ..
+%s
+
+# to see the help
 
 
-This is an example. This will go through all the "novel blast " results
-in a folder  and populate a new text file with
-the old info and add the species found. But only those with more reads
-that the given threshold. Default 5 mismatches (-m). Default if to look at the
-so caled novel swarm clusters. -p is the default program 
-
+ python results_summary.py -h
 run from within the folder with all the results.
 
+# example. Run from within a result directory. 
+ python results_summary.py -t 50  -o PROJECT_NAME_Swarm_RESULTS
+ 
+ # for the novel blast folder, these results are different. you must use -b yes
+  python results_summary.py --blast yes -m 5 -o PROJECT_NAME_novel_blast_RESULTS
 
- python populate_excel_sheet_with_novel_blast_results.py -m 5 -i infile.tx -o outfile.text
 
-"""
-#if "--help" or "-h" in sys.argv:
-    #print(usage)
+This will go through all the  results
+in a folder  and populate a new text file with those with more reads
+that the given threshold (-t). Default 5 mismatches (-m) for the --blast yes option.
+
+
+# NOTE: in the output of this, if the sample did not pass the threshodl thne no results
+will be outputted for that sample. 
+
+# output
+ This will ouput the results which hasve more than -t reads within the cluster.
+ 2 output files. One in long format and one in short. Open and look at them
+ ... to see the format
+
+""" % VERSION
+
+if "--help" or "-h" in sys.argv:
+    print(usage)
 
 
 def get_args():
-    parser = argparse.ArgumentParser(description="Pipeline: cluster " +
-                                     "data for metabarcoding ",
+    parser = argparse.ArgumentParser(description="Pipeline: summerise results " +
+                                     "in a folder ",
                                      add_help=False)
-    file_directory = os.path.realpath(__file__).split("metapy")[0]
+    file_directory = os.path.realpath(__file__).split("results")[0]
     optional = parser.add_argument_group('optional arguments')
     optional.add_argument("-t", "--threshold", dest='threshold',
                           action="store", default=50,
                           type=int,
                           help="min number of reads to consider this an" +
-                          " actual hit. Default 50")
+                          " actual hit. Default 50 for swarm " +
+                          "Cahnge to 10 for Bowtie, or whatever you want")
     optional.add_argument("-i", "--in", dest='infile',
                           action="store",
                           default="samples.txt",
@@ -256,9 +268,11 @@ if __name__ == '__main__':
         f_out2.write(title)
         # call the function to get a list of results wanted
         # full_data, sample_set = parse_text_file(args.infile)
+        file_count = 0
         for filename in os.listdir(".") :
             if not filename.endswith(".RESULTS"):
                 continue
+            file_count += 1
             sample_name_to_hit = parse_swarm_result(filename, sample_name_to_hit, args.threshold)
         for sample, species_reads in sample_name_to_hit.items():
             hits = ""
@@ -271,6 +285,7 @@ if __name__ == '__main__':
             f_out2.write(out_str)
         f_out.close()
         f_out2.close()
+        print("found %d files" % file_count)
     
     if args.blast.upper() == "YES":
         f_out = open(args.out + "_LONG_format.txt", "w")
