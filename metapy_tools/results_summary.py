@@ -289,6 +289,7 @@ if __name__ == '__main__':
         f_out2.close()
         print("found %d files" % file_count)
         print("found %d samples_over_threshold" % samples_over_threshold)
+        print("samples with no results: %d" % (file_count - samples_over_threshold))
     
     if args.blast.upper() == "YES":
         f_out = open(args.out + "_LONG_format.txt", "w")
