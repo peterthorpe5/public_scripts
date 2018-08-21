@@ -8,7 +8,7 @@ interest_list="Control_C1 Control_C2 Control_C3 Control_C4 Control austroc ramor
 lateralis cactorum gonapodyides agathidicida"
 
 Working_directory=$HOME/scratch/tree_health/soils_scot_gov
-project="Control_plate"
+project="Soils_scot_gov"
 
 Raw_illumna_data=/mnt/shared/projects/Phytophthora/201808_Soils_Scot_Gov_ITS_Metabarcoding/RawData/
 

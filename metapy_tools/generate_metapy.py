@@ -30,7 +30,7 @@ for i in sorted(list_of_read_files):
 for i in sorted(seen_set):
     left = i + "_R1_001.fastq.gz"
     right = i + "_R2_001.fastq.gz"
-    commmand = " ".join(["/home/pt40963/public_scripts/metapy/metapy.py",
+    commmand = " ".join(["metapy.py",
                          "-l", left,
                          "-r", right,
                          "--thread",
