@@ -17,7 +17,8 @@ The total number of starting reads for each sample is in the sample results file
 Novel program clusters: This script, by default will go through all clusters ouputted by swarm, that did ot cluster with the databse, and BLAST search a representative of this cluster 
 against nt database. This does NOT identify new species, but does identify other oomycetes and loose matches to Phytophora species. It does this using:
 ``bin/Novel_top_hits.py``  --min_cluster_size 65 --threads 16. So, only if a cluster is bigger than 65 it will BLAST this. Otherwise, the whole process will take to long.
-Any smaller cluster is most likely not biologically relevant. 
+Any smaller cluster is most likely not biologically relevant. Why this script? So, you dont have to call metapy,py 96 times. This will do it for you. The extra commands 
+avavilble for metapy are not easily used from this script, so you will ave to modify generate_metapy.py for that. 
 
 
 ``generate_metapy.py``   This is a scrip to run metapy on all the reads in a folder. This is called from a shell script. 
@@ -32,6 +33,8 @@ default is 5.
 
 ``bin/BLAST_xml_parser.py``   The represnetative of the novel cluster is BLAST searched against nt (or a different db, you can give it that as an option, you may need to alter 
 the path for nt anyaway), the ouput is an xml file. This script is called by bin/Novel_top_hits.py to filter the xml output file. 
+
+``bin/Metapy_sentitivity_test.py``  This works out the specificity and snesitively based on our 4 groups of control mixes. 
 
 
 shell_scripts:
