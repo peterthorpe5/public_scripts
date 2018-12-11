@@ -83,3 +83,5 @@ produce_random_seq
 ===================
 Program to produce N number of random sequences with the average length and average GC of a given database. 
 
+lots more not documented here. Look in the individual repo for more 
+help.
