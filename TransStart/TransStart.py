@@ -21,8 +21,22 @@ import logging.handlers
 import time
 
 
+# check the user is using python 3. 
+if sys.version_info[:1] != (3,):
+    # e.g. sys.version_info(major=3, minor=5, micro=2,
+    # releaselevel='final', serial=0)
+    # break the program
+    print ("currently using:", sys.version_info,
+           "  version of python")
+    raise ImportError("Python 3.x is required for TranStart.py")
+    print ("if you want to force it to use python 2 replace this line"
+           " sys.version_info[:1] != (3) with "
+           " sys.version_info[:1] != (2) ")
+    sys.exit(1)
+
 if "-v" in sys.argv or "--version" in sys.argv:
-    print("TransStart.py Transcription start finder based on read depth coverage v0.1.0")
+    print("TransStart.py Transcription start finder "
+          "based on read depth coverage v0.1.0")
     cmd = "samtools 2>&1 | grep -i ^Version"
     sys.exit(os.system(cmd))
 
@@ -46,8 +60,8 @@ steps:
 3) STAR --genomeDir star_indicies/ --runThreadN 12
     --outFilterMultimapNmax 5 --outSAMtype BAM SortedByCoordinate
     --outFilterMismatchNmax 7 --readFilesCommand zcat
-    --outFileNamePrefix Mc --readFilesIn /PATH_TO/M.cerasi/RNAseq/Mc_R1.fq.gz
-    /PATH_TO/M.cerasi/RNAseq/Mc_R2.fq.gz
+    --outFileNamePrefix Mc --readFilesIn /RNAseq/Mc_R1.fq.gz
+    /RNAseq/Mc_R2.fq.gz
 2) Index your genome:
 4) sort your bam out!
     samtools -@ 12 sort unsorted.bam sorted.bam
@@ -61,9 +75,23 @@ of interest.
 If the number of mapped reads is greater than "threshold (default=3, reads
 mapped per current base)" then it performs statistical
 analysis on this to determine if the start of transcription
+
+
+ python TransStart.py -g genome.fasta
+    --bam index_sorted_bam_file.bam
+    --walk 5 --interation_value 1 
+    --gff genes.gff -o outfile
+
+
+Requirements:
+    you must have in your PATH:
+    samtools
+    Biopython
+    numpy
+
     """)
     cmd = "samtools 2>&1 | grep -i ^Version"
-    sys.exit(os.system(cmd))
+    sys.exit(subprocess.run(cmd))
 
 
 ##############################################################################
@@ -579,20 +607,23 @@ python TransStart.py -g genome.fasta
 
 
 Requirements:
-    you must have samtools in your PATH
+    you must have in your PATH
+    samtools
     Biopython
     numpy
 
 
 steps:
 
-1) Map RNAseq using STAR
+1) Map RNAseq using STAR or similar tool
 2) sort your bam out!
     samtools sort unsorted.bam sorted.bam
 3) Index your sorted.bam
     samtools index sorted.bam
 
-CPU time: 27, 000 genes ~ 5 hours
+
+TranStart:
+1 CPU time: 27, 000 genes ~ 5 hours
 and requires 0.5 GB of RAM using a 500Mbp genome.
 
 """
@@ -607,7 +638,8 @@ parser.add_option("--gff", dest="gff",
                   help="the predicted coordinate for the cds predictions .gff",
                   metavar="FILE")
 
-parser.add_option("-g", "--genome", dest="genome",
+parser.add_option("-g", "--genome",
+                  dest="genome",
                   default=None,
                   help="the genome sequence. Not currently used. TO DO",
                   metavar="FILE")
@@ -656,19 +688,25 @@ parser.add_option("--default_cutoff",
                   "default_cutoff value is applied. " +
                   " Default = 1")
 
-parser.add_option("--help_full", dest="help_full", default=None,
+parser.add_option("--help_full", dest="help_full",
+                  default=None,
                   help="prints out a full description of this program")
 
 parser.add_option("--keep_gene_depth",
-                  dest="keep_gene_depth", default="no",
-                  help="keep the output of the depth for the genes")
+                  dest="keep_gene_depth",
+                  default="no",
+                  help="keep the output of the depth for the genes" +
+                  " yes or no ")
 
-parser.add_option("--logger", dest="logger", default=False,
+parser.add_option("--logger", dest="logger",
+                  default=False,
                   help="Output logger filename. Default: " +
                   "outfile_std.log",
                   metavar="FILE")
 
-parser.add_option("-o", "--out", dest="outfile", default="results.out",
+parser.add_option("-o", "--out",
+                  dest="outfile",
+                  default="results.out",
                   help="Output filename (default: results.out)",
                   metavar="FILE")
 
