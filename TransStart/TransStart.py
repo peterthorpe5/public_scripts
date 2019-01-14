@@ -38,7 +38,7 @@ if "-v" in sys.argv or "--version" in sys.argv:
     print("TransStart.py Transcription start finder "
           "based on read depth coverage v0.1.0")
     cmd = "samtools 2>&1 | grep -i ^Version"
-    sys.exit(os.system(cmd))
+    sys.exit(subprocess.run(cmd))
 
 if "--help_full" in sys.argv:
     print("""Transcription start finder based on read depth coverage v0.1.0
