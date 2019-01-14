@@ -91,8 +91,11 @@ Requirements:
 
     """)
     cmd = "samtools --version"
-    sys.exit(subprocess.run(cmd))
-
+    pipe = subprocess.run(cmd, shell=True,
+                          stdout=subprocess.PIPE,
+                          stderr=subprocess.PIPE,
+                          check=True)
+    sys.exit("samtool version installed = ", pipe)
 
 ##############################################################################
 # functions
