@@ -760,7 +760,7 @@ if __name__ == '__main__':
     err_handler.setFormatter(err_formatter)
     logger.addHandler(err_handler)
     try:
-        outname = "%s_%s" % (genome.split(".fa")[0], args.logger)
+        outname = "%s_%s" % (genome.split(".fa")[0], options.logger)
         logging.basicConfig(filename=outname,level=logging.DEBUG)
         logstream = open(log_out, 'w')
         err_handler_file = logging.StreamHandler(logstream)
