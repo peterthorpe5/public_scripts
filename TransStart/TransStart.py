@@ -196,6 +196,7 @@ def index_gff(gff, logger):
     return gene_start_stop_dict, gene_first_exon_dict, \
            gene_scaff_dict, gene_direction, gene_set, gene_gff_line
 
+
 def create_gff_line(gffline, gene, TranStart, TranStop):
     """func to create a gff line with a new name and
     the start of transcription and end of transcription"""
@@ -295,7 +296,7 @@ def run_samtools_depth(scaffold_start_stop, bam_file, outfile, logger):
                     bam_file,
                     ">",
                     outfile])
-    # logger.info("samtools command: %s", cmd)
+    logger.info("samtools command: %s", cmd)
     # call the func to run subprocess
     pipe = subproces_func(cmd)
     return pipe
@@ -706,7 +707,7 @@ parser.add_option("--keep_gene_depth",
                   " yes or no ")
 
 parser.add_option("--logger", dest="logger",
-                  default=False,
+                  default="TranStart.log",
                   help="Output logger filename. Default: " +
                   "outfile_std.log",
                   metavar="FILE")
@@ -759,7 +760,8 @@ if __name__ == '__main__':
     err_handler.setFormatter(err_formatter)
     logger.addHandler(err_handler)
     try:
-        logging.basicConfig(filename='example.log',level=logging.DEBUG)
+        outname = "%s_%s" % (genome.split(".fa")[0], args.logger)
+        logging.basicConfig(filename=outname,level=logging.DEBUG)
         logstream = open(log_out, 'w')
         err_handler_file = logging.StreamHandler(logstream)
         err_handler_file.setFormatter(err_formatter)
