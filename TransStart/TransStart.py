@@ -707,7 +707,7 @@ parser.add_option("--keep_gene_depth",
                   " yes or no ")
 
 parser.add_option("--logger", dest="logger",
-                  default="TranStart.log",
+                  default=None,
                   help="Output logger filename. Default: " +
                   "outfile_std.log",
                   metavar="FILE")
@@ -751,25 +751,27 @@ if not os.path.isfile(bam_file):
 
 #######################################################################
 # Run as script
+# Run as script
 if __name__ == '__main__':
     # Set up logging
-    logger = logging.getLogger('Transcription_start_predictor.py: %s' % time.asctime())
+    if not options.logger:
+        options.logger = "%s_%s_std.log" % (outfile, stand_dev_threshold)
+    logger = logging.getLogger('TranStart.py: %s' % time.asctime())
     logger.setLevel(logging.DEBUG)
     err_handler = logging.StreamHandler(sys.stderr)
     err_formatter = logging.Formatter('%(levelname)s: %(message)s')
     err_handler.setFormatter(err_formatter)
     logger.addHandler(err_handler)
     try:
-        outname = "%s_%s" % (genome.split(".fa")[0], options.logger)
-        logging.basicConfig(filename=outname,level=logging.DEBUG)
-        logstream = open(log_out, 'w')
+        logstream = open(options.logger, 'w')
         err_handler_file = logging.StreamHandler(logstream)
         err_handler_file.setFormatter(err_formatter)
         # logfile is always verbose
         err_handler_file.setLevel(logging.INFO)
         logger.addHandler(err_handler_file)
     except:
-        logger.error("Could not open %s for logging", logger)
+        outstr = "Could not open %s for logging" % options.logger
+        logger.error(outstr)
         sys.exit(1)
     # Report input arguments
     logger.info(sys.version_info)
