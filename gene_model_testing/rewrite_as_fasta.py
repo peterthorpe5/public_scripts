@@ -52,6 +52,8 @@ def reformat_as_fasta(outfile):
     "this function re-write a file as a fasta file"
     f= open(outfile, 'w')
     for seq_record in SeqIO.parse("temp_fa.fa", "fasta"):
+        # replace stop codons as diamond does not like these
+        seq_record.seq = seq_record.seq.replace("*", "")
         SeqIO.write(seq_record, f, "fasta")
     f.close()
     return True
