@@ -53,7 +53,8 @@ def reformat_as_fasta(outfile):
     f= open(outfile, 'w')
     for seq_record in SeqIO.parse("temp_fa.fa", "fasta"):
         # replace stop codons as diamond does not like these
-        seq_record.seq = seq_record.seq.replace("*", "")
+        seq = str(seq_record.seq)
+        seq_record.seq = seq.replace("*", "")
         SeqIO.write(seq_record, f, "fasta")
     f.close()
     return True
