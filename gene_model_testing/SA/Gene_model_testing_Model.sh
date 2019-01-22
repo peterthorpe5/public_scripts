@@ -1,71 +1,100 @@
 #!/bin/bash
 #$ -cwd
 #Abort on any error,
-#set -e
+set -e
 
 #echo Running on $HOSTNAME
 #echo Current PATH is $PATH
 #source $HOME/.bash_profile
 
+################################################################
+# Variables: FILLL IN DOWN TO THE END OF VARIABLES
 
+nem_dir=/storage/home/users/pjt6/newton/gene_models/brakerrnaseq/
+
+known_fa="${nem_dir}/augustus.hints.aa"
+known_fa_nucl="${nem_dir}/augustus.hints.codingseq"
+prefix="GPALNEWT"
+# default name
+test_fa="augustus.hints.aa"
+min_len_gene="20"
+threads=8
+python_directory=$HOME/public_scripts/gene_model_testing/
+Working_directory=/storage/home/users/pjt6/newton/gene_models/brakerrnaseq/
+test_gff="${nem_dir}/augustus.hints.gff3"
+
+genome="/storage/home/users/pjt6/newton/gene_models/Gp_Newton_haplotype1.fasta"
+
+# FOR HGT
+# tax_filter_out is the phylum your beast lives in, or clade if you want to get a more refined HGT result
+# tax_filter_up_to e.g. metazoan = tax_filter_up_to
+# for aphid: #tax_filter_out=6656 #tax_filter_up_to=33208 
+# for nematodes,
+tax_filter_out=6231
+tax_filter_up_to=33208 
+
+
+# If you want to run transrate to get the RNAseq read mapping to gene 
+# fill these out. Else, just let it fail, as it is the last step.
+
+left_reads="/storage/home/users/pjt6/newton/RNAseq/R1.fq.gz"
+right_reads="/storage/home/users/pjt6/newton/RNAseq/R2.fq.gz"
+
+# END OF VARIABLES !!!!!!!!!!!!!!!!!!!!!!
+########################################################
+
+cd ${Working_directory}
 
 # for now in testing
  rm -rf gff_stats known_fa_all_hits
 
 
 echo "For this program you need:
-Genome tools. Blast. gffread (cufflinks). Python2.7. Biopython. Matplotlib. diamond muscle. transrate"
+Genome tools. Blast. gffread (cufflinks). Python. Biopython. diamond"
 
 mkdir gff_stats
 
 # genome tools to check and reformat the gff - essential step!
 echo "prepare the amino acid seq from the GFF. First check gff"
-gt_cmd="gt gff3 -sort yes -tidy yes -addids -sortnum yes -retainids yes 
-	-fixregionboundaries yes -addintrons yes 
-	-force -o ${test_gff}_reformatted.gff3 ${test_gff}"
+gt_cmd="gt gff3 -sort -retainids -tidy -addids -sortnum -fixregionboundaries 
+	   -addintrons -force -o ${test_gff}_reformatted.gff3 ${test_gff}"
 echo ${gt_cmd}
 eval ${gt_cmd}
 wait
 
 # GT to get stats on the predicted models. 
 
-gt="gt gff3 -sort yes -tidy yes -addids -sortnum yes -retainids yes 
-	-fixregionboundaries yes -addintrons yes ${test_gff}_reformatted.gff3 | 
+gt="gt gff3 -sort -tidy -addintrons ${test_gff}_reformatted.gff3 | 
    gt stat -force -genelengthdistri -o augustus_genelengthdistri.STAT 
    > temp"
 echo ${gt}
 eval ${gt}
 wait
-gt="gt gff3 -sort yes -tidy yes -addids -sortnum yes -retainids yes 
-	-fixregionboundaries yes -addintrons yes ${test_gff}_reformatted.gff3 | 
+gt="gt gff3 -sort -tidy -addintrons ${test_gff}_reformatted.gff3 | 
 gt stat -force -genescoredistri -o augustus_genescoredistri.STAT 
 > temp"
 echo ${gt}
 eval ${gt}
 wait
-gt="gt gff3 -sort yes -tidy yes -addids -sortnum yes -retainids yes 
-	-fixregionboundaries yes -addintrons yes ${test_gff}_reformatted.gff3 
+gt="gt gff3 -sort -tidy -addintrons ${test_gff}_reformatted.gff3 
 | gt stat -force -exonlengthdistri -o augustus_exonlengthdistri.STAT 
 > temp"
 echo ${gt}
 eval ${gt}
 wait
-gt="gt gff3 --sort yes -tidy yes -addids -sortnum yes -retainids yes 
-	-fixregionboundaries yes -addintrons yes ${test_gff}_reformatted.gff3 
+gt="gt gff3 -sort -tidy -addintrons ${test_gff}_reformatted.gff3 
 | gt stat -force -exonnumberdistri -o augustus_exonnumberdistri.STAT 
 > temp"
 echo ${gt}
 eval ${gt}
 wait
-gt="gt gff3 -sort yes -tidy yes -addids -sortnum yes -retainids yes 
-	-fixregionboundaries yes -addintrons yes ${test_gff}_reformatted.gff3 
+gt="gt gff3 -sort -tidy -addintrons ${test_gff}_reformatted.gff3 
 | gt stat -force -intronlengthdistri -o augustus_intronlengthdistri.STAT 
 > temp"
 echo ${gt}
 eval ${gt}
 wait
-gt="gt gff3 -sort yes -tidy yes -addids -sortnum yes -retainids yes 
-	-fixregionboundaries yes -addintrons yes ${test_gff}_reformatted.gff3 
+gt="gt gff3 -sort -tidy -addintrons ${test_gff}_reformatted.gff3 
 | gt stat -force -cdslengthdistri -o augustus_cdslengthdistri.STAT 
 > temp"
 echo ${gt}
@@ -91,10 +120,11 @@ echo "getting the AA and nt cds from the genome"
 gff_to_cds="gffread ${test_gff} 
 		   -g ${genome} -x nt.fa 
 		   -y temp.fa"
-echo ${gff_to_cds}
-eval ${gff_to_cds}
+#echo ${gff_to_cds}
+#eval ${gff_to_cds}
 wait
-
+cp ${known_fa} temp.fa
+cp ${known_fa_nucl} nt.fa 
 # remove dots as stop codons
 echo "step: rename the gene in the reformatted GFF file"
 remove_stops="python ${python_directory}/rewrite_as_fasta.py 
@@ -140,7 +170,7 @@ eval ${no_comment}
 wait
 
 # graph the blast results
-graph="python ${python_directory}/blast_stats.py 
+graph="python ${python_directory}/gene_model_testing/blast_stats.py 
 	  -i test_fa_vs_known_fa.tab 
 	  -o test_fa_vs_known_fa.graphs"
 echo ${graph}
@@ -183,7 +213,7 @@ filenames=*.fasta
 for f in ${filenames}
 do
 	echo "Running muscle ${f}"
-	cmd="$HOME/Downloads/muscle3.8.31_i86linux64 -in ${f} 
+	cmd="muscle3.8.31_i86linux64 -in ${f} 
 		-out ${f}_aligned.fasta -maxiters 5000 -maxtrees 15" 
 	echo ${cmd}
 	eval ${cmd}
@@ -194,7 +224,7 @@ filenames2=*_aligned.fasta
 for file in ${filenames2}
 do
 	echo "Running muscle ${f}"
-	cmd="$HOME/Downloads/muscle3.8.31_i86linux64 
+	cmd="muscle3.8.31_i86linux64 
 		-in ${file} -out ${file}_refine.fasta 
 		-refine" 
 	echo ${cmd}
@@ -212,28 +242,31 @@ mv *_refine.fasta ./alignments
 cd ${Working_directory}
 
 echo "running diamond-BLAST against NR"
-diam_p="/home/pt40963/scratch/Downloads/diamond-master/diamond blastp -p ${threads} --more-sensitive -e 0.00001 
-	   -v -q aa.fa
-	   -d $HOME/scratch/blast_databases/nr.dmnd 
-	   --taxonmap $HOME/scratch/blast_databases/prot.accession2taxid.gz
-	   --outfmt 6 
-	   --out aa.fasta_vs_nr.tab"
+diam_p="diamond blastp -p ${threads} --sensitive -e 0.00001 
+	   -v -q aa.fa 
+	   -d /shelf/public/blastntnr/blastDatabases/nr_PT.dmnd 
+	   -a aa.fasta_vs_nr.da"
 echo ${diam_p}
 eval ${diam_p}
 wait
 
+echo "converting diamond-BLAST output"
+diam_v="diamond view -a aa.fasta*.daa -f tab -o aa.fasta_vs_nr.tab"
+echo ${diam_v}
+eval ${diam_v}
+wait
 
 echo "adding tx_id and descriptions to diamond-BLAST output"
 tax="python $HOME/public_scripts/Diamond_BLAST_add_taxonomic_info/Diamond_blast_to_taxid.py
 	-i aa.fasta_vs_nr.tab 
-	-p $HOME/scratch/blast_databases 
+	-p /shelf/public/blastntnr/blastDatabases/ 
 	-o aa.fasta_vs_nr_tax.tab"
 echo ${tax}
 eval ${tax}
 wait
 
 echo "predicting HGT"
-HGT="python $HOME/public_scripts/Lateral_gene_transfer_prediction_tool/Lateral_gene_transfer_predictor.py
+HGT="python $HOME/public_scripts/Lateral_gene_transfer_prediction_tool/Lateral_gene_transfer_predictor.py 
 		-i *_vs_nr_tax.tab 
 		--tax_filter_out ${tax_filter_out} 
 		--tax_filter_up_to ${tax_filter_up_to}
@@ -246,7 +279,7 @@ wait
 
 #Filter taxomony commands:
 echo "filtering blast results"
-filter_top_blasts="python $HOME/misc_python/BLAST_output_parsing/top_BLAST_hit_filter_out_tax_id.py 
+filter_top_blasts="python ${python_directory}/top_BLAST_hit_filter_out_tax_id.py 
 				  -i *_vs_nr_tax.tab 
 				  -t ${tax_filter_out} 
 				  -p $HOME/scratch/blast_databases 
@@ -255,7 +288,7 @@ echo ${filter_top_blasts}
 eval ${filter_top_blasts}
 wait
 
-filter_species="python $HOME/misc_python/BLAST_output_parsing/top_BLAST_hit_filter_out_tax_id.py 
+filter_species="python ${python_directory}/top_BLAST_hit_filter_out_tax_id.py 
 			   -i *_vs_nr_tax.tab 
 			   -t ${species_tx_id}
 			   -p $HOME/scratch/blast_databases 
@@ -271,7 +304,8 @@ wait
 cd ${Working_directory}
 echo "Running transrate to get RNAseq mapping and it will tell you 
 statistically what genes may be fusions. "
-tran="transrate --assembly nt.fa 
+tran="transrate 
+	 --assembly nt.fa 
 	 --left ${left_reads} 
 	 --right ${right_reads}"
 echo ${tran}

@@ -14,7 +14,7 @@
 
 
 echo "For this program you need:
-Genome tools. Blast. gffread (cufflinks). Python2.7. Biopython. Matplotlib. diamond muscle. transrate"
+Genome tools. Blast. gffread (cufflinks). Python. Biopython. Matplotlib. diamond"
 
 mkdir gff_stats
 

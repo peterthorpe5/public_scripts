@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2.7
 # title: get blast stats and draw a graph of the results
 
 # author: Peter Thorpe September 2016. The James Hutton Insitute, Dundee, UK.
@@ -91,7 +91,8 @@ def plot_hitstogram_graph(data_values, title, file_in):
     pylab.title(title + "_histogram")
     pylab.xlabel('Percentage Identity')
     pylab.ylabel('Number in Bin')
-    pylab.savefig(file_in + "_" + title + '_histogram.png')
+    #pylab.savefig(file_in + "_" + title + '_histogram.png')
+    pylab.savefig(file_in + "_" + title + '_histogram.pdf', format=pdf)
     plt.close()
     pylab.close()
     os.chdir('.')
@@ -155,7 +156,7 @@ def plot_multi_histogram_graph(title1, vals_for_hist1,
     ax3.set_title(title3 + "_histogram")
     fig.tight_layout()
     fig
-    pylab.savefig(file_in + '_histogram.png')
+    pylab.savefig(file_in + '_histogram.pdf')
     pylab.close()
 
 
@@ -195,11 +196,8 @@ if "-v" in sys.argv or "--version" in sys.argv:
 
 
 usage = """Use as follows:
-
 $ python blast_stats.py -i blast.tab -o outfile
-
 script to plot blast tab results.
-
 """
 
 parser = OptionParser(usage=usage)
