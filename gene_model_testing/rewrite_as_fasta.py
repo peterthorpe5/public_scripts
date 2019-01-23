@@ -126,7 +126,7 @@ def plot_multi_histogram_graph(vals, file_in):
     ax4.set_title("Boxplot of Log Gene Sizes")
     fig.tight_layout()
     fig
-    pylab.savefig(file_in.split(".fa")[0] + '.png')
+    pylab.savefig(file_in.split(".fa")[0] + '.pdf')
     pylab.close()
 
 
