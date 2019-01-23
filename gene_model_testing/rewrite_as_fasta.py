@@ -3,6 +3,7 @@
 
 import sys
 import os
+import re
 from optparse import OptionParser
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
