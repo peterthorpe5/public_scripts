@@ -57,6 +57,7 @@ def reformat_as_fasta(outfile):
         seq = str(seq_record.seq)
         # seq = seq.replace("*", "")
         seq_record.seq = Seq(re.sub('[^A-Za-z]',"",str(seq).upper()))
+        seq_record.description=""
         SeqIO.write(seq_record, f, "fasta")
     f.close()
     return True
