@@ -1,27 +1,28 @@
-########################################################################################################
-#####: TITLE: Get the top blast hit from tab file. Get Kingdom hits. Taxonmy filter  ###############
+#!/usr/bin/env python2
+# : TITLE: Get the top blast hit from tab file.
+# Get Kingdom hits. Taxonmy filter  ###############
 
 
 """
-script to return  the top blast hit from tab file (via two methods: One the assuming order in the blast output
-and 2) explicitly looking for the hit with the greatest bit score). The distribution of the kingdom
+script to return  the top blast hit from tab file (via two methods:
+One the assuming order in the blast output
+and 2) explicitly looking for the hit with the greatest bit score).
+The distribution of the kingdom
 for the top hits is also returned in a file. 
 
-taxonomy filter. Can filter out, for exmapl all pea aphid hits, or all arthopoda hits. (pea aphid 7029, arthopoda 6656)
+taxonomy filter. Can filter out, for exmapl all pea aphid hits,
+or all arthopoda hits. (pea aphid 7029, arthopoda 6656)
 """
-#author: Peter Thorpe September 2015. The James Hutton Insitute, Dundee, UK.
+# author: Peter Thorpe September 2015. The James Hutton Insitute, Dundee, UK.
 
-#biopython imports
-
+ 
 import time
-#os imports
 import os
 from sys import stdin,argv
 import sys
 from optparse import OptionParser
 
 
-##################################################################################################
 def wanted_genes(blast_file):
     "function to retunr a list of wanted genes from file"
     wanted = open(blast_file, "r")
@@ -32,6 +33,7 @@ def wanted_genes(blast_file):
     #print "wanted_data :", blast_data
     return blast_data
 
+
 def is_number(s):
     "check cloumn if a float number"
     try:
@@ -40,9 +42,6 @@ def is_number(s):
     except ValueError:
         print "coloumn may not be the correct bit score coloumn. Please check"
         return False
-    
-
-###########################################################################################################################################################################################
 
 
 def parse_NCBI_nodes_tab_file(folder):
@@ -71,8 +70,6 @@ disctionary for later use"""
     #print tax_dictionary    
     return tax_dictionary
 
-
-###########################################################################################################################################################################################
 
 def filter_out(tax_id_of_interst, tax_to_filter_out):
     """function to get a list of tax id of interest from the tax_dictionary
@@ -128,7 +125,7 @@ def get_genus_count(genus_dict, blast_line, sci_name_column="15"):
         genus_dict[genus]=1
     return genus_dict
 
-##############################################################################################
+
 def parse_blast_tab_file(in_file, tax_to_filter_out, bit_score_column, outfile):
     """this is a function to open up a tab file blast results, and
     produce the percentage of kingdom blast hit based on the top
@@ -150,7 +147,7 @@ def parse_blast_tab_file(in_file, tax_to_filter_out, bit_score_column, outfile):
     kingdoms_handles_counts = {'Eukaryota':0, 'N/A':0, 'Bacteria;Eukaryota':0, \
                                'Archaea;Eukaryota':0, 'Virus':0, 'Bacteria;Viruses':0,\
                                'Eukaryota;Viruses':0, 'Archaea':0, 'Bacteria':0,\
-                               'Unclassified':0}
+                               'Unclassified':0, "Other": 0}
     
     #this is out list of so called top matches which we will append and remove as applicable
     top_hits = []
@@ -263,7 +260,7 @@ start_time=time.time()
 
 
 if "-v" in sys.argv or "--version" in sys.argv:
-    print "v0.0.2"
+    print("v0.0.2")
     sys.exit(0)
 
 
@@ -272,39 +269,50 @@ usage = """Use as follows:
 $ python top_BLAST_hit.py -i in.tab -b bit_score coloumn -o out_file 
 
 This iterates through a tabular blast output
-and returns the top blast hit based on the greatest bitscore (-b colomn in file - default is 12 12-1 computer counting)
+and returns the top blast hit based on the greatest bitscore
+(-b colomn in file - default is 12 12-1 computer counting)
 
 and filters out based on a user defined tax id e.g. pea aphid 7029, arthopoda 6656
 
-Usually the order of blast hit is preservedm, this script explicitly looks for the best, checking the order has not been altered. 
+Usually the order of blast hit is preservedm, this script
+explicitly looks for the best, checking the order has not been altered. 
 
 
 
 
-script to return  the top blast hit from tab file (via two methods: One the assuming order in the blast output
-and 2) explicitly looking for the hit with the greatest bit score). The distribution of the kingdom
+script to return  the top blast hit from tab file (via two methods:
+One the assuming order in the blast output
+and 2) explicitly looking for the hit with the greatest bit score).
+The distribution of the kingdom
 for the top hits is also returned in a file. 
 
-#to do taxonomy filter. The code is there, just need to implement this as an option in the main function 
+#to do taxonomy filter. The code is there,
+just need to implement this as an option in the main function 
 
 """
 
 parser = OptionParser(usage=usage)
 
 
-parser.add_option("-i", "--in", dest="in_file", default=None,
+parser.add_option("-i", "--in", dest="in_file",
+                  default=None,
                   help="in file")
-parser.add_option("-t", "--tax_filter_out", dest="tax_to_filter_out", default=None,
+parser.add_option("-t", "--tax_filter_out",
+                  dest="tax_to_filter_out",
+                  default=None,
                   help="tax_to_filter_out of blast results")
-parser.add_option("-b", "--bit_score", dest="bit_score_column", default="12",
+parser.add_option("-b", "--bit_score", dest="bit_score_column",
+                  default="12",
                   help="bit_score_column")
-parser.add_option("-p", "--path", dest="path", default=os.getcwd(),
+parser.add_option("-p", "--path", dest="path",
+                  default=os.getcwd(),
                   help="Directory containing relevant taxonomy/database files "
                        "Default is the current working "
                        "directory. This is not used with the main input and output "
                        "filenames.")
 
-parser.add_option("-o", "--output", dest="out_file", default=None,
+parser.add_option("-o", "--output", dest="out_file",
+                  default=None,
                   help="Output filename",
                   metavar="FILE")
 
@@ -327,10 +335,10 @@ outfile = options.out_file
 
 tax_dictionary = parse_NCBI_nodes_tab_file(path)
 
-parse_blast_tab_file(in_file, tax_to_filter_out, bit_score_column, outfile)
+parse_blast_tab_file(in_file, tax_to_filter_out,
+                     bit_score_column, outfile)
 
 
 end_time=time.time()
 #print 'that took, %.3f' %(end_time - start_time)
 
-#print 'done'
