@@ -155,6 +155,8 @@ def split_gene_name(gene):
     can be messed around with in gff files"""
     gene_info = gene.replace("ID=", "").split()[0]
     gene_info = gene_info.split(".t")[0]
+    if "-T" in gene_info:
+            gene_info = gene_info.split("-T")[0] # funannotate models
     gene_info = gene_info.replace(";", "")
     gene_info = gene_info.replace("Parent=", "")
     gene_info = gene_info.split("Note=")[0]
