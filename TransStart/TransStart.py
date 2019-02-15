@@ -786,6 +786,13 @@ if __name__ == '__main__':
     if not os.path.isfile(bam_file):
         logger.warning("Input BAM file not found: %s" % bam_file)
         sys.exit("Input BAM file not found: %s" % bam_file)
+    if os.path.isfile(bam_file + ".bai"):
+        if os.path.getctime(bam_file + ".bai") < os.path.getctime(bam_file):
+            logger.warning("your bam index file is older than bam")
+            logger.warning("these must NOT match, so indexing again")
+            cmd = " ".join(["samtools",
+                            "index",
+                            bam_file])
     if not os.path.isfile(bam_file + ".bai"):
         logger.warning("you have not indexed you bam file. I will do it.")
         cmd = " ".join(["samtools",
