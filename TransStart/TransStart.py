@@ -294,7 +294,7 @@ def run_samtools_depth(scaffold_start_stop, bam_file, outfile, logger):
     cmd = " ".join(["samtools",
                     "depth",
                     "-r",
-                    scaffold_start_stop,
+                    scaffold_start_stop.rstrip(),
                     bam_file,
                     ">",
                     outfile])
@@ -408,6 +408,7 @@ def TranscriptionFind(genome, gene_start_stop_dict,
             start =int(start)
             stop = int(stop)
             scaffold = gene_scaff_dict[gene]
+            scaffold = scaffold.rstrip()
             direction = gene_direction[gene]
             exon_start_exon_stop = gene_first_exon_dict[gene]
             exon_start, exon_stop = exon_start_exon_stop.split("\t")
