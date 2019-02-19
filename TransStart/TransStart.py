@@ -425,9 +425,11 @@ def TranscriptionFind(genome, gene_start_stop_dict,
                                                scaffold + "_depth.tmp")
             scaffold_start_stop = "%s:%s-%s" %(scaffold, start, stop)
             # call the func to run
-            if "Y" in keep_gene_depth.upper():
-                pipe = run_samtools_depth(scaffold_start_stop, bam_file,
-                                          depth_filename, logger)
+            pipe = run_samtools_depth(scaffold_start_stop, bam_file,
+                                      depth_filename, logger)
+            if "Y" not in keep_gene_depth.upper():
+                os.remove(depth_filename)
+
             if scaffold_depth_file not in depth_set:
                 depth_set.add(scaffold_depth_file)
                 # print("not seen %s" % scaffold)
