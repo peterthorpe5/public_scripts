@@ -447,8 +447,7 @@ def TranscriptionFind(genome, gene_start_stop_dict,
 
             all_coverage = [0] * len(seq_record.seq)
             if "Y" in test_mode.upper():
-                logger.info(" len all cov = ", len(all_coverage),
-                            "all cov first 10 = ", all_coverage[:10])
+                logger.info(" len all cov = ", len(all_coverage))
             all_coverage = fill_in_zero_cov(all_coverage,
                                             scaffold_depth_file)
             # print("seq = ", len(seq_record.seq))
