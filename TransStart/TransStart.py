@@ -279,6 +279,11 @@ def fill_in_zero_cov(all_coverage, depth_file):
     or not returned by"""
     f_in = open(depth_file, "r")
     for line in f_in:
+        if line.startswith("#"):
+            continue
+        if not line.strip():
+            continue # if the last line is blank
+        
         # print(depth_filename)
         ref, possition, coverage = line.rstrip("\n").split("\t")
         possition = int(possition) - 1
