@@ -379,7 +379,8 @@ def TranscriptionFind(genome, gene_start_stop_dict,
                       bam, stand_dev_threshold, walk, min_value,
                       interation_value, out_file, logger, TITLE,
                       keep_gene_depth,
-                      default_cutoff):
+                      default_cutoff,
+                      test_mode):
     """iterate through gene in gff. Call samtools, get expression
     Does the expression fall within X standard deviations when compare
     to the first exon?
@@ -440,9 +441,14 @@ def TranscriptionFind(genome, gene_start_stop_dict,
             # assign zeros to all positions of the transcript,
             # as samtool does no report zeros
             seq_record = genome_index[scaffold]
-            # print(scaffold, gene, len(seq_record.seq), scaffold_depth_file)
+            if "Y" in test_mode.upper():
+                print("scaff = ", scaffold, "len scaffold = ", len(seq_record.seq),
+                      "gene = ", gene, "depth scaff out = ", scaffold_depth_file)
 
             all_coverage = [0] * len(seq_record.seq)
+            if "Y" in test_mode.upper():
+                print(" len all cov = ", len(all_cov),
+                      "all cov first 10 = ", all_coverage[:10])
             all_coverage = fill_in_zero_cov(all_coverage,
                                             scaffold_depth_file)
             # print("seq = ", len(seq_record.seq))
@@ -722,6 +728,11 @@ parser.add_option("-o", "--out",
                   help="Output filename (default: results.out)",
                   metavar="FILE")
 
+parser.add_option("--test",
+                  dest="test_mode",
+                  default="No",
+                  help="testing mode yes or no")
+
 (options, args) = parser.parse_args()
 
 
@@ -745,6 +756,8 @@ interation_value = int(options.interation_value)
 min_value = int(options.min_value)
 # --default_cutoff
 default_cutoff = options.default_cutoff
+# test_mode
+test_mode = options.test_mode
 
 if not logger:
     log_out = "%s_%s_std.log" % (outfile, stand_dev_threshold)
@@ -827,6 +840,7 @@ if __name__ == '__main__':
                        "exon mean",
                        "exon std",
                        "coding direction\n"])
+    # main function
     TranscriptionFind(genome,
                       gene_start_stop_dict,
                       gene_first_exon_dict,
@@ -843,7 +857,8 @@ if __name__ == '__main__':
                       logger,
                       TITLE,
                       options.keep_gene_depth,
-                      default_cutoff)
+                      default_cutoff,
+                      test_mode)
     out_file_gff = outfile.split(".")[0] + "based_on_min_value.gff"
     out_file_gff2 = outfile.split(".")[0] + "based_on_SD_threshold.gff"
     sort_cmd = "sort -k1n -k9n %s > temp1.gff" % out_file_gff
