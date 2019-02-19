@@ -425,20 +425,18 @@ def TranscriptionFind(genome, gene_start_stop_dict,
                                                scaffold + "_depth.tmp")
             scaffold_start_stop = "%s:%s-%s" %(scaffold, start, stop)
             # call the func to run
-            pipe = run_samtools_depth(scaffold_start_stop, bam_file,
-                                      depth_filename, logger)
-            if "Y" not in keep_gene_depth.upper():
-                os.remove(depth_filename)
-
             if scaffold_depth_file not in depth_set:
                 depth_set.add(scaffold_depth_file)
                 # print("not seen %s" % scaffold)
                 pipe = run_samtools_depth(scaffold, bam_file,
                                           scaffold_depth_file, logger)
-    ##        scaffold_exon_start_stop = "%s:%s-%s" %(scaffold, exon_start,
-    ##                                                exon_stop)
-    ##        pipe = run_samtools_depth(scaffold_exon_start_stop, bam_file,
-    ##                                  exon_depth_file, logger)
+            # call the depth for the gene specifically
+            pipe = run_samtools_depth(scaffold_start_stop, bam_file,
+                                      depth_filename, logger)
+            if "Y" not in keep_gene_depth.upper():
+                # can keep the gene depth file, or not
+                os.remove(depth_filename)
+
             # assign zeros to all positions of the transcript,
             # as samtool does no report zeros
             seq_record = genome_index[scaffold]
