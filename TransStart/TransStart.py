@@ -182,6 +182,7 @@ def index_gff(gff, logger):
         scaff, source, feature, start, stop, score, \
               direction, frame, gene_info = line.split("\t")
         gene = split_gene_name(gene_info)
+        scaff = scaff.rstrip()
         if feature == "gene":
             gene_gff_line[gene] = line
             gene_set.add(gene)
