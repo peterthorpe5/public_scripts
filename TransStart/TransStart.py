@@ -442,17 +442,17 @@ def TranscriptionFind(genome, gene_start_stop_dict,
             # as samtool does no report zeros
             seq_record = genome_index[scaffold]
             if "Y" in test_mode.upper():
-                outstr = " ".join(["scaff = ", scaffold,
-                                   "len scaffold = ",
-                                   str(len(seq_record.seq)),
-                                   "gene = ", gene,
+                outstr = " ".join(["scaff = %s" % scaffold,
+                                   "len scaffold = %d " % (len(seq_record.seq)),
+                                   "gene = %s " % gene,
                                    "depth scaff out = ",
                                    scaffold_depth_file])
                 logger.info(outstr)
 
             all_coverage = [0] * len(seq_record.seq)
             if "Y" in test_mode.upper():
-                logger.info(" len all cov = ", len(all_coverage))
+                outstr = "length all_cov = %d" % len(all_coverage)
+                logger.info(outstr)
             all_coverage = fill_in_zero_cov(all_coverage,
                                             scaffold_depth_file)
             # print("seq = ", len(seq_record.seq))
