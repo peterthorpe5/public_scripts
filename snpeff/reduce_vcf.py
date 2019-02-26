@@ -35,8 +35,8 @@ def splitInfo(info, gene_prefix):
         if geneextra.startswith(gene_prefix):
             gene = geneextra
         else:
-            geneextra = geneextra.split("AC")[1]
-            gene = "AC" + geneextra
+            geneextra = geneextra.split(gene_prefix)[1]
+            gene = gene_prefix + geneextra
     return modifier_type, modifier, gene
 
 def haplotype_reduce(incol):
