@@ -35,10 +35,11 @@ def splitInfo(info, gene_prefix):
         if geneextra.startswith(gene_prefix):
             gene = geneextra
         if len(geneextra.split(gene_prefix)) > 1:
-            geneextra = geneextra.split(gene_prefix)[1]
-            gene = gene_prefix + geneextra
-        else:
-            gene = "NA"
+            try:
+                geneextra = geneextra.split(gene_prefix)[1]
+                gene = gene_prefix + geneextra
+            except:
+                gene = "NA"
     return modifier_type, modifier, gene
 
 def haplotype_reduce(incol):
