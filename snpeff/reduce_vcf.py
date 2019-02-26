@@ -34,7 +34,7 @@ def splitInfo(info, gene_prefix):
             return modifier_type, modifier, gene
         if geneextra.startswith(gene_prefix):
             gene = geneextra
-        if geneextra.split(gene_prefix):
+        if len(geneextra.split(gene_prefix)) > 1:
             geneextra = geneextra.split(gene_prefix)[1]
             gene = gene_prefix + geneextra
         else:
