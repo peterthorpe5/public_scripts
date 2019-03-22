@@ -1,0 +1,24 @@
+##reference=file:///cluster/gjb_lab/mgierlinski/projects/aphids/genome/A.pisum_genome_AphidBase_fixed.fasta
+##SnpEffVersion="4.3t (build 2017-11-24 10:18), by Pablo Cingolani"
+##SnpEffCmd="SnpEff  Acyrthosiphon_pisum combined_recal.prune10.vcf "
+##IMPACT=<ID=ANN,Number=.,Type=String,Description="Functional annotations: 'Allele | Annotation | Annotation_Impact | Gene_Name | Gene_ID | Feature_Type | Feature_ID | Transcript_BioType | Rank | HGVS.c | HGVS.p | cDNA.pos / cDNA.length | CDS.pos / CDS.length | AA.pos / AA.length | Distance | ERRORS / WARNINGS / IMPACT' ">
+##IMPACT=<ID=LOF,Number=.,Type=String,Description="Predicted loss of function effects for this variant. Format: 'Gene_Name | Gene_ID | Number_of_transcripts_in_gene | Percent_of_transcripts_affected'">
+##IMPACT=<ID=NMD,Number=.,Type=String,Description="Predicted nonsense mediated decay effects for this variant. Format: 'Gene_Name | Gene_ID | Number_of_transcripts_in_gene | Percent_of_transcripts_affected'">
+#CHROM	POS	ID	REF	ALT	QUAL	SNP_location	IMPACT	FORMAT	F1avr	F1vir	F2avr	F2vir	N116	PSO1	XP1	XP9
+GL373349	177	ACYPI088070	G	T	4796.34	stop_gained	HIGH	GT:AD:DP:GQ:PGT:PID:PL	0/1	0/1	0/1	./.	0/1	1/1	0/1	1/1
+GL373349	195	ACYPI088070	A	AC	5285.55	frameshift_variant	HIGH	GT:AD:DP:GQ:PGT:PID:PL	0/1	0/0	0/1	./.	0/1	1/1	0/1	1/1
+GL373349	275	ACYPI088070	C	A	2355.28	stop_gained	HIGH	GT:AD:DP:GQ:PGT:PID:PL	0/0	0/0	0/1	0/0	0/0	0/1	0/1	0/1
+GL373402	43	ACYPI084356	GT	G	461.36	frameshift_variant	HIGH	GT:AD:DP:GQ:PGT:PID:PL	./.	./.	./.	./.	./.	1/1	1/1	./.
+GL373402	45	ACYPI084356	CT	C	461.36	frameshift_variant	HIGH	GT:AD:DP:GQ:PGT:PID:PL	./.	./.	./.	./.	./.	1/1	1/1	./.
+GL373402	356	ACYPI084356	C	CAT	931.89	frameshift_variant	HIGH	GT:AD:DP:GQ:PGT:PID:PL	0/0	0/0	0/0	0/1	0/0	0/0	0/1	0/1
+GL373449	728	ACYPI085248	A	AATTC	135.23	frameshift_variant	HIGH	GT:AD:DP:GQ:PGT:PID:PL	0/0	0/0	0/0	0/0	0/1	0/0	0/0	0/0
+GL373449	1033	ACYPI085248	A	AG	7450.26	frameshift_variant	HIGH	GT:AD:DP:GQ:PL	1/1	1/1	1/1	1/1	1/1	1/1	1/1	1/1
+GL373451	491	ACYPI062932	C	CA	275.99	frameshift_variant	HIGH	GT:AD:DP:GQ:PL	./.	./.	./.	./.	0/0	1/1	0/1	0/0
+GL373456	35	ACYPI20345	G	GT	172.51	frameshift_variant	HIGH	GT:AD:DP:GQ:PL	./.	0/0	0/0	0/0	0/1	0/0	0/0	0/0
+GL373473	259	ACYPI52731	T	A	6763.28	stop_gained	HIGH	GT:AD:DP:GQ:PGT:PID:PL	0/1	0/1	0/1	1/1	0/1	0/0	0/1	0/1
+GL373473	359	ACYPI52731	C	T	10473.15	stop_gained	HIGH	GT:AD:DP:GQ:PGT:PID:PL	0/1	1/1	0/1	1/1	0/1	0/0	1/1	0/1
+GL373476	495	ACYPI064682	G	A	99.27	stop_gained	HIGH	GT:AD:DP:GQ:PL	0/0	0/0	0/0	0/0	0/1	0/0	0/0	0/0
+GL373476	716	ACYPI064682	A	ACCACCACCCCCTCTTCT	1101.46	frameshift_variant	HIGH	GT:AD:DP:GQ:PGT:PID:PL	0/0	./.	./.	0/0	0/0	0/0	1/1	0/0
+GL373499	439	ACYPI083055	GA	G	1701.89	frameshift_variant	HIGH	GT:AD:DP:GQ:PGT:PID:PL	0/1	0/0	0/0	0/0	0/1	0/0	0/0	0/1
+GL373541	347	ACYPI089300	C	CA	3594.26	frameshift_variant	HIGH	GT:AD:DP:GQ:PGT:PID:PL	1/1	1/1	./.	./.	1/1	1/1	1/1	./.
+GL373541	352	ACYPI089300	T	TA	3594.26	frameshift_variant	HIGH	GT:AD:DP:GQ:PGT:PID:PL	1/1	1/1	./.	./.	1/1	1/1	1/1	./.

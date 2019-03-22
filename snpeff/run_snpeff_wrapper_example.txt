@@ -1,0 +1,16 @@
+
+conda activate python36
+
+python make_combined_fa_gff.py --genome HM005-15May2015-release.fasta --gff ./gene_predictions/medicago_DZA.gff3 -o test.gff
+
+or
+
+bash -c "cat medicago_DZA.gff3; echo '##FASTA' ; cat HM005-15May2015-release.fasta" > test.gff
+
+
+conda activate snpeffwrapper
+
+
+snpEffBuildAndRun --java-exec /usr/bin/java --snpeff-exec /shelf/apps/pjt6/conda/envs/snpeffwrapper/bin/snpEff -o DZA_HM005_medicago_RNAseq_SNPS_0.5MaxMiss_Mac3.vcf.recode.snpEff.vcf test.gff DZA_HM005_medicago_RNAseq_SNPS_0.5MaxMiss_Mac3.vcf.recode.vcf
+
+
