@@ -207,7 +207,7 @@ def create_gff_line(gffline, gene, TranStart, TranStop):
               direction, frame, gene_info = gffline.split("\t")
     gene_info = gene + "_predicted_UTR\n"
     feature = "UTR"
-    source = "TranStart"
+    source = "TransEnd"
     if direction == "+":
         UTR_start = str(TranStart)
         UTR_stop = str(start)
