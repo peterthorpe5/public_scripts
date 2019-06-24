@@ -7,7 +7,6 @@
 
 # this version is if the gff has no exon info
 
-
 # imports
 import subprocess
 import sys
@@ -32,7 +31,8 @@ if sys.version_info[:1] != (3,):
     print ("currently using:", sys.version_info,
            "  version of python")
     raise ImportError("Python 3.x is required for TranStart.py")
-    print ("if you want to force it to use python 2 replace this line"
+    print ("if you want to force it to use python 2 at your own risk "
+           " replace this line "
            " sys.version_info[:1] != (3) with "
            " sys.version_info[:1] != (2) ")
     sys.exit(1)
@@ -305,28 +305,34 @@ def run_samtools_depth(scaffold_start_stop, bam_file, outfile, logger):
     return pipe
 
 
-def walk_away_from_start(start, stop,
-                         direction, walk=3):
-    """function to walk away from the start to get the coverage stats"""
+def walk_away_from_end(start, stop,
+                       direction, walk=3):
+    """function to walk away from the end to get the coverage stats"""
     if direction == "+":
-        current_start = int(start) - int(walk)
-        current_end = int(start)
+        # changed as this is the gene end
+        current_start = int(end)
+        current_end = int(end)  + int(walk)
     else:
         assert direction == "-", "direction does sign error!"
-        current_end = stop + int(walk)
-        current_start = int(stop)
+        current_end = start
+        current_start = int(start) - int(walk)
     return current_start, current_end
 
 
-def add_one_direct_aware(current_start, current_end, interation_value,
-                               direction):
-    """function to alter the current start and end values based on the direction"""
+def add_one_direct_aware(current_start, current_end,
+                         interation_value,
+                         direction):
+    """function to alter the current start and end values based on the direction
+    the interation value is the size of the window to walk. default = 1
+    as this is finding 3 prime UTR it walks away from the end of the gene
+    returns new start and stop coord to test coverage.
+    Iput is the current start and stop values. """
     if direction == "+":
-        current_start = current_start - interation_value
-        current_end = current_end - interation_value
-    else:
         current_start = current_start + interation_value
         current_end = current_end + interation_value
+    else:
+        current_start = current_start - interation_value
+        current_end = current_end - interation_value
     return current_start, current_end
 
 
@@ -410,9 +416,9 @@ def TranscriptionFind(genome, gene_start_stop_dict,
             stop = int(stop)
             scaffold = gene_scaff_dict[gene]
             direction = gene_direction[gene]
-            #exon_start_exon_stop = gene_first_exon_dict[gene]
-            #exon_start, exon_stop = exon_start_exon_stop.split("\t")
-            exon_start =int(start)
+            # exon_start_exon_stop = gene_first_exon_dict[gene]
+            # exon_start, exon_stop = exon_start_exon_stop.split("\t")
+            exon_start = int(start)
             exon_stop = int(stop)
             
             # call samtools to get the depth per posititon for
@@ -470,7 +476,7 @@ def TranscriptionFind(genome, gene_start_stop_dict,
             # logger.info(out_str)
             cut_off = exon_mean - (int(stand_dev_threshold) * exon_stdDev)
             position_mean_cov = mean(all_coverage[exon_start:exon_stop])
-            # walk in 3 bases to find the position where coverage sig drops
+            # walk out (gene end!) 3 bases to find the position where coverage sig drops
             current_end = stop
             current_start = start
             position_mean_cov = 10000000000000
@@ -479,9 +485,9 @@ def TranscriptionFind(genome, gene_start_stop_dict,
                 cut_off = default_cutoff
             write = "yes"
             while position_mean_cov >= cut_off:
-                current_start, current_end = walk_away_from_start(current_start,
-                                                                  current_end,
-                                                                  direction, walk)
+                current_start, current_end = walk_away_from_end(current_start,
+                                                                current_end,
+                                                                direction, walk)
                 current_start, current_end = add_one_direct_aware(current_start,
                                                                   current_end,
                                                                   interation_value,
@@ -514,7 +520,7 @@ def TranscriptionFind(genome, gene_start_stop_dict,
             position_mean_cov = 10000000000
             write_min_value = "ok"
             while position_mean_cov >= int(min_value):
-                current_start1, current_end1 = walk_away_from_start(current_start1,
+                current_start1, current_end1 = walk_away_from_end(current_start1,
                                                                     current_end1,
                                                                     direction, walk)
                 current_start1, current_end1 = add_one_direct_aware(current_start1,

@@ -5,9 +5,6 @@
 # why? Start of transcription is interesting! THIS IS NOT finding the start
 # of coding squence. but where transcription binds and starts
 
-# this version is if the gff has no exon info
-
-
 # imports
 import subprocess
 import sys
@@ -158,6 +155,8 @@ def split_gene_name(gene):
     can be messed around with in gff files"""
     gene_info = gene.replace("ID=", "").split()[0]
     gene_info = gene_info.split(".t")[0]
+    if "-T" in gene_info:
+            gene_info = gene_info.split("-T")[0] # funannotate models
     gene_info = gene_info.replace(";", "")
     gene_info = gene_info.replace("Parent=", "")
     gene_info = gene_info.split("Note=")[0]
@@ -183,6 +182,7 @@ def index_gff(gff, logger):
         scaff, source, feature, start, stop, score, \
               direction, frame, gene_info = line.split("\t")
         gene = split_gene_name(gene_info)
+        scaff = scaff.rstrip()
         if feature == "gene":
             gene_gff_line[gene] = line
             gene_set.add(gene)
@@ -279,6 +279,10 @@ def fill_in_zero_cov(all_coverage, depth_file):
     or not returned by"""
     f_in = open(depth_file, "r")
     for line in f_in:
+        if line.startswith("#"):
+            continue
+        if not line.strip():
+            continue # if the last line is blank
         # print(depth_filename)
         ref, possition, coverage = line.rstrip("\n").split("\t")
         possition = int(possition) - 1
@@ -295,7 +299,7 @@ def run_samtools_depth(scaffold_start_stop, bam_file, outfile, logger):
     cmd = " ".join(["samtools",
                     "depth",
                     "-r",
-                    scaffold_start_stop,
+                    scaffold_start_stop.rstrip(),
                     bam_file,
                     ">",
                     outfile])
@@ -305,28 +309,34 @@ def run_samtools_depth(scaffold_start_stop, bam_file, outfile, logger):
     return pipe
 
 
-def walk_away_from_start(start, stop,
-                         direction, walk=3):
-    """function to walk away from the start to get the coverage stats"""
+def walk_away_from_end(start, stop,
+                       direction, walk=3):
+    """function to walk away from the end to get the coverage stats"""
     if direction == "+":
-        current_start = int(start) - int(walk)
-        current_end = int(start)
+        # changed as this is the gene end
+        current_start = int(end)
+        current_end = int(end)  + int(walk)
     else:
         assert direction == "-", "direction does sign error!"
-        current_end = stop + int(walk)
-        current_start = int(stop)
+        current_end = start
+        current_start = int(start) - int(walk)
     return current_start, current_end
 
 
-def add_one_direct_aware(current_start, current_end, interation_value,
-                               direction):
-    """function to alter the current start and end values based on the direction"""
+def add_one_direct_aware(current_start, current_end,
+                         interation_value,
+                         direction):
+    """function to alter the current start and end values based on the direction
+    the interation value is the size of the window to walk. default = 1
+    as this is finding 3 prime UTR it walks away from the end of the gene
+    returns new start and stop coord to test coverage.
+    Iput is the current start and stop values. """
     if direction == "+":
-        current_start = current_start - interation_value
-        current_end = current_end - interation_value
-    else:
         current_start = current_start + interation_value
         current_end = current_end + interation_value
+    else:
+        current_start = current_start - interation_value
+        current_end = current_end - interation_value
     return current_start, current_end
 
 
@@ -379,7 +389,8 @@ def TranscriptionFind(genome, gene_start_stop_dict,
                       bam, stand_dev_threshold, walk, min_value,
                       interation_value, out_file, logger, TITLE,
                       keep_gene_depth,
-                      default_cutoff):
+                      default_cutoff,
+                      test_mode):
     """iterate through gene in gff. Call samtools, get expression
     Does the expression fall within X standard deviations when compare
     to the first exon?
@@ -409,12 +420,12 @@ def TranscriptionFind(genome, gene_start_stop_dict,
             start =int(start)
             stop = int(stop)
             scaffold = gene_scaff_dict[gene]
+            scaffold = scaffold.rstrip()
             direction = gene_direction[gene]
-            #exon_start_exon_stop = gene_first_exon_dict[gene]
-            #exon_start, exon_stop = exon_start_exon_stop.split("\t")
-            exon_start =int(start)
-            exon_stop = int(stop)
-            
+            exon_start_exon_stop = gene_first_exon_dict[gene]
+            exon_start, exon_stop = exon_start_exon_stop.split("\t")
+            exon_start =int(exon_start)
+            exon_stop = int(exon_stop)
             # call samtools to get the depth per posititon for
             # the transcript of interest
             depth_filename = os.path.join("temp_reads_per_base",
@@ -425,24 +436,33 @@ def TranscriptionFind(genome, gene_start_stop_dict,
                                                scaffold + "_depth.tmp")
             scaffold_start_stop = "%s:%s-%s" %(scaffold, start, stop)
             # call the func to run
-            if "Y" in keep_gene_depth.upper():
-                pipe = run_samtools_depth(scaffold_start_stop, bam_file,
-                                          depth_filename, logger)
             if scaffold_depth_file not in depth_set:
                 depth_set.add(scaffold_depth_file)
                 # print("not seen %s" % scaffold)
                 pipe = run_samtools_depth(scaffold, bam_file,
                                           scaffold_depth_file, logger)
-    ##        scaffold_exon_start_stop = "%s:%s-%s" %(scaffold, exon_start,
-    ##                                                exon_stop)
-    ##        pipe = run_samtools_depth(scaffold_exon_start_stop, bam_file,
-    ##                                  exon_depth_file, logger)
+            # call the depth for the gene specifically
+            pipe = run_samtools_depth(scaffold_start_stop, bam_file,
+                                      depth_filename, logger)
+            if "Y" not in keep_gene_depth.upper():
+                # can keep the gene depth file, or not
+                os.remove(depth_filename)
+
             # assign zeros to all positions of the transcript,
             # as samtool does no report zeros
             seq_record = genome_index[scaffold]
-            # print(scaffold, gene, len(seq_record.seq), scaffold_depth_file)
+            if "Y" in test_mode.upper():
+                outstr = " ".join(["scaff = %s" % scaffold,
+                                   "len scaffold = %d " % (len(seq_record.seq)),
+                                   "gene = %s " % gene,
+                                   "depth scaff out = ",
+                                   scaffold_depth_file])
+                logger.info(outstr)
 
             all_coverage = [0] * len(seq_record.seq)
+            if "Y" in test_mode.upper():
+                outstr = "length all_cov = %d" % len(all_coverage)
+                logger.info(outstr)
             all_coverage = fill_in_zero_cov(all_coverage,
                                             scaffold_depth_file)
             # print("seq = ", len(seq_record.seq))
@@ -479,7 +499,7 @@ def TranscriptionFind(genome, gene_start_stop_dict,
                 cut_off = default_cutoff
             write = "yes"
             while position_mean_cov >= cut_off:
-                current_start, current_end = walk_away_from_start(current_start,
+                current_start, current_end = walk_away_from_end(current_start,
                                                                   current_end,
                                                                   direction, walk)
                 current_start, current_end = add_one_direct_aware(current_start,
@@ -514,9 +534,9 @@ def TranscriptionFind(genome, gene_start_stop_dict,
             position_mean_cov = 10000000000
             write_min_value = "ok"
             while position_mean_cov >= int(min_value):
-                current_start1, current_end1 = walk_away_from_start(current_start1,
-                                                                    current_end1,
-                                                                    direction, walk)
+                current_start1, current_end1 = walk_away_from_end(current_start1,
+                                                                  current_end1,
+                                                                  direction, walk)
                 current_start1, current_end1 = add_one_direct_aware(current_start1,
                                                                     current_end1,
                                                                     interation_value,
@@ -722,6 +742,11 @@ parser.add_option("-o", "--out",
                   help="Output filename (default: results.out)",
                   metavar="FILE")
 
+parser.add_option("--test",
+                  dest="test_mode",
+                  default="No",
+                  help="testing mode yes or no")
+
 (options, args) = parser.parse_args()
 
 
@@ -745,6 +770,8 @@ interation_value = int(options.interation_value)
 min_value = int(options.min_value)
 # --default_cutoff
 default_cutoff = options.default_cutoff
+# test_mode
+test_mode = options.test_mode
 
 if not logger:
     log_out = "%s_%s_std.log" % (outfile, stand_dev_threshold)
@@ -787,6 +814,13 @@ if __name__ == '__main__':
     if not os.path.isfile(bam_file):
         logger.warning("Input BAM file not found: %s" % bam_file)
         sys.exit("Input BAM file not found: %s" % bam_file)
+    if os.path.isfile(bam_file + ".bai"):
+        if os.path.getctime(bam_file + ".bai") < os.path.getctime(bam_file):
+            logger.warning("your bam index file is older than bam")
+            logger.warning("these must NOT match, so indexing again")
+            cmd = " ".join(["samtools",
+                            "index",
+                            bam_file])
     if not os.path.isfile(bam_file + ".bai"):
         logger.warning("you have not indexed you bam file. I will do it.")
         cmd = " ".join(["samtools",
@@ -820,6 +854,7 @@ if __name__ == '__main__':
                        "exon mean",
                        "exon std",
                        "coding direction\n"])
+    # main function
     TranscriptionFind(genome,
                       gene_start_stop_dict,
                       gene_first_exon_dict,
@@ -836,7 +871,8 @@ if __name__ == '__main__':
                       logger,
                       TITLE,
                       options.keep_gene_depth,
-                      default_cutoff)
+                      default_cutoff,
+                      test_mode)
     out_file_gff = outfile.split(".")[0] + "based_on_min_value.gff"
     out_file_gff2 = outfile.split(".")[0] + "based_on_SD_threshold.gff"
     sort_cmd = "sort -k1n -k9n %s > temp1.gff" % out_file_gff
