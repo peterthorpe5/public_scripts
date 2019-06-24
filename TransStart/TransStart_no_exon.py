@@ -306,13 +306,19 @@ def run_samtools_depth(scaffold_start_stop, bam_file, outfile, logger):
 
 
 def walk_away_from_start(start, stop,
-                         direction, walk=3):
+                         direction,
+                         interation_value=1,
+                         walk=3):
     """function to walk away from the start to get the coverage stats"""
     if direction == "+":
+        # we assume that walk has already been added. 
+        start = int(start) + int(walk) - interation_value
         current_start = int(start) - int(walk)
         current_end = int(start)
     else:
         assert direction == "-", "direction does sign error!"
+        # we assume that walk has already been added. 
+        stop = int(stop) - int(walk) + interation_value
         current_end = stop + int(walk)
         current_start = int(stop)
     return current_start, current_end
@@ -481,7 +487,9 @@ def TranscriptionFind(genome, gene_start_stop_dict,
             while position_mean_cov >= cut_off:
                 current_start, current_end = walk_away_from_start(current_start,
                                                                   current_end,
-                                                                  direction, walk)
+                                                                  direction, 
+                                                                  interation_value,
+                                                                  walk)
                 current_start, current_end = add_one_direct_aware(current_start,
                                                                   current_end,
                                                                   interation_value,
@@ -516,7 +524,8 @@ def TranscriptionFind(genome, gene_start_stop_dict,
             while position_mean_cov >= int(min_value):
                 current_start1, current_end1 = walk_away_from_start(current_start1,
                                                                     current_end1,
-                                                                    direction, walk)
+                                                                    direction, interation_value,
+                                                                    walk)
                 current_start1, current_end1 = add_one_direct_aware(current_start1,
                                                                     current_end1,
                                                                     interation_value,

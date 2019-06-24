@@ -310,13 +310,19 @@ def run_samtools_depth(scaffold_start_stop, bam_file, outfile, logger):
 
 
 def walk_away_from_start(start, stop,
-                         direction, walk=3):
+                         direction,
+                         interation_value=1,
+                         walk=3):
     """function to walk away from the start to get the coverage stats"""
     if direction == "+":
+        # we assume that walk has already been added. 
+        start = int(start) + int(walk) - interation_value
         current_start = int(start) - int(walk)
         current_end = int(start)
     else:
         assert direction == "-", "direction does sign error!"
+        # we assume that walk has already been added. 
+        stop = int(stop) - int(walk) + interation_value
         current_end = stop + int(walk)
         current_start = int(stop)
     return current_start, current_end
