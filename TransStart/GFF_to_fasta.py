@@ -45,7 +45,7 @@ def index_gene_scaffold_coordinates(coordinate_file):
         else:
             scaf, source, feature, start, stop, score, \
               direction, frame, gene_info = gff_info.split("\t")
-            scaffold_cordinates = [scaf, start, stop, gene_info]
+            scaffold_cordinates = [scaf, start, stop, direction, gene_info]
             coordinate_dict[gene] = scaffold_cordinates
     return coordinate_dict
 
