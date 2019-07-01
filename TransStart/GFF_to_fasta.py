@@ -33,10 +33,13 @@ def index_gene_scaffold_coordinates(coordinate_file):
     for gff_info in genes_coordinate:
         error = "coord file fields wrong length, should be 9"
         assert len(gff_info.split("\t")) == 9 , "%s" % error
-        gene = gff_info.split("\t")[4]
-        if ";" in gene:
-            gene = gene.replace("ID=gene:", "")
-            gene = gene.split(";")[0]
+        gene = gff_info.split("\t")[-1]
+        gene = gene.replace("ID=gene:", "")
+        gene = gene.replace("gene:", "")
+        gene = gene.split(";")[0]
+        gene = gene.split("Onto")[0]
+        if "ncRNA" in gene:
+            continue
         # check each gene only represented once
         assert gene not in gene_list, ("duplicate found %s. Reformat -C file." % gene)
         gene_list.append(gene)
@@ -46,7 +49,7 @@ def index_gene_scaffold_coordinates(coordinate_file):
         else:
             scaf, source, feature, start, stop, score, \
               direction, frame, gene_info = gff_info.split("\t")
-            scaffold_cordinates = [scaf, start, stop, direction, gene_info]
+            scaffold_cordinates = [scaf, start, stop, direction, gene]
             coordinate_dict[gene] = scaffold_cordinates
     return coordinate_dict
 
@@ -126,7 +129,8 @@ def iterate_coordinate_dict(coordinate_dict,
                                      "genic regions of",
                                      gene,
                                      "on scaffold",
-                                     scaffold])
+                                     scaffold,
+                                     str(vals)])
                     logger.warning(warn)
                     data = coordinate_dict[gene_name]
                     if direction == "upstream":
@@ -183,23 +187,29 @@ def gff_to_fasta(gff, genome, coordinate_dict, min_length, Max_length,
                 continue
             scaff, source, feature, start, stop, score, \
             direction, frame, gene_info = split_line(line)
+            gene_info = gene_info.split("Onto")[0]
             seq_record = genome_database[scaff]
             starting_UTR_count += 1
             if direction == "+":
                 bind_seq = seq_record.seq[(start - upstream):(start + into_TSS)]
-                print("start ;", start, "stop ;", stop)
+                out = "\t".join([gene_info, "start ;", str(start), direction, "adjust new values: ", str(upstream), str(into_TSS)])
+                logger.info(out)
                 new_co_stop = start - upstream
                 new_co_start = start + into_TSS
-                print("new_co_start ;", new_co_start, "new_co_stop ;", new_co_stop)
+                out = "\t".join(["new_co_start ;", str(new_co_start), "new_co_stop ;", str(new_co_stop), "+"])
+                logger.info(out)
 
                 UTR = seq_record.seq[new_co_start:new_co_stop]
                 # check the new coordinate does not hit a gene
-                new_start = iterate_coordinate_dict(cordinate_dictionary,
-                                                    gene_name,
+                new_start = iterate_coordinate_dict(coordinate_dict,
+                                                    gene_info,
                                                     scaff,
                                                     new_co_start,
                                                     logger,
                                                     "upstream")
+                out = "\t".join(["new_start ; ", str(new_start),  direction ])
+                logger.info(out)
+
                 if new_start:
                     new_start = int(new_start)
                     warn = " ".join([gene_name,
@@ -211,7 +221,8 @@ def gff_to_fasta(gff, genome, coordinate_dict, min_length, Max_length,
                     logger.warning(warn)
                     # assign a new region for the seq record . seq
                     UTR = seq_record.seq[new_start:new_co_stop]
-                    print("new_start ;", new_start, "new_co_stop ;", new_co_stop)
+                    out = "\t".join(["new_start ;", str(new_start), "new_co_stop ;", str(new_co_stop)])
+                    logger.info(out)
             if direction == "-":
                 UTR = reverse_complement(seq_record.seq[start:stop])
                 bind_seq = reverse_complement(seq_record.seq[(stop - into_TSS)
@@ -219,13 +230,30 @@ def gff_to_fasta(gff, genome, coordinate_dict, min_length, Max_length,
                 new_co_start = stop - upstream
                 new_co_stop = stop + into_TSS
                 UTR = reverse_complement(seq_record.seq[new_co_start:new_co_stop])
+                out = (gene_info, "start ;", start, direction, "adjust new values: ", upstream, into_TSS)
+                logger.info(out)
+                out = "\t".join(["new_co_start ;", str(new_co_start), "new_co_stop ;", str(new_co_stop), "-"])
+                logger.info(out)
                 ##################################
-                new_start = iterate_coordinate_dict(cordinate_dictionary,
-                                                    gene_name,
+                new_stop = iterate_coordinate_dict(coordinate_dict,
+                                                    gene_info,
                                                     scaff,
-                                                    new_co_start,
+                                                    new_co_stop,
                                                     logger,
                                                     "upstream")
+                if new_stop:
+                    new_stop = int(new_stop)
+                    warn = " ".join([gene_name,
+                                     "query request is going to return",
+                                     "a region of a gene",
+                                     "\n",
+                                     "going to return upto, new_stop: ",
+                                     str(new_stop)])
+                    logger.warning(warn)
+                    # assign a new region for the seq record . seq
+                    UTR = reverse_complement(seq_record.seq[new_co_start:new_stop])
+                    UTR = seq_record.seq[new_start:new_stop]
+                    logger.info("new_start ;", new_start, "new_stop ;", new_stop)
                 ###########
             coordinate_info = "\tScaffold: %s UTR_and_TSS: %d:%d  Coding_direction: %s  " % (scaff,
                                                                                  start,
