@@ -660,4 +660,3 @@ if __name__ == '__main__':
                               user_defined_genic)
     end_time=time.time()
     logger.info('that took, %.1f' % (end_time - start_time))
-

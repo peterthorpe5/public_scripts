@@ -10,9 +10,44 @@ from Bio.Seq import reverse_complement
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio import SeqIO
+import logging
+import logging.handlers
 
 print("""Warning: This is made for a specific purpose. We specific data
       If you are using it, check it works for you!!""")
+
+
+def index_gene_scaffold_coordinates(coordinate_file):
+    """function to return dictionary genes and coordinates
+    without directions
+    gene = scaffold_cordinates"""
+    coordinate_dict = dict()
+    data = open(coordinate_file, "r")
+    genes_coordinate = data.readlines()
+    genes_coordinate = [line.replace("ID=", "").rstrip() \
+                        for line in genes_coordinate
+                        if line.rstrip() != "" if not line.startswith("#")]
+    gene_list = []
+    data.close()
+    for gff_info in genes_coordinate:
+        error = "coord file fields wrong length, should be 9"
+        assert len(gff_info.split("\t")) == 9 , "%s" % error
+        gene = gff_info.split("\t")[4]
+        if ";" in gene:
+            gene = gene.replace("ID=gene:", "")
+            gene = gene.split(";")[0]
+        # check each gene only represented once
+        assert gene not in gene_list, ("duplicate found %s. Reformat -C file." % gene)
+        gene_list.append(gene)
+        if gene in coordinate_dict.values():
+            print ("repeated line in gff sub file")
+            continue
+        else:
+            scaf, source, feature, start, stop, score, \
+              direction, frame, gene_info = gff_info.split("\t")
+            scaffold_cordinates = [scaf, start, stop, gene_info]
+            coordinate_dict[gene] = scaffold_cordinates
+    return coordinate_dict
 
 
 def index_genome_file(genome):
@@ -49,7 +84,77 @@ def split_line(line):
             direction, frame, gene_info
 
 
-def gff_to_fasta(gff, genome, min_length, Max_length,
+
+def iterate_coordinate_dict(coordinate_dict,
+                            gene_name,
+                            scaffold,
+                            coordinates,
+                            logger,
+                            direction):
+    """check to see if the scaffold and new coordinate hits a
+    predicted gene. It wanrs the user if the desired upstream
+    regions falls into an existing gene. The coordinates will
+    be altered upto this gene that is hits."""
+    for gene, vals in coordinate_dict.items():
+        # find the genes on the same scaffold
+        if scaffold in vals[0]:
+            dictionary_scaffold = vals[0]
+            gene = vals[4]
+            # if its is the same gene as the stop
+            if gene_name == gene:
+                continue
+            if scaffold != dictionary_scaffold:
+                continue
+            else:
+                # debugging comment due to Roman numeral scaffold
+                # name being "within" eachother
+                # print ("scaffold = ", scaffold,
+                #        "acutally looking at", vals[0])
+                start = int(vals[1])
+                stop = int(vals[2])
+                coordinates = int(coordinates)
+                direction = vals[3]
+                # print ("coord=%s, start=%s, stop=%s, gene_query=%s,
+                        # gene_GFF=%s" %(coordinates,
+                        # start, stop, gene_name, gene))
+                # basically does the coordinate fall in the current
+                # coordinate for a gene
+                if coordinates >= start and coordinates <= stop:
+                    warn = " ".join([gene_name,
+                                     "upstream coordinate falls in the",
+                                     "genic regions of",
+                                     gene,
+                                     "on scaffold",
+                                     scaffold])
+                    logger.warning(warn)
+                    data = coordinate_dict[gene_name]
+                    if direction == "upstream":
+                       if "+" in data:
+                           # + coding gene, upstream will be
+                           # returned as the end (stop)
+                           # of the preceding gene
+                           return stop
+                       else:
+                           # - coding gene, upstream will be
+                           # returned as the begining (start)
+                           # (stop) of the proceding gene
+                           return start
+                    if direction == "downstream":
+                       if "+" in data:
+                           # + coding gene, downstream will be
+                           # returned as the star
+                           # of the proceding gene
+                           return start
+                       else:
+                           # - coding gene, downstream will be
+                           # returned as the begining (stop)
+                           # (stop) of the preceding gene
+                           return stop
+    return False
+
+
+
+def gff_to_fasta(gff, genome, coordinate_dict, min_length, Max_length,
                  outfile, upstream, into_TSS, NNN):
     """take in gff file. Gets the seq defined by the gff coords.
     If negative direction coding, the reverse complement is generated.
@@ -80,16 +185,47 @@ def gff_to_fasta(gff, genome, min_length, Max_length,
             seq_record = genome_database[scaff]
             starting_UTR_count += 1
             if direction == "+":
-                UTR = seq_record.seq[start:stop]
                 bind_seq = seq_record.seq[(start - upstream):(start + into_TSS)]
-                new_co_start = start - upstream
-                new_co_stop = start + into_TSS
+                print("start ;", start, "stop ;", stop)
+                new_co_stop = start - upstream
+                new_co_start = start + into_TSS
+                print("new_co_start ;", new_co_start, "new_co_stop ;", new_co_stop)
+
+                UTR = seq_record.seq[new_co_start:new_co_stop]
+                # check the new coordinate does not hit a gene
+                new_start = iterate_coordinate_dict(cordinate_dictionary,
+                                                    gene_name,
+                                                    scaff,
+                                                    new_co_start,
+                                                    logger,
+                                                    "upstream")
+                if new_start:
+                    new_start = int(new_start)
+                    warn = " ".join([gene_name,
+                                     "query request is going to return",
+                                     "a region of a gene",
+                                     "\n",
+                                     "going to return upto, New start: ",
+                                     str(new_start)])
+                    logger.warning(warn)
+                    # assign a new region for the seq record . seq
+                    UTR = seq_record.seq[new_start:new_co_stop]
+                    print("new_start ;", new_start, "new_co_stop ;", new_co_stop)
             if direction == "-":
                 UTR = reverse_complement(seq_record.seq[start:stop])
                 bind_seq = reverse_complement(seq_record.seq[(stop - into_TSS)
                                                              :(stop + upstream)])
-                new_co_start = stop + upstream
-                new_co_stop = stop - into_TSS
+                new_co_start = stop - upstream
+                new_co_stop = stop + into_TSS
+                UTR = reverse_complement(seq_record.seq[new_co_start:new_co_stop])
+                ##################################
+                new_start = iterate_coordinate_dict(cordinate_dictionary,
+                                                    gene_name,
+                                                    scaff,
+                                                    new_co_start,
+                                                    logger,
+                                                    "upstream")
+                ###########
             coordinate_info = "\tScaffold: %s UTR_and_TSS: %d:%d  Coding_direction: %s  " % (scaff,
                                                                                  start,
                                                                                  stop,
@@ -136,6 +272,11 @@ parser = OptionParser(usage=usage)
 parser.add_option("--gff", dest="gff",
                   default=None,
                   help="the predicted coordinate for the cds predictions .gff",
+                  metavar="FILE")
+
+parser.add_option("--genome_gff", dest="genome_gff",
+                  default=None,
+                  help="the predicted genes as genome_gff.gff",
                   metavar="FILE")
 
 parser.add_option("-g", "--genome",
@@ -197,6 +338,7 @@ min_length = int(options.min_length)
 into_TSS = int(options.into_TSS)
 # -n
 NNN = int(options.NNN)
+logfile = outfile.split(".fa")[0] + "WARNINGS.log"
 
 #######################################################################
 # Run as script
@@ -206,6 +348,30 @@ if __name__ == '__main__':
         sys.exit("Input genome file not found: %s" % genome)
     if not os.path.isfile(gff):
         sys.exit("Input gff file not found: %s" % gff)
-    gff_to_fasta(gff, genome, min_length,
+    if not os.path.isfile(options.genome_gff):
+        sys.exit("Input gff file not found")
+    # Run as script
+    start_time = time.time()
+    # Set up logging
+    logger = logging.getLogger('GFF_to_fasta: %s'
+                               % time.asctime())
+    logger.setLevel(logging.DEBUG)
+    err_handler = logging.StreamHandler(sys.stderr)
+    err_formatter = logging.Formatter('%(levelname)s: %(message)s')
+    err_handler.setFormatter(err_formatter)
+    logger.addHandler(err_handler)
+    try:
+        logstream = open(logfile, 'w')
+        err_handler_file = logging.StreamHandler(logstream)
+        err_handler_file.setFormatter(err_formatter)
+        # logfile is always verbose
+        err_handler_file.setLevel(logging.INFO)
+        logger.addHandler(err_handler_file)
+    except:
+        logger.error("Could not open %s for logging" %
+                     logfile)
+        sys.exit(1)
+    coordinate_dict = index_gene_scaffold_coordinates(options.genome_gff)
+    gff_to_fasta(gff, genome, coordinate_dict, min_length,
                  max_length, outfile, upstream,
                  into_TSS, NNN)
