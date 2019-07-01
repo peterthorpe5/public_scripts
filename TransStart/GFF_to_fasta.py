@@ -12,6 +12,7 @@ from Bio.SeqRecord import SeqRecord
 from Bio import SeqIO
 import logging
 import logging.handlers
+import time
 
 print("""Warning: This is made for a specific purpose. We specific data
       If you are using it, check it works for you!!""")
