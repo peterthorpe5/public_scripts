@@ -24,3 +24,8 @@ pathogens_Gpal_scaffold_1	100	110	+	GPLIN_000000500
 #pathogens_Gpal_scaffold_1	189475	190807	-	GPLIN_000002400
 #pathogens_Gpal_scaffold_1	191038	191589	+	GPLIN_000002500
 #pathogens_Gpal_scaffold_1	192651	193290	+	GPLIN_000002600
+pathogens_Gpal_scaffold_2	5	10	+	GPLIN_000020100
+pathogens_Gpal_scaffold_2	20	30	+	GPLIN_000020200
+pathogens_Gpal_scaffold_3	40	50	-	GPLIN_000030300
+pathogens_Gpal_scaffold_3	55	70	-	GPLIN_000030400
+pathogens_Gpal_scaffold_3	100	110	+	GPLIN_000030500

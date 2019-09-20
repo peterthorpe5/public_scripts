@@ -83,12 +83,23 @@ def iterate_coordinate_dict(coordinate_dict,
                             gene_name,
                             scaffold,
                             coordinates,
+                            DNA_start,
                             logger,
                             direction):
     """check to see if the scaffold and new coordinate hits a
     predicted gene. It wanrs the user if the desired upstream
     regions falls into an existing gene. The coordinates will
     be altered upto this gene that is hits."""
+    # print("im am here:" , coordinates, DNA_start)
+    corod_list = []
+    if DNA_start > coordinates:
+       for number in range(DNA_start, coordinates):
+          corod_list.append(number)
+    if DNA_start > coordinates:
+       for number in range(coordinates, DNA_start):
+          corod_list.append(number)
+    # print(corod_list)
+
     for gene, vals in coordinate_dict.items():
         # find the genes on the same scaffold
         if scaffold in vals[0]:
@@ -100,6 +111,10 @@ def iterate_coordinate_dict(coordinate_dict,
             if scaffold != dictionary_scaffold:
                 continue
             else:
+                # set up a set of coordinates that are from the start to the end
+                # of the region of interest. Here we can test if this hits a gene or not.
+                
+
                 # debugging comment due to Roman numeral scaffold
                 # name being "within" eachother
                 # print ("scaffold = ", scaffold,
@@ -108,42 +123,46 @@ def iterate_coordinate_dict(coordinate_dict,
                 stop = int(vals[2])
                 coordinates = int(coordinates)
                 direction = vals[3]
-                # print ("coord=%s, start=%s, stop=%s, gene_query=%s,
-                        # gene_GFF=%s" %(coordinates,
-                        # start, stop, gene_name, gene))
+                print ("coord=%s, start=%s, stop=%s, gene_query=%s,gene_GFF=%s"
+                       %(coordinates, start, stop, gene_name, gene))
                 # basically does the coordinate fall in the current
                 # coordinate for a gene
-                if coordinates >= start and coordinates <= stop:
-                    warn = " ".join([gene_name,
-                                     "upstream coordinate falls in the",
-                                     "genic regions of",
-                                     gene,
-                                     "on scaffold",
-                                     scaffold])
-                    logger.warning(warn)
-                    data = coordinate_dict[gene_name]
-                    if direction == "upstream":
-                       if "+" in data:
-                           # + coding gene, upstream will be
-                           # returned as the end (stop)
-                           # of the preceding gene
-                           return stop
-                       else:
-                           # - coding gene, upstream will be
-                           # returned as the begining (start)
-                           # (stop) of the proceding gene
-                           return start
-                    if direction == "downstream":
-                       if "+" in data:
-                           # + coding gene, downstream will be
-                           # returned as the star
-                           # of the proceding gene
-                           return start
-                       else:
-                           # - coding gene, downstream will be
-                           # returned as the begining (stop)
-                           # (stop) of the preceding gene
-                           return stop
+                for number in corod_list:
+                   if number >= start and coordinates <= stop:
+                       warn = " ".join([gene_name,
+                                        "upstream coordinate %d falls in the" % number,
+                                        "genic regions of",
+                                        gene,
+                                        "on scaffold",
+                                        scaffold])
+                       logger.warning(warn)
+                       data = coordinate_dict[gene_name]
+                       if direction == "upstream":
+                          if "+" in data:
+                              # + coding gene, upstream will be
+                              # returned as the end (stop)
+                              # of the preceding gene
+                              print("+ stop")
+                              return stop
+                          else:
+                              # - coding gene, upstream will be
+                              # returned as the begining (start)
+                              # (stop) of the proceding gene
+                              print("+ start")
+                              return start
+                       if direction == "downstream":
+                          if "+" in data:
+                              # + coding gene, downstream will be
+                              # returned as the star
+                              # of the proceding gene
+                              print("+ downstrrea start")
+                              return start
+                          else:
+                              # - coding gene, downstream will be
+                              # returned as the begining (stop)
+                              # (stop) of the preceding gene
+                              print("+ downstrrea stop")
+                              return stop
     return False
 
 
@@ -161,161 +180,6 @@ def parse_through_gene_coordinates(coordinate_file):
     data.close()
     return genes_coordinate
 
-
-def down_stream_seq_getter(coordinate_file,
-                         genome_sequence,
-                         upstream,
-                         genes_file,
-                         outfile,
-                         logger,
-                         min_len,
-                         user_defined_genic=0):
-    """this is a function returns the downstream regions of the list
-    of genes of interest - a user defined threshold for the
-    number of nucleotides upstream is also used"""
-    f= open(outfile, 'w')
-    threshold = int(upstream)
-    min_len = int(min_len)
-    # call the func
-    wanted = wanted_genes(genes_file)
-    assert len(wanted) == len(set(wanted)), "duplicates in wanted list!"
-    logger.info("indexing genome")
-    Genome_sequence = SeqIO.index(genome_sequence, "fasta")
-    Genome_sequence_time=time.time()
-    out = 'import genome file took, %.3f' % (Genome_sequence_time
-                                             - start_time)
-    logger.info(out)
-    coordinates = parse_through_gene_coordinates(coordinate_file)
-    # [gene] = scaffold, cordinates
-    cordinate_dictionary = index_gene_scaffold_coordinates(coordinate_file)
-    # we need to get the gene start and stop information
-    # assign the user defined number of genic nucleotides to return to int
-    user_defined_genic = int(user_defined_genic)
-    for gene_name in wanted:
-        coordinate_info = cordinate_dictionary[gene_name]
-        # assert len(coordinate_full_info.split("\t"))==5
-        contig = coordinate_info[0]
-        location_start = coordinate_info[1]
-        location_stop = coordinate_info[2]
-        direction_of_coding = coordinate_info[3]
-        # get the altered start (+) strand, and stop (-) strand.
-        # if the user want genic regions, user_defined_genic
-        # will bring back X amount of the gene
-        DNA_start = int(location_start)
-        DNA_stop = int(location_stop)
-        error = "are the start stop coordinates are correct?"
-        assert DNA_start < DNA_stop, "%s" % error
-        downstream = (DNA_stop) + threshold
-        negative_strand_downstream = (DNA_start) - threshold
-        Genome_seq_record = Genome_sequence[contig]
-        length_of_contig = len(Genome_seq_record.seq)
-        DNA_region_of_interest = Genome_seq_record.seq
-        if downstream > length_of_contig:
-            warn = " ".join([gene_name,
-                             "downstream region may fall off",
-                             "end of contig: ",
-                             contig])
-            downstream = len(Genome_seq_record.seq)
-            logger.warning(warn)
-        # test if the "upstream region hits a gene
-        # slice up the contig for the region of interest
-        # [threshold upstream: genestart]
-        # or negative [geneend: genestart plus threshold
-        DNA_region_of_interest_downstream_positive \
-                    = DNA_region_of_interest[DNA_stop:downstream]
-        # for negative strand - we reverse complement it
-        DNA_region_of_interest_negative_downstream \
-                    = DNA_region_of_interest[(negative_strand_downstream - 1 )
-                                             :DNA_start]
-        DNA_region_of_interest_negative_downstream \
-            = DNA_region_of_interest_negative_downstream.reverse_complement()
-
-        if "-" in direction_of_coding:
-            new_start = iterate_coordinate_dict(cordinate_dictionary,
-                                                gene_name,
-                                                contig,
-                                                negative_strand_downstream,
-                                                logger,
-                                                "downstream")
-            if new_start:
-                new_start = int(new_start)
-                warn = " ".join([gene_name,
-                                 "query request is going to return",
-                                 "a region of a gene",
-                                 "\n",
-                                 "going to return upto, New start: ",
-                                 str(new_start)])
-                logger.warning(warn)
-
-                DNA_region_of_interest_negative_downstream2 = \
-                                DNA_region_of_interest[new_start:DNA_start]
-                DNA_region_of_interest_negative_downstream = \
-                    DNA_region_of_interest_negative_downstream2.reverse_complement()
-                if len(DNA_region_of_interest_negative_downstream) > min_len:
-                    seq_record = '>%s\t|%s\t[%s:%s]%sbp_downstream - strand\n%s\n' % \
-                                 (gene_name,contig,
-                                 str(new_start),
-                                 DNA_start,
-                                 threshold,
-                                 DNA_region_of_interest_negative_downstream)
-                    f.write(seq_record)
-                    if "NNNNN" in DNA_region_of_interest_negative_downstream:
-                        warn = "NNN found in %s" % (gene_name)
-                        logger.info(warn)
-            else:
-            # (-) ... downstream is threshold - (DNA_start)
-                if len(DNA_region_of_interest_negative_downstream) > min_len:
-                    seq_record = '>%s\t|%s\t[%s:%s]%sbp_downstream - strand\n%s\n' % \
-                                 (gene_name,
-                                  contig,
-                                  negative_strand_downstream,
-                                  DNA_start,
-                                  threshold,
-                                  DNA_region_of_interest_negative_downstream)
-                    f.write(seq_record)
-                    if "NNNNN" in DNA_region_of_interest_negative_downstream:
-                        warn = "NNN found in %s" % (gene_name)
-                        logger.warning(warn)
-
-        if "+" in direction_of_coding:
-            # test if the "upstream region hits a gene
-            new_region_to_return = iterate_coordinate_dict(cordinate_dictionary,
-                                                           gene_name,
-                                                           contig,
-                                                           downstream,
-                                                           logger,
-                                                           "downstream")
-            if new_region_to_return:
-                new_region_to_return = int(new_region_to_return)
-                DNA_region_of_interest_downstream_positive = \
-                        DNA_region_of_interest[DNA_stop:int(new_region_to_return)]
-                if len(DNA_region_of_interest_downstream_positive) > min_len:
-                    seq_record = '>%s\t|%s\t[%s:%s]%sbp_downstream + strand\n%s\n' % \
-                                 (gene_name,
-                                  contig,\
-                                  str(DNA_stop),
-                                  str(new_region_to_return),
-                                  threshold,
-                                  DNA_region_of_interest_downstream_positive)
-                    f.write(seq_record)
-                    if "NNNNN" in DNA_region_of_interest_downstream_positive:
-                        warn = "NNN found in %s" % (gene_name)
-                        logger.warning(warn)
-            else:
-            # (+) ... upstream is (DNA_start) - threshold"
-                if len(DNA_region_of_interest_downstream_positive) > min_len:
-                    seq_record = '>%s\t|%s\t[%s:%s]%sbp_downstream + strand\n%s\n' % \
-                                  (gene_name,
-                                  contig,\
-                                  str(DNA_stop),
-                                  downstream,
-                                  threshold,
-                                  DNA_region_of_interest_downstream_positive)
-                    f.write(seq_record)
-                    if "NNNNN" in DNA_region_of_interest_downstream_positive:
-                        warn = "NNN found in %s" % (gene_name)
-                        logger.warning(warn)
-    f.close()
 
 
 def up_stream_seq_getter(coordinate_file,
@@ -398,6 +262,7 @@ def up_stream_seq_getter(coordinate_file,
                                                 gene_name,
                                                 contig,
                                                 negative_strand_upstream,
+                                                DNA_start,
                                                 logger,
                                                 "upstream")
             if new_start:
@@ -448,6 +313,7 @@ def up_stream_seq_getter(coordinate_file,
                                                            gene_name,
                                                            contig,
                                                            upstream,
+                                                           DNA_start,
                                                            logger,
                                                            "upstream")
             if new_region_to_return:

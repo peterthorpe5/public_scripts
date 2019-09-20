@@ -65,10 +65,6 @@ def in_vcf(vcf, gene_prefix, logger, outfile):
         if line.startswith("##scaffold"):
             continue
         if line.startswith("#"):
-            if "INFO" in line:
-                line = line.replace("INFO", "IMPACT")
-                line = line.replace("FILTER", "SNP_location")
-               
             f_out.write(line)
             f_highImpact.write(line)
             continue
