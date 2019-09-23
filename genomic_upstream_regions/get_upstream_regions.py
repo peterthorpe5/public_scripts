@@ -52,7 +52,10 @@ def wanted_genes(genes_file):
 def index_gene_scaffold_coordinates(coordinate_file):
     """function to return dictionary genes and coordinates
     without directions
-    gene = scaffold_cordinates"""
+    gene = scaffold_cordinates
+    scaffold_cordinates = gff_info.split("\t")[:]
+    coordinate_dict[gene] = scaffold_cordinates
+            """
     coordinate_dict = dict()
     data = open(coordinate_file, "r")
     genes_coordinate = data.readlines()
@@ -75,8 +78,43 @@ def index_gene_scaffold_coordinates(coordinate_file):
             continue
         else:
             scaffold_cordinates = gff_info.split("\t")[:]
-            coordinate_dict[gene] = scaffold_cordinates
+            coordinate_dict[gene.rstrip()] = scaffold_cordinates
     return coordinate_dict
+
+
+def populate_coordinate_list(DNA_start, coordinates, direction):
+   """function to take in a start and stop and return a list of
+   number in between
+   returns a list
+   takes in: int DNA_start, int coordinates. This is a bad variable
+   name for the DNA_stop ...
+   direction is a str coding sirection. 
+   """
+    # print("im am here:" , coordinates, DNA_start)
+   corod_list = []
+   # DNA start is the gene start in the gff
+   # coord is the up stream as defined by the region of interest.
+   # is gene is (+) coding: DNA_start > coordinates
+   if DNA_start > coordinates:  # + coding
+       for number in range(coordinates, DNA_start):
+          # print("DNA start greater, should be +", direction)
+          # need to get rid of negative coodinates is there
+          # are any 
+          if number < 1:
+             continue
+          corod_list.append(int(number))
+       corod_list = corod_list[::-1]
+   if DNA_start < coordinates:
+      for number in range(DNA_start, coordinates):
+          # need to get rid of negative coodinates is there
+          # are any 
+          if number < 1:
+             continue
+          corod_list.append(int(number))
+   # print(corod_list)
+   # we return a reversed list. So we can go through the coorinates away
+   # from the gene to see to see if it fals into a gene   
+   return corod_list
 
 
 def iterate_coordinate_dict(coordinate_dict,
@@ -84,6 +122,7 @@ def iterate_coordinate_dict(coordinate_dict,
                             scaffold,
                             coordinates,
                             DNA_start,
+                            direction_of_coding,
                             logger,
                             direction):
     """check to see if the scaffold and new coordinate hits a
@@ -91,30 +130,26 @@ def iterate_coordinate_dict(coordinate_dict,
     regions falls into an existing gene. The coordinates will
     be altered upto this gene that is hits."""
     # print("im am here:" , coordinates, DNA_start)
-    corod_list = []
-    if DNA_start > coordinates:
-       for number in range(DNA_start, coordinates):
-          corod_list.append(number)
-    if DNA_start > coordinates:
-       for number in range(coordinates, DNA_start):
-          corod_list.append(number)
-    # print(corod_list)
-
+    # call the func populate_coordinate_list to obtain a reversed list
+    # of coords from the current gene
+    corod_list = populate_coordinate_list(DNA_start,
+                                          coordinates,
+                                          direction_of_coding)
     for gene, vals in coordinate_dict.items():
         # find the genes on the same scaffold
         if scaffold in vals[0]:
             dictionary_scaffold = vals[0]
+            dictionary_scaffold = dictionary_scaffold.rstrip()
             gene = vals[4]
+            gene = gene.rstrip()
             # if its is the same gene as the stop
             if gene_name == gene:
                 continue
-            if scaffold != dictionary_scaffold:
+            if scaffold.rstrip() != dictionary_scaffold:
                 continue
             else:
                 # set up a set of coordinates that are from the start to the end
                 # of the region of interest. Here we can test if this hits a gene or not.
-                
-
                 # debugging comment due to Roman numeral scaffold
                 # name being "within" eachother
                 # print ("scaffold = ", scaffold,
@@ -122,13 +157,19 @@ def iterate_coordinate_dict(coordinate_dict,
                 start = int(vals[1])
                 stop = int(vals[2])
                 coordinates = int(coordinates)
-                direction = vals[3]
-                print ("coord=%s, start=%s, stop=%s, gene_query=%s,gene_GFF=%s"
-                       %(coordinates, start, stop, gene_name, gene))
+                direction_target_gene = vals[3]
+                #print ("coord=%s, start=%s, stop=%s, direction_of_coding=%s,"
+                       #"direction=%s, gene_query=%s, gene_GFF=%s"
+                       #%(coordinates, start, stop, direction_of_coding,
+                         #direction, gene_name, gene))
                 # basically does the coordinate fall in the current
                 # coordinate for a gene
                 for number in corod_list:
-                   if number >= start and coordinates <= stop:
+                   number = int(number)
+                   #print("looking at %d from %s Vs %s : "
+                         #"gene_start %d, gene stop %d" % (number, gene_name, gene,
+                                                          #start, stop))
+                   if number >= start and number <= stop:
                        warn = " ".join([gene_name,
                                         "upstream coordinate %d falls in the" % number,
                                         "genic regions of",
@@ -181,6 +222,43 @@ def parse_through_gene_coordinates(coordinate_file):
     return genes_coordinate
 
 
+def iteritively_find_new_start(new_start_in,
+                               cordinate_dictionary,
+                               gene_name,
+                               contig,
+                               negative_strand_upstream,
+                               DNA_stop,
+                               direction_of_coding,
+                               logger,
+                               looking_direction):
+   """funct to run the find new start over again,
+   if there is no change in the new start value. Then,
+   continue"""
+   new_start = 0
+   new_start_in = int(new_start_in)
+   while int(new_start) != int(new_start_in):
+      new_start = iterate_coordinate_dict(cordinate_dictionary,
+                                          gene_name,
+                                          contig,
+                                          new_start_in,
+                                          DNA_stop,
+                                          direction_of_coding,
+                                          logger,
+                                          looking_direction)
+      warn = " ".join([gene_name,
+                        "query request is going to return",
+                        "a region of a gene",
+                        "New start: ",
+                        str(new_start), str(new_start_in)])
+      # logger.warning(warn)
+      if not new_start or int(new_start) == 0:
+         return new_start_in
+      if int(new_start) == int(new_start_in):
+         return new_start
+      print(new_start)
+
+   return new_start
+
 
 def up_stream_seq_getter(coordinate_file,
                          genome_sequence,
@@ -195,7 +273,6 @@ def up_stream_seq_getter(coordinate_file,
     number of nucleotides upstream is also used"""
     f= open(outfile, 'w')
     threshold = int(upstream)
-    min_len = int(min_len)
     # call the func
     wanted = wanted_genes(genes_file)
     assert len(wanted) == len(set(wanted)), "duplicates in wanted list!"
@@ -262,18 +339,29 @@ def up_stream_seq_getter(coordinate_file,
                                                 gene_name,
                                                 contig,
                                                 negative_strand_upstream,
-                                                DNA_start,
+                                                DNA_stop,
+                                                direction_of_coding,
                                                 logger,
                                                 "upstream")
             if new_start:
-                new_start = int(new_start)
                 warn = " ".join([gene_name,
                                  "query request is going to return",
                                  "a region of a gene",
-                                 "\n",
-                                 "going to return upto, New start: ",
+                                 "New start: ",
                                  str(new_start)])
                 logger.warning(warn)
+                # check this over and over again to refine the new_start
+                new_start = iteritively_find_new_start(new_start,
+                                                       cordinate_dictionary,
+                                                gene_name,
+                                                contig,
+                                                new_start,
+                                                DNA_stop,
+                                                direction_of_coding,
+                                                logger,
+                                                "upstream")
+                new_start = int(new_start) -1
+                print(" new_startnew_startnew_startnew_start", new_start)
 
                 DNA_region_of_interest_negative_upstream2 = \
                                 DNA_region_of_interest[(DNA_stop -
@@ -314,10 +402,23 @@ def up_stream_seq_getter(coordinate_file,
                                                            contig,
                                                            upstream,
                                                            DNA_start,
+                                                           direction_of_coding,
                                                            logger,
                                                            "upstream")
             if new_region_to_return:
                 new_region_to_return = int(new_region_to_return)
+                # check this over and over again to refine the new_start
+                new_region_to_return = iteritively_find_new_start(new_region_to_return,
+                                                                  cordinate_dictionary,
+                                                                  gene_name,
+                                                                  contig,
+                                                                  new_region_to_return,
+                                                                  DNA_stop,
+                                                                  direction_of_coding,
+                                                                  logger,
+                                                                  "upstream")
+                new_region_to_return = int(new_region_to_return)
+                print(new_region_to_return, "new_region_to_return")
                 DNA_region_of_interest_upstream_positive = \
                         DNA_region_of_interest[new_region_to_return:(DNA_start +(
                             user_defined_genic - 1))]
@@ -471,11 +572,12 @@ parser.add_option("-o", "--output",
 (options, args) = parser.parse_args()
 coordinate_file = options.coordinate_file
 genome_sequence = options.genome_sequence
-upstream = options.upstream
+upstream = int(options.upstream) + 1
 downstream = options.downstream
 genes_file = options.genes_file
 outfile = options.out_file
 min_len = options.min_len
+min_len = int(min_len) + 1
 user_defined_genic = options.user_defined_genic
 logfile = outfile.split(".fa")[0] + "WARNINGS.log"
 
@@ -506,6 +608,9 @@ if __name__ == '__main__':
         if not os.path.isfile(user_file):
            print("file not found: %s" % user_file)
            os._exit(0)
+    logger.info(sys.version_info)
+    logger.info("Command-line: %s", ' '.join(sys.argv))
+    logger.info("Starting testing: %s", time.asctime())
     if upstream:
        up_stream_seq_getter(coordinate_file,
                             genome_sequence,

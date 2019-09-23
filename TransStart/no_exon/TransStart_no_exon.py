@@ -336,6 +336,41 @@ def add_one_direct_aware(current_start, current_end, interation_value,
     return current_start, current_end
 
 
+def populate_coordinate_list(start, end):
+   """function to take in a start and stop and return a list of
+   number in between
+   returns a list
+   takes in: int DNA_start, int coordinates. This is a bad variable
+   name for the DNA_stop ...
+   direction is a str coding sirection. 
+   """
+    # print("im am here:" , coordinates, DNA_start)
+   corod_list = []
+   # DNA start is the gene start in the gff
+   # coord is the up stream as defined by the region of interest.
+   # is gene is (+) coding: DNA_start > coordinates
+   if start > end:  # + coding
+       for number in range(end, start):
+          # print("DNA start greater, should be +", direction)
+          # need to get rid of negative coodinates is there
+          # are any 
+          if number < 1:
+             continue
+          corod_list.append(int(number))
+       corod_list = corod_list[::-1]
+   if start < end:
+      for number in range(start, end):
+          # need to get rid of negative coodinates is there
+          # are any 
+          if number < 1:
+             continue
+          corod_list.append(int(number))
+   # print(corod_list)
+   # we return a reversed list. So we can go through the coorinates away
+   # from the gene to see to see if it fals into a gene   
+   return corod_list
+
+
 def iterate_coordinate_dict(gene_gff_line,
                             gene_name,
                             scaffold,
@@ -364,7 +399,9 @@ def iterate_coordinate_dict(gene_gff_line,
             stop = int(stop)
             # basically does the coordinate fall in the current
             # coordinate for a gene
-            for UTR_coordinate in range(current_start, current_stop):
+            # call the function to poulate the list
+            UTR_coodinate_list = populate_coordinate_list(current_start, current_stop)
+            for UTR_coordinate in UTR_coodinate_list:
                 ##logger.info(info)
                 if UTR_coordinate > start and UTR_coordinate < stop:
                     warn = " ".join([gene_name,
@@ -376,6 +413,7 @@ def iterate_coordinate_dict(gene_gff_line,
                     logger.warning(warn)
                     return "HITS genic region"
     return "OK"
+
 
 
 ## main function
