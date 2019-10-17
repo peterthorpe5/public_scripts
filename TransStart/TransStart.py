@@ -447,7 +447,7 @@ def iterate_coordinate_dict(gene_gff_line,
                         # returned as the begining (start)
                         # (stop) of the proceding gene
                         # print("+ start")
-                    return "HITS genic region", start
+                        return "HITS genic region", start
     return "OK", "NA"
 
 
