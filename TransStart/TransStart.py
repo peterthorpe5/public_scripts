@@ -551,7 +551,7 @@ def TranscriptionFind(genome, gene_start_stop_dict,
                 warn = "No RNAseq expression for gene exon 1 %s" % gene
                 logger.warning("%s: gene failed", warn)
                 gene_failed_count = gene_failed_count + 1
-                continue
+                # continue
             out_str = "\t".join([gene + ":",
                                 "Cov min: %i" % min(all_coverage),
                                 "max: %i" % max(all_coverage),
@@ -658,8 +658,8 @@ def TranscriptionFind(genome, gene_start_stop_dict,
                                            = iterate_coordinate_dict(gene_gff_line,
                                                                      gene,
                                                                      scaffold,
-                                                                     UTR_start,
-                                                                     UTR_stop,
+                                                                     current_start,
+                                                                     current_end,
                                                                      direction,
                                                                      logger)
                     new_gff_line1, UTR_start, \
