@@ -559,7 +559,7 @@ def TranscriptionFind(genome, gene_start_stop_dict,
                 warn = "No RNAseq expression for gene exon 1 %s" % gene
                 logger.warning("%s: gene failed", warn)
                 gene_failed_count = gene_failed_count + 1
-                # continue
+                continue
             out_str = "\t".join([gene + ":",
                                 "Cov min: %i" % min(all_coverage),
                                 "max: %i" % max(all_coverage),
@@ -679,8 +679,8 @@ def TranscriptionFind(genome, gene_start_stop_dict,
                     if Min_val_Hits_geneic_or_not == "HITS genic region":
                         gene_failed_count = gene_failed_count + 1
                         continue
-                    # if Min_val_Hits_geneic_or_not == "OK": # we are going to write it anyway
-                    gff_out.write(new_gff_line1)
+                    if Min_val_Hits_geneic_or_not == "OK": # we are going to write it anyway
+                        gff_out.write(new_gff_line1)
                     # for the standard dev approach
                     new2_gff_line, UTR_start, \
                                    UTR_stop = create_gff_line(GENE_gff, gene,
@@ -699,9 +699,9 @@ def TranscriptionFind(genome, gene_start_stop_dict,
                     if sd_geneic_or_not == "HITS genic region":
                         gene_failed_count = gene_failed_count + 1
                         # continue
-                    # if sd_geneic_or_not == "OK": # we write it anyway
-                    gff_sd_out.write(new2_gff_line)
-                    gene_results_printed_count = gene_results_printed_count + 1
+                    if sd_geneic_or_not == "OK": # we write it anyway
+                        gff_sd_out.write(new2_gff_line)
+                        gene_results_printed_count = gene_results_printed_count + 1
             else:
                 gene_failed_count = gene_failed_count + 1
                 
