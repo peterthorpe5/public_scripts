@@ -491,7 +491,7 @@ def TranscriptionFind(genome, gene_start_stop_dict,
             scaffold = gene_scaff_dict[gene]
             scaffold = scaffold.rstrip()
             direction = gene_direction[gene]
-            if gene_first_exon_dict.has_key[gene]:
+            if gene in gene_first_exon_dict:
                 exon_start_exon_stop = gene_first_exon_dict[gene]
                 exon_start, exon_stop = exon_start_exon_stop.split("\t")
                 exon_start =int(exon_start)
