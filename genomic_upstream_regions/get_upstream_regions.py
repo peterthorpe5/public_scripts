@@ -171,6 +171,7 @@ def iterate_coordinate_dict(coordinate_dict,
                                                           #start, stop))
                    if number >= start and number <= stop:
                        warn = " ".join([gene_name,
+                                        direction_of_coding,
                                         "upstream coordinate %d falls in the" % number,
                                         "genic regions of",
                                         gene,
