@@ -354,17 +354,17 @@ def up_stream_seq_getter(coordinate_file,
                                  str(new_start)])
                 logger.warning(warn)
                 # check this over and over again to refine the new_start
-                new_start = iteritively_find_new_start(new_start,
-                                                       cordinate_dictionary,
-                                                gene_name,
-                                                contig,
-                                                new_start,
-                                                DNA_stop,
-                                                direction_of_coding,
-                                                logger,
-                                                "upstream")
-                new_start = int(new_start) -1
-                print(" new_startnew_startnew_startnew_start", new_start)
+##                new_start = iteritively_find_new_start(new_start,
+##                                                       cordinate_dictionary,
+##                                                      gene_name,
+##                                                      contig,
+##                                                      new_start,
+##                                                      DNA_stop,
+##                                                      direction_of_coding,
+##                                                      logger,
+##                                                      "upstream")
+##                new_start = int(new_start) -1
+                # print(" new_startnew_startnew_startnew_start", new_start)
 
                 DNA_region_of_interest_negative_upstream2 = \
                                 DNA_region_of_interest[(DNA_stop -
@@ -411,17 +411,17 @@ def up_stream_seq_getter(coordinate_file,
             if new_region_to_return:
                 new_region_to_return = int(new_region_to_return)
                 # check this over and over again to refine the new_start
-                new_region_to_return = iteritively_find_new_start(new_region_to_return,
-                                                                  cordinate_dictionary,
-                                                                  gene_name,
-                                                                  contig,
-                                                                  new_region_to_return,
-                                                                  DNA_stop,
-                                                                  direction_of_coding,
-                                                                  logger,
-                                                                  "upstream")
-                new_region_to_return = int(new_region_to_return)
-                print(new_region_to_return, "new_region_to_return")
+##                new_region_to_return = iteritively_find_new_start(new_region_to_return,
+##                                                                  cordinate_dictionary,
+##                                                                  gene_name,
+##                                                                  contig,
+##                                                                  new_region_to_return,
+##                                                                  DNA_stop,
+##                                                                  direction_of_coding,
+##                                                                  logger,
+##                                                                  "upstream")
+                #new_region_to_return = int(new_region_to_return)
+                #print(new_region_to_return, "new_region_to_return")
                 DNA_region_of_interest_upstream_positive = \
                         DNA_region_of_interest[new_region_to_return:(DNA_start +(
                             user_defined_genic - 1))]
