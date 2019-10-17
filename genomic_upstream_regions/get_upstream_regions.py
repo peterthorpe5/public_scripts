@@ -187,12 +187,16 @@ def iterate_coordinate_dict(coordinate_dict,
                               # returned as the end (stop)
                               # of the preceding gene
                               print("+ stop")
+                              info = "new coordinate %s" % (str(stop))
+                              logger.warning(info)
                               return stop
                           else:
                               # - coding gene, upstream will be
                               # returned as the begining (start)
                               # (stop) of the proceding gene
                               print("+ start")
+                              info = "new coordinate %s" % (str(start))
+                              logger.warning(info)
                               return start
                        if direction == "downstream":
                           if "+" in data:
@@ -200,12 +204,17 @@ def iterate_coordinate_dict(coordinate_dict,
                               # returned as the star
                               # of the proceding gene
                               print("+ downstrrea start")
+                              print("+ start")
+                              info = "new coordinate %s" % (str(start))
+                              logger.warning(info)
                               return start
                           else:
                               # - coding gene, downstream will be
                               # returned as the begining (stop)
                               # (stop) of the preceding gene
                               print("+ downstrrea stop")
+                              info = "new coordinate %s" % (str(stop))
+                              logger.warning(info)
                               return stop
     return False
 
