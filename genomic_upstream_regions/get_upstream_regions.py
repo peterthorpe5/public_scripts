@@ -183,7 +183,7 @@ def iterate_coordinate_dict(coordinate_dict,
                        logger.warning(warn)
                        data = coordinate_dict[gene_name]
                        if direction == "upstream":
-                          if "+" in data:
+                          if "+" in direction_of_coding:
                               # + coding gene, upstream will be
                               # returned as the end (stop)
                               # of the preceding gene
