@@ -346,7 +346,7 @@ def add_one_direct_aware(current_start, current_end, interation_value,
     return current_start, current_end
 
 
-def populate_coordinate_list(start, end):
+def populate_coordinate_list(start, end, direction_of_coding):
    """function to take in a start and stop and return a list of
    number in between
    returns a list
@@ -359,7 +359,9 @@ def populate_coordinate_list(start, end):
    # DNA start is the gene start in the gff
    # coord is the up stream as defined by the region of interest.
    # is gene is (+) coding: DNA_start > coordinates
+   # this is backward logic.. but true
    if start > end:  # + coding
+       assert direction_of_coding == "+"
        for number in range(end, start):
           # print("DNA start greater, should be +", direction)
           # need to get rid of negative coodinates is there
