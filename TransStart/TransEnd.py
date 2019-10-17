@@ -459,10 +459,14 @@ def TranscriptionFind(genome, gene_start_stop_dict,
             scaffold = gene_scaff_dict[gene]
             scaffold = scaffold.rstrip()
             direction = gene_direction[gene]
-            exon_start_exon_stop = gene_first_exon_dict[gene]
-            exon_start, exon_stop = exon_start_exon_stop.split("\t")
-            exon_start =int(exon_start)
-            exon_stop = int(exon_stop)
+            if gene_first_exon_dict.has_key[gene]:
+                exon_start_exon_stop = gene_first_exon_dict[gene]
+                exon_start, exon_stop = exon_start_exon_stop.split("\t")
+                exon_start =int(exon_start)
+                exon_stop = int(exon_stop)
+            else:
+                exon_start =int(start)
+                exon_stop = int(stop)
             # call samtools to get the depth per posititon for
             # the transcript of interest
             depth_filename = os.path.join("temp_reads_per_base",

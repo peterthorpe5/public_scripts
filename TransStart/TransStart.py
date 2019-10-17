@@ -200,7 +200,9 @@ def index_gff(gff, logger):
            gene_scaff_dict, gene_direction, gene_set, gene_gff_line
 
 
-def create_gff_line(gffline, gene, TranStart, TranStop):
+def create_gff_line(gffline, gene,
+                    TranStart, TranStop,
+                    direction, new_coorinate):
     """func to create a gff line with a new name and
     the start of transcription and end of transcription"""
     scaff, source, feature, start, stop, score, \
@@ -211,9 +213,13 @@ def create_gff_line(gffline, gene, TranStart, TranStop):
     if direction == "+":
         UTR_start = str(TranStart)
         UTR_stop = str(start)
+        if new_coorinate != "NA":
+            UTR_stop = str(new_coorinate)
     if direction == "-":
         UTR_start = str(stop)
         UTR_stop = str(TranStop)
+        if new_coorinate != "NA":
+            UTR_start = str(new_coorinate)
     new_gff_line = "\t".join([scaff, source, feature, UTR_start,
                              UTR_stop, score,
                              direction, frame, gene_info])
@@ -381,6 +387,7 @@ def iterate_coordinate_dict(gene_gff_line,
                             scaffold,
                             current_start,
                             current_stop,
+                            direction_of_coding,
                             logger):
     """check to see if the predicted TSS fall within a 
     predicted gene. It wanrs the user if the desired upstream
@@ -405,7 +412,9 @@ def iterate_coordinate_dict(gene_gff_line,
             # basically does the coordinate fall in the current
             # coordinate for a gene
             # call the function to poulate the list
-            UTR_coodinate_list = populate_coordinate_list(current_start, current_stop)
+            UTR_coodinate_list = populate_coordinate_list(current_start,
+                                                          current_stop,
+                                                          direction_of_coding)
             for UTR_coordinate in UTR_coodinate_list:
                 ##logger.info(info)
                 if UTR_coordinate > start and UTR_coordinate < stop:
@@ -415,9 +424,31 @@ def iterate_coordinate_dict(gene_gff_line,
                                      gene,
                                      "on scaffold",
                                      scaffold])
+
+                    warn = " ".join([gene_name,
+                                     direction_of_coding,
+                                     "UTR coordinate %d falls in the" % UTR_coordinate,
+                                     "genic regions of",
+                                     gene,
+                                     "on scaffold",
+                                     scaffold,
+                                     " START: STOP ",
+                                     str(start),
+                                     str(stop)])
                     logger.warning(warn)
-                    return "HITS genic region"
-    return "OK"
+                    if "+" in data:
+                        # + coding gene, upstream will be
+                        # returned as the end (stop)
+                        # of the preceding gene
+                        # print("+ stop")
+                        return "HITS genic region", stop
+                    else:
+                        # - coding gene, upstream will be
+                        # returned as the begining (start)
+                        # (stop) of the proceding gene
+                        # print("+ start")
+                    return "HITS genic region", start
+    return "OK", "NA"
 
 
 ## main function
@@ -460,10 +491,15 @@ def TranscriptionFind(genome, gene_start_stop_dict,
             scaffold = gene_scaff_dict[gene]
             scaffold = scaffold.rstrip()
             direction = gene_direction[gene]
-            exon_start_exon_stop = gene_first_exon_dict[gene]
-            exon_start, exon_stop = exon_start_exon_stop.split("\t")
-            exon_start =int(exon_start)
-            exon_stop = int(exon_stop)
+            if gene_first_exon_dict.has_key[gene]:
+                exon_start_exon_stop = gene_first_exon_dict[gene]
+                exon_start, exon_stop = exon_start_exon_stop.split("\t")
+                exon_start =int(exon_start)
+                exon_stop = int(exon_stop)
+            else:
+                exon_start =int(start)
+                exon_stop = int(stop)
+                
             # call samtools to get the depth per posititon for
             # the transcript of interest
             depth_filename = os.path.join("temp_reads_per_base",
@@ -617,37 +653,47 @@ def TranscriptionFind(genome, gene_start_stop_dict,
                     GENE_gff = gene_gff_line[gene]
                     # for the min value approach
 
-                    new_gff_line1, UTR_start, UTR_stop = create_gff_line(GENE_gff, gene,
-                                                   current_start1,
-                                                   current_end1)
-                    Min_val_Hits_geneic_or_not = iterate_coordinate_dict(gene_gff_line,
-                                                             gene,
-                                                             scaffold,
-                                                             UTR_start,
-                                                             UTR_stop,
-                                                             logger)
+
+                    Min_val_Hits_geneic_or_not, new_coorinate\
+                                           = iterate_coordinate_dict(gene_gff_line,
+                                                                     gene,
+                                                                     scaffold,
+                                                                     UTR_start,
+                                                                     UTR_stop,
+                                                                     direction,
+                                                                     logger)
+                    new_gff_line1, UTR_start, \
+                                   UTR_stop = create_gff_line(GENE_gff, gene,
+                                                              current_start1,
+                                                              current_end1,
+                                                              direction,
+                                                              new_coorinate)
                     if Min_val_Hits_geneic_or_not == "HITS genic region":
                         gene_failed_count = gene_failed_count + 1
                         continue
-                    if Min_val_Hits_geneic_or_not == "OK":
-                        gff_out.write(new_gff_line1)
+                    # if Min_val_Hits_geneic_or_not == "OK": # we are going to write it anyway
+                    gff_out.write(new_gff_line1)
                     # for the standard dev approach
-                    new2_gff_line, UTR_start, UTR_stop = create_gff_line(GENE_gff, gene,
-                                                    current_start,
-                                                    current_end)
+                    new2_gff_line, UTR_start, \
+                                   UTR_stop = create_gff_line(GENE_gff, gene,
+                                                              current_start,
+                                                              current_end,
+                                                              direction,
+                                                              new_coorinate)
                     # Check to see if this hits a gene or not
                     sd_geneic_or_not = iterate_coordinate_dict(gene_gff_line,
                                                                gene,
                                                                scaffold,
                                                                UTR_start,
                                                                UTR_stop,
+                                                               direction,
                                                                logger)
                     if sd_geneic_or_not == "HITS genic region":
                         gene_failed_count = gene_failed_count + 1
-                        continue
-                    if sd_geneic_or_not == "OK":
-                        gff_sd_out.write(new2_gff_line)
-                        gene_results_printed_count = gene_results_printed_count + 1
+                        # continue
+                    # if sd_geneic_or_not == "OK": # we write it anyway
+                    gff_sd_out.write(new2_gff_line)
+                    gene_results_printed_count = gene_results_printed_count + 1
             else:
                 gene_failed_count = gene_failed_count + 1
                 

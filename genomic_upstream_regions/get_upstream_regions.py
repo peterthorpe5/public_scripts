@@ -175,7 +175,10 @@ def iterate_coordinate_dict(coordinate_dict,
                                         "genic regions of",
                                         gene,
                                         "on scaffold",
-                                        scaffold])
+                                        scaffold,
+                                        " START: STOP ",
+                                        str(start),
+                                        str(stop)])
                        logger.warning(warn)
                        data = coordinate_dict[gene_name]
                        if direction == "upstream":
