@@ -438,17 +438,19 @@ def iterate_coordinate_dict(gene_gff_line,
                                      str(start),
                                      str(stop)])
                     logger.warning(warn)
-                    if "+" in data:
+                    if "+" in direction_of_coding:
                         # + coding gene, upstream will be
                         # returned as the end (stop)
                         # of the preceding gene
                         # print("+ stop")
+                        logger.warning("coordinate", stop)
                         return "HITS genic region", stop
                     else:
                         # - coding gene, upstream will be
                         # returned as the begining (start)
                         # (stop) of the proceding gene
                         # print("+ start")
+                        logger.warning("coordinate", start)
                         return "HITS genic region", start
     return "OK", "NA"
 
