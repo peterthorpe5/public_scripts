@@ -443,20 +443,19 @@ def iterate_coordinate_dict(gene_gff_line,
                         # returned as the end (stop)
                         # of the preceding gene
                         # print("+ stop")
-                        start = start -1
-                        info = "new coordinate %s" % (str(start))
+                        stop = stop +1
+                        info = "new coordinate %s" % (str(stop))
                         logger.warning(info)
-                        return "HITS genic region", start
+                        return "HITS genic region", stop
                     else:
                         # - coding gene, upstream will be
                         # returned as the begining (start)
                         # (stop) of the proceding gene
                         # print("+ start")
-                        stop = stop +1
-                        info = "new coordinate %s" % (str(stop))
+                        start = start -1
+                        info = "new coordinate %s" % (str(start))
                         logger.warning(info)
-
-                        return "HITS genic region", stop
+                        return "HITS genic region", start
     return "OK", "NA"
 
 
