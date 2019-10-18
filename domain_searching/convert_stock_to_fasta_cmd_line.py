@@ -5,6 +5,7 @@ import os
 from sys import stdin,argv
 import sys
 from optparse import OptionParser
+from Bio import AlignIO
 
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
