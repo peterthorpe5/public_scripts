@@ -1,0 +1,7 @@
+258303	Eukaryota| Viridiplantae| Streptophyta| Magnoliopsida| Alismatales| Araceae| Rhaphidophora| | Rhaphidophora petrieana
+258304	Eukaryota| Viridiplantae| Streptophyta| Magnoliopsida| Alismatales| Araceae| Rhaphidophora| | Rhaphidophora puberula
+258305	Eukaryota| Viridiplantae| Streptophyta| Magnoliopsida| Alismatales| Araceae| Rhaphidophora| | Rhaphidophora schlechteri
+258306	Eukaryota| Viridiplantae| Streptophyta| Magnoliopsida| Alismatales| Araceae| Rhaphidophora| | Rhaphidophora schottii
+258307	Eukaryota| Viridiplantae| Streptophyta| Magnoliopsida| Alismatales| Araceae| Rhaphidophora| | Rhaphidophora spathacea
+258308	Eukaryota| Viridiplantae| Streptophyta| Magnoliopsida| Alismatales| Araceae| Rhaphidophora| | Rhaphidophora spuria
+25830	NA

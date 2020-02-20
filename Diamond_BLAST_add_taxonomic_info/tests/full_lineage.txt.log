@@ -1,0 +1,4 @@
+INFO: sys.version_info(major=3, minor=7, micro=2, releaselevel='final', serial=0)
+INFO: Command-line: C:\Users\pjt6\Desktop\public_scripts\Diamond_BLAST_add_taxonomic_info\return_full_lineage.py
+INFO: Starting testing: Thu Feb 20 14:20:31 2020
+WARNING: 25830 has no lineage info
