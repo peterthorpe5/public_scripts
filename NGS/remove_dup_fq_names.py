@@ -1,6 +1,6 @@
 
 ######################################################################
-# Title: Script to get reads I want from a file of read names#
+# Title: remove dup names from fq file #
 ######################################################################
 
 """ This script uses Biopython magic to iterate through a fastq file
