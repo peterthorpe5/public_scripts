@@ -21,11 +21,12 @@ def make_me_a_folder():
     try:
         os.mkdir('split_fasta_files')
     except OSError:
-        print "already exists"
+        print("already exists")
     #os.chdir("split_fasta_files")
     return True
 
 ########################################
+
     
 def count_size_of_fasta(in_fasta):
     "function to find out how many sequences"
@@ -36,12 +37,14 @@ def count_size_of_fasta(in_fasta):
                 count = count+1
         return count
 
+
 def how_many_seq_per_file(how_many_files, in_fasta):
     "function to find out how many seq in each file"
     total_size = count_size_of_fasta(in_fasta)
-    how_many_seq_per_file = total_size/int(how_many_files)
-    print "number of seq per file: ", how_many_seq_per_file
+    how_many_seq_per_file = total_size/(int(how_many_files) -1)
+    print("number of seq per file: ", how_many_seq_per_file)
     return how_many_seq_per_file, total_size
+
 
 def batch_iterator(iterator, batch_size) :
     """Returns lists of length batch_size.
@@ -74,23 +77,22 @@ def batch_iterator(iterator, batch_size) :
 def seq_getter(how_many_files, filename):
     "function to write the outfiles"
     names_printed = set([])
-    how_many_seq_in_file, total_size = how_many_seq_per_file(how_many_files, filename)
+    how_many_seq_in_file, total_size = how_many_seq_per_file(how_many_files,
+                                                             filename)
     record_iter = SeqIO.parse(filename, "fasta")
     
-    for i, batch in enumerate(batch_iterator(record_iter, how_many_seq_in_file)) :
-        outfile = "./split_fasta_files/"+filename.split("fa")[0]+"_%d.fasta" %(i+1)
+    for i, batch in enumerate(batch_iterator(record_iter,
+                                             how_many_seq_in_file)) :
+        outfile = "./split_fasta_files/" + filename.split("fa")[0] + "_%d.fasta" % (i+1)
         handle = open(outfile, "w")
         count = SeqIO.write(batch, handle, "fasta")
         handle.close()
-        #print "Wrote %i records to %s" % (count, filename)
-
-    return True
 
 
 #################################################################################################
 
 if "-v" in sys.argv or "--version" in sys.argv:
-    print "v0.0.1"
+    print("v0.0.1")
     sys.exit(0)
 
 
