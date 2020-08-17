@@ -1,3 +1,12 @@
+THIS HAS BEEN SUPERSEDED BY:
+=============================
+
+https://github.com/peterthorpe5/intergenic_regions
+==================================================
+
+why: Long read genomes highlighted and unforseen bug. It was better to recode from scratch with unit tests. 
+
+
 READme info for script to get upstream regions
 ==============================================
 
