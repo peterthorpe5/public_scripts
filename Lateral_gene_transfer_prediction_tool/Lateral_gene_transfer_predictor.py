@@ -16,6 +16,9 @@ import datetime
 import logging
 import logging.handlers
 import time
+from HGT_modules.parsenodes import parse_NCBI_nodes_tab_file
+from HGT_modules.metazoan_or_not import test_if_id_is_metazoan
+from HGT_modules.parseblast import parse_blast_line
 
 """
 What:
@@ -58,35 +61,6 @@ scientific_name
 scomnames = common_name
 sskingdoms = kingdom
 """
-
-##################################################################
-def parse_NCBI_nodes_tab_file(folder):
-    """this is a function to open nodes.dmp from the NCBI taxonomy
-    database and find the parent child relationship....returns a
-    dictionary for later use"""
-    # open file - read.
-    # nodes.dmp - this file is separated by \t|\t
-    # tax_dmp_database = open(nodes_dmp, "r")
-    # empty dictionary to add to parent and child (keys,vals) to
-    tax_dictionary = {}
-    # nodes.dmp files goes: child, parent, etc
-    # merged.dmp file goes: old, new
-    # In both cases, can take key as column 0 and value as column 1
-    for filename in ["nodes.dmp", "merged.dmp"]:
-        with open(os.path.join(folder, filename)) as handle:
-            for line in handle:
-                tax_info = line.replace("\n", "\t").split("\t|\t")
-                # first element
-                parent = tax_info[1]
-                # second element
-                child = tax_info[0]
-                # add these to the dictionary {parent:child}
-                tax_dictionary[child]= parent
-    # print tax_dictionary
-    # f_out = open("dictionary_test.out", "w")
-    # print >> f_out, tax_dictionary
-    # f_out.close()
-    return tax_dictionary
 
 
 def test_if_id_is_metazoan(tax_id_of_interst,
@@ -167,36 +141,6 @@ def test_id_of_interst(tax_id_of_interst,
 #6656 = filter_out_tax_id
 #33208 = Metazoa   -  for me this is the tax id I want to go up to
 ###########################################################################
-
-
-def parse_blast_line(blast_line_as_list, tax_coloumn):
-    """function to return the bits of info which we want
-    from the blast line(passed to function as a list)"""
-    if len(blast_line_as_list) == 1:
-        blast_line_as_list = blast_line_as_list[0]
-    blast_line = blast_line_as_list
-    try:
-        Evalue = float(blast_line[10])
-        bit_score = float(blast_line[11])
-    except ValueError:
-        print("\n\ncannot convert to float", blast_line[10],
-               blast_line[11], "\n")
-    # tax id can have a whole load of value e.g.
-    # 5141;367110;510951;510952;771870.
-    # Thefore we split it and take the first one
-    query_name = blast_line[0]
-    query_name = query_name.split("gene=")[0]
-    # if "g3392" in query_name:
-        # print "RAW BLAST line = ", query_name, blast_line
-    percentage_identity = blast_line[2]
-    description = blast_line[12]
-    tax_id = blast_line[tax_coloumn].split(";")[0]
-    species_sci = blast_line[-3]
-    species_common = blast_line[-2]
-    kingdom = blast_line[-1]
-    return query_name, percentage_identity, Evalue, bit_score, \
-           description, tax_id, species_sci, species_common,\
-           kingdom
 
 
 def meta_or_non_metazoan(tax_id, Metazoa_tax_id, filter_out_tax_id):
