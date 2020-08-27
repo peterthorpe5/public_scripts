@@ -27,7 +27,7 @@ def parse_NCBI_nodes_tab_file(folder):
     # f_out = open("dictionary_test.out", "w")
     # print >> f_out, tax_dictionary
     # f_out.close()
-    print(tax_dictionary)
+    # print(tax_dictionary)
     return tax_dictionary
 
 
