@@ -641,6 +641,12 @@ $ python Lateral_gene_transfer_predictor.py -i blast_w_tax_id.tab
     --tax_filter_out 6656 (e.g.arthropoda) --tax_filter_up_to 33208
     (e.g. metazoan) -o LGT_results.out
 
+If you use this please cite:
+Thorpe, P., Escudero-Martinez, C.M., Cock, P.J., Eves-van den Akker,
+S. and Bos, J.I., 2018.
+Shared transcriptional control and disparate gain and loss of
+aphid parasitism genes.
+Genome biology and evolution, 10(10), pp.2716-2733.
 
 taxid - 6231 (nematoda)
 
