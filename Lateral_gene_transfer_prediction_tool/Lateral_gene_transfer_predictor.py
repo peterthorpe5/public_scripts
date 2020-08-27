@@ -20,6 +20,17 @@ from HGT_modules.parsenodes import parse_NCBI_nodes_tab_file
 from HGT_modules.metazoan_or_not import test_if_id_is_metazoan
 from HGT_modules.parseblast import parse_blast_line
 
+if sys.version_info[:1] != (3,):
+    # e.g. sys.version_info(major=3, minor=6, micro=7,
+    # releaselevel='final', serial=0)
+    # break the program
+    print ("currently using:", sys.version_info,
+           "  version of python")
+    raise ImportError("Python 3.x is now required for LTG.py")
+    print ("did you activate the virtual environment?")
+    print ("this is to deal with module imports")
+    sys.exit(1)
+
 """
 What:
 To determine Lateral gene transfer event (LGT).
