@@ -1,8 +1,8 @@
 
-cite:
-=====
+please cite:
+============
 
-Thorpe, P., Escudero-Martinez, C.M., Cock, P.J., Eves-van den Akker, S. and Bos, J.I., 2018. Shared transcriptional control and disparate gain and loss of aphid parasitism genes. Genome biology and evolution, 10(10), pp.2716-2733.
+``Thorpe, P., Escudero-Martinez, C.M., Cock, P.J., Eves-van den Akker, S. and Bos, J.I., 2018. Shared transcriptional control and disparate gain and loss of aphid parasitism genes. Genome biology and evolution, 10(10), pp.2716-2733.``
 
 
 READme info for script to Identify putative HGT events
