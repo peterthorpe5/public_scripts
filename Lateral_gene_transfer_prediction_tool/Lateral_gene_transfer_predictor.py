@@ -835,7 +835,7 @@ if __name__ == '__main__':
         sys.exit(1)
     if os.path.isfile(blast_tab_output):
         create_time = os.path.getctime(blast_tab_output)
-        logger.info("blast file created: ", create_time)
+        # logger.info("blast file created: ", create_time)
 
     tax_filename = os.path.join(path, "nodes.dmp")
     if not os.path.isfile(tax_filename):
@@ -844,7 +844,7 @@ if __name__ == '__main__':
         sys.exit(1)
     if os.path.isfile(tax_filename):
         create_time = os.path.getctime(tax_filename)
-        logger.info("taxonomy file created: ", create_time)
+        # logger.info("taxonomy file created: ", create_time)
 
     logger.info(sys.version_info)
     logger.info("Command-line: %s", ' '.join(sys.argv))
