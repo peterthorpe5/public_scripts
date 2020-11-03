@@ -1426,7 +1426,7 @@ if __name__ == '__main__':
     # run BLASTCLUST
     if "blastclust" in tools_list:
         print("we are not going to run blastclust")
-        continue
+        continue  # this is just too slow
         Run_blastclust = args.Run_blastclust.upper()
         if Run_blastclust.rstrip() == "YES":
             blastclust_threshold = args.blastclust_threshold  # for now
