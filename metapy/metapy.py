@@ -866,9 +866,7 @@ if __name__ == '__main__':
                           stdout=subprocess.PIPE,
                           stderr=subprocess.PIPE,
                           check=True)
-    if "cd-hit-est" in tools_list:
-        print("we are not going to run cdhit")
-        continue
+    if "cd-hit-est" in tools_list: continue # not running this
         # default dont run cd hit!
         if args.Run_cdhit.upper == "YES":
             cd_folder_name = PREFIX + "_cd_hit_%s" % CDHIT_THRESHOLD
@@ -1424,9 +1422,7 @@ if __name__ == '__main__':
 
     #####################################################################
     # run BLASTCLUST
-    if "blastclust" in tools_list:
-        print("we are not going to run blastclust")
-        continue  # this is just too slow
+    if "blastclust" in tools_list: continue # not running this
         Run_blastclust = args.Run_blastclust.upper()
         if Run_blastclust.rstrip() == "YES":
             blastclust_threshold = args.blastclust_threshold  # for now
