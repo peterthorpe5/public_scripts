@@ -866,82 +866,82 @@ if __name__ == '__main__':
                           stdout=subprocess.PIPE,
                           stderr=subprocess.PIPE,
                           check=True)
-    if "cd-hit-est" in tools_list: continue # not running this
-        # default dont run cd hit!
-        if args.Run_cdhit.upper == "YES":
-            cd_folder_name = PREFIX + "_cd_hit_%s" % CDHIT_THRESHOLD
-            CDHIT_FOLDER = make_folder(os.path.join(RESULT_FOLDER,
-                                                    cd_folder_name),
-                                       WORKING_DIR)
-            cluster = cd_hit.Cd_hit(args.cd_hit)
-            results = cluster.run("assembled_fa_and_OTU_db.fasta",
-                                  THREADS,
-                                  CDHIT_THRESHOLD,
-                                  CDHIT_FOLDER,
-                                  PREFIX)
-            logger.info("cdhit: %s", results.command)
-            logger.info("reformatting cd hit output")
-            reformat_cdhit_clustrs(results.clusters,
-                                   results.clusters + "_1_line_per",
-                                   results.clusters + "for_R")
-            # add this file for Rand index comparison later
-            CLUSTER_FILES_FOR_RAND_INDEX.append(results.clusters + "for_R")
-            # analyse the clusters
-            cmd_c = ["python",
-                     os.path.join(FILE_DIRECTORY,
-                                  "post_analysis",
-                                  "get_results_from_cluster_and_novel_" +
-                                  "clusterings_cd_hit.py"),
-                     "-f", ASSEMBLED + ".bio.chopped.fasta",
-                     "--all_fasta", "assembled_fa_and_OTU_db.fasta",
-                     "--seq_db", OTU_DATABASE,
-                     "--min_novel_cluster_threshold",
-                     args.min_novel_cluster_threshold,
-                     "--left", LEFT_READS,
-                     "--right", RIGHT_READS,
-                     "--Name_of_project",
-                     os.path.join(CDHIT_FOLDER, "clusters"),
-                     "--in",
-                     results.clusters + "_1_line_per",
-                     "--difference", CDHIT_THRESHOLD,
-                     "-o",
-                     os.path.join(CDHIT_FOLDER,
-                                  "%s_cdhit_results_%s.RESULTS" %
-                                  (PREFIX, str(CDHIT_THRESHOLD))),
-                     "--old_to_new", "db_old_to_new_names.txt"]
-
-            cd_hit_result = os.path.join(CDHIT_FOLDER,
-                                         "%s_cdhit_results_%s.RESULTS" %
-                                         (PREFIX, str(CDHIT_THRESHOLD)))
-            RESULTS.append("cdhit\t%s" % cd_hit_result)
-
-            cmd_c = ' '.join(cmd_c)
-            if args.align:
-                logger.info("going to align the cluster. Will take ages!")
-                cmd_c = cmd_c + " --align True"
-            if args.percent_identity:
-                cmd_c = cmd_c + " --blast True"
-            logger.info("%s = post analysis command", cmd_c)
-            pipe = subprocess.run(cmd_c, shell=True,
-                                  stdout=subprocess.PIPE,
-                                  stderr=subprocess.PIPE,
-                                  check=True)
-            if args.plots.upper() == "YES":
-                logger.info("graphically represent cdhit clusters")
-                plot_cmd = ["python",
-                            os.path.join(FILE_DIRECTORY,
-                                         "bin",
-                                         "draw_bar_chart_of_clusters.py"),
-                            "-i",
-                            results.clusters + "_1_line_per",
-                            " --db",
-                            OTU_DATABASE]
-                plot_cmd = ' '.join(plot_cmd)
-                logger.info("plotting command = %s", plot_cmd)
-                pipe = subprocess.run(plot_cmd, shell=True,
-                                      stdout=subprocess.PIPE,
-                                      stderr=subprocess.PIPE,
-                                  check=True)
+##    if "cd-hit-est" in tools_list:
+##        # default dont run cd hit!
+##        if args.Run_cdhit.upper == "YES":
+##            cd_folder_name = PREFIX + "_cd_hit_%s" % CDHIT_THRESHOLD
+##            CDHIT_FOLDER = make_folder(os.path.join(RESULT_FOLDER,
+##                                                    cd_folder_name),
+##                                       WORKING_DIR)
+##            cluster = cd_hit.Cd_hit(args.cd_hit)
+##            results = cluster.run("assembled_fa_and_OTU_db.fasta",
+##                                  THREADS,
+##                                  CDHIT_THRESHOLD,
+##                                  CDHIT_FOLDER,
+##                                  PREFIX)
+##            logger.info("cdhit: %s", results.command)
+##            logger.info("reformatting cd hit output")
+##            reformat_cdhit_clustrs(results.clusters,
+##                                   results.clusters + "_1_line_per",
+##                                   results.clusters + "for_R")
+##            # add this file for Rand index comparison later
+##            CLUSTER_FILES_FOR_RAND_INDEX.append(results.clusters + "for_R")
+##            # analyse the clusters
+##            cmd_c = ["python",
+##                     os.path.join(FILE_DIRECTORY,
+##                                  "post_analysis",
+##                                  "get_results_from_cluster_and_novel_" +
+##                                  "clusterings_cd_hit.py"),
+##                     "-f", ASSEMBLED + ".bio.chopped.fasta",
+##                     "--all_fasta", "assembled_fa_and_OTU_db.fasta",
+##                     "--seq_db", OTU_DATABASE,
+##                     "--min_novel_cluster_threshold",
+##                     args.min_novel_cluster_threshold,
+##                     "--left", LEFT_READS,
+##                     "--right", RIGHT_READS,
+##                     "--Name_of_project",
+##                     os.path.join(CDHIT_FOLDER, "clusters"),
+##                     "--in",
+##                     results.clusters + "_1_line_per",
+##                     "--difference", CDHIT_THRESHOLD,
+##                     "-o",
+##                     os.path.join(CDHIT_FOLDER,
+##                                  "%s_cdhit_results_%s.RESULTS" %
+##                                  (PREFIX, str(CDHIT_THRESHOLD))),
+##                     "--old_to_new", "db_old_to_new_names.txt"]
+##
+##            cd_hit_result = os.path.join(CDHIT_FOLDER,
+##                                         "%s_cdhit_results_%s.RESULTS" %
+##                                         (PREFIX, str(CDHIT_THRESHOLD)))
+##            RESULTS.append("cdhit\t%s" % cd_hit_result)
+##
+##            cmd_c = ' '.join(cmd_c)
+##            if args.align:
+##                logger.info("going to align the cluster. Will take ages!")
+##                cmd_c = cmd_c + " --align True"
+##            if args.percent_identity:
+##                cmd_c = cmd_c + " --blast True"
+##            logger.info("%s = post analysis command", cmd_c)
+##            pipe = subprocess.run(cmd_c, shell=True,
+##                                  stdout=subprocess.PIPE,
+##                                  stderr=subprocess.PIPE,
+##                                  check=True)
+##            if args.plots.upper() == "YES":
+##                logger.info("graphically represent cdhit clusters")
+##                plot_cmd = ["python",
+##                            os.path.join(FILE_DIRECTORY,
+##                                         "bin",
+##                                         "draw_bar_chart_of_clusters.py"),
+##                            "-i",
+##                            results.clusters + "_1_line_per",
+##                            " --db",
+##                            OTU_DATABASE]
+##                plot_cmd = ' '.join(plot_cmd)
+##                logger.info("plotting command = %s", plot_cmd)
+##                pipe = subprocess.run(plot_cmd, shell=True,
+##                                      stdout=subprocess.PIPE,
+##                                      stderr=subprocess.PIPE,
+##                                  check=True)
 
     ####################################################################
     # run vsearch
@@ -1422,88 +1422,90 @@ if __name__ == '__main__':
 
     #####################################################################
     # run BLASTCLUST
-    if "blastclust" in tools_list: continue # not running this
-        Run_blastclust = args.Run_blastclust.upper()
-        if Run_blastclust.rstrip() == "YES":
-            blastclust_threshold = args.blastclust_threshold  # for now
-            bc = PREFIX + "_blastclust_%s" % str(blastclust_threshold)
-            BLASTCL_FOLDER = make_folder(os.path.join(RESULT_FOLDER,
-                                                      bc),
-                                         WORKING_DIR)
-            logger.info("running blastclust. This is slow")
-            bc = blast.Blastclust("blastclust")
-            result = bc.run("assembled_fa_and_OTU_db.fasta", BLASTCL_FOLDER,
-                            THREADS)
-
-            # reformat_swarm_cls(swarm, db, db_and_reads, outfile)
-            # use this to reformat the blastclust clusters
-            result_file_r = (os.path.join(BLASTCL_FOLDER,
-                                          "assembled_fa_and_OTU_db.fasta" +
-                                          ".blastclust99.forR"))
-            reformat_swarm_cls(os.path.join(BLASTCL_FOLDER,
-                                            "assembled_fa_and_OTU_db.fasta" +
-                                            ".blastclust99.lst"),
-                               OTU_DATABASE,
-                               "assembled_fa_and_OTU_db.fasta",
-                               result_file_r,
-                               False)
-            # add this file for Rand index comparison later
-            CLUSTER_FILES_FOR_RAND_INDEX.append(result_file_r)
-            logger.info("graphically represent swarm clusters")
-            plot_cmd = ["python",
-                        os.path.join(FILE_DIRECTORY,
-                                     "bin",
-                                     "draw_bar_chart_of_clusters.py"),
-                        "-i",
-                        result.outfilename,
-                        " --db",
-                        OTU_DATABASE]
-            plot_cmd = ' '.join(plot_cmd)
-            logger.info("plotting command = %s", plot_cmd)
-            pipe = subprocess.run(plot_cmd, shell=True,
-                                  stdout=subprocess.PIPE,
-                                  stderr=subprocess.PIPE,
-                                  check=True)
-            cmd_b = ["python",
-                     os.path.join(FILE_DIRECTORY,
-                                  "post_analysis",
-                                  "get_results_from_cluster_and_novel_" +
-                                  "clusterings_cd_hit.py"),
-                     "-f", ASSEMBLED + ".bio.chopped.fasta",
-                     "--all_fasta", "assembled_fa_and_OTU_db.fasta",
-                     "--seq_db", OTU_DATABASE,
-                     "--min_novel_cluster_threshold",
-                     args.min_novel_cluster_threshold,
-                     "--left", LEFT_READS,
-                     "--right", RIGHT_READS,
-                     "--Name_of_project",
-                     os.path.join(BLASTCL_FOLDER, "clusters_%s" %
-                                  str(blastclust_threshold)),
-                     "--in",
-                     result.outfilename,
-                     "--difference", str(blastclust_threshold),
-                     "-o",
-                     os.path.join(BLASTCL_FOLDER,
-                                  "%s_blastclust_results_%s.RESULTS" %
-                                  (PREFIX, str(blastclust_threshold))),
-                     "--old_to_new", "db_old_to_new_names.txt"]
-
-            bc_result = os.path.join(BLASTCL_FOLDER,
-                                     "%s_blastclust_results_%s.RESULTS" %
-                                     (PREFIX, str(blastclust_threshold)))
-            RESULTS.append("blastclust\t%s" % bc_result)
-
-            cmd_b = ' '.join(cmd_b)
-            if args.align:
-                logger.info("going to align the cluster. Will take ages!")
-                cmd_b = cmd_b + " --align True"
-            if args.percent_identity:
-                cmd_b = cmd_b + " --blast True"
-            logger.info("%s = post analysis command", cmd_b)
-            pipe = subprocess.run(cmd_b, shell=True,
-                                  stdout=subprocess.PIPE,
-                                  stderr=subprocess.PIPE,
-                                  check=True)
+##    if "blastclust" in tools_list:
+##        print("we are not going to run blastclust")
+##        continue  # this is just too slow
+##        Run_blastclust = args.Run_blastclust.upper()
+##        if Run_blastclust.rstrip() == "YES":
+##            blastclust_threshold = args.blastclust_threshold  # for now
+##            bc = PREFIX + "_blastclust_%s" % str(blastclust_threshold)
+##            BLASTCL_FOLDER = make_folder(os.path.join(RESULT_FOLDER,
+##                                                      bc),
+##                                         WORKING_DIR)
+##            logger.info("running blastclust. This is slow")
+##            bc = blast.Blastclust("blastclust")
+##            result = bc.run("assembled_fa_and_OTU_db.fasta", BLASTCL_FOLDER,
+##                            THREADS)
+##
+##            # reformat_swarm_cls(swarm, db, db_and_reads, outfile)
+##            # use this to reformat the blastclust clusters
+##            result_file_r = (os.path.join(BLASTCL_FOLDER,
+##                                          "assembled_fa_and_OTU_db.fasta" +
+##                                          ".blastclust99.forR"))
+##            reformat_swarm_cls(os.path.join(BLASTCL_FOLDER,
+##                                            "assembled_fa_and_OTU_db.fasta" +
+##                                            ".blastclust99.lst"),
+##                               OTU_DATABASE,
+##                               "assembled_fa_and_OTU_db.fasta",
+##                               result_file_r,
+##                               False)
+##            # add this file for Rand index comparison later
+##            CLUSTER_FILES_FOR_RAND_INDEX.append(result_file_r)
+##            logger.info("graphically represent swarm clusters")
+##            plot_cmd = ["python",
+##                        os.path.join(FILE_DIRECTORY,
+##                                     "bin",
+##                                     "draw_bar_chart_of_clusters.py"),
+##                        "-i",
+##                        result.outfilename,
+##                        " --db",
+##                        OTU_DATABASE]
+##            plot_cmd = ' '.join(plot_cmd)
+##            logger.info("plotting command = %s", plot_cmd)
+##            pipe = subprocess.run(plot_cmd, shell=True,
+##                                  stdout=subprocess.PIPE,
+##                                  stderr=subprocess.PIPE,
+##                                  check=True)
+##            cmd_b = ["python",
+##                     os.path.join(FILE_DIRECTORY,
+##                                  "post_analysis",
+##                                  "get_results_from_cluster_and_novel_" +
+##                                  "clusterings_cd_hit.py"),
+##                     "-f", ASSEMBLED + ".bio.chopped.fasta",
+##                     "--all_fasta", "assembled_fa_and_OTU_db.fasta",
+##                     "--seq_db", OTU_DATABASE,
+##                     "--min_novel_cluster_threshold",
+##                     args.min_novel_cluster_threshold,
+##                     "--left", LEFT_READS,
+##                     "--right", RIGHT_READS,
+##                     "--Name_of_project",
+##                     os.path.join(BLASTCL_FOLDER, "clusters_%s" %
+##                                  str(blastclust_threshold)),
+##                     "--in",
+##                     result.outfilename,
+##                     "--difference", str(blastclust_threshold),
+##                     "-o",
+##                     os.path.join(BLASTCL_FOLDER,
+##                                  "%s_blastclust_results_%s.RESULTS" %
+##                                  (PREFIX, str(blastclust_threshold))),
+##                     "--old_to_new", "db_old_to_new_names.txt"]
+##
+##            bc_result = os.path.join(BLASTCL_FOLDER,
+##                                     "%s_blastclust_results_%s.RESULTS" %
+##                                     (PREFIX, str(blastclust_threshold)))
+##            RESULTS.append("blastclust\t%s" % bc_result)
+##
+##            cmd_b = ' '.join(cmd_b)
+##            if args.align:
+##                logger.info("going to align the cluster. Will take ages!")
+##                cmd_b = cmd_b + " --align True"
+##            if args.percent_identity:
+##                cmd_b = cmd_b + " --blast True"
+##            logger.info("%s = post analysis command", cmd_b)
+##            pipe = subprocess.run(cmd_b, shell=True,
+##                                  stdout=subprocess.PIPE,
+##                                  stderr=subprocess.PIPE,
+##                                  check=True)
     try:
         Rand_results = pairwise_comparison_Rand(CLUSTER_FILES_FOR_RAND_INDEX,
                                                 os.path.join(RESULT_FOLDER,
