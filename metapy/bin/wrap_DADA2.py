@@ -243,7 +243,7 @@ if __name__ == '__main__':
     # Set up Rscript file
     shell = open("dada2.R", "w")
     make_folder(working_dir, "dada2")
-    shell.write("#!/usr/bin/Rscript\n")
+    shell.write("#!Rscript\n")
     shell.write('library(dada2); packageVersion("dada2")\n')
     print("read_directory = ", read_directory)
     r_path = 'path <- "%s"' % (read_directory)
