@@ -319,7 +319,7 @@ if __name__ == '__main__':
 
     shell.close()  # MUST do this before try to run it!
 
-    subprocess.check_call([os.path.join("/usr", "bin", "Rscript"),
+    subprocess.check_call([os.path.join("Rscript"),
                            os.path.join(os.getcwd(), "dada2.R")])
     # it might seem mad to trim the seq here, but if doing ITS the seq is too short
     # and the 5.8S region comes through from the left read. So Hvae to trim this off
