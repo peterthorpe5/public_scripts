@@ -35,14 +35,15 @@ biocLite("dada2")
 
 """
 
-if sys.version_info[:2] != (3, 5):
-    # e.g. sys.version_info(major=3, minor=5, micro=2,
+if sys.version_info[:1] != (3,):
+    # e.g. sys.version_info(major=3, minor=6, micro=7,
     # releaselevel='final', serial=0)
     # break the program
     print ("currently using:", sys.version_info,
            "  version of python")
-    raise ImportError("Python 3.5 is required for metapy.py and tools")
+    raise ImportError("Python 3.x is now required for LTG.py")
     print ("did you activate the virtual environment?")
+    print ("this is to deal with module imports")
     sys.exit(1)
 
 VERSION = "Pycits classify OTU: v0.0.2"
