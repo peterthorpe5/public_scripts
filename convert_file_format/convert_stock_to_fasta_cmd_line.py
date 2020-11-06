@@ -1,9 +1,11 @@
+#!/usr/bin/env python
+
 from Bio import SeqIO
 import os
 from sys import stdin,argv
 import sys
 from optparse import OptionParser
-
+from Bio import AlignIO
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 dest_dir = os.path.join(script_dir, 'fasta_files')
@@ -23,12 +25,11 @@ def convert_files(indirectory, filename_endswith):
             outfile = "./fasta_files/%s.fasta" %(filename[:-4])
 
             AlignIO.write(alignment, outfile, "fasta")
-    return "finished"
 
 
 
 if "-v" in sys.argv or "--version" in sys.argv:
-    print "v0.0.1"
+    print("v0.0.1")
     sys.exit(0)
 
 

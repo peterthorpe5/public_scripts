@@ -13,7 +13,7 @@ dest_dir = os.path.join(script_dir, 'fasta_files')
 try:
     os.makedirs(dest_dir)
 except OSError:
-    print "already exists"
+    print("already exists")
 
 
 def convert_files(indirectory, filename_endswith):
@@ -26,12 +26,12 @@ def convert_files(indirectory, filename_endswith):
             outfile = "./fasta_files/%s.fasta" %(filename[:-4])
 
             AlignIO.write(alignment, outfile, "fasta")
-    return "finished"
+
 
 
 
 if "-v" in sys.argv or "--version" in sys.argv:
-    print "v0.0.1"
+    print("v0.0.1")
     sys.exit(0)
 
 
