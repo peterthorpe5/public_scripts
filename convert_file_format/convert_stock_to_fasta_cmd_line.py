@@ -48,7 +48,7 @@ or to do one file. make -e your specific file
 
 parser = OptionParser(usage=usage)
 
-parser.add_option("-d", dest="directory", default=default=os.getcwd(),
+parser.add_option("-d", dest="directory", default=os.getcwd(),
                   help="directory of the files you are wanting to go through")
 parser.add_option("-e", "--ends", dest="endswith", default=".sto",
                   help="Output filename",
