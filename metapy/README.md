@@ -6,6 +6,14 @@
 * [`codecov.io` page](https://codecov.io/gh/widdowquinn/THAPBI-pycits)
 * [`landscape.io` page](https://landscape.io/github/widdowquinn/THAPBI-pycits/1)
 
+# `metapy` is now been superseeded by thapbi-pict.
+
+This is well coded and documented. Please use this instead. 
+
+https://thapbi-pict.readthedocs.io/en/latest/examples/
+https://github.com/peterjc/thapbi-pict
+
+
 # README.py - `THAPBI-metapy`
 This repository is for development of ITS1-based diagnostic/profiling tools for the THAPBI Phyto-Threats project, funded by BBSRC.
 
