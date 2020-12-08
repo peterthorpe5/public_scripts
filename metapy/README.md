@@ -6,7 +6,7 @@
 * [`codecov.io` page](https://codecov.io/gh/widdowquinn/THAPBI-pycits)
 * [`landscape.io` page](https://landscape.io/github/widdowquinn/THAPBI-pycits/1)
 
-# `metapy` have been superseeded by Pete Cock's `thapbi-pict`: please ue this instead
+# `metapy` have been superseeded by Pete Cock's `thapbi-pict`: please use this instead
 
 This is well coded and documented. Please use this instead. 
 
