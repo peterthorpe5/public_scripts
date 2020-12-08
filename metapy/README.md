@@ -6,11 +6,12 @@
 * [`codecov.io` page](https://codecov.io/gh/widdowquinn/THAPBI-pycits)
 * [`landscape.io` page](https://landscape.io/github/widdowquinn/THAPBI-pycits/1)
 
-# `metapy` is now been superseeded by thapbi-pict.
+# `metapy` is now been superseeded by `thapbi-pict`: please ue this instead
 
 This is well coded and documented. Please use this instead. 
 
 https://thapbi-pict.readthedocs.io/en/latest/examples/
+
 https://github.com/peterjc/thapbi-pict
 
 
