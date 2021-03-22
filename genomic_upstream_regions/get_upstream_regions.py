@@ -623,6 +623,8 @@ if __name__ == '__main__':
            os._exit(0)
     logger.info(sys.version_info)
     logger.info("Command-line: %s", ' '.join(sys.argv))
+    logger.info("THIS HAS BEEN SUPERSEDED BY:  https://github.com/peterthorpe5/intergenic_regions")
+    logger.info("please do not use this")
     logger.info("Starting testing: %s", time.asctime())
     if upstream:
        up_stream_seq_getter(coordinate_file,
