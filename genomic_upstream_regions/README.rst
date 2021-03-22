@@ -7,6 +7,11 @@ https://github.com/peterthorpe5/intergenic_regions
 why: Long read genomes highlighted and unforseen bug. It was better to recode from scratch with unit tests. 
 
 
+please use this alternative instead
+====================================
+
+
+
 READme info for script to get upstream regions
 ==============================================
 
