@@ -26,6 +26,7 @@ def parse_file(infile, outfile, LOGFC_threshold, FDR_threshold, logger):
     name_set = set([])
     f = open(infile, "r")
     f_out = open(outfile, "w")
+    gene_names = set([])
     for line in f:
         if test_line(line):
             if "Row.names" in line:
@@ -48,11 +49,15 @@ def parse_file(infile, outfile, LOGFC_threshold, FDR_threshold, logger):
                 #print(line.rstrip())
                 if FDR <= float(FDR_threshold):
                     count = count + 1
+                    gene_names.add(name)
                     f_out.write(line)
 
     f.close()
     f_out.close()
-    data =("%s\twe found %d DE transcripts" % (infile, count))
+    gene_names = "\t".join(gene_names)
+    data =("%s\twe found %d DE transcripts\ttranscript:\t%s" % (infile,
+                                                                count,
+                                                                gene_names))
     logger.info(data)
 
 
