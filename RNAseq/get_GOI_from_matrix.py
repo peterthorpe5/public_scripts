@@ -29,7 +29,9 @@ def parse_goi(goi, logger):
     for line in f_in:
         input_count = input_count + 1
         if test_line(line):
-            goi_set.add(line.strip())
+            line = line.strip()
+            line = line.upper()
+            goi_set.add()
     info = "input GOI list was %d genes" % input_count
     logger.info(info)
     info = "non-redundant GOI list was %d genes" % len(goi_set)
