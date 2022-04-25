@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
-# script to parse and filter DE results for sig FC and FDR
-# author Pete Thorpe 2021 Oct
+# script to search for perefect peptide matches in a fasta db
+# author Pete Thorpe 2022 April
 # imports
 
 
@@ -24,7 +24,8 @@ import re
 
 
 def get_peps(infile, logger):
-   """func to get peps"""
+   """func to get peps: returns a set
+   infile is csv. Peptide coloumn is called Peptide"""
    data = pd.read_csv(infile) #, skiprows = 1)
    peptides = list(data["Peptide"])
    d = ("we have an original list of %d peptides" % (len(peptides)))
@@ -42,7 +43,9 @@ def get_peps(infile, logger):
 def seq_getter(fasta, pep_set, logger):
     """this is a function to open up a fasta file and
     returns those which are
-    contained within wanted"""
+    contained within the set.
+    returns a results dict: [pep] = list of hist
+    list is coordinate. seq.id"""
     reults_dict = defaultdict(list)
 
     for seq_record in SeqIO.parse(fasta, "fasta"):
@@ -54,8 +57,6 @@ def seq_getter(fasta, pep_set, logger):
                out_result = "\t".join([str(result), seq_record.id])
                reults_dict[pep].append(out_result)
     return reults_dict
-
-
 
 
 
