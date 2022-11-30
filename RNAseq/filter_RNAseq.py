@@ -50,7 +50,16 @@ def parse_file(infile, outfile, LOGFC_threshold, FDR_threshold, logger):
                 if FDR <= float(FDR_threshold):
                     count = count + 1
                     gene_names.add(name)
+                    out_data = "%s\t%s\t%s\n" % (name, logfc, FDR)
+                    f_out.write(out_data)
                     f_out.write(line)
+            # convert the negative to positive for easy testing
+            if (logfc * -1.0) >= float(LOGFC_threshold):
+                if FDR <= float(FDR_threshold):
+                    count = count + 1
+                    gene_names.add(name)
+                    out_data = "%s\t%s\t%s\n" % (name, logfc, FDR)
+                    f_out.write(out_data)
 
     f.close()
     f_out.close()
@@ -76,13 +85,13 @@ $ python filter....py --fdr FDR_threshold --log logFC threshold
 parser = OptionParser(usage=usage)
 
 parser.add_option("--fdr", dest="fdr",
-                  default=0.05,
-                  help="FDR threshold: default =< 0.05")
+                  default=0.01,
+                  help="FDR threshold: default =< 0.01")
 
 
 parser.add_option("-l", "--logfc", dest="out",
-                  default=1.0,
-                  help="logFC threshold: default => 1.0",
+                  default=1.6,
+                  help="logFC threshold: default => 1.6",
                   metavar="FILE")
 
 
@@ -92,7 +101,7 @@ parser.add_option("-l", "--logfc", dest="out",
 FDR = options.fdr
 LOGFC = options.out
 
-logfile = "filter_RNAseqogFC_%.2f_FDR_%.2f.log" % (LOGFC, FDR)
+logfile = "filter_RNAseqogFC_%.2f_FDR_%.3f.log" % (LOGFC, FDR)
 # Run as script
 if __name__ == '__main__':
     start_time = time.time()
@@ -122,7 +131,7 @@ if __name__ == '__main__':
         FDR = float(FDR)
         LOGFC = float(LOGFC)
         # folder_for_all_the_out_files
-        out_folder = "filtered_by_logFC_%.2f_FDR_%.2f" % (LOGFC, FDR)
+        out_folder = "filtered_by_logFC_%.2f_FDR_%.3f" % (LOGFC, FDR)
         dest_dir = os.path.join(os.getcwd(),
                                 out_folder)
         try:
