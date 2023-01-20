@@ -386,7 +386,11 @@ do
 	tar -zxvf ${fol}
 done
 
+echo downloading and unzipping done
 
+export BLASTDB=$`pwd` 
+
+blastdbcmd -entry 'all' -db nr > nr.faa
 
 echo "downloading and unzipping done"
 
