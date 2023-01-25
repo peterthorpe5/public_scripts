@@ -390,9 +390,17 @@ echo downloading and unzipping done
 
 export BLASTDB=$`pwd` 
 
-blastdbcmd -entry 'all' -db nr > nr.faa
+#blastdbcmd -entry 'all' -db nr > nr.faa
+
+wget https://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/nr.gz
+
+wget https://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/swissprot.gz 
 
 echo "downloading and unzipping done"
+
+ln -s nr nr.faa
+
+ln -s Swiss-rot swissprot.faa
 
 python prepare_accession_to_description_db.py
 
